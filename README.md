@@ -365,7 +365,7 @@ The project uses Tailwind CSS. Modify `app.css` to customize:
 ### Build for production
 
 ```bash
-npm run build
+pnpm build
 ```
 
 The static site is generated in the `build/` folder.
@@ -474,8 +474,7 @@ Not yet, but it's planned! You can contribute to this feature.
 ## 📞 Support
 
 - 📧 Email: hello@aker.pro
-- 🐛 Issues: [GitHub Issues](https://github.com/your-username/portfolio-generator/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/your-username/portfolio-generator/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/aker-dev/microfolio/issues)
 
 ## 📚 Useful Resources
 

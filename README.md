@@ -49,7 +49,7 @@ _[Screenshots to be added]_
 ### 1. Clone the template
 
 ```bash
-git clone https://github.com/aker-dev/µFolio.git my-portfolio
+git clone https://github.com/aker-dev/microfolio.git my-portfolio
 cd my-portfolio
 ```
 
@@ -59,13 +59,20 @@ cd my-portfolio
 pnpm install
 ```
 
-### 3. Start the development server
+### 3. Install demo projects (optional)
+
+```bash
+chmod +x example_projects_generator.sh
+./example_projects_generator.sh
+```
+
+### 4. Start the development server
 
 ```bash
 pnpm dev
 ```
 
-### 4. Open http://localhost:5173
+### 5. Open http://localhost:5173
 
 1. Create a folder for your project:
 
@@ -77,16 +84,16 @@ content/projects/my-first-project
 
 ```markdown
 ---
-title: "My First Project"
-date: "2024-01-15"
-location: "Paris, France"
+title: 'My First Project'
+date: '2024-01-15'
+location: 'Paris, France'
 coordinates: [48.8566, 2.3522]
-description: "A brief description of my project"
-type: "architecture"
-tags: ["architecture", "modern"]
+description: 'A brief description of my project'
+type: 'architecture'
+tags: ['architecture', 'modern']
 authors:
-  - name: "Your Name"
-    role: "Architect"
+  - name: 'Your Name'
+    role: 'Architect'
 featured: true
 ---
 
@@ -153,18 +160,18 @@ Each project is organized in its own folder with an `index.md` file:
 ```yaml
 ---
 # Required fields
-title: "Project Title"
-date: "2024-01-15" # ISO format (YYYY-MM-DD)
-location: "City, Country"
-description: "Short description for lists"
+title: 'Project Title'
+date: '2024-01-15' # ISO format (YYYY-MM-DD)
+location: 'City, Country'
+description: 'Short description for lists'
 
 # Optional fields
 coordinates: [latitude, longitude] # For the map
-type: "architecture" # Main category
-tags: ["tag1", "tag2"] # Multiple tags
+type: 'architecture' # Main category
+tags: ['tag1', 'tag2'] # Multiple tags
 authors: # List of contributors
-  - name: "Name"
-    role: "Role"
+  - name: 'Name'
+    role: 'Role'
 featured: true # Featured project
 ---
 ## Description
@@ -294,30 +301,30 @@ Consult the [detailed specifications](documents/specifications.pdf)
 
 ```javascript
 export const siteConfig = {
-  title: "µFolio",
-  description: "static site generator",
-  author: "AKER",
+	title: 'µFolio',
+	description: 'static site generator',
+	author: 'AKER',
 
-  // Navigation
-  navigation: [
-    { name: "Home", href: "/" },
-    { name: "Projects", href: "/projects" },
-    // ...
-  ],
+	// Navigation
+	navigation: [
+		{ name: 'Home', href: '/' },
+		{ name: 'Projects', href: '/projects' }
+		// ...
+	],
 
-  // Project types
-  projectTypes: [
-    { value: "architecture", label: "Architecture" },
-    { value: "design", label: "Design" },
-    // Add your own types
-  ],
+	// Project types
+	projectTypes: [
+		{ value: 'architecture', label: 'Architecture' },
+		{ value: 'design', label: 'Design' }
+		// Add your own types
+	],
 
-  // Map configuration
-  mapConfig: {
-    center: [46.603354, 1.888334],
-    zoom: 6,
-    // ...
-  },
+	// Map configuration
+	mapConfig: {
+		center: [46.603354, 1.888334],
+		zoom: 6
+		// ...
+	}
 };
 ```
 

@@ -4,7 +4,7 @@
 
 <footer>
 	<div
-		class="mr-auto ml-auto flex h-12 max-w-6xl items-center justify-between border-t border-solid border-black pr-4 pl-4"
+		class="mr-auto ml-auto flex h-12 max-w-7xl items-center justify-between border-t-2 border-solid border-black pr-4 pl-4"
 	>
 		<p>
 			© {siteConfig.author}

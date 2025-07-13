@@ -17,13 +17,6 @@ export const siteConfig = {
 		// ...
 	],
 
-	// Project types
-	projectTypes: [
-		{ value: 'architecture', label: 'Architecture' },
-		{ value: 'design', label: 'Design' }
-		// ...
-	],
-
 	// Map configuration
 	mapConfig: {
 		center: [46.603354, 1.888334],

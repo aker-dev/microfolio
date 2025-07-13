@@ -8,7 +8,7 @@
 
 <AkHeader />
 
-<main class="mr-auto ml-auto max-w-6xl pr-4 pb-24 pl-4">
+<main class="mr-auto ml-auto max-w-7xl pr-4 pb-24 pl-4">
 	{@render children()}
 </main>
 

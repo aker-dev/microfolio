@@ -1,6 +1,6 @@
-<article class="prose max-w-none">
-	<h1>Welcome to µFolio</h1>
-	<p>
+<article class="space-y-6">
+	<h1 class="text-4xl font-bold">Welcome to µFolio</h1>
+	<p class="text-lg">
 		A modern static portfolio generator built with SvelteKit and Tailwind CSS. Showcase your
 		creative work with elegance and simplicity.
 	</p>

@@ -26,53 +26,63 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<article class="mx-auto max-w-4xl">
+<article class="">
 	<!-- Header -->
 	<header class="mb-8">
-		<nav class="mb-4">
-			<a href="/projects" class="text-sm text-gray-600 hover:text-black">← Back to Projects</a>
+		<h2 class="text-4xl font-bold text-black">{project.title}</h2>
+		<nav class="my-4">
+			<a href="/projects" class="text-sm hover:underline">← Back to Projects</a>
 		</nav>
 
 		<div class="space-y-4">
 			<div class="flex items-center gap-4">
-				<span class="inline-block rounded bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800">
+				<span
+					class="inline-block cursor-default rounded-full border border-black bg-white px-3 py-1 text-sm text-black capitalize"
+				>
 					{project.type}
 				</span>
 				{#if project.featured}
-					<span class="text-sm font-medium text-yellow-600">Featured</span>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						fill="currentColor"
+						class="size-5"
+					>
+						<path
+							fill-rule="evenodd"
+							d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z"
+							clip-rule="evenodd"
+						/>
+					</svg>
 				{/if}
 			</div>
 
-			<h1 class="text-4xl font-bold text-gray-900">{project.title}</h1>
-
-			<div class="flex flex-wrap gap-4 text-sm text-gray-600">
-				<span>{project.location}</span>
-				<span>•</span>
-				<span>{new Date(project.date).toLocaleDateString()}</span>
-			</div>
-
-			<p class="text-lg leading-relaxed text-gray-700">{project.description}</p>
+			<p class="text-lg leading-relaxed text-black">{project.description}</p>
 
 			<!-- Authors -->
 			{#if project.authors && project.authors.length > 0}
 				<div class="space-y-2">
-					<h3 class="text-sm font-medium text-gray-900">Team</h3>
-					<div class="flex flex-wrap gap-4">
-						{#each project.authors as author}
-							<div class="text-sm">
-								<span class="font-medium">{author.name}</span>
-								<span class="text-gray-600">— {author.role}</span>
-							</div>
-						{/each}
-					</div>
+					<h3 class="text-lg font-medium text-black">Team</h3>
+
+					{#each project.authors as author}
+						<div class="text-sm">
+							<span class="font-medium">{author.name}</span>
+							<span class="text-black">› {author.role}</span>
+						</div>
+					{/each}
 				</div>
 			{/if}
+
+			<div class="text-sm">
+				<span>{project.location}</span>
+				<span>{new Date(project.date).toISOString().slice(0, 7)}</span>
+			</div>
 
 			<!-- Tags -->
 			{#if project.tags && project.tags.length > 0}
 				<div class="flex flex-wrap gap-2">
 					{#each project.tags as tag}
-						<span class="rounded bg-gray-50 px-2 py-1 text-xs text-gray-600">
+						<span class="rounded bg-white px-2 py-1 text-xs text-black">
 							{tag}
 						</span>
 					{/each}
@@ -83,11 +93,7 @@
 
 	<!-- Main thumbnail -->
 	<div class="mb-8">
-		<img
-			src="/content/projects/{project.slug}/thumbnail.jpg"
-			alt={project.title}
-			class="w-full rounded-lg shadow-lg"
-		/>
+		<img src="/content/projects/{project.slug}/thumbnail.jpg" alt={project.title} class="w-full" />
 	</div>
 
 	<!-- Content -->
@@ -101,17 +107,17 @@
 		{#if project.resources.images && project.resources.images.length > 0}
 			<section class="mb-12">
 				<h2 class="mb-6 text-2xl font-bold">Gallery</h2>
-				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+				<div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
 					{#each project.resources.images as image}
 						<button
 							type="button"
 							onclick={() => openLightbox(image)}
-							class="group block aspect-square overflow-hidden rounded-lg bg-gray-100 transition-shadow hover:shadow-md"
+							class="group block aspect-square cursor-pointer overflow-hidden"
 						>
 							<img
 								src={image.path}
 								alt={image.name}
-								class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+								class="h-full w-full object-cover"
 								loading="lazy"
 							/>
 						</button>
@@ -132,7 +138,7 @@
 								Your browser does not support the video tag.
 							</video>
 							<div class="p-3">
-								<p class="text-sm text-gray-600">{video.name}</p>
+								<p class="text-sm text-black">{video.name}</p>
 							</div>
 						</div>
 					{/each}
@@ -150,11 +156,11 @@
 							href={document.path}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="flex items-center gap-3 rounded-lg bg-gray-50 p-4 transition-colors hover:bg-gray-100"
+							class="flex items-center gap-3 bg-white p-4"
 						>
 							<div class="flex-shrink-0">
 								<svg
-									class="h-6 w-6 text-gray-600"
+									class="h-6 w-6 text-black"
 									fill="none"
 									stroke="currentColor"
 									viewBox="0 0 24 24"
@@ -168,8 +174,8 @@
 								</svg>
 							</div>
 							<div class="flex-1">
-								<p class="text-sm font-medium text-gray-900">{document.name}</p>
-								<p class="text-xs text-gray-600">Click to download</p>
+								<p class="text-sm font-medium text-black">{document.name}</p>
+								<p class="text-xs text-black">Click to download</p>
 							</div>
 						</a>
 					{/each}
@@ -189,7 +195,7 @@
 			<button
 				type="button"
 				onclick={closeLightbox}
-				class="absolute top-4 right-4 z-10 text-white hover:text-gray-300"
+				class="absolute top-4 right-4 z-10 text-white hover:text-black"
 			>
 				<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path

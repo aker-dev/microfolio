@@ -13,7 +13,7 @@
 
 <header class="sticky top-0 z-100 mb-8 bg-neutral-100">
 	<div
-		class="mr-auto ml-auto flex h-32 max-w-6xl items-end justify-between border-b border-solid border-black pr-4 pl-4"
+		class="mr-auto ml-auto flex h-32 max-w-7xl items-end justify-between border-b border-solid border-black pr-4 pl-4"
 	>
 		<section class="h-15">
 			<h1 class="text-2xl font-medium">{siteConfig.title}</h1>

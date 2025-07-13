@@ -29,34 +29,35 @@
 <article class="">
 	<!-- Header -->
 	<header class="mb-8">
-		<h2 class="text-4xl font-bold text-black">{project.title}</h2>
 		<nav class="my-4">
 			<a href="/projects" class="text-sm hover:underline">← Back to Projects</a>
 		</nav>
 
-		<div class="space-y-4">
-			<div class="flex items-center gap-4">
-				<span
-					class="inline-block cursor-default rounded-full border border-black bg-white px-3 py-1 text-sm text-black capitalize"
+		<div class="mb-2 flex items-center gap-4">
+			<span
+				class="inline-block cursor-default rounded-full border border-black bg-white px-3 py-1 text-sm text-black capitalize"
+			>
+				{project.type}
+			</span>
+			{#if project.featured}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 20 20"
+					fill="currentColor"
+					class="size-5"
 				>
-					{project.type}
-				</span>
-				{#if project.featured}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20"
-						fill="currentColor"
-						class="size-5"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z"
-							clip-rule="evenodd"
-						/>
-					</svg>
-				{/if}
-			</div>
+					<path
+						fill-rule="evenodd"
+						d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z"
+						clip-rule="evenodd"
+					/>
+				</svg>
+			{/if}
+		</div>
 
+		<h2 class="mb-2 text-4xl font-bold text-black">{project.title}</h2>
+
+		<div class="space-y-4">
 			<p class="text-lg leading-relaxed text-black">{project.description}</p>
 
 			<!-- Authors -->
@@ -73,17 +74,20 @@
 				</div>
 			{/if}
 
+			<h3 class="text-lg font-medium text-black">Location & Date</h3>
 			<div class="text-sm">
-				<span>{project.location}</span>
+				<span>{project.location} — </span>
 				<span>{new Date(project.date).toISOString().slice(0, 7)}</span>
 			</div>
 
 			<!-- Tags -->
+			<h3 class="text-lg font-medium text-black">Tags</h3>
+
 			{#if project.tags && project.tags.length > 0}
 				<div class="flex flex-wrap gap-2">
 					{#each project.tags as tag}
-						<span class="rounded bg-white px-2 py-1 text-xs text-black">
-							{tag}
+						<span class="rounded border border-black bg-white px-2 py-1 text-xs text-black">
+							#{tag}
 						</span>
 					{/each}
 				</div>

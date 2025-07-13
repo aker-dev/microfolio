@@ -34,11 +34,11 @@
 				{#each projectTypes as type}
 					<button
 						onclick={() => (selectedType = type)}
-						class="rounded-full border px-3 py-1 text-sm {selectedType === type
+						class="rounded-full border px-3 py-1 text-sm capitalize {selectedType === type
 							? 'border-black bg-black text-white'
 							: 'cursor-pointer border-black bg-white text-black hover:bg-black hover:text-white'}"
 					>
-						{type.charAt(0).toUpperCase() + type.slice(1)}
+						{type}
 					</button>
 				{/each}
 			</div>
@@ -66,7 +66,7 @@
 					<img
 						src={project.thumbnailPath}
 						alt={project.title}
-						class="h-full w-full object-cover"
+						class="h-full w-full object-cover grayscale transition-all hover:grayscale-0"
 						loading="lazy"
 					/>
 				</div>
@@ -74,7 +74,9 @@
 				<!-- Content -->
 				<div class="space-y-3 p-4">
 					<div class="flex items-center justify-between">
-						<span class="inline-block rounded bg-neutral-100 px-2 py-1 text-xs font-medium">
+						<span
+							class="inline-block rounded-full border border-black bg-white px-2 py-1 text-xs capitalize"
+						>
 							{project.type}
 						</span>
 						{#if project.featured}
@@ -97,9 +99,9 @@
 						{project.title}
 					</h3>
 
-					<!-- <p class="line-clamp-2 text-sm text-neutral-600">
-						{project.description}
-					</p> -->
+					<p class="line-clamp-2 text-sm">
+						{project.description}…
+					</p>
 
 					<div class="flex items-center justify-between text-xs">
 						<span>{project.location}</span>

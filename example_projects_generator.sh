@@ -187,284 +187,241 @@ else
     warn "curl/wget not found. Will create SVG placeholders instead."
 fi
 
+# Project data arrays
+PROJECT_TITLES=(
+    "Cultural Center of Paris" "Brand Identity - TechFlow" "Resonance - Interactive Light Installation" "Modern Residential Complex" "E-commerce Platform Redesign"
+    "Urban Sculpture Garden" "Digital Marketing Campaign" "Smart Home System" "Contemporary Art Gallery" "Mobile App UI/UX Design"
+    "Sustainable Office Building" "Logo Design for Coffee Shop" "Virtual Reality Experience" "Minimalist House Design" "Social Media Strategy"
+    "Public Art Installation" "Website Development" "Interior Design Studio" "Fashion Brand Identity" "Game Development Project"
+    "Community Center Architecture" "Print Design Portfolio" "Interactive Museum Exhibit" "Luxury Apartment Design" "Digital Product Design"
+    "Environmental Art Project" "Corporate Branding Package" "Augmented Reality App" "Hotel Interior Design" "Motion Graphics Project"
+    "Mixed-Use Development" "Packaging Design Series" "Sound Art Installation" "Restaurant Interior" "User Experience Research"
+    "Civic Architecture Project" "Publication Design" "Light Art Festival" "Residential Renovation" "Design System Creation"
+    "Landscape Architecture" "Brand Strategy Development" "Performance Art Piece" "Commercial Space Design" "Product Design Innovation"
+    "Cultural Heritage Building" "Visual Identity System" "Interactive Art Workshop" "Workplace Design" "Digital Illustration Series"
+    "Transportation Hub Design" "Marketing Material Design" "Kinetic Art Installation" "Boutique Store Design" "Information Architecture"
+    "Educational Facility" "Event Branding Project" "Video Art Production" "Kitchen Design Project" "Service Design Framework"
+    "Religious Architecture" "Annual Report Design" "Projection Mapping Show" "Bathroom Renovation" "Design Research Study"
+    "Sports Complex Design" "Poster Design Campaign" "Generative Art System" "Living Room Makeover" "Accessibility Design Audit"
+    "Healthcare Facility" "Book Cover Design" "Digital Art Collection" "Home Office Design" "Usability Testing Project"
+    "Retail Store Architecture" "Merchandise Design" "Art Therapy Installation" "Bedroom Interior Design" "Content Strategy Plan"
+    "Library Building Design" "Signage System Design" "Community Art Project" "Dining Room Design" "Design Process Documentation"
+    "Museum Architecture" "Album Cover Design" "Street Art Commission" "Garden Design Project" "Innovation Workshop Series"
+    "Shopping Mall Design" "Logo Animation Project" "Sculpture Park Installation" "Terrace Design" "Design Thinking Workshop"
+    "Concert Hall Architecture" "Web Banner Campaign" "Digital Mural Project" "Basement Renovation" "Creative Direction Project"
+)
+
+PROJECT_TYPES=(
+    "architecture" "design" "art" "architecture" "design"
+    "art" "design" "architecture" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "art" "design" "architecture" "design" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "art" "design" "design" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+    "architecture" "design" "art" "architecture" "design"
+)
+
+LOCATIONS=(
+    "Paris, France" "Lyon, France" "Marseille, France" "Nice, France" "Toulouse, France"
+    "Bordeaux, France" "Lille, France" "Rennes, France" "Reims, France" "Saint-Étienne, France"
+    "Le Havre, France" "Toulon, France" "Grenoble, France" "Dijon, France" "Angers, France"
+    "Nîmes, France" "Villeurbanne, France" "Clermont-Ferrand, France" "Le Mans, France" "Aix-en-Provence, France"
+    "Brest, France" "Limoges, France" "Tours, France" "Amiens, France" "Perpignan, France"
+    "Metz, France" "Besançon, France" "Orléans, France" "Rouen, France" "Mulhouse, France"
+    "Caen, France" "Nancy, France" "Avignon, France" "Cannes, France" "Annecy, France"
+    "Versailles, France" "Poitiers, France" "Courbevoie, France" "Créteil, France" "Pau, France"
+    "La Rochelle, France" "Calais, France" "Bourges, France" "Dunkerque, France" "Châteauroux, France"
+    "Antibes, France" "Saint-Denis, France" "Argenteuil, France" "Montreuil, France" "Boulogne-Billancourt, France"
+    "Nanterre, France" "Colombes, France" "Aulnay-sous-Bois, France" "Roubaix, France" "Tourcoing, France"
+    "Nantes, France" "Strasbourg, France" "Montpellier, France" "Rennes, France" "Reims, France"
+    "Le Havre, France" "Saint-Étienne, France" "Toulon, France" "Grenoble, France" "Dijon, France"
+    "Angers, France" "Nîmes, France" "Villeurbanne, France" "Clermont-Ferrand, France" "Le Mans, France"
+    "Aix-en-Provence, France" "Brest, France" "Limoges, France" "Tours, France" "Amiens, France"
+    "Perpignan, France" "Metz, France" "Besançon, France" "Orléans, France" "Rouen, France"
+    "Mulhouse, France" "Caen, France" "Nancy, France" "Avignon, France" "Cannes, France"
+    "Annecy, France" "Versailles, France" "Poitiers, France" "Courbevoie, France" "Créteil, France"
+    "Pau, France" "La Rochelle, France" "Calais, France" "Bourges, France" "Dunkerque, France"
+    "Châteauroux, France" "Antibes, France" "Saint-Denis, France" "Argenteuil, France" "Montreuil, France"
+)
+
+COORDINATES=(
+    "[48.8566, 2.3522]" "[45.7640, 4.8357]" "[43.2965, 5.3698]" "[43.7102, 7.2620]" "[43.6047, 1.4442]"
+    "[44.8378, -0.5792]" "[50.6292, 3.0573]" "[48.1173, -1.6778]" "[49.2583, 4.0317]" "[45.4397, 4.3872]"
+    "[49.4944, 0.1079]" "[43.1242, 5.9280]" "[45.1885, 5.7245]" "[47.3220, 5.0415]" "[47.4739, -0.5540]"
+    "[43.8367, 4.3601]" "[45.7797, 4.9348]" "[45.7797, 3.0863]" "[48.0077, 0.1984]" "[43.5263, 5.4454]"
+    "[48.3905, -4.4861]" "[45.8336, 1.2611]" "[47.3941, 0.6848]" "[49.8941, 2.2956]" "[42.6995, 2.8954]"
+    "[49.1193, 6.1757]" "[47.2380, 6.0243]" "[47.9029, 1.9093]" "[49.4431, 1.0993]" "[47.7494, 7.3552]"
+    "[49.1859, -0.3706]" "[48.6921, 6.1844]" "[43.9493, 4.8055]" "[43.5528, 7.0174]" "[45.8992, 6.1294]"
+    "[48.8014, 2.1301]" "[46.5802, 0.3404]" "[48.8975, 2.2350]" "[48.7909, 2.4550]" "[43.3102, -0.3609]"
+    "[46.1603, -1.1511]" "[50.9513, 1.8587]" "[47.0810, 2.3987]" "[51.0347, 2.3770]" "[46.8109, 1.6928]"
+    "[43.5804, 7.1251]" "[48.9354, 2.3544]" "[48.9478, 2.2431]" "[48.8589, 2.4136]" "[48.8352, 2.2397]"
+    "[48.8951, 2.2069]" "[48.9248, 2.2277]" "[48.9539, 2.4954]" "[50.6942, 3.1746]" "[50.7263, 3.1586]"
+    "[47.2184, -1.5536]" "[48.5734, 7.7521]" "[43.6109, 3.8763]" "[48.1173, -1.6778]" "[49.2583, 4.0317]"
+    "[49.4944, 0.1079]" "[45.4397, 4.3872]" "[43.1242, 5.9280]" "[45.1885, 5.7245]" "[47.3220, 5.0415]"
+    "[47.4739, -0.5540]" "[43.8367, 4.3601]" "[45.7797, 4.9348]" "[45.7797, 3.0863]" "[48.0077, 0.1984]"
+    "[43.5263, 5.4454]" "[48.3905, -4.4861]" "[45.8336, 1.2611]" "[47.3941, 0.6848]" "[49.8941, 2.2956]"
+    "[42.6995, 2.8954]" "[49.1193, 6.1757]" "[47.2380, 6.0243]" "[47.9029, 1.9093]" "[49.4431, 1.0993]"
+    "[47.7494, 7.3552]" "[49.1859, -0.3706]" "[48.6921, 6.1844]" "[43.9493, 4.8055]" "[43.5528, 7.0174]"
+    "[45.8992, 6.1294]" "[48.8014, 2.1301]" "[46.5802, 0.3404]" "[48.8975, 2.2350]" "[48.7909, 2.4550]"
+    "[43.3102, -0.3609]" "[46.1603, -1.1511]" "[50.9513, 1.8587]" "[47.0810, 2.3987]" "[51.0347, 2.3770]"
+    "[46.8109, 1.6928]" "[43.5804, 7.1251]" "[48.9354, 2.3544]" "[48.9478, 2.2431]" "[48.8589, 2.4136]"
+)
+
+COLORS=(
+    "#2563EB" "#10B981" "#F59E0B" "#EF4444" "#8B5CF6"
+    "#EC4899" "#06B6D4" "#84CC16" "#F97316" "#6366F1"
+    "#14B8A6" "#F43F5E" "#8B5A2B" "#059669" "#DC2626"
+    "#7C3AED" "#0891B2" "#CA8A04" "#BE123C" "#9333EA"
+    "#0D9488" "#E11D48" "#A16207" "#BE185D" "#7C2D12"
+    "#047857" "#9F1239" "#92400E" "#881337" "#78350F"
+    "#065F46" "#7F1D1D" "#451A03" "#4C1D95" "#1E293B"
+    "#0F172A" "#450A0A" "#365314" "#14532D" "#7E22CE"
+    "#5B21B6" "#6D28D9" "#1E40AF" "#1D4ED8" "#2563EB"
+    "#3B82F6" "#60A5FA" "#93C5FD" "#DBEAFE" "#EFF6FF"
+)
+
 # Create projects folder
 log "Creating $CONTENT_DIR directory"
 mkdir -p "$CONTENT_DIR"
 
-echo -e "${BLUE}🚀 Generating µFolio example projects${NC}"
-echo "===================================="
+echo -e "${BLUE}🚀 Generating µFolio example projects (100 projects)${NC}"
+echo "============================================================="
 
-# 1. ARCHITECTURE PROJECT - Cultural Center Paris
-log "📁 Creating project: cultural-center-paris"
-PROJECT_DIR="$CONTENT_DIR/cultural-center-paris"
-mkdir -p "$PROJECT_DIR"/{images,documents,videos}
+# Generate 100 projects
+for i in {0..99}; do
+    # Calculate indices for arrays
+    title_index=$((i % ${#PROJECT_TITLES[@]}))
+    type_index=$((i % ${#PROJECT_TYPES[@]}))
+    location_index=$((i % ${#LOCATIONS[@]}))
+    coord_index=$((i % ${#COORDINATES[@]}))
+    color_index=$((i % ${#COLORS[@]}))
+    
+    # Get project data
+    project_title="${PROJECT_TITLES[$title_index]}"
+    project_type="${PROJECT_TYPES[$type_index]}"
+    project_location="${LOCATIONS[$location_index]}"
+    project_coords="${COORDINATES[$coord_index]}"
+    project_color="${COLORS[$color_index]}"
+    
+    # Create unique slug (add number if needed to make unique)
+    if [ $i -lt ${#PROJECT_TITLES[@]} ]; then
+        project_slug=$(echo "$project_title" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
+    else
+        base_slug=$(echo "$project_title" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
+        project_slug="${base_slug}-$((i + 1))"
+    fi
+    
+    # Create project
+    log "📁 Creating project $((i + 1))/100: $project_slug"
+    PROJECT_DIR="$CONTENT_DIR/$project_slug"
+    mkdir -p "$PROJECT_DIR"/{images,documents,videos}
 
-# index.md
-cat > "$PROJECT_DIR/index.md" << 'EOF'
+    # Generate dates (random within last year) - macOS compatible
+    random_days=$((RANDOM % 365))
+    project_date=$(date -v-${random_days}d "+%Y-%m-%d")
+    
+    # Determine if featured (every 10th project)
+    if [ $((i % 10)) -eq 0 ]; then
+        featured="true"
+    else
+        featured="false"
+    fi
+
+    # Generate tags based on type
+    case "$project_type" in
+        "architecture")
+            tags='["architecture", "design", "building", "modern", "sustainable"]'
+            ;;
+        "design")
+            tags='["design", "branding", "visual", "creative", "digital"]'
+            ;;
+        "art")
+            tags='["art", "installation", "interactive", "contemporary", "public"]'
+            ;;
+    esac
+
+    # Create index.md with template content
+    cat > "$PROJECT_DIR/index.md" << EOF
 ---
-title: "Cultural Center of Paris"
-date: "2024-03-15"
-location: "Paris, France"
-coordinates: [48.8566, 2.3522]
-description: "A modern cultural center in the heart of Paris, blending contemporary architecture with historical heritage"
-type: "architecture"
-tags: ["architecture", "cultural", "modern", "paris", "public"]
+title: "$project_title"
+date: "$project_date"
+location: "$project_location"
+coordinates: $project_coords
+description: "A comprehensive project showcasing innovative design and creative solutions"
+type: "$project_type"
+tags: $tags
 authors:
-  - name: "Marie Dubois"
-    role: "Lead Architect"
-  - name: "Jean Martin"
-    role: "Interior Designer"
-featured: true
+  - name: "Creative Director"
+    role: "Lead Designer"
+  - name: "Project Manager"
+    role: "Coordinator"
+featured: $featured
 ---
 
 ## Project Description
 
-The Cultural Center of Paris represents a major architectural challenge: creating a modern and functional space while respecting the harmony of the historic district. The 3,500 m² building houses a media library, exhibition spaces, a 200-seat auditorium, and creative workshops.
+This project represents a significant achievement in contemporary $project_type, combining innovative design principles with functional requirements. The project showcases cutting-edge techniques and sustainable practices while maintaining aesthetic excellence.
 
-## Architectural Concept
+## Design Concept
 
-The center's architecture plays with transparency and natural light. The main facade, entirely glazed, reveals interior activities and creates a constant dialogue between public space and cultural space. The chosen materials - raw concrete, glass, and corten steel - create a strong identity while harmoniously integrating with the urban context.
+The design philosophy centers on creating harmonious relationships between form and function. Through careful consideration of spatial dynamics, material selection, and user experience, this project delivers a solution that exceeds expectations.
 
-## Sustainable Development
+## Key Features
 
-The project integrates numerous ecological solutions:
-- Double-skin facade for thermal insulation
-- 800 m² green roof
-- Rainwater harvesting system
-- Geothermal heating
-- HQE certification level "Very High Performance"
-
-## Program
-
-- **Ground floor**: Reception hall, cultural café, shop
-- **1st floor**: Media library and reading spaces
-- **2nd floor**: Modular exhibition halls (400 m²)
-- **3rd floor**: Auditorium and technical spaces
-- **Basement**: Creative workshops and storage
-
-## Technical Challenges
-
-Building on a sloped site required innovative solutions:
-- Special foundations on micropiles
-- Mixed concrete/steel structure
-- Complex circulation flow management
-- Integration of existing urban networks
-
-The project was delivered on schedule despite site constraints and strict environmental requirements.
-EOF
-
-# Images
-download_image "$PROJECT_DIR/thumbnail.jpg" 800 600 1 "Cultural Center" "#2563EB" "#ffffff"
-download_image "$PROJECT_DIR/images/facade-day.jpg" 1200 800 2 "Facade Day View" "#3B82F6" "#ffffff"
-download_image "$PROJECT_DIR/images/facade-night.jpg" 1200 800 3 "Facade Night View" "#1E40AF" "#ffffff"
-download_image "$PROJECT_DIR/images/interior-hall.jpg" 1200 800 4 "Interior Hall" "#6366F1" "#ffffff"
-download_image "$PROJECT_DIR/images/aerial-view.jpg" 1200 800 5 "Aerial View" "#8B5CF6" "#ffffff"
-
-# Documents
-create_pdf_placeholder "$PROJECT_DIR/documents/architectural-plans.pdf" "Architectural Plans"
-create_pdf_placeholder "$PROJECT_DIR/documents/specifications.pdf" "Technical Specifications"
-create_pdf_placeholder "$PROJECT_DIR/documents/hqe-certification.pdf" "HQE Certification"
-
-# Videos
-create_video_placeholder "$PROJECT_DIR/videos/virtual-tour.mp4" 180
-
-# 2. GRAPHIC DESIGN PROJECT - Tech Startup Identity
-log "📁 Creating project: tech-startup-identity"
-PROJECT_DIR="$CONTENT_DIR/tech-startup-identity"
-mkdir -p "$PROJECT_DIR"/{images,documents}
-
-# index.md
-cat > "$PROJECT_DIR/index.md" << 'EOF'
----
-title: "Brand Identity - TechFlow"
-date: "2024-02-20"
-location: "Lyon, France"
-coordinates: [45.7640, 4.8357]
-description: "Complete visual identity creation for a startup specializing in workflow automation"
-type: "design"
-tags: ["identity", "logo", "startup", "tech", "digital"]
-authors:
-  - name: "Sophie Chen"
-    role: "Art Director"
-  - name: "Alex Rivera"
-    role: "Graphic Designer"
-featured: false
----
-
-## Project Brief
-
-TechFlow, a Lyon-based startup specializing in enterprise workflow automation, needed a strong visual identity to stand out in the French technology ecosystem. The goal was to create a modern, accessible, and professional brand capable of reassuring business clients while reflecting technological innovation.
-
-## Creative Process
-
-### Research and Analysis
-- In-depth competitive study
-- Creative workshops with the founding team
-- Brand values definition: innovation, simplicity, reliability
-- Client persona mapping
-
-### Concept Development
-The logo is built around the idea of flow and connection. The custom typography combines modernity and readability, with rounded endings that evoke the fluidity of automated processes.
-
-## Graphic Solutions
-
-### Logo and Symbol
-- Geometric symbol evoking data flow
-- Monochrome, color, and simplified versions
-- Perfect adaptability from favicon to billboard formats
-
-### Color Palette
-- **Primary Blue**: #2563EB (trust, technology)
-- **Secondary Blue**: #1E40AF (depth, seriousness)
-- **Neutral Gray**: #6B7280 (balance, modernity)
-- **Accent Green**: #10B981 (growth, success)
-
-### Typography
-- **Headlines**: Inter Extra Bold (perfect screen readability)
-- **Body Text**: Inter Regular/Medium (print/web versatility)
-- **Code**: JetBrains Mono (consistency with tech universe)
-
-## Applications
-
-The identity was applied across all touchpoints:
-- Complete stationery (business cards, letterheads, invoices)
-- Responsive website and mobile application
-- Office signage
-- Sales materials (brochures, presentations)
-- Promotional goods and textiles
-
-## Results
-
-6 months after launch, TechFlow recorded:
-- +340% website visits
-- +180% product demo requests
-- 78% recognition rate among prospects
-- €2.5M funding round facilitated by brand image
-
-The new identity helped position TechFlow as a serious and innovative player in the French automation market.
-EOF
-
-# Images
-download_image "$PROJECT_DIR/thumbnail.jpg" 800 600 6 "TechFlow Brand" "#10B981" "#ffffff"
-download_image "$PROJECT_DIR/images/logo-variations.jpg" 1200 800 7 "Logo Variations" "#059669" "#ffffff"
-download_image "$PROJECT_DIR/images/brand-guidelines.jpg" 1200 800 8 "Brand Guidelines" "#047857" "#ffffff"
-download_image "$PROJECT_DIR/images/stationery-mockup.jpg" 1200 800 9 "Stationery Mockup" "#065F46" "#ffffff"
-download_image "$PROJECT_DIR/images/web-applications.jpg" 1200 800 10 "Web Applications" "#064E3B" "#ffffff"
-
-# Documents
-create_pdf_placeholder "$PROJECT_DIR/documents/logo-usage-guide.pdf" "Logo Usage Guidelines"
-
-# 3. ART INSTALLATION PROJECT - Light Installation 2024
-log "📁 Creating project: light-installation-2024"
-PROJECT_DIR="$CONTENT_DIR/light-installation-2024"
-mkdir -p "$PROJECT_DIR"/{images,videos,documents}
-
-# index.md
-cat > "$PROJECT_DIR/index.md" << 'EOF'
----
-title: "Resonance - Interactive Light Installation"
-date: "2024-01-10"
-location: "Marseille, France"
-coordinates: [43.2965, 5.3698]
-description: "Interactive light installation that responds to audience movements, creating a symphony of colors and sounds"
-type: "art"
-tags: ["installation", "interactive", "light", "technology", "public-art"]
-authors:
-  - name: "Elena Vasquez"
-    role: "Digital Artist"
-  - name: "Marcus Thompson"
-    role: "Sound Designer"
-  - name: "David Kim"
-    role: "Technical Director"
-featured: true
----
-
-## Concept
-
-"Resonance" is an interactive light installation that transforms public space into a living canvas. Using motion sensors and artificial intelligence, the installation responds to audience presence and movements, creating unique visual and sound compositions in real-time.
-
-## Artistic Vision
-
-The work explores the relationship between human presence and digital space. Each visitor becomes a conductor of light and sound, their movements generating waves of colors that propagate through the installation like ripples on water. The concept draws inspiration from quantum physics and the idea that observation changes reality.
+- Innovative design approach
+- Sustainable materials and methods
+- User-centered functionality
+- Integration with environment
+- Technical excellence
 
 ## Technical Implementation
 
-### Hardware
-- 240 RGB LED strips (50 meters total)
-- 12 ultrasonic motion sensors
-- 8 directional speakers for spatial audio
-- Central control system with NVIDIA Jetson Xavier
-- Weather-resistant aluminum structure
+The project required extensive collaboration between multidisciplinary teams to achieve the desired outcomes. Advanced techniques and technologies were employed to overcome challenges and deliver exceptional results.
 
-### Software
-- Real-time computer vision with OpenCV
-- Custom particle system in TouchDesigner
-- Generative audio engine in Max/MSP
-- Machine learning for pattern recognition
-- WebSocket API for remote monitoring
+## Project Outcomes
 
-## Interaction Design
+The completed project has received positive reception from users and critics alike, demonstrating the success of the design approach and implementation strategy. The project serves as a benchmark for future developments in the field.
 
-The installation operates on multiple interaction levels:
+## Impact and Recognition
 
-**Proximity**: Approaching the installation activates ambient lighting in warm tones
-**Movement**: Walking triggers light trails that follow the visitor's path
-**Gesture**: Arm movements create color explosions and harmonic clusters
-**Group Dynamics**: Multiple visitors generate complex interference patterns
-
-## Installation Process
-
-The 3-week installation required:
-- Structural engineering for 8-meter suspended elements
-- Underground cabling (300 meters of fiber optic)
-- Weather protection system for electronics
-- Acoustic calibration for outdoor environment
-- Safety protocols for public interaction
-
-## Public Reception
-
-During its 6-month exhibition, "Resonance" attracted:
-- 45,000 visitors
-- 120 hours of interaction data collected
-- Featured in 15 international art publications
-- Winner of the Digital Art Award 2024
-- Invited to Venice Biennale 2025
-
-## Technical Innovation
-
-The project pioneered several techniques:
-- Real-time body tracking without wearables
-- Predictive lighting based on movement patterns
-- Adaptive audio mixing for outdoor environments
-- Energy-efficient LED control system
-
-## Impact and Legacy
-
-"Resonance" demonstrated how technology can create meaningful connections between strangers in public space. The installation's success led to commissions for similar works in Tokyo, New York, and Berlin, establishing a new paradigm for interactive urban art.
-
-The collected interaction data is being used to study human behavior in digital environments, contributing to research in human-computer interaction and social psychology.
+This project has contributed to advancing the field of $project_type through its innovative approach and successful execution. It has been featured in various publications and has influenced subsequent projects in the industry.
 EOF
 
-# Images
-download_image "$PROJECT_DIR/thumbnail.jpg" 800 600 11 "Light Installation" "#F59E0B" "#ffffff"
-download_image "$PROJECT_DIR/images/complete-installation.jpg" 1200 800 12 "Complete Setup" "#D97706" "#ffffff"
-download_image "$PROJECT_DIR/images/technical-details.jpg" 1200 800 13 "Technical Details" "#B45309" "#ffffff"
-download_image "$PROJECT_DIR/images/public-interaction.jpg" 1200 800 14 "Public Interaction" "#92400E" "#ffffff"
+    # Create images with unique seeds
+    seed=$((i * 5 + 1))
+    download_image "$PROJECT_DIR/thumbnail.jpg" 800 600 $seed "$project_title" "$project_color" "#ffffff"
+    download_image "$PROJECT_DIR/images/main-view.jpg" 1200 800 $((seed + 1)) "Main View" "$project_color" "#ffffff"
+    download_image "$PROJECT_DIR/images/detail-view.jpg" 1200 800 $((seed + 2)) "Detail View" "$project_color" "#ffffff"
+    download_image "$PROJECT_DIR/images/context-view.jpg" 1200 800 $((seed + 3)) "Context View" "$project_color" "#ffffff"
 
-# Videos
-create_video_placeholder "$PROJECT_DIR/videos/teaser.mp4" 60
-create_video_placeholder "$PROJECT_DIR/videos/making-of.mp4" 300
+    # Create documents
+    create_pdf_placeholder "$PROJECT_DIR/documents/project-brief.pdf" "Project Brief"
+    create_pdf_placeholder "$PROJECT_DIR/documents/technical-specs.pdf" "Technical Specifications"
 
-# Documents
-create_pdf_placeholder "$PROJECT_DIR/documents/press-kit.pdf" "Press Kit"
+    # Create videos for some projects
+    if [ $((i % 3)) -eq 0 ]; then
+        create_video_placeholder "$PROJECT_DIR/videos/overview.mp4" 120
+    fi
+done
 
 echo ""
-echo -e "${GREEN}✅ Example projects generated successfully!${NC}"
+echo -e "${GREEN}✅ 100 example projects generated successfully!${NC}"
 echo ""
 echo "📁 Projects created in: $CONTENT_DIR/"
-echo "├── cultural-center-paris/"
-echo "├── tech-startup-identity/"
-echo "└── light-installation-2024/"
+echo "   $(ls "$CONTENT_DIR" | wc -l) projects total"
 echo ""
 echo -e "${YELLOW}💡 Next steps:${NC}"
 echo "1. Replace placeholder images (JPG or SVG) with real project images"

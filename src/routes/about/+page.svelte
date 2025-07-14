@@ -19,6 +19,6 @@
 	{/if}
 </header>
 
-<article class="prose prose-neutral text-black">
+<article class="prose prose-neutral max-w-none bg-white p-6 text-black">
 	{@html page.content}
 </article>

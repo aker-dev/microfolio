@@ -1,6 +1,8 @@
 <script>
+	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
 	let { data } = $props();
 	let page = $derived(data.page);
+	let featuredProjects = $derived(data.featuredProjects);
 </script>
 
 <svelte:head>
@@ -19,6 +21,20 @@
 	{/if}
 </header>
 
-<article class="prose prose-neutral text-black">
+<article class="prose prose-neutral max-w-none bg-white p-6 text-black">
 	{@html page.content}
 </article>
+<!-- Featured Projects Section -->
+{#if featuredProjects && featuredProjects.length > 0}
+	<div class="mt-8 mb-8 space-y-8">
+		<!-- Header -->
+		<h2 class="text-3xl font-bold">Featured Projects</h2>
+
+		<!-- Mosaic Grid -->
+		<div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
+			{#each featuredProjects as project}
+				<AkProjectCard {project} />
+			{/each}
+		</div>
+	</div>
+{/if}

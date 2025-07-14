@@ -19,6 +19,24 @@
 		mobileMenuOpen = false;
 	}
 
+	// Close mobile menu when clicking outside
+	$effect(() => {
+		if (mobileMenuOpen) {
+			const handleClickOutside = (event) => {
+				const header = event.target.closest('header');
+				if (!header) {
+					mobileMenuOpen = false;
+				}
+			};
+
+			document.addEventListener('click', handleClickOutside);
+
+			return () => {
+				document.removeEventListener('click', handleClickOutside);
+			};
+		}
+	});
+
 	// Log page changes
 	$effect(() => {
 		console.log('Current page:', currentPage);
@@ -31,8 +49,8 @@
 	>
 		<section class="h-15 flex-1">
 			<a href="/">
-				<h1 class="text-xl font-medium md:text-2xl">{siteConfig.title}</h1>
-				<h2 class="text-xs md:text-sm">{siteConfig.description}</h2>
+				<h1 class="text-2xl font-medium">{siteConfig.title}</h1>
+				<h2 class="text-sm">{siteConfig.description}</h2>
 			</a>
 		</section>
 
@@ -59,7 +77,7 @@
 			onclick={toggleMobileMenu}
 			aria-label="Toggle mobile menu"
 		>
-			<Icon icon="heroicons:bars-3" class="h-6 w-6" />
+			<Icon icon={mobileMenuOpen ? 'carbon:close-large' : 'carbon:menu'} class="h-6 w-6" />
 		</button>
 	</div>
 

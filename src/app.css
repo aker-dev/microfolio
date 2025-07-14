@@ -1,11 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
-/* Custom styles for line clamp */
-.line-clamp-2 {
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	line-clamp: 2;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
+@theme {
+	--default-font-family: 'IBM Plex Sans', 'sans-serif';
 }

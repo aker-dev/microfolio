@@ -12,7 +12,11 @@ export default defineConfig({
 				{
 					src: 'content',
 					dest: '.'
-				}
+				},
+				...(process.env.CUSTOM_DOMAIN ? [{
+					src: 'static/CNAME',
+					dest: '.'
+				}] : [])
 			]
 		})
 	],

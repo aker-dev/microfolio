@@ -1,6 +1,6 @@
 export const siteConfig = {
-	title: 'µFolio',
-	description: 'static site generator',
+	title: 'microfolio',
+	description: 'static portfolio generator',
 	author: 'AKER',
 
 	// Social links

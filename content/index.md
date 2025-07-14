@@ -19,7 +19,7 @@ description: 'A modern static portfolio generator built with SvelteKit and Tailw
 
 ## Who is it for?
 
-µFolio is perfect for:
+microfolio is perfect for:
 
 - Designers and graphic artists
 - Architects and urban planners

@@ -1,4 +1,5 @@
 <script>
+	import Icon from '@iconify/svelte';
 	import { siteConfig } from '../config.js';
 </script>
 
@@ -8,18 +9,29 @@
 	>
 		<p>
 			© {siteConfig.author}
-			{new Date().getFullYear()} — generated with µFolio
+			{new Date().getFullYear()} — generated with
+			<a
+				href="https://https://github.com/aker-dev/microfolio"
+				target="_blank"
+				class="font-medium hover:underline">microfolio</a
+			>
 		</p>
 		<nav>
 			<ul class="flex justify-end gap-4">
 				<li>
-					<a href={siteConfig.socialLinks.instagram} target="_blank" class="">IG</a>
+					<a href={siteConfig.socialLinks.instagram} target="_blank"
+						><Icon icon="akar-icons:instagram-fill" /></a
+					>
 				</li>
 				<li>
-					<a href={siteConfig.socialLinks.linkedin} target="_blank" class="">LI</a>
+					<a href={siteConfig.socialLinks.linkedin} target="_blank"
+						><Icon icon="akar-icons:linkedin-fill" /></a
+					>
 				</li>
 				<li>
-					<a href={siteConfig.socialLinks.github} target="_blank" class="">GH</a>
+					<a href={siteConfig.socialLinks.github} target="_blank"
+						><Icon icon="akar-icons:github-fill" /></a
+					>
 				</li>
 			</ul>
 		</nav>

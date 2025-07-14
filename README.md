@@ -1,4 +1,4 @@
-# µFolio
+# microfolio
 
 A modern static portfolio generator based on **SvelteKit 2** and **Tailwind CSS 4**, using a folder tree structure and Markdown files to manage content. Perfect for designers, artists, architects, and creatives who want to showcase their projects elegantly and professionally without the hassle!
 
@@ -18,7 +18,7 @@ A modern static portfolio generator based on **SvelteKit 2** and **Tailwind CSS 
 
 ## Who is it for?
 
-µFolio is perfect for:
+microfolio is perfect for:
 
 - Designers and graphic artists
 - Architects and urban planners
@@ -117,7 +117,7 @@ images videos documents
 ## 📁 Folder Structure
 
 ```
-µFolio/
+microfolio/
 ├── 📁 content/
 │   ├── 📁 projects/              # All projects
 │   │   ├── 📁 cultural-center-paris/
@@ -301,7 +301,7 @@ Consult the [detailed specifications](documents/specifications.pdf)
 
 ```javascript
 export const siteConfig = {
-	title: 'µFolio',
+	title: 'microfolio',
 	description: 'static site generator',
 	author: 'AKER',
 

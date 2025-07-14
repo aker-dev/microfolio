@@ -81,7 +81,7 @@ images videos documents
 ## 📁 Folder Structure
 
 ```
-µFolio/
+microfolio/
 ├── 📁 content/
 │   ├── 📁 projects/              # All projects
 │   │   ├── 📁 cultural-center-paris/
@@ -265,7 +265,7 @@ Consult the [detailed specifications](documents/specifications.pdf)
 
 ```javascript
 export const siteConfig = {
-	title: 'µFolio',
+	title: 'microfolio',
 	description: 'static site generator',
 	author: 'AKER',
 

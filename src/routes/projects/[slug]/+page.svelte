@@ -8,30 +8,66 @@
 	// Image gallery state
 	let selectedImage = $state(null);
 	let showLightbox = $state(false);
+	let currentImageIndex = $state(0);
 
 	function openLightbox(image) {
 		selectedImage = image;
 		showLightbox = true;
+		// Find the index of the selected image
+		if (project.resources?.images) {
+			currentImageIndex = project.resources.images.findIndex((img) => img.path === image.path);
+		}
 	}
 
 	function closeLightbox() {
 		showLightbox = false;
 		selectedImage = null;
+		currentImageIndex = 0;
+	}
+
+	function navigateToImage(index) {
+		if (project.resources?.images && index >= 0 && index < project.resources.images.length) {
+			currentImageIndex = index;
+			selectedImage = project.resources.images[index];
+		}
+	}
+
+	function nextImage() {
+		if (project.resources?.images) {
+			const nextIndex = (currentImageIndex + 1) % project.resources.images.length;
+			navigateToImage(nextIndex);
+		}
+	}
+
+	function previousImage() {
+		if (project.resources?.images) {
+			const prevIndex =
+				currentImageIndex === 0 ? project.resources.images.length - 1 : currentImageIndex - 1;
+			navigateToImage(prevIndex);
+		}
 	}
 
 	// Handle keyboard navigation
 	function handleKeydown(event) {
+		if (!showLightbox) return;
+
 		if (event.key === 'Escape') {
 			closeLightbox();
+		} else if (event.key === 'ArrowRight') {
+			event.preventDefault();
+			nextImage();
+		} else if (event.key === 'ArrowLeft') {
+			event.preventDefault();
+			previousImage();
 		}
 	}
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="grid grid-cols-3 gap-6">
+<div class="order-last grid grid-cols-1 lg:order-first lg:grid-cols-3 lg:gap-6">
 	<!-- Main content -->
-	<article class="prose col-span-2 max-w-none">
+	<article class="prose prose-neutral col-span-2 mb-12 max-w-none text-black">
 		<!-- Main thumbnail -->
 		<img
 			src="/content/projects/{project.slug}/thumbnail.jpg"
@@ -45,15 +81,15 @@
 	</article>
 
 	<!-- Header -->
-	<header class="">
+	<header class="order-first mb-6 bg-white p-6 lg:sticky lg:top-40 lg:order-last lg:self-start">
 		<a href="/projects" class="mb-4 block text-sm hover:underline">← Back to Projects</a>
 
 		<AkBadge class="mb-2">{project.type}</AkBadge>
 
-		<h2 class="mb-2 text-3xl font-bold text-black">
+		<h2 class="mb-2 text-3xl font-bold text-balance text-black">
 			{project.title}
 			{#if project.featured}
-				<Icon icon="heroicons:star-solid" class="inline-block pb-2" />
+				<Icon icon="carbon:star-filled" class="inline-block size-8 pb-2" />
 			{/if}
 		</h2>
 
@@ -91,13 +127,14 @@
 		{/if}
 	</header>
 </div>
+
 <!-- Resources -->
 {#if project.resources}
 	<!-- Images Gallery -->
 	{#if project.resources.images && project.resources.images.length > 0}
 		<section class="mb-12">
 			<h2 class="mb-6 text-2xl font-bold">Gallery</h2>
-			<div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+			<div class="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
 				{#each project.resources.images as image}
 					<button
 						type="button"
@@ -107,7 +144,7 @@
 						<img
 							src={image.path}
 							alt={image.name}
-							class="h-full w-full bg-neutral-500 object-cover"
+							class="h-full w-full bg-neutral-500 object-cover grayscale transition-all hover:grayscale-0"
 							loading="lazy"
 						/>
 					</button>
@@ -120,9 +157,9 @@
 	{#if project.resources.videos && project.resources.videos.length > 0}
 		<section class="mb-12">
 			<h2 class="mb-6 text-2xl font-bold">Videos</h2>
-			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 				{#each project.resources.videos as video}
-					<div class="overflow-hidden rounded-lg bg-gray-100">
+					<div class="overflow-hidden bg-neutral-500">
 						<video controls class="w-full" preload="metadata">
 							<source src={video.path} type="video/mp4" />
 							Your browser does not support the video tag.
@@ -140,7 +177,7 @@
 	{#if project.resources.documents && project.resources.documents.length > 0}
 		<section class="mb-12">
 			<h2 class="mb-6 text-2xl font-bold">Documents</h2>
-			<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 				{#each project.resources.documents as document}
 					<a
 						href={document.path}
@@ -149,14 +186,7 @@
 						class="flex items-center gap-3 bg-white p-4"
 					>
 						<div class="flex-shrink-0">
-							<svg class="h-6 w-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-								></path>
-							</svg>
+							<Icon icon="carbon:document" class="h-6 w-6 text-black" />
 						</div>
 						<div class="flex-1">
 							<p class="text-sm font-medium text-black">{document.name}</p>
@@ -172,30 +202,70 @@
 <!-- Lightbox -->
 {#if showLightbox && selectedImage}
 	<div
-		class="fixed inset-0 z-1000 flex items-center justify-center bg-black/80"
+		role="dialog"
+		aria-modal="true"
+		aria-label="Image lightbox"
+		tabindex="-1"
+		class="fixed inset-0 z-1000 flex items-center justify-center bg-black/80 p-4"
 		onclick={closeLightbox}
+		onkeydown={handleKeydown}
 	>
-		<div class="relative max-h-[90vh] max-w-4xl p-4">
+		<div class="relative flex h-full w-full items-center justify-center">
+			<!-- Previous image click area -->
+			{#if project.resources?.images && project.resources.images.length > 1}
+				<button
+					type="button"
+					onclick={(e) => {
+						e.stopPropagation();
+						previousImage();
+					}}
+					class="absolute top-0 left-0 z-20 h-full w-1/4 cursor-pointer"
+					aria-label="Previous image"
+				></button>
+			{/if}
+
+			<!-- Next image click area -->
+			{#if project.resources?.images && project.resources.images.length > 1}
+				<button
+					type="button"
+					onclick={(e) => {
+						e.stopPropagation();
+						nextImage();
+					}}
+					class="absolute top-0 right-0 z-20 h-full w-1/4 cursor-pointer"
+					aria-label="Next image"
+				></button>
+			{/if}
+
+			<!-- Close button -->
 			<button
 				type="button"
-				onclick={closeLightbox}
-				class="absolute top-4 right-4 z-10 text-white hover:text-black"
+				onclick={(e) => {
+					e.stopPropagation();
+					closeLightbox();
+				}}
+				class="absolute top-4 right-4 z-30 cursor-pointer rounded-full bg-black/50 p-2 text-white backdrop-blur-md transition-all hover:bg-black/70"
+				aria-label="Close lightbox"
 			>
-				<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M6 18L18 6M6 6l12 12"
-					></path>
-				</svg>
+				<Icon icon="carbon:close" class="h-6 w-6" />
 			</button>
-			<img
-				src={selectedImage.path}
-				alt={selectedImage.name}
-				class="max-h-full max-w-full object-contain"
-				onclick={(e) => e.stopPropagation()}
-			/>
+
+			<!-- Image counter -->
+			{#if project.resources?.images && project.resources.images.length > 1}
+				<div
+					class="absolute -bottom-2 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1 text-sm text-white"
+				>
+					{currentImageIndex + 1} / {project.resources.images.length}
+				</div>
+			{/if}
+
+			<div class="pointer-events-none">
+				<img
+					src={selectedImage.path}
+					alt={selectedImage.name}
+					class="max-h-[90vh] max-w-[90vw] object-contain shadow-2xl"
+				/>
+			</div>
 		</div>
 	</div>
 {/if}

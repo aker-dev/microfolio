@@ -27,7 +27,7 @@
 
 <div class="space-y-8">
 	<!-- Header -->
-	<h1 class="text-4xl font-bold">Projects</h1>
+	<h2 class="text-4xl font-bold">Projects</h2>
 
 	<div>
 		<!-- Filters -->

@@ -22,17 +22,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Checkout dev branch for content
-        uses: actions/checkout@v4
-        with:
-          ref: dev
-          path: dev-content
-          
-      - name: Copy content from dev branch
+      - name: Generate example projects
         run: |
-          mkdir -p content
-          cp -r dev-content/content/* content/
-          rm -rf dev-content
+          chmod +x example_projects_generator.sh
+          ./example_projects_generator.sh
         
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -45,39 +38,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
         
-      - name: Checkout content from dev branch
-        uses: actions/checkout@v4
-        with:
-          ref: dev
-          path: content-source
-          
-      - name: Copy content files
-        run: |
-          # Copy content from dev branch to main branch workspace
-          if [ -d "content-source/content/projects" ]; then
-            echo "Copying content from dev branch..."
-            cp -r content-source/content/projects content/
-            echo "Content copied successfully"
-            ls -la content/projects/ | head -10
-          else
-            echo "No content/projects found in dev branch, creating sample content..."
-            mkdir -p content/projects/sample-project
-            cat > content/projects/sample-project/index.md << EOF
-          ---
-          title: Sample Project
-          description: This is a sample project for demonstration
-          type: Design
-          location: Sample City
-          date: 2024-01-01
-          featured: true
-          ---
-          
-          This is a sample project created for the GitHub Pages deployment.
-          EOF
-            # Create a simple 1x1 pixel image as thumbnail
-            echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" | base64 -d > content/projects/sample-project/thumbnail.jpg
-          fi
-          
       - name: Build
         run: pnpm run build
         env:

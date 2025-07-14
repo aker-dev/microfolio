@@ -13,6 +13,7 @@ export const siteConfig = {
 	// Navigation
 	navigation: [
 		{ name: 'Home', href: '/' },
+		{ name: 'About', href: '/about' },
 		{ name: 'Projects', href: '/projects' }
 		// ...
 	],

@@ -65,6 +65,11 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
+<svelte:head>
+	<title>{project.title}</title>
+	<meta name="description" content={project.description} />
+</svelte:head>
+
 <div class="order-last grid grid-cols-1 lg:order-first lg:grid-cols-3 lg:gap-6">
 	<!-- Main content -->
 	<article class="prose prose-neutral col-span-2 mb-12 max-w-none text-black">

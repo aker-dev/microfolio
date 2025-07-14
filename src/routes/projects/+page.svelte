@@ -25,6 +25,11 @@
 	);
 </script>
 
+<svelte:head>
+	<title>Projects</title>
+	<meta name="description" content="Projects list" />
+</svelte:head>
+
 <div class="space-y-8">
 	<!-- Header -->
 	<h2 class="text-4xl font-bold">Projects</h2>

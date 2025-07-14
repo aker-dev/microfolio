@@ -249,7 +249,7 @@
 					e.stopPropagation();
 					closeLightbox();
 				}}
-				class="absolute top-4 right-4 z-30 cursor-pointer rounded-full bg-black/50 p-2 text-white backdrop-blur-md transition-all hover:bg-black/70"
+				class="absolute top-4 right-4 z-30 cursor-pointer rounded-full bg-black p-2 text-white"
 				aria-label="Close lightbox"
 			>
 				<Icon icon="carbon:close" class="h-6 w-6" />
@@ -258,7 +258,7 @@
 			<!-- Image counter -->
 			{#if project.resources?.images && project.resources.images.length > 1}
 				<div
-					class="absolute -bottom-2 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1 text-sm text-white"
+					class="absolute -bottom-2 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black px-3 py-1 text-sm text-white"
 				>
 					{currentImageIndex + 1} / {project.resources.images.length}
 				</div>

@@ -121,8 +121,8 @@
 		document.head.appendChild(style);
 
 		// Test marker
-		const testMarker = L.marker([48.8566, 2.3522]).addTo(map);
-		testMarker.bindPopup('Test marker in Paris');
+		// const testMarker = L.marker([48.8566, 2.3522]).addTo(map);
+		// testMarker.bindPopup('Test marker in Paris');
 
 		// Initial marker update
 		setTimeout(() => {
@@ -266,7 +266,7 @@
 				<div class="relative max-w-sm">
 					<button
 						onclick={closeProjectCard}
-						class="absolute -top-2 -right-2 z-20 cursor-pointer rounded-full bg-white p-1"
+						class="absolute -top-2 -right-2 z-20 cursor-pointer rounded-full bg-white p-2"
 						aria-label="Close project card"
 					>
 						<Icon icon="carbon:close" class="h-6 w-6" />
@@ -276,11 +276,4 @@
 			</div>
 		{/if}
 	</div>
-
-	<!-- Empty state -->
-	{#if filteredProjects.length === 0}
-		<div class="py-12 text-center">
-			<p class="">No projects found matching your criteria.</p>
-		</div>
-	{/if}
 </div>

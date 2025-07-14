@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to generate µFolio example projects
+# Script to generate microfolio example projects
 # chmod +x example_projects_generator.sh
 # Usage: ./example_projects_generator.sh
 
@@ -142,7 +142,7 @@ endobj
 endobj
 
 %% Placeholder PDF: $title
-%% Generated automatically by µFolio
+%% Generated automatically by microfolio
 EOF
     log "PDF placeholder created: $path"
 }
@@ -162,7 +162,7 @@ create_video_placeholder() {
 # This file simulates a video. 
 # Replace it with a real MP4 file for your project.
 #
-# Generated automatically by µFolio
+# Generated automatically by microfolio
 EOF
     log "Video placeholder created: $path"
 }
@@ -297,7 +297,7 @@ COLORS=(
 log "Creating $CONTENT_DIR directory"
 mkdir -p "$CONTENT_DIR"
 
-echo -e "${BLUE}🚀 Generating µFolio example projects (100 projects)${NC}"
+echo -e "${BLUE}🚀 Generating microfolio example projects (100 projects)${NC}"
 echo "============================================================="
 
 # Generate 100 projects
@@ -329,9 +329,9 @@ for i in {0..99}; do
     PROJECT_DIR="$CONTENT_DIR/$project_slug"
     mkdir -p "$PROJECT_DIR"/{images,documents,videos}
 
-    # Generate dates (random within last year) - macOS compatible
+    # Generate dates (random within last year) - cross-platform compatible
     random_days=$((RANDOM % 365))
-    project_date=$(date -v-${random_days}d "+%Y-%m-%d")
+    project_date=$(date -d "-${random_days} days" "+%Y-%m-%d" 2>/dev/null || date -v-${random_days}d "+%Y-%m-%d")
     
     # Determine if featured (every 10th project)
     if [ $((i % 10)) -eq 0 ]; then
@@ -422,11 +422,5 @@ echo -e "${GREEN}✅ 100 example projects generated successfully!${NC}"
 echo ""
 echo "📁 Projects created in: $CONTENT_DIR/"
 echo "   $(ls "$CONTENT_DIR" | wc -l) projects total"
-echo ""
-echo -e "${YELLOW}💡 Next steps:${NC}"
-echo "1. Replace placeholder images (JPG or SVG) with real project images"
-echo "2. Update project content in index.md files"
-echo "3. Add real PDF documents and videos"
-echo "4. Customize project metadata (dates, locations, etc.)"
 echo ""
 echo -e "${BLUE}🚀 Start your dev server: pnpm dev${NC}"

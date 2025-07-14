@@ -1,11 +1,12 @@
 <script>
+	import { base } from '$app/paths';
 	import AkBadge from './AkBadge.svelte';
 	import Icon from '@iconify/svelte';
 
 	let { project, class: className } = $props();
 </script>
 
-<a href="/projects/{project.slug}" class="group block overflow-hidden bg-white {className}">
+<a href="{base}/projects/{project.slug}" class="group block overflow-hidden bg-white {className}">
 	<!-- Thumbnail -->
 	<div class="aspect-[4/3] overflow-hidden">
 		<img

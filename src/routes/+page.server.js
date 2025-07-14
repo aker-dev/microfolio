@@ -4,6 +4,9 @@ import { parse } from 'yaml';
 import { marked } from 'marked';
 import { error } from '@sveltejs/kit';
 
+// Get base path from environment
+const basePath = process.env.NODE_ENV === 'production' ? '/microfolio' : '';
+
 export async function load() {
 	const indexPath = join(process.cwd(), 'content/index.md');
 	const projectsPath = join(process.cwd(), 'content/projects');
@@ -33,7 +36,7 @@ export async function load() {
 				projects.push({
 					slug: folder,
 					...projectMetadata,
-					thumbnailPath: `/content/projects/${folder}/thumbnail.jpg`
+					thumbnailPath: `${basePath}/content/projects/${folder}/thumbnail.jpg`
 				});
 			} catch (error) {
 				console.warn(`Error reading project ${folder}:`, error);

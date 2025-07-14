@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import Icon from '@iconify/svelte';
 
@@ -75,7 +76,7 @@
 	<article class="prose prose-neutral col-span-2 mb-12 max-w-none text-black">
 		<!-- Main thumbnail -->
 		<img
-			src="/content/projects/{project.slug}/thumbnail.jpg"
+			src="{base}/content/projects/{project.slug}/thumbnail.jpg"
 			alt={project.title}
 			class="w-full bg-neutral-500"
 		/>
@@ -87,7 +88,7 @@
 
 	<!-- Header -->
 	<header class="order-first mb-6 bg-white p-6 lg:sticky lg:top-40 lg:order-last lg:self-start">
-		<a href="/projects" class="mb-4 block text-sm hover:underline">← Back to Projects</a>
+		<a href="{base}/projects" class="mb-4 block text-sm hover:underline">← Back to Projects</a>
 
 		<AkBadge class="mb-2">{project.type}</AkBadge>
 

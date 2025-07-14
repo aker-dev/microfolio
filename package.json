@@ -9,7 +9,8 @@
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"lint": "prettier --check . && eslint .",
+		"deploy": "NODE_ENV=production pnpm run build"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",

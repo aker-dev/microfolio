@@ -2,6 +2,9 @@ import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import { parse } from 'yaml';
 
+// Get base path from environment
+const basePath = process.env.NODE_ENV === 'production' ? '/microfolio' : '';
+
 export async function load() {
 	const projectsPath = join(process.cwd(), 'content/projects');
 
@@ -24,7 +27,7 @@ export async function load() {
 				projects.push({
 					slug: folder,
 					...metadata,
-					thumbnailPath: `/content/projects/${folder}/thumbnail.jpg`
+					thumbnailPath: `${basePath}/content/projects/${folder}/thumbnail.jpg`
 				});
 			} catch (error) {
 				console.warn(`Error reading project ${folder}:`, error);

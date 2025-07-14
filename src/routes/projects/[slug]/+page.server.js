@@ -4,6 +4,9 @@ import { parse } from 'yaml';
 import { marked } from 'marked';
 import { error } from '@sveltejs/kit';
 
+// Get base path from environment
+const basePath = process.env.NODE_ENV === 'production' ? '/microfolio' : '';
+
 export async function load({ params }) {
 	const { slug } = params;
 	const projectPath = join(process.cwd(), 'content/projects', slug);
@@ -50,7 +53,7 @@ async function getProjectResources(projectPath) {
 				.filter((file) => /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(file))
 				.map((file) => ({
 					name: file,
-					path: `/content/projects/${projectPath.split('/').pop()}/images/${file}`
+					path: `${basePath}/content/projects/${projectPath.split('/').pop()}/images/${file}`
 				}));
 		} catch (e) {
 			// Images folder doesn't exist, skip
@@ -64,7 +67,7 @@ async function getProjectResources(projectPath) {
 				.filter((file) => /\.(mp4|webm|mov)$/i.test(file))
 				.map((file) => ({
 					name: file,
-					path: `/content/projects/${projectPath.split('/').pop()}/videos/${file}`
+					path: `${basePath}/content/projects/${projectPath.split('/').pop()}/videos/${file}`
 				}));
 		} catch (e) {
 			// Videos folder doesn't exist, skip
@@ -78,7 +81,7 @@ async function getProjectResources(projectPath) {
 				.filter((file) => /\.(pdf|doc|docx|ppt|pptx)$/i.test(file))
 				.map((file) => ({
 					name: file,
-					path: `/content/projects/${projectPath.split('/').pop()}/documents/${file}`
+					path: `${basePath}/content/projects/${projectPath.split('/').pop()}/documents/${file}`
 				}));
 		} catch (e) {
 			// Documents folder doesn't exist, skip

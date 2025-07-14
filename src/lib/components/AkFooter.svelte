@@ -11,7 +11,7 @@
 			© {siteConfig.author}
 			{new Date().getFullYear()} — generated with
 			<a
-				href="https://https://github.com/aker-dev/microfolio"
+				href="https://github.com/aker-dev/microfolio"
 				target="_blank"
 				class="font-medium hover:underline">microfolio</a
 			>

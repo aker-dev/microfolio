@@ -5,9 +5,9 @@
 
 <footer>
 	<div
-		class="mr-auto ml-auto flex h-12 max-w-7xl items-center justify-between border-t-2 border-solid border-black pr-4 pl-4"
+		class="mr-auto ml-auto flex h-auto max-w-7xl flex-col items-center justify-between gap-4 border-t-2 border-solid border-black py-4 pr-4 pl-4 md:h-12 md:flex-row md:gap-0 md:py-0"
 	>
-		<p>
+		<p class="text-center text-sm md:text-left md:text-base">
 			© {siteConfig.author}
 			{new Date().getFullYear()} — generated with
 			<a
@@ -17,21 +17,21 @@
 			>
 		</p>
 		<nav>
-			<ul class="flex justify-end gap-4">
+			<ul class="flex justify-center gap-4 md:justify-end">
 				<li>
-					<a href={siteConfig.socialLinks.instagram} target="_blank"
-						><Icon icon="akar-icons:instagram-fill" /></a
-					>
+					<a href={siteConfig.socialLinks.instagram} target="_blank" aria-label="Instagram">
+						<Icon icon="akar-icons:instagram-fill" class="h-5 w-5" />
+					</a>
 				</li>
 				<li>
-					<a href={siteConfig.socialLinks.linkedin} target="_blank"
-						><Icon icon="akar-icons:linkedin-fill" /></a
-					>
+					<a href={siteConfig.socialLinks.linkedin} target="_blank" aria-label="LinkedIn">
+						<Icon icon="akar-icons:linkedin-fill" class="h-5 w-5" />
+					</a>
 				</li>
 				<li>
-					<a href={siteConfig.socialLinks.github} target="_blank"
-						><Icon icon="akar-icons:github-fill" /></a
-					>
+					<a href={siteConfig.socialLinks.github} target="_blank" aria-label="GitHub">
+						<Icon icon="akar-icons:github-fill" class="h-5 w-5" />
+					</a>
 				</li>
 			</ul>
 		</nav>

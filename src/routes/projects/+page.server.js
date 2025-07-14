@@ -4,20 +4,20 @@ import { parse } from 'yaml';
 
 export async function load() {
 	const projectsPath = join(process.cwd(), 'content/projects');
-	
+
 	try {
 		const projectFolders = await readdir(projectsPath);
 		const projects = [];
-		
+
 		for (const folder of projectFolders) {
 			const projectPath = join(projectsPath, folder);
 			const indexPath = join(projectPath, 'index.md');
-			
+
 			try {
 				const content = await readFile(indexPath, 'utf-8');
 				const [, frontmatter] = content.split('---');
 				const metadata = parse(frontmatter);
-				
+
 				projects.push({
 					slug: folder,
 					...metadata,
@@ -27,10 +27,10 @@ export async function load() {
 				console.warn(`Error reading project ${folder}:`, error);
 			}
 		}
-		
+
 		// Sort by date (newest first)
 		projects.sort((a, b) => new Date(b.date) - new Date(a.date));
-		
+
 		return {
 			projects
 		};

@@ -33,41 +33,38 @@ jobs:
       - name: Install dependencies
         run: pnpm install
         
-      - name: Generate sample content
-        run: |
-          # Generate sample projects for deployment
-          mkdir -p content/projects
+      - name: Checkout content from dev branch
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: content-source
           
-          # Create multiple sample projects
-          for i in {1..3}; do
-            PROJECT_NAME="sample-project-$i"
-            mkdir -p "content/projects/$PROJECT_NAME"
-            
-            cat > "content/projects/$PROJECT_NAME/index.md" << EOF
+      - name: Copy content files
+        run: |
+          # Copy content from dev branch to main branch workspace
+          if [ -d "content-source/content/projects" ]; then
+            echo "Copying content from dev branch..."
+            cp -r content-source/content/projects content/
+            echo "Content copied successfully"
+            ls -la content/projects/ | head -10
+          else
+            echo "No content/projects found in dev branch, creating sample content..."
+            mkdir -p content/projects/sample-project
+            cat > content/projects/sample-project/index.md << EOF
           ---
-          title: Sample Project $i
-          description: This is sample project $i for demonstration
+          title: Sample Project
+          description: This is a sample project for demonstration
           type: Design
           location: Sample City
-          date: 2024-0$i-01
-          featured: $([ $i -eq 1 ] && echo "true" || echo "false")
+          date: 2024-01-01
+          featured: true
           ---
           
-          This is sample project $i created for the GitHub Pages deployment.
-          
-          ## Project Details
-          
-          This project demonstrates the microfolio static site generator functionality.
+          This is a sample project created for the GitHub Pages deployment.
           EOF
-          
-            # Create a simple colored square as thumbnail using ImageMagick if available, otherwise use a base64 encoded 1x1 pixel
-            if command -v convert >/dev/null 2>&1; then
-              convert -size 300x200 xc:"#$(printf '%06x' $((0x333333 + i * 0x111111)))" "content/projects/$PROJECT_NAME/thumbnail.jpg"
-            else
-              # Fallback to base64 encoded 1x1 pixel
-              echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" | base64 -d > "content/projects/$PROJECT_NAME/thumbnail.jpg"
-            fi
-          done
+            # Create a simple 1x1 pixel image as thumbnail
+            echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" | base64 -d > content/projects/sample-project/thumbnail.jpg
+          fi
           
       - name: Build
         run: pnpm run build

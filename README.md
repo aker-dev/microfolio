@@ -1,20 +1,23 @@
 # microfolio
 
-A modern static portfolio generator based on **SvelteKit 2** and **Tailwind CSS 4**, using a folder tree structure and Markdown files to manage content. Perfect for designers, artists, architects, and creatives who want to showcase their projects elegantly and professionally without the hassle!
+A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CSS 4**. Features a file-based content management system using folders and Markdown files. Perfect for designers, artists, architects, and creatives who want to showcase their projects elegantly and professionally.
+
+🚀 **Live Demo**: [https://aker-dev.github.io/microfolio/](https://aker-dev.github.io/microfolio/)
 
 ## Key Features
 
-- **100% static site** - Optimal performance and simple hosting
-- **Markdown content** - Easy project and page management
-- **4 viewing modes**:
-  - **List**: Sortable table with filters
-  - **Mosaic**: Visual gallery with thumbnails
-  - **Timeline**: Chronological view of projects
-  - **Map**: Interactive geographical location
-- **Tag system** - Classification and filtering by project type
-- **Multi-author** - Role attribution for each project
-- **Responsive** - Mobile, tablet, and desktop optimized
-- **SEO optimized** - Optimized metadata and structure
+- **📁 File-based CMS** - No database needed, content managed through folders and Markdown
+- **🎨 Multiple View Modes**:
+  - **Mosaic**: Visual grid with project thumbnails
+  - **Map**: Interactive map with project locations using Leaflet
+  - **Projects**: Detailed project listings with filtering
+- **📱 Fully Responsive** - Optimized for mobile, tablet, and desktop
+- **🏷️ Smart Tagging** - Project categorization and filtering system
+- **👥 Multi-author Support** - Role attribution for collaborative projects
+- **🚀 Static Site Generation** - Built with SvelteKit for optimal performance
+- **🎯 SEO Ready** - Optimized metadata and structure
+- **📦 GitHub Pages Ready** - Automated deployment with GitHub Actions
+- **🌐 Custom Domain Support** - Environment-based configuration for custom domains
 
 ## Who is it for?
 
@@ -43,8 +46,9 @@ _[Screenshots to be added]_
 
 ### Prerequisites
 
-- Node.js LTS 22.17.0+ and pnpm
-- Git
+- **Node.js** LTS 20+ (tested with 20.x)
+- **pnpm** package manager
+- **Git** for version control
 
 ### 1. Clone the template
 
@@ -302,29 +306,23 @@ Consult the [detailed specifications](documents/specifications.pdf)
 ```javascript
 export const siteConfig = {
 	title: 'microfolio',
-	description: 'static site generator',
+	description: 'static portfolio generator',
 	author: 'AKER',
+
+	// Social links
+	socialLinks: {
+		github: 'https://github.com/yourusername',
+		linkedin: 'https://linkedin.com/in/yourusername',
+		instagram: 'https://instagram.com/yourusername'
+	},
 
 	// Navigation
 	navigation: [
 		{ name: 'Home', href: '/' },
-		{ name: 'Projects', href: '/projects' }
-		// ...
-	],
-
-	// Project types
-	projectTypes: [
-		{ value: 'architecture', label: 'Architecture' },
-		{ value: 'design', label: 'Design' }
-		// Add your own types
-	],
-
-	// Map configuration
-	mapConfig: {
-		center: [46.603354, 1.888334],
-		zoom: 6
-		// ...
-	}
+		{ name: 'About', href: '/about' },
+		{ name: 'Projects', href: '/projects' },
+		{ name: 'Map', href: '/map' }
+	]
 };
 ```
 
@@ -337,39 +335,48 @@ The project uses Tailwind CSS. Modify `app.css` to customize:
 - Spacing
 - Animations
 
-## 🗺️ Detailed Features
-
-### List View
-
-- Table with sortable columns
-- Filtering by type/tag
-- Search (coming soon)
-- CSV export (coming soon)
-
-### Timeline View
-
-- Chronological display
-- Grouping by year
-- Quick navigation
-- Scroll animations
-
-### Map View
-
-- Interactive map (Leaflet)
-- Clickable markers
-- Clusters for dense areas
-- Popup with preview
+## 🎨 View Modes & Features
 
 ### Mosaic View
 
-- Responsive grid
-- Lazy loading of images
-- Lightbox (coming soon)
-- Visual filters
+- **Responsive masonry grid** - Projects displayed as cards with thumbnails
+- **Smart filtering** - Filter by project type, tags, and featured status
+- **Lazy loading** - Optimized image loading for performance
+- **Project cards** - Show title, date, location, type, and tags
+
+### Interactive Map
+
+- **Leaflet integration** - Professional mapping with OpenStreetMap
+- **Geo-located projects** - Projects with coordinates appear as markers
+- **Popup previews** - Click markers to see project details
+- **Cluster support** - Automatic grouping for dense project areas
+
+### Project Detail Pages
+
+- **Dynamic routing** - SEO-friendly URLs for each project
+- **Automatic galleries** - Images from `/images` folder displayed automatically
+- **Video support** - MP4/WebM videos from `/videos` folder with native player
+- **Document downloads** - PDFs and docs from `/documents` folder
+- **Mobile optimized** - Touch-friendly navigation and lightbox
+
+### About Page
+
+- **Dynamic content loading** - Markdown-based page content
+- **Metadata integration** - Author information and site configuration
 
 ## 🚀 Deployment
 
-### Build for production
+### GitHub Pages (Recommended)
+
+The project includes automated GitHub Actions deployment:
+
+1. **Enable GitHub Pages**: Go to Settings → Pages → Source → GitHub Actions
+2. **Configure custom domain** (optional):
+   - Add your domain to `.env`: `CUSTOM_DOMAIN=yourdomain.com`
+   - Update `static/CNAME` with your domain
+3. **Push to main branch** - Deployment happens automatically
+
+### Manual Build
 
 ```bash
 pnpm build
@@ -377,19 +384,28 @@ pnpm build
 
 The static site is generated in the `build/` folder.
 
-### Hosting
+### Other Hosting Platforms
 
 Compatible with all static site hosts:
 
-- **Vercel**: `vercel`
-- **GitHub Pages**: Via GitHub Actions
-- **Classic server**: FTP upload of the `build` folder
+- **Vercel**: Connect your repository and deploy
+- **Netlify**: Drag and drop the `build/` folder
+- **Classic server**: FTP upload of the `build/` folder
 
-### Production Configuration
+### Environment Configuration
 
-1. Modify `.env` with your production URL
-2. Optimize your images before build
-3. Test the build locally: `pnpm preview`
+For custom domains, configure environment variables:
+
+```bash
+# .env
+CUSTOM_DOMAIN=yourdomain.com
+```
+
+This automatically:
+
+- Removes the `/microfolio` base path
+- Copies CNAME file for GitHub Pages
+- Optimizes configuration for custom domain hosting
 
 ## 🔄 Migration from Other Systems
 
@@ -419,15 +435,30 @@ Contributions are welcome!
 4. Push (`git push origin feature/new-feature`)
 5. Open a Pull Request
 
-### Contribution ideas
+### Recent Updates
 
-- [ ] Add search mode
+Based on the 25+ feature commits, microfolio now includes:
+
+- ✅ **Interactive Map** with Leaflet integration and project markers
+- ✅ **Mobile Menu** with improved header and navigation
+- ✅ **Custom Fonts** and enhanced typography
+- ✅ **GitHub Actions** deployment for automated publishing
+- ✅ **Static Adapter** with prerendering for optimal performance
+- ✅ **Custom Domain Support** with environment-based configuration
+- ✅ **Dynamic Content Loading** for projects and pages
+- ✅ **Icon Integration** with @iconify/svelte
+- ✅ **Responsive Design** with mobile-first approach
+
+### Contribution Ideas
+
+- [ ] Timeline view for chronological browsing
+- [ ] Table view for listing all projects
 - [ ] PDF export of portfolio
-- [ ] Additional themes
-- [ ] Multilingual support
+- [ ] Additional themes and color schemes
+- [ ] Multilingual support (i18n)
 - [ ] Headless CMS integration
-- [ ] Advanced animations
-- [ ] PWA support
+- [ ] Advanced animations and transitions
+- [ ] PWA support with offline capabilities
 
 ## 📄 License
 
@@ -480,8 +511,9 @@ Not yet, but it's planned! You can contribute to this feature.
 
 ## 📞 Support
 
-- 📧 Email: hello@aker.pro
-- 🐛 Issues: [GitHub Issues](https://github.com/aker-dev/microfolio/issues)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/aker-dev/microfolio/issues)
+- 💬 **Discussions**: Use GitHub Discussions for questions and ideas
+- 📧 **Email**: hello@aker.pro
 
 ## 📚 Useful Resources
 

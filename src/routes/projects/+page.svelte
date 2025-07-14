@@ -1,4 +1,5 @@
 <script>
+	import AkBadge from '$lib/components/AkBadge.svelte';
 	let { data } = $props();
 	let projects = $derived(data.projects);
 
@@ -74,11 +75,7 @@
 				<!-- Content -->
 				<div class="space-y-3 p-4">
 					<div class="flex items-center justify-between">
-						<span
-							class="inline-block rounded-full border border-black bg-white px-2 py-1 text-xs capitalize"
-						>
-							{project.type}
-						</span>
+						<AkBadge>{project.type}</AkBadge>
 						{#if project.featured}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"

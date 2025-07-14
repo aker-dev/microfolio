@@ -1,4 +1,6 @@
 <script>
+	import AkBadge from '$lib/components/AkBadge.svelte';
+
 	let { data } = $props();
 	let project = $derived(data.project);
 
@@ -34,11 +36,7 @@
 		</nav>
 
 		<div class="mb-2 flex items-center gap-4">
-			<span
-				class="inline-block cursor-default rounded-full border border-black bg-white px-3 py-1 text-sm text-black capitalize"
-			>
-				{project.type}
-			</span>
+			<AkBadge>{project.type}</AkBadge>
 			{#if project.featured}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -86,9 +84,7 @@
 			{#if project.tags && project.tags.length > 0}
 				<div class="flex flex-wrap gap-2">
 					{#each project.tags as tag}
-						<span class="rounded border border-black bg-white px-2 py-1 text-xs text-black">
-							#{tag}
-						</span>
+						<AkBadge small>#{tag}</AkBadge>
 					{/each}
 				</div>
 			{/if}

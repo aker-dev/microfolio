@@ -15,6 +15,7 @@ export const siteConfig = {
 		{ name: 'Home', href: '/' },
 		{ name: 'About', href: '/about' },
 		{ name: 'Projects', href: '/projects' },
+		{ name: 'List', href: '/list' },
 		{ name: 'Map', href: '/map' }
 		// ...
 	]

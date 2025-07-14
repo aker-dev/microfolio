@@ -1,12 +1,24 @@
-<article class="space-y-8">
-	<h1 class="text-4xl font-bold">Welcome to µFolio</h1>
-	<p class="text-lg">
-		A modern static portfolio generator built with SvelteKit and Tailwind CSS. Showcase your
-		creative work with elegance and simplicity.
-	</p>
+<script>
+	let { data } = $props();
+	let page = $derived(data.page);
+</script>
 
-	<div>
-		<a href="/projects"> View Projects </a> <br />
-		<a href="https://github.com/aker-dev/microfolio"> GitHub </a>
-	</div>
+<svelte:head>
+	<title>{page.title}</title>
+	<meta name="description" content={page.description} />
+</svelte:head>
+
+<header class="mb-8">
+	<h2 class="mb-4 text-4xl font-bold text-black">
+		{page.title}
+	</h2>
+	{#if page.description}
+		<p class="text-xl">
+			{page.description}
+		</p>
+	{/if}
+</header>
+
+<article class="prose prose-neutral text-black">
+	{@html page.content}
 </article>

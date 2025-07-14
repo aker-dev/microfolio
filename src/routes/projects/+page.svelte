@@ -26,12 +26,18 @@
 </script>
 
 <div class="space-y-8">
-	<div class="flex flex-col space-y-4">
-		<h1 class="text-4xl font-bold">Projects</h1>
-		<p class="text-lg">Explore our collection of creative works</p>
+	<!-- Header -->
+	<h1 class="text-4xl font-bold">Projects</h1>
 
+	<div>
 		<!-- Filters -->
 		<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+			<input
+				type="text"
+				placeholder="Search projects..."
+				bind:value={searchTerm}
+				class="rounded-lg border border-black px-4 py-2 focus:bg-white focus:outline-none"
+			/>
 			<div class="flex flex-wrap gap-2">
 				{#each projectTypes as type}
 					<button
@@ -44,23 +50,14 @@
 					</button>
 				{/each}
 			</div>
-
-			<input
-				type="text"
-				placeholder="Search projects..."
-				bind:value={searchTerm}
-				class="rounded-lg border border-black px-4 py-2 focus:bg-white focus:outline-none"
-			/>
 		</div>
-
 		<!-- Results count -->
-		<p class="text-sm">
+		<p class="mt-2 text-sm">
 			{filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''} found
 		</p>
 	</div>
-
 	<!-- Mosaic Grid -->
-	<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+	<div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
 		{#each filteredProjects as project}
 			<AkProjectCard {project} />
 		{/each}

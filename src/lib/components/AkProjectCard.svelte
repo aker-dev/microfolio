@@ -10,7 +10,7 @@
 		<img
 			src={project.thumbnailPath}
 			alt={project.title}
-			class="h-full w-full object-cover grayscale transition-all hover:grayscale-0"
+			class="h-full w-full bg-neutral-500 object-cover grayscale transition-all hover:grayscale-0"
 			loading="lazy"
 		/>
 	</div>

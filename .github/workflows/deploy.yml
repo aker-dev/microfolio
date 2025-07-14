@@ -22,6 +22,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
+      - name: Checkout dev branch for content
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: dev-content
+          
+      - name: Copy content from dev branch
+        run: |
+          mkdir -p content
+          cp -r dev-content/content/* content/
+          rm -rf dev-content
+        
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:

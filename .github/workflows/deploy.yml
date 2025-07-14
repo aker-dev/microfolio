@@ -33,6 +33,42 @@ jobs:
       - name: Install dependencies
         run: pnpm install
         
+      - name: Generate sample content
+        run: |
+          # Generate sample projects for deployment
+          mkdir -p content/projects
+          
+          # Create multiple sample projects
+          for i in {1..3}; do
+            PROJECT_NAME="sample-project-$i"
+            mkdir -p "content/projects/$PROJECT_NAME"
+            
+            cat > "content/projects/$PROJECT_NAME/index.md" << EOF
+          ---
+          title: Sample Project $i
+          description: This is sample project $i for demonstration
+          type: Design
+          location: Sample City
+          date: 2024-0$i-01
+          featured: $([ $i -eq 1 ] && echo "true" || echo "false")
+          ---
+          
+          This is sample project $i created for the GitHub Pages deployment.
+          
+          ## Project Details
+          
+          This project demonstrates the microfolio static site generator functionality.
+          EOF
+          
+            # Create a simple colored square as thumbnail using ImageMagick if available, otherwise use a base64 encoded 1x1 pixel
+            if command -v convert >/dev/null 2>&1; then
+              convert -size 300x200 xc:"#$(printf '%06x' $((0x333333 + i * 0x111111)))" "content/projects/$PROJECT_NAME/thumbnail.jpg"
+            else
+              # Fallback to base64 encoded 1x1 pixel
+              echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" | base64 -d > "content/projects/$PROJECT_NAME/thumbnail.jpg"
+            fi
+          done
+          
       - name: Build
         run: pnpm run build
         env:

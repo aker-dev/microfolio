@@ -43,7 +43,7 @@
 	});
 </script>
 
-<header class="sticky top-0 z-100 mb-8 bg-neutral-100">
+<header class="sticky top-0 z-5000 mb-8 bg-neutral-100">
 	<div
 		class="mr-auto ml-auto flex h-32 max-w-7xl items-end justify-between border-b border-solid border-black pr-4 pl-4 md:h-32"
 	>

@@ -14,14 +14,8 @@ export const siteConfig = {
 	navigation: [
 		{ name: 'Home', href: '/' },
 		{ name: 'About', href: '/about' },
-		{ name: 'Projects', href: '/projects' }
+		{ name: 'Projects', href: '/projects' },
+		{ name: 'Map', href: '/map' }
 		// ...
-	],
-
-	// Map configuration
-	mapConfig: {
-		center: [46.603354, 1.888334],
-		zoom: 6
-		// ...
-	}
+	]
 };

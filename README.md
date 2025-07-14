@@ -9,6 +9,7 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 - **📁 File-based CMS** - No database needed, content managed through folders and Markdown
 - **🎨 Multiple View Modes**:
   - **Mosaic**: Visual grid with project thumbnails
+  - **List**: Sortable and filterable table view with advanced search
   - **Map**: Interactive map with project locations using Leaflet
   - **Projects**: Detailed project listings with filtering
 - **📱 Fully Responsive** - Optimized for mobile, tablet, and desktop
@@ -321,6 +322,7 @@ export const siteConfig = {
 		{ name: 'Home', href: '/' },
 		{ name: 'About', href: '/about' },
 		{ name: 'Projects', href: '/projects' },
+		{ name: 'List', href: '/list' },
 		{ name: 'Map', href: '/map' }
 	]
 };
@@ -350,6 +352,15 @@ The project uses Tailwind CSS. Modify `app.css` to customize:
 - **Geo-located projects** - Projects with coordinates appear as markers
 - **Popup previews** - Click markers to see project details
 - **Cluster support** - Automatic grouping for dense project areas
+
+### List View
+
+- **Sortable table** - Click column headers to sort by title, type, or date
+- **Advanced filtering** - Filter by project type and full-text search
+- **Pagination** - Configurable rows per page (5, 10, 20, 50, 100)
+- **Responsive design** - Mobile-optimized table with horizontal scrolling
+- **Quick actions** - Direct navigation to project details with icon buttons
+- **Compact display** - Efficient use of space with truncated descriptions and tag previews
 
 ### Project Detail Pages
 
@@ -440,6 +451,7 @@ Contributions are welcome!
 Based on the 25+ feature commits, microfolio now includes:
 
 - ✅ **Interactive Map** with Leaflet integration and project markers
+- ✅ **List View** with sortable columns and advanced filtering using @vincjo/datatables
 - ✅ **Mobile Menu** with improved header and navigation
 - ✅ **Custom Fonts** and enhanced typography
 - ✅ **GitHub Actions** deployment for automated publishing
@@ -452,7 +464,7 @@ Based on the 25+ feature commits, microfolio now includes:
 ### Contribution Ideas
 
 - [ ] Timeline view for chronological browsing
-- [ ] Table view for listing all projects
+- [x] **Table view** for listing all projects (✅ Completed - List view with sorting and filtering)
 - [ ] PDF export of portfolio
 - [ ] Additional themes and color schemes
 - [ ] Multilingual support (i18n)

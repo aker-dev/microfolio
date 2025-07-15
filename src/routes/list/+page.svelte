@@ -51,7 +51,7 @@
 		if (searchTerm === '') {
 			handler.clearSearch();
 		} else {
-			handler.search(searchTerm, ['title', 'description', 'tags']);
+			handler.search(searchTerm, ['title', 'description', 'tags', 'location']);
 		}
 	});
 
@@ -130,6 +130,9 @@
 							<ThSort {handler} orderBy="type" class="px-4 py-3 text-left">
 								<span class="font-semibold">Type</span>
 							</ThSort>
+							<ThSort {handler} orderBy="location" class="px-4 py-3 text-left">
+								<span class="font-semibold">Location</span>
+							</ThSort>
 							<ThSort {handler} orderBy="date" class="px-4 py-3 text-left">
 								<span class="font-semibold">Date</span>
 							</ThSort>
@@ -152,6 +155,9 @@
 								</td>
 								<td class="px-4 py-3">
 									<AkBadge>{project.type}</AkBadge>
+								</td>
+								<td class="px-4 py-3 text-sm text-black">
+									{project.location || 'N/A'}
 								</td>
 								<td class="px-4 py-3 text-sm text-black">
 									{formatDate(project.date)}

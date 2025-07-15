@@ -1,7 +1,7 @@
 node_modules
 # Content
-content/projects
-!content/projects/example-project
+content/projects/*
+!content/projects/example-project/
 
 # Output
 .output

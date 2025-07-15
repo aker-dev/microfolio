@@ -1,4 +1,3 @@
-import { mdsvex } from 'mdsvex';
 import adapter from '@sveltejs/adapter-static';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -15,14 +14,16 @@ const config = {
 			strict: true
 		}),
 		paths: {
-			base: process.env.CUSTOM_DOMAIN ? '' : (process.env.NODE_ENV === 'production' ? '/microfolio' : '')
+			base: process.env.CUSTOM_DOMAIN
+				? ''
+				: process.env.NODE_ENV === 'production'
+					? '/microfolio'
+					: ''
 		},
 		prerender: {
 			handleHttpError: 'warn'
 		}
-	},
-	preprocess: [mdsvex()],
-	extensions: ['.svelte', '.svx']
+	}
 };
 
 export default config;

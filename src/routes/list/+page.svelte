@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	import { DataHandler } from '@vincjo/datatables/legacy';
 	import Datatable from '$lib/components/Datatable.svelte';
 	import ThFilter from '$lib/components/ThFilter.svelte';
@@ -174,7 +175,7 @@
 								</td>
 								<td class="px-4 py-3">
 									<a
-										href="/projects/{project.slug}"
+										href="{base}/projects/{project.slug}"
 										class="flex h-8 w-8 items-center justify-center rounded border border-black bg-white hover:bg-black hover:text-white"
 										title="View project"
 									>

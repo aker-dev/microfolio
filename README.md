@@ -8,10 +8,9 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 
 - **📁 File-based CMS** - No database needed, content managed through folders and Markdown
 - **🎨 Multiple View Modes**:
-  - **Mosaic**: Visual grid with project thumbnails
+  - **Projects**: Detailed project listings with filtering
   - **List**: Sortable and filterable table view with advanced search
   - **Map**: Interactive map with project locations using Leaflet
-  - **Projects**: Detailed project listings with filtering
 - **📱 Fully Responsive** - Optimized for mobile, tablet, and desktop
 - **🏷️ Smart Tagging** - Project categorization and filtering system
 - **👥 Multi-author Support** - Role attribution for collaborative projects
@@ -78,6 +77,15 @@ pnpm dev
 ```
 
 ### 5. Open http://localhost:5173
+
+### 6. Customize your content
+
+You can customize the main pages by editing the markdown files in the `/content` directory:
+
+- **Homepage**: Edit `content/index.md` to customize your homepage content
+- **About page**: Edit `content/about.md` to add your personal information and bio
+
+### 7. Add your first project
 
 1. Create a folder for your project:
 

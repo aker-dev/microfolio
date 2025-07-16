@@ -31,7 +31,7 @@ Ce guide couvre tout ce dont vous avez besoin :
 - Ajout de vos premiers projets
 - Conseils pratiques et résolution de problèmes
 
-## Vos retours sont précieux 💝
+## Vos retours sont précieux ❤️
 
 N'hésitez pas à me faire part de :
 
@@ -48,11 +48,10 @@ Si vous rencontrez le moindre problème, je suis là pour vous aider. N'hésitez
 
 ---
 
-Merci encore pour votre participation ! Votre aide est essentielle pour rendre microfolio encore plus accessible aux créatifs.
+Merci encore pour votre participation ! Votre aide est essentielle pour rendre microfolio plus accessible.
 
 À très bientôt,
 
-**Adrien pour AKER**  
-Équipe microfolio
+**Adrien pour AKER**
 
 P.S. : Ne vous inquiétez pas si vous n'êtes pas à l'aise avec la ligne de commande, le guide est fait pour vous accompagner ! 😊

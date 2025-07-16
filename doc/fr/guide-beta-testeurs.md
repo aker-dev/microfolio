@@ -12,6 +12,24 @@ Une **seconde phase** suivra pour tester la publication (build) et l'hébergemen
 
 **Merci** de participer à cette phase de test ! Votre aide est précieuse pour améliorer l'outil et le rendre plus accessible aux créatifs de tous horizons.
 
+## Note importante sur le terminal / ligne de commande
+
+**Rassurez-vous !** Ce guide utilise le terminal (ou "ligne de commande"), mais **aucune connaissance technique n'est requise**. Vous devrez simplement taper ou copier-coller quelques commandes simples. C'est plus facile qu'il n'y paraît ! 😊
+
+### Comment ouvrir le terminal
+
+**Sur Mac :**
+
+- Appuyez sur `Cmd + Espace` pour ouvrir Spotlight
+- Tapez "Terminal" et appuyez sur Entrée
+- Ou allez dans Applications > Utilitaires > Terminal
+
+**Sur Windows :**
+
+- Appuyez sur `Windows + R`
+- Tapez "cmd" et appuyez sur Entrée
+- Ou cherchez "Invite de commandes" dans le menu Démarrer
+
 ## Votre mission en tant que beta-testeur
 
 En tant que beta-testeur, voici votre mission :

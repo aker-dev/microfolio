@@ -79,18 +79,29 @@ Envoyez vos retours à **hello@aker.pro** en précisant :
 #### 2. Installer Git
 
 1. Ouvrez le Terminal
-2. Tapez `git --version`
-3. Si Git n'est pas installé, macOS vous proposera de l'installer automatiquement
-4. Ou téléchargez Git depuis https://git-scm.com/download/mac
+2. Tapez la commande suivante :
+   ```bash
+   xcode-select --install
+   ```
+3. Un logiciel d'installation va s'ouvrir automatiquement
+4. Suivez les instructions à l'écran pour installer les outils de développement Xcode
+5. Vérifiez l'installation une fois terminée :
+   ```bash
+   git --version
+   ```
 
 #### 3. Installer pnpm
 
 1. Ouvrez le Terminal
 2. Tapez la commande suivante :
    ```bash
-   npm install -g pnpm
+   curl -fsSL https://get.pnpm.io/install.sh | sh
    ```
-3. Vérifiez l'installation :
+3. Redémarrez votre terminal ou tapez :
+   ```bash
+   source ~/.zshrc
+   ```
+4. Vérifiez l'installation :
    ```bash
    pnpm --version
    ```

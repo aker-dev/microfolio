@@ -44,20 +44,61 @@ _[Screenshots to be added]_
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Option 1: Homebrew Installation (macOS - Recommended)
+
+**Homebrew** is a package manager for macOS that simplifies the installation of development software.
+
+1. **Install Homebrew** (if you don't have it already):
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+2. **Install microfolio via Homebrew**:
+   ```bash
+   brew install aker-dev/tap/microfolio
+   ```
+
+3. **Create a new portfolio**:
+   ```bash
+   microfolio new my-portfolio
+   cd my-portfolio
+   ```
+
+4. **Start the development server**:
+   ```bash
+   microfolio dev
+   ```
+
+5. **Open http://localhost:5173**
+
+**Advantages of this method:**
+- Automatic installation of all dependencies (Node.js, pnpm, Git)
+- Simplified commands: `microfolio new`, `microfolio dev`, `microfolio build`
+- Easy updates with `brew upgrade microfolio`
+
+**Available commands:**
+- `microfolio new <project-name>` - Create a new portfolio
+- `microfolio dev` - Start development server
+- `microfolio build` - Build site for production
+- `microfolio preview` - Preview built site locally
+- `microfolio help` - Show help
+
+### Option 2: Manual Installation
+
+#### Prerequisites
 
 - **Node.js** LTS 20+ (tested with 20.x)
 - **pnpm** package manager
 - **Git** for version control
 
-### 1. Clone the template
+#### 1. Clone the template
 
 ```bash
 git clone https://github.com/aker-dev/microfolio.git my-portfolio
 cd my-portfolio
 ```
 
-### 2. Install dependencies
+#### 2. Install dependencies
 
 ```bash
 pnpm install
@@ -72,6 +113,12 @@ chmod +x example_projects_generator.sh
 
 ### 4. Start the development server
 
+**With Homebrew:**
+```bash
+microfolio dev
+```
+
+**With manual installation:**
 ```bash
 pnpm dev
 ```
@@ -397,6 +444,12 @@ The project includes automated GitHub Actions deployment:
 
 ### Manual Build
 
+**With Homebrew:**
+```bash
+microfolio build
+```
+
+**With manual installation:**
 ```bash
 pnpm build
 ```

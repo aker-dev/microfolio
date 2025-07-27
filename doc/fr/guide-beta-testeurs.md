@@ -65,6 +65,42 @@ Envoyez vos retours à **hello@aker.pro** en précisant :
 
 ### Pour Mac
 
+#### Option 1 : Installation via Homebrew (Recommandée)
+
+**Homebrew** est un gestionnaire de paquets pour macOS qui simplifie grandement l'installation de logiciels de développement.
+
+1. **Installer Homebrew** (si vous ne l'avez pas déjà) :
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+2. **Installer microfolio via Homebrew** :
+   ```bash
+   brew install aker-dev/tap/microfolio
+   ```
+
+3. **Créer un nouveau portfolio** :
+   ```bash
+   microfolio new mon-portfolio
+   cd mon-portfolio
+   ```
+
+4. **Démarrer le serveur de développement** :
+   ```bash
+   microfolio dev
+   ```
+
+Votre site sera accessible à l'adresse : http://localhost:5173
+
+**Avantages de cette méthode :**
+- Installation automatique de toutes les dépendances (Node.js, pnpm, Git)
+- Commandes simplifiées : `microfolio new`, `microfolio dev`, `microfolio build`
+- Mise à jour facile avec `brew upgrade microfolio`
+
+#### Option 2 : Installation manuelle
+
+Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Homebrew :
+
 #### 1. Installer Node.js
 
 1. Rendez-vous sur https://nodejs.org/
@@ -200,6 +236,17 @@ pnpm build            # Construire le site pour la production
 
 ## Téléchargement de microfolio
 
+### Si vous avez installé via Homebrew
+
+Utilisez directement la commande `microfolio` :
+
+```bash
+microfolio new mon-portfolio
+cd mon-portfolio
+```
+
+### Si vous avez fait l'installation manuelle
+
 Une fois dans votre répertoire de travail :
 
 ```bash
@@ -218,6 +265,23 @@ pnpm install
 ## Travailler sur votre site
 
 ### Démarrer le serveur de développement
+
+#### Si vous avez installé via Homebrew
+
+À chaque fois que vous voulez travailler sur votre site :
+
+1. **Ouvrez un terminal**
+2. **Naviguez vers votre dossier portfolio** :
+   ```bash
+   cd chemin/vers/mon-portfolio
+   ```
+3. **Lancez le serveur** :
+   ```bash
+   microfolio dev
+   ```
+4. **Ouvrez votre navigateur** et allez sur http://localhost:5173
+
+#### Si vous avez fait l'installation manuelle
 
 À chaque fois que vous voulez travailler sur votre site :
 

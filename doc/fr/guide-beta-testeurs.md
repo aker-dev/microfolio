@@ -27,8 +27,8 @@ Une **seconde phase** suivra pour tester la publication (build) et l'hébergemen
 **Sur Windows :**
 
 - Appuyez sur `Windows + R`
-- Tapez "cmd" et appuyez sur Entrée
-- Ou cherchez "Invite de commandes" dans le menu Démarrer
+- Tapez "powershell" et appuyez sur Entrée
+- Ou cherchez "PowerShell" dans le menu Démarrer
 
 ## Votre mission en tant que beta-testeur
 
@@ -149,7 +149,7 @@ Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Hom
 1. Rendez-vous sur https://nodejs.org/
 2. Téléchargez la version LTS (recommandée)
 3. Ouvrez le fichier `.msi` téléchargé et suivez l'assistant
-4. Vérifiez l'installation en ouvrant l'Invite de commandes (CMD) et tapant :
+4. Vérifiez l'installation en ouvrant PowerShell et tapant :
    ```bash
    node --version
    ```
@@ -166,10 +166,10 @@ Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Hom
 
 #### 3. Installer pnpm
 
-1. Ouvrez l'Invite de commandes (CMD) en tant qu'administrateur
+1. Ouvrez PowerShell en tant qu'administrateur
 2. Tapez :
    ```bash
-   npm install -g pnpm
+   Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
    ```
 3. Vérifiez l'installation :
    ```bash
@@ -223,7 +223,7 @@ pnpm build            # Construire le site pour la production
 
 ### Sur Windows
 
-1. Ouvrez l'Invite de commandes (CMD)
+1. Ouvrez PowerShell
 2. Naviguez vers vos Documents :
    ```bash
    cd %USERPROFILE%\Documents
@@ -285,7 +285,7 @@ pnpm install
 
 À chaque fois que vous voulez travailler sur votre site :
 
-1. **Ouvrez un terminal** (Terminal sur Mac, CMD sur Windows)
+1. **Ouvrez un terminal** (Terminal sur Mac, PowerShell sur Windows)
 2. **Naviguez vers votre dossier microfolio** :
    ```bash
    cd chemin/vers/mon-portfolio
@@ -461,7 +461,7 @@ Pour plus de détails, consultez le [dossier technique](documents/specifications
 
 - Vérifiez que Node.js, Git et pnpm sont bien installés
 - Redémarrez votre terminal
-- Sur Windows, utilisez l'Invite de commandes en tant qu'administrateur
+- Sur Windows, utilisez PowerShell en tant qu'administrateur
 
 ### Images qui ne s'affichent pas
 

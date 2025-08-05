@@ -1,10 +1,10 @@
 # Documentation Microfolio
 
-Bienvenue dans la documentation complète de Microfolio ! Cette documentation vous guide pas à pas pour créer, personnaliser et publier votre portfolio professionnel.
+Bienvenue dans la documentation complète de **microfolio** ! 🎉
 
 ## À propos de Microfolio
 
-Microfolio est un générateur de portfolio statique moderne, conçu spécialement pour les créatifs : architectes, designers, artistes, graphistes, et tous les professionnels souhaitant présenter leur travail de manière élégante et professionnelle.
+microfolio est un générateur de portfolio statique moderne, conçu spécialement pour les créatifs : designers, architectes, photographes, artistes, graphistes, collectifs… Il vous permet de créer un site web professionnel pour présenter vos projets de manière élégante, sans avoir besoin de connaissances techniques approfondies.
 
 ### Caractéristiques principales
 
@@ -50,18 +50,41 @@ Microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 
 ## Démarrage rapide
 
-### Installation express
+### Option 1 : Installation via Homebrew (Recommandée pour Mac)
+
+**Homebrew** est un gestionnaire de paquets pour macOS qui simplifie grandement l'installation :
+
+```bash
+# Installer microfolio via Homebrew
+brew install aker-dev/tap/microfolio
+
+# Créer un nouveau portfolio
+microfolio new mon-portfolio
+cd mon-portfolio
+
+# Démarrer le serveur de développement
+microfolio dev
+```
+
+Votre site sera accessible à l'adresse : http://localhost:5173
+
+**Avantages de cette méthode :**
+- Installation automatique de toutes les dépendances (Node.js, pnpm, Git)
+- Commandes simplifiées : `microfolio new`, `microfolio dev`, `microfolio build`
+- Mise à jour facile avec `brew upgrade microfolio`
+
+### Option 2 : Installation manuelle
 
 ```bash
 # Cloner le repository
-git clone https://github.com/votre-utilisateur/microfolio.git
-cd microfolio
+git clone https://github.com/aker-dev/microfolio.git mon-portfolio
+cd mon-portfolio
 
 # Installer les dépendances
 pnpm install
 
 # Lancer le serveur de développement
-pnpm run dev
+pnpm dev
 ```
 
 ### Personnalisation de base
@@ -71,6 +94,22 @@ pnpm run dev
 3. **Configurez votre domaine** dans `static/CNAME`
 4. **Testez localement** avec `pnpm run dev`
 5. **Publiez** avec `pnpm run build`
+
+## Note importante sur le terminal / ligne de commande
+
+**Rassurez-vous !** Ce guide utilise le terminal (ou "ligne de commande"), mais **aucune connaissance technique n'est requise**. Vous devrez simplement taper ou copier-coller quelques commandes simples. C'est plus facile qu'il n'y paraît ! 😊
+
+### Comment ouvrir le terminal
+
+**Sur Mac :**
+- Appuyez sur `Cmd + Espace` pour ouvrir Spotlight
+- Tapez "Terminal" et appuyez sur Entrée
+- Ou allez dans Applications > Utilitaires > Terminal
+
+**Sur Windows :**
+- Appuyez sur `Windows + R`
+- Tapez "powershell" et appuyez sur Entrée
+- Ou cherchez "PowerShell" dans le menu Démarrer
 
 ## Public cible
 
@@ -97,12 +136,15 @@ Cette documentation s'adresse principalement aux **créatifs non-développeurs**
 
 ### Contact
 
-Si vous avez des questions ou rencontrez des difficultés :
+Pour toute question ou problème :
 
-1. Consultez d'abord la documentation
-2. Vérifiez les issues GitHub existantes
-3. Créez une nouvelle issue si nécessaire
-4. Rejoignez les discussions communautaires
+📧 **Email** : hello@aker.pro
+
+Dans votre message, précisez :
+- Votre système d'exploitation (Mac/Windows)
+- Le problème rencontré
+- Les étapes que vous avez suivies
+- Une capture d'écran si possible
 
 ### Contribution
 

@@ -1,10 +1,10 @@
 # Microfolio Documentation
 
-Welcome to the complete Microfolio documentation! This documentation guides you step by step to create, customize, and publish your professional portfolio.
+Welcome to the complete documentation for **microfolio**! 🎉
 
 ## About Microfolio
 
-Microfolio is a modern static portfolio generator, designed especially for creatives: architects, designers, artists, graphic designers, and all professionals who want to showcase their work elegantly and professionally.
+microfolio is a modern static portfolio generator, designed specifically for creatives: designers, architects, photographers, artists, graphic designers, collectives... It allows you to create a professional website to showcase your projects elegantly, without needing deep technical knowledge.
 
 ### Key Features
 
@@ -14,7 +14,7 @@ Microfolio is a modern static portfolio generator, designed especially for creat
 - 🚀 **Optimal performance**
 - 🔍 **SEO friendly**
 - 🗺️ **Map display** for geolocated projects
-- 🏷️ **Tags and filters system**
+- 🏷️ **Tag and filter system**
 - 📊 **Different display modes** (grid, list, map)
 - 🌐 **Ready for custom domain**
 
@@ -29,48 +29,87 @@ Microfolio is a modern static portfolio generator, designed especially for creat
 ### [2. Configuration Guide](02-configuration.md)
 - Page customization
 - Domain configuration
-- Colors and styles customization
+- Color and style customization
 - Metadata and SEO
 - Advanced features
 
-### [3. Adding Projects Guide](03-adding-projects.md)
+### [3. Project Addition Guide](03-adding-projects.md)
 - Project structure
 - Creating new projects
 - Media management (images, videos)
 - Metadata and organization
 - Best practices
 
-### [4. Publishing Guide](04-publishing.md)
-- Preparing for publication
-- Site building
-- GitHub Pages publishing
+### [4. Publication Guide](04-publication.md)
+- Publication preparation
+- Site build
+- GitHub Pages publication
 - Custom domains
 - Other hosting options
 - Maintenance and updates
 
 ## Quick Start
 
-### Express Installation
+### Option 1: Installation via Homebrew (Recommended for Mac)
+
+**Homebrew** is a package manager for macOS that greatly simplifies installation:
+
+```bash
+# Install microfolio via Homebrew
+brew install aker-dev/tap/microfolio
+
+# Create a new portfolio
+microfolio new my-portfolio
+cd my-portfolio
+
+# Start the development server
+microfolio dev
+```
+
+Your site will be accessible at: http://localhost:5173
+
+**Advantages of this method:**
+- Automatic installation of all dependencies (Node.js, pnpm, Git)
+- Simplified commands: `microfolio new`, `microfolio dev`, `microfolio build`
+- Easy updates with `brew upgrade microfolio`
+
+### Option 2: Manual installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/microfolio.git
-cd microfolio
+git clone https://github.com/aker-dev/microfolio.git my-portfolio
+cd my-portfolio
 
 # Install dependencies
 pnpm install
 
 # Start the development server
-pnpm run dev
+pnpm dev
 ```
 
-### Basic Customization
+### Basic customization
 
 1. **Edit your profile** in `content/index.md` and `content/about.md`
 2. **Add your projects** in `content/projects/`
 3. **Configure your domain** in `static/CNAME`
 4. **Test locally** with `pnpm run dev`
 5. **Publish** with `pnpm run build`
+
+## Important note about the terminal / command line
+
+**Don't worry!** This guide uses the terminal (or "command line"), but **no technical knowledge is required**. You'll simply need to type or copy-paste a few simple commands. It's easier than it looks! 😊
+
+### How to open the terminal
+
+**On Mac:**
+- Press `Cmd + Space` to open Spotlight
+- Type "Terminal" and press Enter
+- Or go to Applications > Utilities > Terminal
+
+**On Windows:**
+- Press `Windows + R`
+- Type "powershell" and press Enter
+- Or search for "PowerShell" in the Start menu
 
 ## Target Audience
 
@@ -92,159 +131,42 @@ This documentation is primarily aimed at **non-developer creatives**:
 
 - **Official documentation**: This `doc/` folder
 - **Project examples**: `content/projects/` folder
-- **GitHub issues**: To report bugs
+- **GitHub Issues**: To report bugs
 - **Discussions**: To ask questions
 
 ### Contact
 
-If you have questions or encounter difficulties:
+For any questions or problems:
 
-1. First consult the documentation
-2. Check existing GitHub issues
-3. Create a new issue if necessary
-4. Join community discussions
+📧 **Email**: hello@aker.pro
 
-### Contributing
+In your message, please specify:
+- Your operating system (Mac/Windows)
+- The problem encountered
+- The steps you followed
+- A screenshot if possible
+
+### Contribution
 
 Your contributions are welcome! Feel free to:
 
-- Improve documentation
+- Improve the documentation
 - Report bugs
 - Suggest new features
-- Share your achievements
-
-## Features Overview
-
-### 🎨 Creative-Focused Design
-
-Microfolio is built with creatives in mind:
-
-- **Visual-first approach**: Your work takes center stage
-- **Flexible layouts**: Adapt to different creative fields
-- **Professional presentation**: Impress clients and collaborators
-- **Portfolio organization**: Showcase your best work effectively
-
-### 📱 Modern Web Standards
-
-- **Responsive design**: Perfect on all devices
-- **Fast loading**: Optimized for performance
-- **SEO optimized**: Better visibility in search engines
-- **Accessible**: Inclusive design for all users
-
-### 🛠️ Easy to Use
-
-- **No coding required**: Simple file editing
-- **Markdown-based**: Easy content creation
-- **Drag-and-drop**: Simple media management
-- **Live preview**: See changes instantly
-
-### 🌍 Global Reach
-
-- **Multi-language ready**: Easy to translate
-- **Custom domains**: Your personal brand
-- **CDN support**: Fast worldwide delivery
-- **Social sharing**: Built-in social media optimization
-
-## Use Cases
-
-### Architects
-- Showcase building projects
-- Display technical drawings
-- Present 3D visualizations
-- Include project timelines
-
-### Graphic Designers
-- Display brand identities
-- Show design process
-- Present client work
-- Include case studies
-
-### Artists
-- Gallery-style presentation
-- Exhibition documentation
-- Artistic process showcase
-- Statement and biography
-
-### Photographers
-- Portfolio galleries
-- Client testimonials
-- Service offerings
-- Equipment and techniques
-
-### Interior Designers
-- Before/after showcases
-- Room-by-room presentations
-- Style guides
-- Client projects
-
-## Getting Started Checklist
-
-Ready to create your portfolio? Follow this checklist:
-
-### Setup Phase
-- [ ] Install Node.js, Git, and pnpm
-- [ ] Clone or download Microfolio
-- [ ] Install dependencies
-- [ ] Start development server
-
-### Content Phase
-- [ ] Write your about page
-- [ ] Add your best projects (5-10)
-- [ ] Optimize all images
-- [ ] Write compelling descriptions
-
-### Customization Phase
-- [ ] Choose your color scheme
-- [ ] Customize typography
-- [ ] Add your favicon
-- [ ] Configure metadata
-
-### Publishing Phase
-- [ ] Test on different devices
-- [ ] Optimize for performance
-- [ ] Set up custom domain
-- [ ] Deploy to hosting
-
-### Maintenance Phase
-- [ ] Add new projects regularly
-- [ ] Update descriptions
-- [ ] Monitor performance
-- [ ] Backup your work
+- Share your creations
 
 ## Changelog
 
 ### Version 0.1.0-beta.1
-- Complete documentation in French and English
+- Complete documentation in French
 - Detailed guides for non-developers
 - Practical examples
 - Modular structure
 
 ## License
 
-This project is under the MIT license. You are free to use, modify, and distribute it according to the terms of this license.
-
-## Community
-
-Join our growing community of creatives:
-
-- **GitHub Discussions**: Share ideas and get help
-- **Issue Tracker**: Report bugs and request features
-- **Examples Gallery**: See what others have created
-- **Tips and Tricks**: Learn from experienced users
-
-## Roadmap
-
-Upcoming features:
-- 🌙 Dark mode support
-- 🎥 Video portfolio templates
-- 📧 Contact form integration
-- 📊 Analytics dashboard
-- 🎨 More design themes
+This project is under MIT license. You are free to use, modify and distribute it under the terms of this license.
 
 ---
 
-**Start creating with Microfolio today! 🎨**
-
-Your creative work deserves a beautiful home on the web. Microfolio makes it easy to build, customize, and share your professional portfolio. Whether you're just starting out or are an established professional, Microfolio grows with you.
-
-Ready to showcase your creativity to the world? [Start with the installation guide](01-installation.md) and begin your journey!
+**Happy creating with Microfolio! 🎨**

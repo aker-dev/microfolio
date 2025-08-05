@@ -1,4 +1,4 @@
-# Adding Projects Guide
+# Project Addition Guide
 
 ## Project Structure
 
@@ -28,7 +28,8 @@ mkdir content/projects/your-project-name
 cd content/projects/your-project-name
 ```
 
-**Naming Rules:**
+**Naming rules:**
+
 - Use hyphens (-) instead of spaces
 - Avoid special characters
 - Prefer short and descriptive names
@@ -40,71 +41,69 @@ Create the `index.md` file with the following structure:
 
 ```markdown
 ---
-title: "Your Project Title"
-date: "2024-01-15"
-location: "City, Country"
+title: 'Your project title'
+date: '2024-01-15'
+location: 'City, Country'
 coordinates: [latitude, longitude]
-description: "Short and compelling description of your project"
-type: "architecture"
-tags: ["architecture", "design", "modern", "sustainable"]
+description: 'Short and compelling description of your project'
+type: 'architecture'
+tags: ['architecture', 'design', 'modern', 'sustainable']
 authors:
-  - name: "Your Name"
-    role: "Lead Designer"
-  - name: "Collaborator"
-    role: "Consultant"
+  - name: 'Your Name'
+    role: 'Lead Designer'
+  - name: 'Collaborator'
+    role: 'Consultant'
 featured: true
 ---
 
 ## Project Description
 
-Describe your project in detail. Explain the context, challenges, and your creative approach.
+Describe your project in detail. Explain the context, challenges, your creative approach.
 
 ## Concept and Inspiration
 
-Talk about your creative process, inspiration sources, and vision.
+Talk about your creative process, sources of inspiration, your vision.
 
 ## Creation Process
 
-Detail the steps of your work, techniques used, and tools employed.
+Detail the steps of your work, techniques used, tools employed.
 
 ## Results and Impact
 
-Present the results achieved, project reception, and its impact.
+Present the results obtained, project reception, its impact.
 ```
 
 ### 3. Important Metadata
 
 **Required fields:**
+
 - `title`: Project title
 - `date`: Completion date (YYYY-MM-DD format)
 - `description`: Short description for previews
 - `type`: Project type (see list below)
 
 **Optional fields:**
+
 - `location`: Project location
 - `coordinates`: GPS coordinates [latitude, longitude]
 - `tags`: Keywords for filtering
 - `authors`: Creators and collaborators
 - `featured`: Featured project (true/false)
 
-### 4. Available Project Types
+### 4. Project Type Examples
 
 - `architecture`: Architectural projects
 - `design`: Graphic design, product design
 - `art`: Artistic works
-- `interior`: Interior design
-- `landscape`: Landscape architecture
-- `digital`: Digital projects
-- `branding`: Visual identity
-- `photography`: Photography
-- `illustration`: Illustration
 - `web`: Websites, applications
+- ...
 
 ## Adding Media
 
 ### 1. Thumbnail Image (required)
 
 Add a `thumbnail.jpg` image in the project folder:
+
 - **Format**: JPG or PNG
 - **Recommended size**: 800x600 pixels
 - **Weight**: Maximum 200 KB
@@ -112,22 +111,10 @@ Add a `thumbnail.jpg` image in the project folder:
 
 ### 2. Project Images
 
-Create an `images/` folder and add your images:
-
-```markdown
-## Gallery
-
-![Main view](images/main-view.jpg)
-*Caption for the main image*
-
-![Detail](images/detail-view.jpg)
-*Close-up of an important detail*
-
-![Context](images/context-view.jpg)
-*Overview in its environment*
-```
+Create an `images/` folder and add your images.
 
 **Image tips:**
+
 - Name your files descriptively
 - Use web-optimized formats (JPG, PNG, WebP)
 - Add explanatory captions
@@ -135,31 +122,25 @@ Create an `images/` folder and add your images:
 
 ### 3. Videos (optional)
 
-To add videos, create a `videos/` folder:
-
-```markdown
-## Presentation Video
-
-<video controls>
-  <source src="videos/overview.mp4" type="video/mp4">
-  Your browser does not support video playback.
-</video>
-```
+To add videos, create a `videos/` folder
 
 **Supported formats:**
+
 - MP4 (recommended)
 - WebM
 - OGV
 
 ### 4. Documents (optional)
 
-For PDF documents or others:
+To add documents, create a `documents/` folder
+
+For PDF or other documents:
 
 ```markdown
 ## Documents
 
-- [Technical Documentation](documents/technical-specs.pdf)
-- [Project Brief](documents/project-brief.pdf)
+- [Technical file](documents/technical-specs.pdf)
+- [Project brief](documents/project-brief.pdf)
 ```
 
 ## Complete Example
@@ -168,68 +149,69 @@ Here's a complete example of an architecture project:
 
 ```markdown
 ---
-title: "Contemporary Villa"
-date: "2024-03-20"
-location: "Nice, France"
+title: 'Contemporary Villa'
+date: '2024-03-20'
+location: 'Nice, France'
 coordinates: [43.7102, 7.2620]
-description: "Contemporary individual house with sea view, integrating sustainable development principles"
-type: "architecture"
-tags: ["architecture", "residential", "contemporary", "sustainable", "sea view"]
+description: 'Contemporary individual house with sea view, integrating sustainable development principles'
+type: 'architecture'
+tags: ['architecture', 'residential', 'contemporary', 'sustainable', 'sea view']
 authors:
-  - name: "Marie Dubois"
-    role: "Architect"
-  - name: "Jean Martin"
-    role: "Landscape Architect"
+  - name: 'Marie Dubois'
+    role: 'Architect'
+  - name: 'Jean Martin'
+    role: 'Landscape Architect'
 featured: true
 ---
 
 ## Project Description
 
-This contemporary 250m² villa was designed for a family of four wishing to combine modern comfort with environmental respect. Located in the hills of Nice, it benefits from a panoramic view of the Mediterranean.
+This contemporary 250m² villa was designed for a family of four wishing to combine modern comfort and environmental respect. Located on the heights of Nice, it benefits from a panoramic view of the Mediterranean.
 
 ## Architectural Concept
 
-The project is based on three fundamental principles:
-- **Landscape opening**: Large south-facing windows
+The project is structured around three fundamental principles:
+
+- **Opening to the landscape**: Large south-facing windows
 - **Environmental integration**: Use of local materials
 - **Energy performance**: BBC certification
 
 ## Gallery
 
-![Terrace view](images/terrace-view.jpg)
-*The main terrace offers an unobstructed view of the sea*
+![View from the terrace](images/terrace-view.jpg)
+_The main terrace offers an unobstructed view of the sea_
 
 ![Main living room](images/living-room.jpg)
-*The open living space bathed in natural light*
+_The open living space bathed in natural light_
 
 ![South facade](images/south-facade.jpg)
-*South facade with large openings and sun shades*
+_South facade with its large openings and sun shades_
 
 ## Materials and Techniques
 
 - **Structure**: Reinforced concrete and steel
 - **Insulation**: Wood fiber and cellulose wadding
-- **Joinery**: Aluminum with thermal bridge break
-- **Coverings**: Local stone and Douglas fir wood
+- **Windows**: Aluminum with thermal break
+- **Coverings**: Local stone and Douglas fir
 
 ## Sustainable Development
 
 - Photovoltaic solar panels
-- Rainwater harvesting
+- Rainwater collection
 - Green roofs
 - Geothermal heating
 
 ## Recognition
 
 - **2024**: PACA Sustainable Architecture Award
-- **2024**: Published in "Contemporary Houses"
+- **2024**: Publication in "Contemporary Houses"
 - **2024**: Architectures à Vivre Selection
 
 ## Documents
 
-- [Architectural Plans](documents/plans.pdf)
-- [Technical Documentation](documents/technical-specs.pdf)
-- [BBC Certification](documents/bbc-certificate.pdf)
+- [Architectural plans](documents/plans.pdf)
+- [Technical file](documents/technical-specs.pdf)
+- [BBC certification](documents/bbc-certificate.pdf)
 ```
 
 ## Best Practices
@@ -259,59 +241,15 @@ The project is based on three fundamental principles:
 ### 4. SEO
 
 - **Descriptive URLs**: Explicit folder name
-- **Alt tags**: Image descriptions
 - **Natural keywords**: Integrated in text
 - **Internal links**: To other similar projects
 
-## Project Management
-
-### Work in Progress
-
-For an unfinished project:
-
-```markdown
----
-title: "Project in Progress"
-date: "2024-12-01"
-status: "in-progress"
-completion: 75
----
-
-## Progress Status
-
-This project is currently in the implementation phase. Estimated completion: 75%
-
-**Completed stages:**
-- ✅ Design
-- ✅ Technical studies
-- ✅ Building permit
-
-**Current stages:**
-- 🔄 Implementation
-- ⏳ Finishing
-```
-
-### Conceptual Project
-
-For an unrealized project:
-
-```markdown
----
-title: "Development Concept"
-date: "2024-11-15"
-status: "concept"
----
-
-## Exploratory Concept
-
-This project explores new approaches to urban development. Although not realized, it presents innovative solutions for the future of our cities.
-```
-
-## Validation and Publishing
+## Validation and Publication
 
 ### 1. Verification
 
 Before publishing, check:
+
 - [ ] Complete `index.md` file
 - [ ] `thumbnail.jpg` image present
 - [ ] Correct metadata
@@ -321,12 +259,13 @@ Before publishing, check:
 ### 2. Local Testing
 
 ```bash
-pnpm run dev
+pnpm dev
 ```
 
-Check that your project displays correctly in:
-- The projects list
-- The project detail
+Verify your project displays correctly in:
+
+- Project list
+- Project detail
 - Filters and search
 - Map view (if GPS coordinates)
 
@@ -337,77 +276,13 @@ Check that your project displays correctly in:
 - Test on mobile
 - Validate accessibility
 
-## Project Categories
-
-### Architecture
-
-Perfect for:
-- Residential buildings
-- Commercial spaces
-- Public buildings
-- Urban planning
-
-```markdown
-type: "architecture"
-tags: ["architecture", "residential", "commercial", "urban"]
-```
-
-### Design
-
-Ideal for:
-- Graphic design
-- Product design
-- UI/UX design
-- Brand identity
-
-```markdown
-type: "design"
-tags: ["design", "graphic", "product", "branding"]
-```
-
-### Art
-
-For:
-- Installations
-- Sculptures
-- Paintings
-- Performance art
-
-```markdown
-type: "art"
-tags: ["art", "installation", "sculpture", "performance"]
-```
-
-### Digital
-
-For:
-- Websites
-- Mobile apps
-- Interactive experiences
-- Digital art
-
-```markdown
-type: "digital"
-tags: ["digital", "web", "app", "interactive"]
-```
-
 ## Next Steps
 
-Once your projects are added, check out the [Publishing Guide](04-publishing.md) to put your portfolio online.
+Once your projects are added, check out the [Publication guide](04-publication.md) to put your portfolio online.
 
 ## Useful Resources
 
 - **Image optimization**: TinyPNG, Squoosh
 - **GPS coordinates**: Google Maps, OpenStreetMap
 - **Inspiration**: Behance, Dribbble, ArchDaily
-- **Writing**: Grammarly, ProWritingAid
-
-## Tips for Success
-
-1. **Quality over quantity**: Better to have fewer high-quality projects
-2. **Tell a story**: Each project should have a narrative
-3. **Show process**: Include sketches, development stages
-4. **Be consistent**: Maintain a coherent style across projects
-5. **Update regularly**: Keep your portfolio fresh with new work
-
-Your projects are the heart of your portfolio - make them shine!
+- **Writing**: Grammarly, Antidote

@@ -7,6 +7,7 @@
 Avant de publier votre portfolio, assurez-vous que :
 
 **Contenu obligatoire :**
+
 - [ ] Page d'accueil personnalisée (`content/index.md`)
 - [ ] Page à propos complétée (`content/about.md`)
 - [ ] Au moins 3-5 projets avec images
@@ -14,6 +15,7 @@ Avant de publier votre portfolio, assurez-vous que :
 - [ ] Informations de contact
 
 **Vérification technique :**
+
 - [ ] Liens fonctionnels
 - [ ] Images optimisées
 - [ ] Métadonnées complètes
@@ -26,11 +28,13 @@ Avant de publier votre portfolio, assurez-vous que :
 Si vous avez votre propre domaine :
 
 1. **Configurez le fichier CNAME**
+
    ```bash
    echo "votre-domaine.com" > static/CNAME
    ```
 
 2. **Définissez la variable d'environnement**
+
    ```bash
    # Dans le fichier .env
    CUSTOM_DOMAIN=true
@@ -45,6 +49,7 @@ Si vous avez votre propre domaine :
 Si vous utilisez GitHub Pages sans domaine personnalisé :
 
 1. **Configurez le fichier .env**
+
    ```bash
    # Dans le fichier .env
    CUSTOM_DOMAIN=false
@@ -63,15 +68,16 @@ Testez toujours localement avant de publier :
 
 ```bash
 # Avec domaine personnalisé
-CUSTOM_DOMAIN=true pnpm run build
+CUSTOM_DOMAIN=true pnpm build
 
 # Ou simplement (si défini dans .env)
-pnpm run build
+pnpm build
 ```
 
 ### 2. Vérification du build
 
 Après le build, vérifiez :
+
 - Dossier `build/` créé
 - Fichier `build/index.html` présent
 - Fichier `build/CNAME` (si domaine personnalisé)
@@ -82,7 +88,7 @@ Après le build, vérifiez :
 Prévisualisez le site en production :
 
 ```bash
-pnpm run preview
+pnpm preview
 ```
 
 Testez toutes les pages et fonctionnalités.
@@ -117,29 +123,6 @@ git push origin main
 Le repository utilise GitHub Actions pour le déploiement automatique. À chaque push sur `main`, le site sera rebuild et redéployé.
 
 **Fichier `.github/workflows/deploy.yml` :**
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - run: npm install -g pnpm
-      - run: pnpm install
-      - run: CUSTOM_DOMAIN=true pnpm run build
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
-```
 
 ## Publication manuelle
 
@@ -151,7 +134,7 @@ git add .
 git commit -m "Prêt pour publication"
 
 # Build du site
-pnpm run build
+pnpm build
 ```
 
 ### 2. Déployement manuel
@@ -172,7 +155,7 @@ gh-pages -d build
 
 1. **Connectez votre repository GitHub à Netlify**
 2. **Configurez le build :**
-   - Build command: `pnpm run build`
+   - Build command: `pnpm build`
    - Publish directory: `build`
    - Environment variables: `CUSTOM_DOMAIN=true`
 
@@ -192,8 +175,9 @@ gh-pages -d build
 Pour un hébergement classique :
 
 1. **Build du site :**
+
    ```bash
-   CUSTOM_DOMAIN=true pnpm run build
+   CUSTOM_DOMAIN=true pnpm build
    ```
 
 2. **Upload du contenu :**
@@ -205,6 +189,7 @@ Pour un hébergement classique :
 ### 1. Configuration DNS
 
 **Pour un domaine principal (exemple.com) :**
+
 ```
 Type: A
 Host: @
@@ -215,6 +200,7 @@ Value: 185.199.108.153
 ```
 
 **Pour un sous-domaine (portfolio.exemple.com) :**
+
 ```
 Type: CNAME
 Host: portfolio
@@ -228,6 +214,7 @@ GitHub Pages active automatiquement HTTPS pour les domaines personnalisés. Pati
 ### 3. Vérification du domaine
 
 Vérifiez que votre domaine fonctionne :
+
 - `https://votre-domaine.com`
 - Redirection HTTP → HTTPS
 - Certificat SSL valide
@@ -251,11 +238,11 @@ git push origin main
 ```bash
 # Modifiez les fichiers nécessaires
 # Testez localement
-pnpm run dev
+pnpm dev
 
 # Build et test
-pnpm run build
-pnpm run preview
+pnpm build
+pnpm preview
 
 # Publiez
 git add .
@@ -273,8 +260,8 @@ pnpm outdated
 pnpm update
 
 # Testez
-pnpm run dev
-pnpm run build
+pnpm dev
+pnpm build
 
 # Publiez
 git add .
@@ -306,42 +293,18 @@ find content/ -name "*.png" -exec optipng -o5 {} \;
 - Ajoutez des balises Open Graph
 - Configurez Google Analytics
 
-## Surveillance et analytics
-
-### 1. Google Analytics
-
-Ajoutez le tracking dans `src/app.html` :
-
-```html
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'GA_MEASUREMENT_ID');
-</script>
-```
-
-### 2. Monitoring
-
-- Utilisez Google Search Console
-- Surveillez les erreurs 404
-- Vérifiez la vitesse de chargement
-- Testez l'accessibilité
-
 ## Dépannage
 
 ### Problème : Build échoue
 
 ```bash
 # Nettoyez le cache
-pnpm run clean
+pnpm clean
 rm -rf node_modules package-lock.json
 pnpm install
 
 # Rebuild
-pnpm run build
+pnpm build
 ```
 
 ### Problème : Images manquantes
@@ -357,35 +320,6 @@ pnpm run build
 - Patientez la propagation DNS (24-48h)
 - Vérifiez les paramètres GitHub Pages
 
-### Problème : Site lent
-
-- Optimisez les images
-- Réduisez la taille des vidéos
-- Utilisez un CDN
-- Activez la compression gzip
-
-## Sécurité
-
-### 1. Bonnes pratiques
-
-- Ne commitez jamais de clés API
-- Utilisez des variables d'environnement
-- Mettez à jour les dépendances régulièrement
-- Surveillez les vulnérabilités
-
-### 2. Sauvegarde
-
-```bash
-# Sauvegardez régulièrement
-git add .
-git commit -m "Sauvegarde $(date)"
-git push origin main
-
-# Créez des tags pour les versions importantes
-git tag -a v1.0 -m "Version 1.0"
-git push origin v1.0
-```
-
 ## Ressources utiles
 
 - **GitHub Pages** : https://pages.github.com/
@@ -394,15 +328,6 @@ git push origin v1.0
 - **DNS Checker** : https://dnschecker.org/
 - **PageSpeed Insights** : https://pagespeed.web.dev/
 - **Google Search Console** : https://search.google.com/search-console
-
-## Support
-
-Si vous rencontrez des problèmes :
-
-1. Consultez les logs GitHub Actions
-2. Vérifiez les issues du repository
-3. Testez localement avec `pnpm run dev`
-4. Contactez le support de votre hébergeur
 
 ---
 

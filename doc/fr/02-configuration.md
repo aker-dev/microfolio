@@ -61,6 +61,7 @@ Expliquez votre approche du design/art, vos valeurs, ce qui vous motive.
 Si vous avez un nom de domaine personnalisé :
 
 1. Modifiez le fichier `static/CNAME` et remplacez le contenu par votre domaine :
+
    ```
    monportfolio.com
    ```
@@ -75,6 +76,7 @@ Si vous avez un nom de domaine personnalisé :
 Le site utilise Tailwind CSS v4. Vous pouvez personnaliser les couleurs et le style dans le fichier `src/app.css`.
 
 **Exemple de personnalisation :**
+
 ```css
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 
@@ -82,21 +84,21 @@ Le site utilise Tailwind CSS v4. Vous pouvez personnaliser les couleurs et le st
 @plugin '@tailwindcss/typography';
 
 @theme {
-  --default-font-family: 'IBM Plex Sans', 'sans-serif';
-  
-  /* Personnalisation des couleurs */
-  --color-primary-50: #f0f9ff;
-  --color-primary-500: #3b82f6;
-  --color-primary-900: #1e3a8a;
-  
-  /* Personnalisation des espacements */
-  --spacing-custom: 2.5rem;
+	--default-font-family: 'IBM Plex Sans', 'sans-serif';
+
+	/* Personnalisation des couleurs */
+	--color-primary-50: #f0f9ff;
+	--color-primary-500: #3b82f6;
+	--color-primary-900: #1e3a8a;
+
+	/* Personnalisation des espacements */
+	--spacing-custom: 2.5rem;
 }
 
 /* Styles personnalisés */
 .mon-style-perso {
-  color: var(--color-primary-500);
-  font-family: var(--default-font-family);
+	color: var(--color-primary-500);
+	font-family: var(--default-font-family);
 }
 ```
 
@@ -106,16 +108,16 @@ Modifiez le fichier `src/app.html` pour personnaliser les métadonnées globales
 
 ```html
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portfolio de [Votre Nom]" />
-  <meta name="author" content="[Votre Nom]" />
-  <title>Portfolio - [Votre Nom]</title>
-  
-  <!-- Ajoutez vos propres métadonnées -->
-  <meta property="og:title" content="Portfolio - [Votre Nom]" />
-  <meta property="og:description" content="Découvrez mes créations..." />
-  <meta property="og:image" content="/images/og-image.jpg" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Portfolio de [Votre Nom]" />
+	<meta name="author" content="[Votre Nom]" />
+	<title>Portfolio - [Votre Nom]</title>
+
+	<!-- Ajoutez vos propres métadonnées -->
+	<meta property="og:title" content="Portfolio - [Votre Nom]" />
+	<meta property="og:description" content="Découvrez mes créations..." />
+	<meta property="og:image" content="/images/og-image.jpg" />
 </head>
 ```
 
@@ -134,14 +136,14 @@ Pour utiliser des polices personnalisées :
 
 ```css
 @font-face {
-  font-family: 'MaPolice';
-  src: url('/fonts/mapolice.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'MaPolice';
+	src: url('/fonts/mapolice.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
 }
 
-body {
-  font-family: 'MaPolice', sans-serif;
+@theme {
+	--default-font-family: 'MaPolice', 'sans-serif';
 }
 ```
 
@@ -153,21 +155,23 @@ Pour ajouter Google Analytics :
 
 ```svelte
 <script>
-  import { onMount } from 'svelte';
-  
-  onMount(() => {
-    // Code Google Analytics
-    window.gtag = window.gtag || function() {
-      (window.gtag.q = window.gtag.q || []).push(arguments);
-    };
-    
-    gtag('js', new Date());
-    gtag('config', 'GA_MEASUREMENT_ID');
-  });
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		// Code Google Analytics
+		window.gtag =
+			window.gtag ||
+			function () {
+				(window.gtag.q = window.gtag.q || []).push(arguments);
+			};
+
+		gtag('js', new Date());
+		gtag('config', 'GA_MEASUREMENT_ID');
+	});
 </script>
 
 <svelte:head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
 </svelte:head>
 ```
 
@@ -176,11 +180,13 @@ Pour ajouter Google Analytics :
 ### 4. Personnalisation des modes d'affichage
 
 Le site propose différents modes d'affichage des projets :
+
 - **Grid** : Affichage en grille
 - **List** : Affichage en liste
 - **Map** : Affichage sur carte (si coordonnées GPS)
 
 Vous pouvez personnaliser ces modes dans les fichiers correspondants :
+
 - `src/routes/projects/+page.svelte` (grille)
 - `src/routes/list/+page.svelte` (liste)
 - `src/routes/map/+page.svelte` (carte)
@@ -188,6 +194,7 @@ Vous pouvez personnaliser ces modes dans les fichiers correspondants :
 ### 5. Filtres et catégories
 
 Les projets peuvent être filtrés par :
+
 - **Type** : architecture, design, art, etc.
 - **Localisation** : ville, pays
 - **Année** : période de réalisation
@@ -205,9 +212,6 @@ CUSTOM_DOMAIN=true
 
 # Mode de développement
 NODE_ENV=development
-
-# Autres configurations
-VITE_APP_NAME=Mon Portfolio
 ```
 
 ## Sauvegarde et versioning
@@ -226,7 +230,7 @@ git commit -m "Personnalisation du portfolio"
 
 ## Conseils
 
-- Testez toujours vos modifications avec `pnpm run dev`
+- Testez toujours vos modifications avec `pnpm dev`
 - Gardez vos textes courts et impactants
 - Utilisez des images de haute qualité
 - Vérifiez la compatibilité mobile

@@ -2,7 +2,46 @@
 
 ## Configuration de base
 
-### 1. Informations personnelles
+### 1. Modification du fichier config.js
+
+Le fichier `src/lib/config.js` contient les paramètres principaux de votre portfolio. Voici comment le personnaliser :
+
+```javascript
+// Configuration du site
+export const config = {
+	// Informations générales
+	siteName: 'Mon Portfolio',
+	siteDescription: 'Portfolio de [Votre Nom] - [Votre profession]',
+	author: 'Votre Nom',
+
+	// Navigation
+	navigation: [
+		{ name: 'Accueil', href: '/' },
+		{ name: 'Projets', href: '/projects' },
+		{ name: 'Liste', href: '/list' },
+		{ name: 'Carte', href: '/map' },
+		{ name: 'À propos', href: '/about' }
+	],
+
+	// Liens sociaux
+	social: {
+		email: 'votre@email.com',
+		linkedin: 'https://linkedin.com/in/votre-profil',
+		instagram: 'https://instagram.com/votre-compte',
+		github: 'https://github.com/votre-compte'
+	}
+};
+```
+
+**Personnalisez les sections suivantes :**
+
+- **siteName** : Le nom de votre portfolio
+- **siteDescription** : Description pour le SEO
+- **author** : Votre nom complet
+- **navigation** : Ajustez ou supprimez des liens de navigation
+- **social** : Vos profils sur les réseaux sociaux
+
+### 2. Informations personnelles
 
 Éditez le fichier `content/index.md` pour personnaliser votre page d'accueil :
 
@@ -94,31 +133,6 @@ Le site utilise Tailwind CSS v4. Vous pouvez personnaliser les couleurs et le st
 	/* Personnalisation des espacements */
 	--spacing-custom: 2.5rem;
 }
-
-/* Styles personnalisés */
-.mon-style-perso {
-	color: var(--color-primary-500);
-	font-family: var(--default-font-family);
-}
-```
-
-### 5. Configuration des métadonnées
-
-Modifiez le fichier `src/app.html` pour personnaliser les métadonnées globales :
-
-```html
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Portfolio de [Votre Nom]" />
-	<meta name="author" content="[Votre Nom]" />
-	<title>Portfolio - [Votre Nom]</title>
-
-	<!-- Ajoutez vos propres métadonnées -->
-	<meta property="og:title" content="Portfolio - [Votre Nom]" />
-	<meta property="og:description" content="Découvrez mes créations..." />
-	<meta property="og:image" content="/images/og-image.jpg" />
-</head>
 ```
 
 ## Configuration avancée
@@ -147,37 +161,7 @@ Pour utiliser des polices personnalisées :
 }
 ```
 
-### 3. Google Analytics
-
-Pour ajouter Google Analytics :
-
-1. Créez un fichier `src/lib/components/Analytics.svelte` :
-
-```svelte
-<script>
-	import { onMount } from 'svelte';
-
-	onMount(() => {
-		// Code Google Analytics
-		window.gtag =
-			window.gtag ||
-			function () {
-				(window.gtag.q = window.gtag.q || []).push(arguments);
-			};
-
-		gtag('js', new Date());
-		gtag('config', 'GA_MEASUREMENT_ID');
-	});
-</script>
-
-<svelte:head>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-</svelte:head>
-```
-
-2. Importez-le dans votre layout principal.
-
-### 4. Personnalisation des modes d'affichage
+### 3. Personnalisation des modes d'affichage
 
 Le site propose différents modes d'affichage des projets :
 
@@ -191,17 +175,6 @@ Vous pouvez personnaliser ces modes dans les fichiers correspondants :
 - `src/routes/list/+page.svelte` (liste)
 - `src/routes/map/+page.svelte` (carte)
 
-### 5. Filtres et catégories
-
-Les projets peuvent être filtrés par :
-
-- **Type** : architecture, design, art, etc.
-- **Localisation** : ville, pays
-- **Année** : période de réalisation
-- **Statut** : terminé, en cours, concept
-
-Ces filtres se configurent dans les métadonnées de chaque projet (voir guide suivant).
-
 ## Variables d'environnement
 
 Le fichier `.env` contient les variables importantes :
@@ -209,18 +182,6 @@ Le fichier `.env` contient les variables importantes :
 ```env
 # Configuration du domaine
 CUSTOM_DOMAIN=true
-
-# Mode de développement
-NODE_ENV=development
-```
-
-## Sauvegarde et versioning
-
-N'oubliez pas de sauvegarder vos modifications avec Git :
-
-```bash
-git add .
-git commit -m "Personnalisation du portfolio"
 ```
 
 ## Prochaines étapes

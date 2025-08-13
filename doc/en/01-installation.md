@@ -65,7 +65,8 @@ If you prefer manual installation or encounter problems with Homebrew:
 1. Go to https://nodejs.org/
 2. Download the LTS version (recommended)
 3. Open the downloaded `.pkg` file and follow the wizard
-4. Verify the installation by opening Terminal and typing:
+4. **Close and restart Terminal** for the installation to take effect
+5. Verify the installation by typing:
    ```bash
    node --version
    ```
@@ -80,7 +81,8 @@ If you prefer manual installation or encounter problems with Homebrew:
    ```
 3. An installation software will open automatically
 4. Follow the on-screen instructions to install Xcode development tools
-5. Verify the installation once completed:
+5. **Close and restart Terminal** for the installation to take effect
+6. Verify the installation once completed:
    ```bash
    git --version
    ```
@@ -92,10 +94,7 @@ If you prefer manual installation or encounter problems with Homebrew:
    ```bash
    curl -fsSL https://get.pnpm.io/install.sh | sh
    ```
-3. Restart your terminal or type:
-   ```bash
-   source ~/.zshrc
-   ```
+3. **Close and restart Terminal** for the installation to take effect (or type `source ~/.zshrc` in the current terminal)
 4. Verify the installation:
    ```bash
    pnpm --version
@@ -108,7 +107,8 @@ If you prefer manual installation or encounter problems with Homebrew:
 1. Go to https://nodejs.org/
 2. Download the LTS version (recommended)
 3. Open the downloaded `.msi` file and follow the wizard
-4. Verify the installation by opening PowerShell and typing:
+4. **Close and restart PowerShell** for the installation to take effect
+5. Verify the installation by typing:
    ```bash
    node --version
    ```
@@ -118,7 +118,8 @@ If you prefer manual installation or encounter problems with Homebrew:
 1. Download Git from https://git-scm.com/download/win
 2. Open the `.exe` file and follow the wizard
 3. Leave the default options
-4. Verify the installation:
+4. **Close and restart PowerShell** for the installation to take effect
+5. Verify the installation:
    ```bash
    git --version
    ```
@@ -130,7 +131,8 @@ If you prefer manual installation or encounter problems with Homebrew:
    ```bash
    Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
    ```
-3. Verify the installation:
+3. **Close and restart PowerShell** for the installation to take effect
+4. Verify the installation:
    ```bash
    pnpm --version
    ```

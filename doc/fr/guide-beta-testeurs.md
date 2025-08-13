@@ -106,7 +106,8 @@ Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Hom
 1. Rendez-vous sur https://nodejs.org/
 2. Téléchargez la version LTS (recommandée)
 3. Ouvrez le fichier `.pkg` téléchargé et suivez l'assistant
-4. Vérifiez l'installation en ouvrant le Terminal et tapant :
+4. **Fermez et relancez le Terminal** pour que l'installation soit prise en compte
+5. Vérifiez l'installation en tapant :
    ```bash
    node --version
    ```
@@ -121,7 +122,8 @@ Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Hom
    ```
 3. Un logiciel d'installation va s'ouvrir automatiquement
 4. Suivez les instructions à l'écran pour installer les outils de développement Xcode
-5. Vérifiez l'installation une fois terminée :
+5. **Fermez et relancez le Terminal** pour que l'installation soit prise en compte
+6. Vérifiez l'installation une fois terminée :
    ```bash
    git --version
    ```
@@ -133,10 +135,7 @@ Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Hom
    ```bash
    curl -fsSL https://get.pnpm.io/install.sh | sh
    ```
-3. Redémarrez votre terminal ou tapez :
-   ```bash
-   source ~/.zshrc
-   ```
+3. **Fermez et relancez le Terminal** pour que l'installation soit prise en compte (ou tapez `source ~/.zshrc` dans le terminal actuel)
 4. Vérifiez l'installation :
    ```bash
    pnpm --version
@@ -149,7 +148,8 @@ Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Hom
 1. Rendez-vous sur https://nodejs.org/
 2. Téléchargez la version LTS (recommandée)
 3. Ouvrez le fichier `.msi` téléchargé et suivez l'assistant
-4. Vérifiez l'installation en ouvrant PowerShell et tapant :
+4. **Fermez et relancez PowerShell** pour que l'installation soit prise en compte
+5. Vérifiez l'installation en tapant :
    ```bash
    node --version
    ```
@@ -159,7 +159,8 @@ Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Hom
 1. Téléchargez Git depuis https://git-scm.com/download/win
 2. Ouvrez le fichier `.exe` et suivez l'assistant
 3. Laissez les options par défaut
-4. Vérifiez l'installation :
+4. **Fermez et relancez PowerShell** pour que l'installation soit prise en compte
+5. Vérifiez l'installation :
    ```bash
    git --version
    ```
@@ -171,7 +172,8 @@ Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Hom
    ```bash
    Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
    ```
-3. Vérifiez l'installation :
+3. **Fermez et relancez PowerShell** pour que l'installation soit prise en compte
+4. Vérifiez l'installation :
    ```bash
    pnpm --version
    ```

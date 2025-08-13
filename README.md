@@ -1,6 +1,6 @@
 # microfolio
 
-*[🇫🇷 Lire en français](LISEZMOI.md)*
+_[🇫🇷 Lire en français](LISEZMOI.md)_
 
 A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CSS 4** by AKER. Features a file-based content management system using folders and Markdown files. Perfect for designers, artists, architects, and creatives who want to showcase their projects elegantly and professionally.
 
@@ -60,6 +60,27 @@ pnpm dev
 ```
 
 📖 **Detailed installation guide**: [doc/en/01-installation.md](doc/en/01-installation.md)
+
+## 🖥️ Screenshots
+
+### Homepage Views
+
+![microfolio Homepage 1](doc/screenshots/microfolio_home_01.png)
+![microfolio Homepage 2](doc/screenshots/microfolio_home_02.png)
+
+### Project Views
+
+![microfolio Projects Gallery](doc/screenshots/microfolio_projects.png)
+![microfolio Project Detail 1](doc/screenshots/microfolio_project_01.png)
+![microfolio Project Detail 2](doc/screenshots/microfolio_project_02.png)
+
+### List View
+
+![microfolio List View](doc/screenshots/microfolio_list.png)
+
+### Map View
+
+![microfolio Interactive Map](doc/screenshots/microfolio_map.png)
 
 ## 📚 Documentation
 

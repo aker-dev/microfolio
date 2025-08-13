@@ -1,6 +1,6 @@
 # microfolio
 
-*[🇺🇸 Read in English](README.md)*
+_[🇺🇸 Read in English](README.md)_
 
 Un générateur de portfolio statique moderne développé avec **SvelteKit 2** et **Tailwind CSS 4** par AKER. Il intègre un système de gestion de contenu basé sur des fichiers utilisant des dossiers et des fichiers Markdown. Idéal pour les designers, artistes, architectes et créatifs qui souhaitent présenter leurs projets avec élégance et professionnalisme.
 
@@ -60,6 +60,27 @@ pnpm dev
 ```
 
 📖 **Guide d'installation détaillé** : [doc/fr/01-installation.md](doc/fr/01-installation.md)
+
+## 🖥️ Captures d'écran
+
+### Vues de la page d'accueil
+
+![microfolio Page d'accueil 1](doc/screenshots/microfolio_home_01.png)
+![microfolio Page d'accueil 2](doc/screenshots/microfolio_home_02.png)
+
+### Vues des projets
+
+![microfolio Galerie des projets](doc/screenshots/microfolio_projects.png)
+![microfolio Détail de projet 1](doc/screenshots/microfolio_project_01.png)
+![microfolio Détail de projet 2](doc/screenshots/microfolio_project_02.png)
+
+### Vue liste
+
+![microfolio Vue liste](doc/screenshots/microfolio_list.png)
+
+### Vue carte
+
+![microfolio Carte interactive](doc/screenshots/microfolio_map.png)
 
 ## 📚 Documentation
 

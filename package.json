@@ -13,25 +13,25 @@
 		"deploy": "NODE_ENV=production pnpm run build"
 	},
 	"devDependencies": {
-		"@eslint/compat": "^1.2.5",
-		"@eslint/js": "^9.18.0",
-		"@sveltejs/adapter-auto": "^6.0.0",
-		"@sveltejs/adapter-static": "^3.0.8",
-		"@sveltejs/kit": "^2.22.0",
-		"@sveltejs/vite-plugin-svelte": "^6.0.0",
-		"@tailwindcss/typography": "^0.5.15",
-		"@tailwindcss/vite": "^4.0.0",
-		"@vincjo/datatables": "^2.6.0",
-		"eslint": "^9.18.0",
-		"eslint-config-prettier": "^10.0.1",
-		"eslint-plugin-svelte": "^3.0.0",
-		"globals": "^16.0.0",
-		"prettier": "^3.4.2",
-		"prettier-plugin-svelte": "^3.3.3",
+		"@eslint/compat": "^1.3.2",
+		"@eslint/js": "^9.33.0",
+		"@sveltejs/adapter-auto": "^6.1.0",
+		"@sveltejs/adapter-static": "^3.0.9",
+		"@sveltejs/kit": "^2.29.1",
+		"@sveltejs/vite-plugin-svelte": "^6.1.2",
+		"@tailwindcss/typography": "^0.5.16",
+		"@tailwindcss/vite": "^4.1.11",
+		"@vincjo/datatables": "^2.6.2",
+		"eslint": "^9.33.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.11.0",
+		"globals": "^16.3.0",
+		"prettier": "^3.6.2",
+		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.6.14",
-		"svelte": "^5.0.0",
-		"tailwindcss": "^4.0.0",
-		"vite": "^7.0.4",
+		"svelte": "^5.38.1",
+		"tailwindcss": "^4.1.11",
+		"vite": "^7.1.2",
 		"vite-plugin-static-copy": "^3.1.1"
 	},
 	"pnpm": {
@@ -41,9 +41,9 @@
 	},
 	"packageManager": "pnpm@9.12.0+sha256.a61b67ff6cc97af864564f4442556c22a04f2e5a7714fbee76a1011361d9b726",
 	"dependencies": {
-		"@iconify/svelte": "^5.0.0",
+		"@iconify/svelte": "^5.0.1",
 		"leaflet": "^1.9.4",
-		"marked": "^16.0.0",
-		"yaml": "^2.8.0"
+		"marked": "^16.1.2",
+		"yaml": "^2.8.1"
 	}
 }

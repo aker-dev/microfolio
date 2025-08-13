@@ -13,7 +13,7 @@
 			<a
 				href="https://github.com/aker-dev/microfolio"
 				target="_blank"
-				class="font-medium hover:underline">microfolio</a
+				class="font-medium hover:underline">microfolio {siteConfig.version}</a
 			>
 		</p>
 		<nav>

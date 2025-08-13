@@ -38,7 +38,7 @@
 	// Update map height and invalidate size when window height changes
 	$effect(() => {
 		if (windowHeight > 0) {
-			const height = Math.max(400, Math.min(800, windowHeight * 0.6));
+			const height = Math.max(400, Math.min(600, windowHeight * 0.5));
 			const newMapHeight = `${height}px`;
 
 			// Only update if height actually changed
@@ -251,11 +251,11 @@
 	</div>
 
 	<!-- Map Container -->
-	<div class="relative">
+	<div class="relative overflow-hidden border border-black">
 		<div
 			bind:this={mapContainer}
-			class="w-full border border-black"
-			style="height: {mapHeight}"
+			class="w-full"
+			style="height: {mapHeight}; max-height: 80vh;"
 		></div>
 
 		<!-- Project Card Overlay -->

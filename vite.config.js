@@ -11,12 +11,18 @@ export default defineConfig({
 			targets: [
 				{
 					src: 'content',
-					dest: '.'
+					dest: '.',
+					ignore: ['**/.DS_Store']
 				},
-				...(process.env.CUSTOM_DOMAIN ? [{
-					src: 'static/CNAME',
-					dest: '.'
-				}] : [])
+				...(process.env.CUSTOM_DOMAIN
+					? [
+							{
+								src: 'static/CNAME',
+								dest: '.',
+								ignore: ['**/.DS_Store']
+							}
+						]
+					: [])
 			]
 		})
 	],

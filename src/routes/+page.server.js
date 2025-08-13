@@ -25,6 +25,8 @@ export async function load() {
 		const projects = [];
 
 		for (const folder of projectFolders) {
+			// Skip hidden files and .DS_Store
+			if (folder.startsWith('.')) continue;
 			const projectPath = join(projectsPath, folder);
 			const indexPath = join(projectPath, 'index.md');
 

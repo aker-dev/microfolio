@@ -168,6 +168,7 @@
 					<div class="overflow-hidden bg-neutral-500">
 						<video controls class="w-full" preload="metadata">
 							<source src={video.path} type="video/mp4" />
+							<track kind="captions" />
 							Your browser does not support the video tag.
 						</video>
 						<div class="p-3">

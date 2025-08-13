@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0-beta.4] - 2025-08-13
+
+### Added
+- AkFilters component for project filtering and searching functionality
+- Comprehensive project audit report (French) covering architecture, security, code quality, performance, and testing strategy
+- Screenshots to README and LISEZMOI documentation
+- CLAUDE.md with project overview, development commands, and architecture details
+- Installation instructions for microfolio via Homebrew and manual methods
+- Enhanced Quick Start section with Homebrew installation instructions
+
+### Changed
+- Consolidated project loading logic into loadProjects function
+- Updated installation instructions to emphasize restarting terminal/PowerShell for changes to take effect
+- Updated configuration guide with detailed instructions for customizing config.js and personal information
+- Cleaned and updated documentation (FR/EN)
+- Updated Windows terminal instructions to use PowerShell instead of CMD
+
+### Fixed
+- Map display bug when scrolling or resizing (#3)
+- Updated pnpm packages to latest versions
+- Updated branch name in deploy workflow from main to preview
+- Added captions track to video element in project page
+- Ignore DS_Store files (#2)
+- Include version in footer for better testing
+
+### Removed
+- Removed deploy-content.sh script as it is no longer needed
+
 ## [0.1.0-beta.3] - 2025-07-16
 
 ### Added

@@ -12,7 +12,7 @@ export async function loadProjects() {
 		const projects = [];
 
 		for (const folder of projectFolders) {
-			if (folder.startsWith('.')) continue;
+			if (folder.startsWith('.') || folder.endsWith('.zip')) continue;
 
 			const projectPath = join(projectsPath, folder);
 			const indexPath = join(projectPath, 'index.md');

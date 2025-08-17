@@ -1,29 +1,53 @@
 import adapter from '@sveltejs/adapter-static';
+import { readdir } from 'fs/promises';
+import { join } from 'path';
 
-/** @type {import('@sveltejs/kit').Config} */
-const config = {
-	kit: {
-		// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
-		adapter: adapter({
-			pages: 'build',
-			assets: 'build',
-			fallback: undefined,
-			precompress: false,
-			strict: true
-		}),
-		paths: {
-			base: process.env.CUSTOM_DOMAIN
-				? ''
-				: process.env.NODE_ENV === 'production'
-					? '/microfolio'
-					: ''
-		},
-		prerender: {
-			handleHttpError: 'warn'
+async function createConfig() {
+	const entries = [
+		'/',
+		'/projects',
+		'/list', 
+		'/map',
+		'/about'
+	];
+	
+	try {
+		const projectsPath = join(process.cwd(), 'content/projects');
+		const projectFolders = await readdir(projectsPath);
+		
+		for (const folder of projectFolders) {
+			if (folder.startsWith('.') || folder.endsWith('.zip')) continue;
+			entries.push(`/projects/${folder}`);
 		}
+		
+		console.log(`Generated ${entries.length} prerender entries`);
+	} catch (error) {
+		console.error('Error generating entries:', error);
 	}
-};
 
-export default config;
+	/** @type {import('@sveltejs/kit').Config} */
+	return {
+		kit: {
+			adapter: adapter({
+				pages: 'build',
+				assets: 'build',
+				fallback: undefined,
+				precompress: false,
+				strict: true
+			}),
+			paths: {
+				base: process.env.CUSTOM_DOMAIN
+					? ''
+					: process.env.NODE_ENV === 'production'
+						? '/microfolio'
+						: ''
+			},
+			prerender: {
+				handleHttpError: 'warn',
+				entries
+			}
+		}
+	};
+}
+
+export default await createConfig();

@@ -2,6 +2,7 @@ node_modules
 # Content
 content/projects/*
 !content/projects/example-project/
+!content/projects/example_projects.zip
 
 # Output
 .output

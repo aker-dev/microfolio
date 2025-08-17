@@ -24,8 +24,8 @@ jobs:
 
       - name: Generate example projects
         run: |
-          chmod +x example_projects_generator.sh
-          ./example_projects_generator.sh
+          cd content/projects
+          unzip -o example_projects.zip
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

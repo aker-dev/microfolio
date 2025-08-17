@@ -94,30 +94,3 @@ body {
 .prose code {
 	color: var(--color-primary);
 }
-
-/* Custom Thumbnail Classes */
-.thumbnail {
-	filter: var(--thumbnail-filter);
-	transition: filter 0.3s ease;
-}
-
-.thumbnail:hover {
-	filter: var(--thumbnail-hover-filter);
-}
-
-/* Thumbnail variant classes */
-.thumbnail-always-color {
-	filter: grayscale(0%);
-}
-
-.thumbnail-always-grayscale {
-	filter: grayscale(100%);
-}
-
-.thumbnail-inverted {
-	filter: var(--thumbnail-hover-filter);
-}
-
-.thumbnail-inverted:hover {
-	filter: var(--thumbnail-filter);
-}

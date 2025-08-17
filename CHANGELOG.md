@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0-beta.1] - 2025-08-17
+
+### Fixed
+- **Critical**: Fixed static site generation issue where non-featured projects were not being prerendered, causing 404 errors for projects like residential-renovation
+- Added explicit prerender entries generation to svelte.config.js to ensure all 101+ projects are properly built and accessible
+- Fixed zip file filtering in project loading functions to prevent build errors with example_projects.zip
+
+### Changed
+- Enhanced svelte.config.js to dynamically generate all project routes for static site generation
+- Improved error handling for zip files in content/projects directory
+
 ## [0.1.0-beta.4] - 2025-08-13
 
 ### Added

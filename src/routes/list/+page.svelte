@@ -90,15 +90,15 @@
 				type="text"
 				placeholder="Search projects..."
 				bind:value={searchTerm}
-				class="rounded-lg border border-black px-4 py-2 focus:bg-white focus:outline-none"
+				class="border-primary focus:bg-box rounded-lg border px-4 py-2 focus:outline-none"
 			/>
 			<div class="flex flex-wrap gap-2">
 				{#each projectTypes as type}
 					<button
 						onclick={() => (selectedType = type)}
 						class="rounded-full border px-3 py-1 text-sm capitalize {selectedType === type
-							? 'border-black bg-black text-white'
-							: 'cursor-pointer border-black bg-white text-black hover:bg-black hover:text-white'}"
+							? 'border-primary bg-primary text-box'
+							: 'border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer'}"
 					>
 						{type}
 					</button>
@@ -122,7 +122,7 @@
 		<div class="overflow-x-auto">
 			<Datatable {handler} class="w-full">
 				<table class="w-full">
-					<thead class="bg-white">
+					<thead class="bg-box">
 						<tr>
 							<ThSort {handler} orderBy="title" class="px-4 py-3 text-left">
 								<span class="font-semibold">Title</span>
@@ -149,20 +149,20 @@
 					</thead>
 					<tbody>
 						{#each $rows as project (project.slug)}
-							<tr class="border-t border-neutral-200 hover:bg-white">
+							<tr class="border-primary hover:bg-box border-t">
 								<td class="px-4 py-3">
 									<div class="font-medium">{project.title}</div>
 								</td>
 								<td class="px-4 py-3">
 									<AkBadge>{project.type}</AkBadge>
 								</td>
-								<td class="px-4 py-3 text-sm text-black">
+								<td class="text-primary px-4 py-3 text-sm">
 									{project.location || 'N/A'}
 								</td>
-								<td class="px-4 py-3 text-sm text-black">
+								<td class="text-primary px-4 py-3 text-sm">
 									{formatDate(project.date)}
 								</td>
-								<td class="px-4 py-3 text-sm text-black">
+								<td class="text-primary px-4 py-3 text-sm">
 									{truncateText(project.description)}
 								</td>
 								<td class="px-4 py-3">
@@ -182,7 +182,7 @@
 								<td class="px-4 py-3">
 									<a
 										href="{base}/projects/{project.slug}"
-										class="flex h-8 w-8 items-center justify-center rounded border border-black bg-white hover:bg-black hover:text-white"
+										class="border-primary bg-box hover:bg-primary hover:text-box flex h-8 w-8 items-center justify-center rounded border"
 										title="View project"
 									>
 										<Icon icon="carbon:arrow-right" class="h-4 w-4" />

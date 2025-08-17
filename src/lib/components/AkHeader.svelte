@@ -44,9 +44,9 @@
 	});
 </script>
 
-<header class="sticky top-0 z-5000 mb-8 bg-neutral-100">
+<header class="sticky top-0 z-5000 mb-8 bg-background">
 	<div
-		class="mr-auto ml-auto flex h-32 max-w-7xl items-end justify-between border-b border-solid border-black pr-4 pl-4 md:h-32"
+		class="mr-auto ml-auto flex h-32 max-w-7xl items-end justify-between border-b border-solid border-primary pr-4 pl-4 md:h-32"
 	>
 		<section class="h-15 flex-1">
 			<a href="{base}/">
@@ -60,10 +60,10 @@
 			<ul class="flex h-8 gap-4">
 				{#each siteConfig.navigation as item}
 					<li
-						class="px-2 hover:border-black hover:font-medium {currentPage === base + item.href ||
+						class="px-2 hover:border-primary hover:font-medium {currentPage === base + item.href ||
 						currentPage === base + item.href + '/+page' ||
 						currentPage.startsWith(base + item.href + '/')
-							? 'border-b-2 border-black font-medium'
+							? 'border-b-2 border-primary font-medium'
 							: ''}"
 					>
 						<a href="{base}{item.href}">{item.name}</a>
@@ -84,7 +84,7 @@
 
 	<!-- Mobile Menu -->
 	{#if mobileMenuOpen}
-		<div class="border-t border-solid border-black bg-white md:hidden">
+		<div class="border-t border-solid border-primary bg-box md:hidden">
 			<nav class="mx-auto max-w-7xl px-4 py-4">
 				<ul class="flex flex-col gap-4">
 					{#each siteConfig.navigation as item}

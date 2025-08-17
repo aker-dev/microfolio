@@ -10,7 +10,7 @@
 	<span class="text-sm">Show:</span>
 	<select
 		bind:value={$rowsPerPageStore}
-		class="rounded border border-black bg-white px-2 py-1 text-sm focus:outline-none"
+		class="rounded border border-primary bg-box px-2 py-1 text-sm focus:outline-none"
 	>
 		{#each options as option}
 			<option value={option}>{option}</option>

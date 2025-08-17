@@ -25,7 +25,7 @@
 		<button
 			onclick={previousPage}
 			disabled={$pageNumber === 1}
-			class="rounded border border-black bg-white px-3 py-1 text-sm hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-black"
+			class="rounded border border-primary bg-box px-3 py-1 text-sm hover:bg-primary hover:text-box disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-box disabled:hover:text-primary"
 		>
 			Previous
 		</button>
@@ -33,13 +33,13 @@
 		<!-- Page numbers -->
 		{#each $pages as page}
 			{#if page === '...'}
-				<span class="px-2 py-1 text-sm text-black">...</span>
+				<span class="px-2 py-1 text-sm text-primary">...</span>
 			{:else}
 				<button
 					onclick={() => goToPage(page)}
 					class="rounded border px-3 py-1 text-sm {$pageNumber === page
-						? 'border-black bg-black text-white'
-						: 'border-black bg-white text-black hover:bg-black hover:text-white'}"
+						? 'border-primary bg-primary text-box'
+						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
 				>
 					{page}
 				</button>
@@ -50,7 +50,7 @@
 		<button
 			onclick={nextPage}
 			disabled={$pageNumber === $pageCount}
-			class="rounded border border-black bg-white px-3 py-1 text-sm hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-black"
+			class="rounded border border-primary bg-box px-3 py-1 text-sm hover:bg-primary hover:text-box disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-box disabled:hover:text-primary"
 		>
 			Next
 		</button>

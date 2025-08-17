@@ -209,7 +209,7 @@
 	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects />
 
 	<!-- Map Container -->
-	<div class="relative overflow-hidden border border-black">
+	<div class="border-primary relative overflow-hidden border">
 		<div
 			bind:this={mapContainer}
 			class="w-full"
@@ -224,7 +224,7 @@
 				<div class="relative max-w-sm">
 					<button
 						onclick={closeProjectCard}
-						class="absolute -top-2 -right-2 z-20 cursor-pointer rounded-full bg-white p-2"
+						class="absolute -top-2 -right-2 z-20 cursor-pointer rounded-full bg-white p-2 text-black"
 						aria-label="Close project card"
 					>
 						<Icon icon="carbon:close" class="h-6 w-6" />

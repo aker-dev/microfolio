@@ -16,6 +16,6 @@
 	type="text"
 	placeholder="Search..."
 	bind:value={searchValue}
-	class="rounded-lg border border-black px-4 py-2 focus:bg-white focus:outline-none {className}"
+	class="rounded-lg border border-primary px-4 py-2 focus:bg-box focus:outline-none {className}"
 	{...props}
 />

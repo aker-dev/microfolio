@@ -5,4 +5,105 @@
 
 @theme {
 	--default-font-family: 'IBM Plex Sans', 'sans-serif';
+
+	/* Theme Color Variables */
+	--color-primary: #000000; /* black */
+	--color-background: #f5f5f5; /* neutral-100 */
+	--color-box: #ffffff; /* white */
+}
+
+/* Custom Theme Classes */
+.bg-primary {
+	background-color: var(--color-primary);
+}
+.bg-background {
+	background-color: var(--color-background);
+}
+.bg-box {
+	background-color: var(--color-box);
+}
+
+.text-primary {
+	color: var(--color-primary);
+}
+.text-background {
+	color: var(--color-background);
+}
+.text-box {
+	color: var(--color-box);
+}
+
+.border-primary {
+	border-color: var(--color-primary);
+}
+.border-background {
+	border-color: var(--color-background);
+}
+.border-box {
+	border-color: var(--color-box);
+}
+
+.hover\:bg-primary:hover {
+	background-color: var(--color-primary);
+}
+.hover\:bg-background:hover {
+	background-color: var(--color-background);
+}
+.hover\:bg-box:hover {
+	background-color: var(--color-box);
+}
+
+.hover\:text-primary:hover {
+	color: var(--color-primary);
+}
+.hover\:text-background:hover {
+	color: var(--color-background);
+}
+.hover\:text-box:hover {
+	color: var(--color-box);
+}
+
+.hover\:border-primary:hover {
+	border-color: var(--color-primary);
+}
+.hover\:border-background:hover {
+	border-color: var(--color-background);
+}
+.hover\:border-box:hover {
+	border-color: var(--color-box);
+}
+
+/* Default text color */
+body {
+	color: var(--color-primary);
+}
+
+/* Prose styles to use theme colors */
+.prose {
+	color: var(--color-primary);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+	color: var(--color-primary);
+}
+
+.prose strong {
+	color: var(--color-primary);
+}
+
+.prose a {
+	color: var(--color-primary);
+}
+
+.prose blockquote {
+	color: var(--color-primary);
+}
+
+.prose code {
+	color: var(--color-primary);
 }

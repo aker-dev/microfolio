@@ -6,7 +6,7 @@
 	let { project, class: className } = $props();
 </script>
 
-<a href="{base}/projects/{project.slug}" class="group block overflow-hidden bg-white {className}">
+<a href="{base}/projects/{project.slug}" class="group block overflow-hidden bg-box {className}">
 	<!-- Thumbnail -->
 	<div class="aspect-[4/3] overflow-hidden">
 		<img

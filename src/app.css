@@ -5,11 +5,23 @@
 
 @theme {
 	--default-font-family: 'IBM Plex Sans', 'sans-serif';
+}
 
-	/* Theme Color Variables */
-	--color-primary: #000000; /* black */
-	--color-background: #f5f5f5; /* neutral-100 */
-	--color-box: #ffffff; /* white */
+/* Theme Color Variables */
+:root {
+	/* Light Theme Color Variables */
+	--color-primary: black; /* black */
+	--color-background: oklch(97% 0 0); /* neutral-100 */
+	--color-box: white; /* white */
+}
+
+/* Dark Theme Color Variables */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-primary: white; /* white */
+		--color-background: oklch(20.5% 0 0); /* neutral-900 */
+		--color-box: oklch(26.9% 0 0); /* neutral-800 */
+	}
 }
 
 /* Custom Theme Classes */
@@ -73,9 +85,10 @@
 	border-color: var(--color-box);
 }
 
-/* Default text color */
+/* Default text color and background */
 body {
 	color: var(--color-primary);
+	background-color: var(--color-background);
 }
 
 /* Prose styles to use theme colors */

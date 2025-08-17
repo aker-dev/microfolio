@@ -3,6 +3,9 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+/* Import custom theme classes */
+@import './lib/theme.css';
+
 @theme {
 	--default-font-family: 'IBM Plex Sans', 'sans-serif';
 }
@@ -13,6 +16,10 @@
 	--color-primary: black; /* black */
 	--color-background: oklch(97% 0 0); /* neutral-100 */
 	--color-box: white; /* white */
+
+	/* Thumbnail styles configuration */
+	--thumbnail-filter: grayscale(100%);
+	--thumbnail-hover-filter: grayscale(0%);
 }
 
 /* Dark Theme Color Variables */
@@ -21,102 +28,9 @@
 		--color-primary: white; /* white */
 		--color-background: oklch(20.5% 0 0); /* neutral-900 */
 		--color-box: oklch(26.9% 0 0); /* neutral-800 */
+
+		/* Thumbnail styles for dark theme */
+		--thumbnail-filter: grayscale(100%);
+		--thumbnail-hover-filter: grayscale(0%);
 	}
-}
-
-/* Custom Theme Classes */
-.bg-primary {
-	background-color: var(--color-primary);
-}
-.bg-background {
-	background-color: var(--color-background);
-}
-.bg-box {
-	background-color: var(--color-box);
-}
-
-.text-primary {
-	color: var(--color-primary);
-}
-.text-background {
-	color: var(--color-background);
-}
-.text-box {
-	color: var(--color-box);
-}
-
-.border-primary {
-	border-color: var(--color-primary);
-}
-.border-background {
-	border-color: var(--color-background);
-}
-.border-box {
-	border-color: var(--color-box);
-}
-
-.hover\:bg-primary:hover {
-	background-color: var(--color-primary);
-}
-.hover\:bg-background:hover {
-	background-color: var(--color-background);
-}
-.hover\:bg-box:hover {
-	background-color: var(--color-box);
-}
-
-.hover\:text-primary:hover {
-	color: var(--color-primary);
-}
-.hover\:text-background:hover {
-	color: var(--color-background);
-}
-.hover\:text-box:hover {
-	color: var(--color-box);
-}
-
-.hover\:border-primary:hover {
-	border-color: var(--color-primary);
-}
-.hover\:border-background:hover {
-	border-color: var(--color-background);
-}
-.hover\:border-box:hover {
-	border-color: var(--color-box);
-}
-
-/* Default text color and background */
-body {
-	color: var(--color-primary);
-	background-color: var(--color-background);
-}
-
-/* Prose styles to use theme colors */
-.prose {
-	color: var(--color-primary);
-}
-
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
-	color: var(--color-primary);
-}
-
-.prose strong {
-	color: var(--color-primary);
-}
-
-.prose a {
-	color: var(--color-primary);
-}
-
-.prose blockquote {
-	color: var(--color-primary);
-}
-
-.prose code {
-	color: var(--color-primary);
 }

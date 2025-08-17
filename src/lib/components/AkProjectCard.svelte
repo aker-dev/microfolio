@@ -6,13 +6,13 @@
 	let { project, class: className } = $props();
 </script>
 
-<a href="{base}/projects/{project.slug}" class="group block overflow-hidden bg-box {className}">
+<a href="{base}/projects/{project.slug}" class="group bg-box block overflow-hidden {className}">
 	<!-- Thumbnail -->
 	<div class="aspect-[4/3] overflow-hidden">
 		<img
 			src={project.thumbnailPath}
 			alt={project.title}
-			class="h-full w-full bg-neutral-500 object-cover grayscale transition-all hover:grayscale-0"
+			class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
 			loading="lazy"
 		/>
 	</div>

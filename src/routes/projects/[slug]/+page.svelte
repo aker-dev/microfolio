@@ -73,7 +73,7 @@
 
 <div class="order-last grid grid-cols-1 lg:order-first lg:grid-cols-3 lg:gap-6">
 	<!-- Main content -->
-	<article class="prose prose-neutral col-span-2 mb-12 max-w-none text-primary">
+	<article class="prose prose-neutral text-primary col-span-2 mb-12 max-w-none">
 		<!-- Main thumbnail -->
 		<img
 			src="{base}/content/projects/{project.slug}/thumbnail.jpg"
@@ -87,22 +87,22 @@
 	</article>
 
 	<!-- Header -->
-	<header class="order-first mb-6 bg-box p-6 lg:sticky lg:top-40 lg:order-last lg:self-start">
+	<header class="bg-box order-first mb-6 p-6 lg:sticky lg:top-40 lg:order-last lg:self-start">
 		<a href="{base}/projects" class="mb-4 block text-sm hover:underline">← Back to Projects</a>
 
 		<AkBadge class="mb-2">{project.type}</AkBadge>
 
-		<h2 class="mb-2 text-3xl font-bold text-balance text-primary">
+		<h2 class="text-primary mb-2 text-3xl font-bold text-balance">
 			{project.title}
 			{#if project.featured}
 				<Icon icon="carbon:star-filled" class="inline-block size-8 pb-2" />
 			{/if}
 		</h2>
 
-		<p class="text-lg leading-relaxed text-primary">{project.description}</p>
+		<p class="text-primary text-lg leading-relaxed">{project.description}</p>
 
 		<!-- Location & Date -->
-		<h3 class="mt-2 mb-1 font-medium text-primary">Location & Date</h3>
+		<h3 class="text-primary mt-2 mb-1 font-medium">Location & Date</h3>
 		<div class="text-sm">
 			<span>{project.location} › </span>
 			<span>{new Date(project.date).toISOString().slice(0, 7)}</span>
@@ -110,7 +110,7 @@
 
 		<!-- Authors -->
 		{#if project.authors && project.authors.length > 0}
-			<h3 class="mt-2 mb-1 font-medium text-primary">Team</h3>
+			<h3 class="text-primary mt-2 mb-1 font-medium">Team</h3>
 
 			{#each project.authors as author}
 				<div class="text-sm">
@@ -123,7 +123,7 @@
 		<!-- Tags -->
 
 		{#if project.tags && project.tags.length > 0}
-			<h3 class="mt-2 mb-1 font-medium text-primary">Tags</h3>
+			<h3 class="text-primary mt-2 mb-1 font-medium">Tags</h3>
 
 			<div class="flex flex-wrap gap-2">
 				{#each project.tags as tag}
@@ -150,7 +150,7 @@
 						<img
 							src={image.path}
 							alt={image.name}
-							class="h-full w-full bg-neutral-500 object-cover grayscale transition-all hover:grayscale-0"
+							class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
 							loading="lazy"
 						/>
 					</button>
@@ -172,7 +172,7 @@
 							Your browser does not support the video tag.
 						</video>
 						<div class="p-3">
-							<p class="text-sm text-primary">{video.name}</p>
+							<p class="text-primary text-sm">{video.name}</p>
 						</div>
 					</div>
 				{/each}
@@ -190,14 +190,14 @@
 						href={document.path}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="flex items-center gap-3 bg-box p-4"
+						class="bg-box flex items-center gap-3 p-4"
 					>
 						<div class="flex-shrink-0">
-							<Icon icon="carbon:document" class="h-6 w-6 text-primary" />
+							<Icon icon="carbon:document" class="text-primary h-6 w-6" />
 						</div>
 						<div class="flex-1">
-							<p class="text-sm font-medium text-primary">{document.name}</p>
-							<p class="text-xs text-primary">Click to download</p>
+							<p class="text-primary text-sm font-medium">{document.name}</p>
+							<p class="text-primary text-xs">Click to download</p>
 						</div>
 					</a>
 				{/each}

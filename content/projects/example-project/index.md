@@ -12,6 +12,10 @@ authors:
     role: 'Chief Aligot Architect'
   - name: 'Pomme de Terre'
     role: 'Potato Structural Engineer'
+owner: 'Diocese of Aligot'
+status: 'delivered'
+surface_area: '2 500 m²'
+cost: '12 000 000 €'
 featured: true
 ---
 

@@ -120,8 +120,39 @@
 			{/each}
 		{/if}
 
-		<!-- Tags -->
+		<!-- Project Owner -->
+		{#if project.owner}
+			<h3 class="text-primary mt-2 mb-1 font-medium">Project Owner</h3>
+			<div class="text-sm">
+				{project.owner}
+			</div>
+		{/if}
 
+		<!-- Status -->
+		{#if project.status}
+			<h3 class="text-primary mt-2 mb-1 font-medium">Status</h3>
+			<div class="text-sm capitalize">
+				{project.status}
+			</div>
+		{/if}
+
+		<!-- Surface Area -->
+		{#if project.surface_area}
+			<h3 class="text-primary mt-2 mb-1 font-medium">Surface Area</h3>
+			<div class="text-sm">
+				{project.surface_area}
+			</div>
+		{/if}
+
+		<!-- Cost -->
+		{#if project.cost}
+			<h3 class="text-primary mt-2 mb-1 font-medium">Cost</h3>
+			<div class="text-sm">
+				{project.cost}
+			</div>
+		{/if}
+
+		<!-- Tags -->
 		{#if project.tags && project.tags.length > 0}
 			<h3 class="text-primary mt-2 mb-1 font-medium">Tags</h3>
 

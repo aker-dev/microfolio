@@ -21,7 +21,7 @@ export async function load({ params }) {
 		const htmlContent = marked(markdownContent);
 
 		// Get project resources
-		const resources = await getProjectResources(projectPath);
+		const resources = await getProjectResources(projectPath, slug);
 
 		return {
 			project: {
@@ -37,7 +37,7 @@ export async function load({ params }) {
 	}
 }
 
-async function getProjectResources(projectPath) {
+async function getProjectResources(projectPath, slug) {
 	const resources = {
 		images: [],
 		videos: [],
@@ -53,9 +53,9 @@ async function getProjectResources(projectPath) {
 				.filter((file) => /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(file))
 				.map((file) => ({
 					name: file,
-					path: `${basePath}/content/projects/${projectPath.split('/').pop()}/images/${file}`
+					path: `${basePath}/content/projects/${slug}/images/${file}`
 				}));
-		} catch (e) {
+		} catch {
 			// Images folder doesn't exist, skip
 		}
 
@@ -67,9 +67,9 @@ async function getProjectResources(projectPath) {
 				.filter((file) => /\.(mp4|webm|mov)$/i.test(file))
 				.map((file) => ({
 					name: file,
-					path: `${basePath}/content/projects/${projectPath.split('/').pop()}/videos/${file}`
+					path: `${basePath}/content/projects/${slug}/videos/${file}`
 				}));
-		} catch (e) {
+		} catch {
 			// Videos folder doesn't exist, skip
 		}
 
@@ -81,9 +81,9 @@ async function getProjectResources(projectPath) {
 				.filter((file) => /\.(pdf|doc|docx|ppt|pptx)$/i.test(file))
 				.map((file) => ({
 					name: file,
-					path: `${basePath}/content/projects/${projectPath.split('/').pop()}/documents/${file}`
+					path: `${basePath}/content/projects/${slug}/documents/${file}`
 				}));
-		} catch (e) {
+		} catch {
 			// Documents folder doesn't exist, skip
 		}
 	} catch (error) {

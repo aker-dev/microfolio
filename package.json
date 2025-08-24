@@ -42,6 +42,7 @@
 	"packageManager": "pnpm@9.12.0+sha256.a61b67ff6cc97af864564f4442556c22a04f2e5a7714fbee76a1011361d9b726",
 	"dependencies": {
 		"@iconify/svelte": "^5.0.1",
+		"exifr": "^7.1.3",
 		"leaflet": "^1.9.4",
 		"marked": "^16.1.2",
 		"yaml": "^2.8.1"

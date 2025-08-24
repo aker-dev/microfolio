@@ -2,9 +2,19 @@
 	import { base } from '$app/paths';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import Icon from '@iconify/svelte';
+	import { onMount } from 'svelte';
+	import {
+		extractImageMetadata,
+		formatCreditLine,
+		formatCopyrightNotice,
+		getLicenseInfo
+	} from '$lib/utils/imageMetadata.js';
 
 	let { data } = $props();
 	let project = $derived(data.project);
+
+	// Store metadata for each image
+	let imageMetadata = $state(new Map());
 
 	// Image gallery state
 	let selectedImage = $state(null);
@@ -62,6 +72,39 @@
 			previousImage();
 		}
 	}
+
+	// Load metadata for all images
+	onMount(async () => {
+		if (project.resources?.images) {
+			for (const image of project.resources.images) {
+				try {
+					const metadata = await extractImageMetadata(image.path);
+					if (metadata) {
+						imageMetadata.set(image.path, metadata);
+						// Trigger reactivity
+						imageMetadata = imageMetadata;
+					}
+				} catch (error) {
+					console.warn('Failed to load metadata for image:', image.path, error);
+				}
+			}
+		}
+
+		// Also load metadata for thumbnail
+		if (project.slug) {
+			try {
+				const thumbnailPath = `${base}/content/projects/${project.slug}/thumbnail.jpg`;
+				const thumbnailMetadata = await extractImageMetadata(thumbnailPath);
+				if (thumbnailMetadata) {
+					imageMetadata.set(thumbnailPath, thumbnailMetadata);
+					// Trigger reactivity
+					imageMetadata = imageMetadata;
+				}
+			} catch (error) {
+				console.warn('Failed to load metadata for thumbnail:', error);
+			}
+		}
+	});
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -75,11 +118,50 @@
 	<!-- Main content -->
 	<article class="prose prose-neutral text-primary col-span-2 mb-12 max-w-none">
 		<!-- Main thumbnail -->
-		<img
-			src="{base}/content/projects/{project.slug}/thumbnail.jpg"
-			alt={project.title}
-			class="w-full bg-neutral-500"
-		/>
+		<div class="mb-4">
+			<img
+				src="{base}/content/projects/{project.slug}/thumbnail.jpg"
+				alt={project.title}
+				class="w-full bg-neutral-500"
+			/>
+			<!-- Thumbnail metadata -->
+			{#if imageMetadata.has(`${base}/content/projects/${project.slug}/thumbnail.jpg`)}
+				{@const metadata = imageMetadata.get(
+					`${base}/content/projects/${project.slug}/thumbnail.jpg`
+				)}
+				{@const creditLine = formatCreditLine(metadata)}
+				{@const copyrightNotice = formatCopyrightNotice(metadata)}
+				{@const licenseInfo = getLicenseInfo(metadata)}
+
+				{#if creditLine || copyrightNotice || licenseInfo}
+					<div class="mt-2 space-y-1 text-xs text-neutral-600">
+						{#if creditLine}
+							<div>Photo: {creditLine}</div>
+						{/if}
+						{#if copyrightNotice}
+							<div>© {copyrightNotice}</div>
+						{/if}
+						{#if licenseInfo}
+							<div>
+								License:
+								{#if licenseInfo.url}
+									<a
+										href={licenseInfo.url}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="underline hover:no-underline"
+									>
+										{licenseInfo.text || 'View License'}
+									</a>
+								{:else}
+									{licenseInfo.text}
+								{/if}
+							</div>
+						{/if}
+					</div>
+				{/if}
+			{/if}
+		</div>
 
 		<!-- Content -->
 
@@ -171,20 +253,58 @@
 	{#if project.resources.images && project.resources.images.length > 0}
 		<section class="mb-12">
 			<h2 class="mb-6 text-2xl font-bold">Gallery</h2>
-			<div class="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
+			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 				{#each project.resources.images as image}
-					<button
-						type="button"
-						onclick={() => openLightbox(image)}
-						class="group block aspect-square cursor-pointer overflow-hidden"
-					>
-						<img
-							src={image.path}
-							alt={image.name}
-							class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
-							loading="lazy"
-						/>
-					</button>
+					<div class="group">
+						<button
+							type="button"
+							onclick={() => openLightbox(image)}
+							class="block aspect-[4/3] w-full cursor-pointer overflow-hidden"
+						>
+							<img
+								src={image.path}
+								alt={image.name}
+								class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
+								loading="lazy"
+							/>
+						</button>
+
+						<!-- Image metadata -->
+						{#if imageMetadata.has(image.path)}
+							{@const metadata = imageMetadata.get(image.path)}
+							{@const creditLine = formatCreditLine(metadata)}
+							{@const copyrightNotice = formatCopyrightNotice(metadata)}
+							{@const licenseInfo = getLicenseInfo(metadata)}
+
+							{#if creditLine || copyrightNotice || licenseInfo}
+								<div class="mt-2 space-y-1 text-xs text-neutral-600">
+									{#if creditLine}
+										<div>Photo: {creditLine}</div>
+									{/if}
+									{#if copyrightNotice}
+										<div>© {copyrightNotice}</div>
+									{/if}
+									{#if licenseInfo}
+										<div>
+											License:
+											{#if licenseInfo.url}
+												<a
+													href={licenseInfo.url}
+													target="_blank"
+													rel="noopener noreferrer"
+													class="underline hover:no-underline"
+												>
+													{licenseInfo.text || 'View License'}
+												</a>
+											{:else}
+												{licenseInfo.text}
+											{/if}
+										</div>
+									{/if}
+								</div>
+							{/if}
+						{/if}
+					</div>
 				{/each}
 			</div>
 		</section>
@@ -297,12 +417,141 @@
 				</div>
 			{/if}
 
-			<div class="pointer-events-none">
-				<img
-					src={selectedImage.path}
-					alt={selectedImage.name}
-					class="max-h-[90vh] max-w-[90vw] object-contain shadow-2xl"
-				/>
+			<div class="pointer-events-none flex h-full w-full items-center justify-center">
+				<div class="flex max-h-[90vh] max-w-[95vw] flex-col items-center gap-6 lg:flex-row">
+					<!-- Image -->
+					<div class="flex-shrink-0">
+						<img
+							src={selectedImage.path}
+							alt={selectedImage.name}
+							class="max-h-[70vh] max-w-[90vw] object-contain shadow-2xl lg:max-w-[60vw]"
+						/>
+					</div>
+
+					<!-- Metadata panel -->
+					{#if imageMetadata.has(selectedImage.path)}
+						{@const metadata = imageMetadata.get(selectedImage.path)}
+						<div
+							class="pointer-events-auto max-h-[70vh] max-w-[90vw] space-y-4 overflow-y-auto bg-white/95 p-6 text-sm text-black shadow-xl backdrop-blur-sm lg:max-w-[30vw]"
+						>
+							<h3 class="mb-4 text-lg font-bold">Image Information</h3>
+
+							<!-- Basic info -->
+							<div class="space-y-2">
+								<div><strong>Filename:</strong> {selectedImage.name}</div>
+								{#if metadata.description}
+									<div><strong>Description:</strong> {metadata.description}</div>
+								{/if}
+								{#if metadata.headline}
+									<div><strong>Headline:</strong> {metadata.headline}</div>
+								{/if}
+							</div>
+
+							<!-- Credit information -->
+							{#if formatCreditLine(metadata) || formatCopyrightNotice(metadata) || getLicenseInfo(metadata)}
+								{@const creditLine = formatCreditLine(metadata)}
+								{@const copyrightNotice = formatCopyrightNotice(metadata)}
+								{@const licenseInfo = getLicenseInfo(metadata)}
+								<div class="space-y-2 border-t pt-4">
+									<h4 class="font-semibold">Credits & Rights</h4>
+									{#if creditLine}
+										<div><strong>Credit:</strong> {creditLine}</div>
+									{/if}
+									{#if copyrightNotice}
+										<div><strong>Copyright:</strong> © {copyrightNotice}</div>
+									{/if}
+									{#if licenseInfo}
+										<div>
+											<strong>License:</strong>
+											{#if licenseInfo.url}
+												<a
+													href={licenseInfo.url}
+													target="_blank"
+													rel="noopener noreferrer"
+													class="text-blue-600 underline hover:no-underline"
+												>
+													{licenseInfo.text || 'View License'}
+												</a>
+											{:else}
+												{licenseInfo.text}
+											{/if}
+										</div>
+									{/if}
+								</div>
+							{/if}
+
+							<!-- Technical details -->
+							{#if metadata.camera || metadata.lens || metadata.focalLength || metadata.aperture || metadata.shutterSpeed || metadata.iso}
+								<div class="space-y-2 border-t pt-4">
+									<h4 class="font-semibold">Technical Details</h4>
+									{#if metadata.camera}
+										<div><strong>Camera:</strong> {metadata.camera}</div>
+									{/if}
+									{#if metadata.lens}
+										<div><strong>Lens:</strong> {metadata.lens}</div>
+									{/if}
+									{#if metadata.focalLength}
+										<div><strong>Focal Length:</strong> {metadata.focalLength}</div>
+									{/if}
+									{#if metadata.aperture}
+										<div><strong>Aperture:</strong> {metadata.aperture}</div>
+									{/if}
+									{#if metadata.shutterSpeed}
+										<div><strong>Shutter Speed:</strong> {metadata.shutterSpeed}</div>
+									{/if}
+									{#if metadata.iso}
+										<div><strong>ISO:</strong> {metadata.iso}</div>
+									{/if}
+								</div>
+							{/if}
+
+							<!-- Location and date -->
+							{#if metadata.dateTime || metadata.city || metadata.state || metadata.country || metadata.location || metadata.gps}
+								<div class="space-y-2 border-t pt-4">
+									<h4 class="font-semibold">Location & Date</h4>
+									{#if metadata.dateTime}
+										<div><strong>Date:</strong> {new Date(metadata.dateTime).toLocaleString()}</div>
+									{/if}
+									{#if metadata.location}
+										<div><strong>Location:</strong> {metadata.location}</div>
+									{/if}
+									{#if metadata.city || metadata.state || metadata.country}
+										<div>
+											<strong>Address:</strong>
+											{[metadata.city, metadata.state, metadata.country].filter(Boolean).join(', ')}
+										</div>
+									{/if}
+									{#if metadata.gps}
+										<div>
+											<strong>Coordinates:</strong>
+											<a
+												href="https://maps.google.com/?q={metadata.gps.latitude},{metadata.gps
+													.longitude}"
+												target="_blank"
+												rel="noopener noreferrer"
+												class="text-blue-600 underline hover:no-underline"
+											>
+												{metadata.gps.latitude.toFixed(6)}, {metadata.gps.longitude.toFixed(6)}
+											</a>
+										</div>
+									{/if}
+								</div>
+							{/if}
+
+							<!-- Keywords -->
+							{#if metadata.keywords && metadata.keywords.length > 0}
+								<div class="space-y-2 border-t pt-4">
+									<h4 class="font-semibold">Keywords</h4>
+									<div class="flex flex-wrap gap-1">
+										{#each metadata.keywords as keyword}
+											<span class="bg-gray-200 px-2 py-1 text-xs">{keyword}</span>
+										{/each}
+									</div>
+								</div>
+							{/if}
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>

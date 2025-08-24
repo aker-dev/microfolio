@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0-beta.2] - 2025-08-24
+
+### Added
+- Dark mode theme support
+- EXIF/IPTC metadata extraction and display for project images
+- Project details including owner, status, surface area, and cost display
+- Image hover effect utility class
+- New favicon design
+
+### Changed
+- Updated example project images with demo metadata
+- Streamlined theme color variables and removed redundant styles
+
+### Fixed
+- Updated map link to use OpenStreetMap instead of Google Maps
+- Enhanced copyright notice formatting and added keyword parsing utility
+- Fixed absolute Windows paths in URL handling
+
 ## [0.2.0-beta.1] - 2025-08-17
 
 ### Fixed

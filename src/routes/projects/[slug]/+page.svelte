@@ -525,8 +525,7 @@
 										<div>
 											<strong>Coordinates:</strong>
 											<a
-												href="https://maps.google.com/?q={metadata.gps.latitude},{metadata.gps
-													.longitude}"
+												href="https://www.openstreetmap.org/?mlat={metadata.gps.latitude}&mlon={metadata.gps.longitude}&zoom=15"
 												target="_blank"
 												rel="noopener noreferrer"
 												class="text-blue-600 underline hover:no-underline"

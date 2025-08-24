@@ -139,7 +139,7 @@
 							<div>Photo: {creditLine}</div>
 						{/if}
 						{#if copyrightNotice}
-							<div>© {copyrightNotice}</div>
+							<div>{copyrightNotice}</div>
 						{/if}
 						{#if licenseInfo}
 							<div>
@@ -458,7 +458,7 @@
 										<div><strong>Credit:</strong> {creditLine}</div>
 									{/if}
 									{#if copyrightNotice}
-										<div><strong>Copyright:</strong> © {copyrightNotice}</div>
+										<div><strong>Copyright:</strong> {copyrightNotice}</div>
 									{/if}
 									{#if licenseInfo}
 										<div>

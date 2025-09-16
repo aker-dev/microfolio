@@ -99,6 +99,14 @@
 <div class="order-last grid grid-cols-1 lg:order-first lg:grid-cols-3 lg:gap-6">
 	<!-- Main content -->
 	<article class="prose prose-neutral text-primary col-span-2 mb-12 max-w-none">
+		<!-- Title & Description -->
+		<h2 class="text-4xl font-bold">
+			{#if project.featured}
+				<Icon icon="carbon:star-filled" class="inline-block size-8 pb-2" />
+			{/if}{project.title}
+		</h2>
+		<p class="text-lg">{project.description}</p>
+
 		<!-- Main thumbnail -->
 		<div class="mb-4">
 			<img
@@ -106,12 +114,10 @@
 				alt={project.title}
 				class="w-full bg-neutral-500"
 			/>
-
 			<!-- Thumbnail metadata -->
 		</div>
 
 		<!-- Content -->
-
 		{@html project.content}
 	</article>
 
@@ -120,15 +126,6 @@
 		<a href="{base}/projects" class="mb-4 block text-sm hover:underline">← Back to Projects</a>
 
 		<AkBadge class="mb-2">{project.type}</AkBadge>
-
-		<h2 class="text-primary mb-2 text-3xl font-bold text-balance">
-			{project.title}
-			{#if project.featured}
-				<Icon icon="carbon:star-filled" class="inline-block size-8 pb-2" />
-			{/if}
-		</h2>
-
-		<p class="text-primary text-lg leading-relaxed">{project.description}</p>
 
 		<!-- Location & Date -->
 		<h3 class="text-primary mt-2 mb-1 font-medium">Location & Date</h3>
@@ -220,7 +217,7 @@
 							{@const metadata = imageMetadata.get(image.path)}
 							<div class="text-primary mt-2 text-sm">
 								{#if metadata.headline}
-									<p>{metadata.headline}</p>
+									<p class="font-medium">{metadata.headline}</p>
 								{/if}
 								{#if metadata.description}
 									<p class="italic">{metadata.description}</p>
@@ -249,15 +246,13 @@
 			<h2 class="mb-6 text-2xl font-bold">Videos</h2>
 			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 				{#each project.resources.videos as video}
-					<div class="overflow-hidden bg-neutral-500">
+					<div class="overflow-hidden">
 						<video controls class="w-full" preload="metadata">
 							<source src={video.path} type="video/mp4" />
 							<track kind="captions" />
 							Your browser does not support the video tag.
 						</video>
-						<div class="p-3">
-							<p class="text-primary text-sm">{video.name}</p>
-						</div>
+						<p class="text-primary mt-2 text-sm font-medium">{video.name}</p>
 					</div>
 				{/each}
 			</div>

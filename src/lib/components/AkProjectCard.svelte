@@ -21,13 +21,14 @@
 	<div class="space-y-3 p-4">
 		<div class="flex items-center justify-between">
 			<AkBadge>{project.type}</AkBadge>
+
+			{#if project.featured}
+				<Icon icon="carbon:star-filled" class="inline-block size-6 pb-1" />
+			{/if}
 		</div>
 
 		<h3 class="text-lg font-semibold text-balance">
 			{project.title}
-			{#if project.featured}
-				<Icon icon="carbon:star-filled" class="inline-block size-5 pb-1" />
-			{/if}
 		</h3>
 
 		<p class="line-clamp-2 text-sm">

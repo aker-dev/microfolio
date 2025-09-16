@@ -100,11 +100,7 @@
 	<!-- Main content -->
 	<article class="prose prose-neutral text-primary col-span-2 mb-12 max-w-none">
 		<!-- Title & Description -->
-		<h2 class="text-4xl font-bold">
-			{#if project.featured}
-				<Icon icon="carbon:star-filled" class="inline-block size-8 pb-2" />
-			{/if}{project.title}
-		</h2>
+		<h2 class="text-4xl font-bold">{project.title}</h2>
 		<p class="text-lg">{project.description}</p>
 
 		<!-- Main thumbnail -->
@@ -122,70 +118,81 @@
 	</article>
 
 	<!-- Header -->
-	<header class="bg-box order-first mb-6 p-6 lg:sticky lg:top-40 lg:order-last lg:self-start">
+	<header
+		class="bg-box order-first mb-6 p-6 text-sm lg:sticky lg:top-40 lg:order-last lg:self-start"
+	>
 		<a href="{base}/projects" class="mb-4 block text-sm hover:underline">← Back to Projects</a>
 
 		<AkBadge class="mb-2">{project.type}</AkBadge>
 
+		{#if project.featured}
+			<Icon icon="carbon:star-filled" class="inline-block size-6 pb-1" />
+		{/if}
+
 		<!-- Location & Date -->
-		<h3 class="text-primary mt-2 mb-1 font-medium">Location & Date</h3>
-		<div class="text-sm">
-			<span>{project.location} › </span>
+
+		<div>
+			<span class="font-medium">Location & Date ›</span>
+			<span>{project.location} / </span>
 			<span>{new Date(project.date).toISOString().slice(0, 7)}</span>
 		</div>
 
-		<!-- Authors -->
-		{#if project.authors && project.authors.length > 0}
-			<h3 class="text-primary mt-2 mb-1 font-medium">Team</h3>
-
-			{#each project.authors as author}
-				<div class="text-sm">
-					<span class="font-medium">{author.name}</span>
-					<span class="text-primary">› {author.role}</span>
-				</div>
-			{/each}
+		<!-- Status -->
+		{#if project.status}
+			<div>
+				<span class="font-medium">Status › </span>
+				<span class="capitalize">{project.status}</span>
+			</div>
 		{/if}
 
 		<!-- Project Owner -->
 		{#if project.owner}
-			<h3 class="text-primary mt-2 mb-1 font-medium">Project Owner</h3>
-			<div class="text-sm">
-				{project.owner}
-			</div>
-		{/if}
-
-		<!-- Status -->
-		{#if project.status}
-			<h3 class="text-primary mt-2 mb-1 font-medium">Status</h3>
-			<div class="text-sm capitalize">
-				{project.status}
+			<div class="mt-2">
+				<span class="font-medium">Project Owner › </span>
+				<span>{project.owner}</span>
 			</div>
 		{/if}
 
 		<!-- Surface Area -->
 		{#if project.surface_area}
-			<h3 class="text-primary mt-2 mb-1 font-medium">Surface Area</h3>
-			<div class="text-sm">
-				{project.surface_area}
+			<div>
+				<span class="font-medium">Surface Area › </span>
+				<span>{project.surface_area}</span>
 			</div>
 		{/if}
 
 		<!-- Cost -->
 		{#if project.cost}
-			<h3 class="text-primary mt-2 mb-1 font-medium">Cost</h3>
-			<div class="text-sm">
-				{project.cost}
+			<div>
+				<span class="font-medium">Cost ›</span>
+				<span>{project.cost}</span>
+			</div>
+		{/if}
+
+		<!-- Authors -->
+		{#if project.authors && project.authors.length > 0}
+			<div class="mt-2">
+				<h3 class="text-base font-medium">Team</h3>
+
+				{#each project.authors as author}
+					<div>
+						<span class="font-medium">{author.name}</span>
+						<span>› {author.role}</span>
+					</div>
+				{/each}
 			</div>
 		{/if}
 
 		<!-- Tags -->
 		{#if project.tags && project.tags.length > 0}
-			<h3 class="text-primary mt-2 mb-1 font-medium">Tags</h3>
+			<div class="mt-2">
+				<h3 class="mb-1 text-base font-medium">Tags</h3>
 
-			<div class="flex flex-wrap gap-2">
-				{#each project.tags as tag}
-					<AkBadge small>#{tag}</AkBadge>
-				{/each}
+				<div class="flex flex-wrap gap-2">
+					{#each project.tags as tag}
+						<AkBadge small>#{tag}</AkBadge>
+					{/each}
+				</div>
 			</div>
 		{/if}
 	</header>

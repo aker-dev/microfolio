@@ -3,18 +3,14 @@
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
-	import {
-		extractImageMetadata,
-		formatCreditLine,
-		formatCopyrightNotice,
-		getLicenseInfo
-	} from '$lib/utils/imageMetadata.js';
+	import { extractImageMetadata, formatCreditLine } from '$lib/utils/imageMetadata.js';
 
 	let { data } = $props();
 	let project = $derived(data.project);
 
 	// Store metadata for each image
 	let imageMetadata = $state(new Map());
+	let metadataCount = $state(0);
 
 	// Image gallery state
 	let selectedImage = $state(null);
@@ -81,27 +77,11 @@
 					const metadata = await extractImageMetadata(image.path);
 					if (metadata) {
 						imageMetadata.set(image.path, metadata);
-						// Trigger reactivity
-						imageMetadata = imageMetadata;
+						metadataCount = imageMetadata.size;
 					}
 				} catch (error) {
 					console.warn('Failed to load metadata for image:', image.path, error);
 				}
-			}
-		}
-
-		// Also load metadata for thumbnail
-		if (project.slug) {
-			try {
-				const thumbnailPath = `${base}/content/projects/${project.slug}/thumbnail.jpg`;
-				const thumbnailMetadata = await extractImageMetadata(thumbnailPath);
-				if (thumbnailMetadata) {
-					imageMetadata.set(thumbnailPath, thumbnailMetadata);
-					// Trigger reactivity
-					imageMetadata = imageMetadata;
-				}
-			} catch (error) {
-				console.warn('Failed to load metadata for thumbnail:', error);
 			}
 		}
 	});
@@ -124,43 +104,8 @@
 				alt={project.title}
 				class="w-full bg-neutral-500"
 			/>
-			<!-- Thumbnail metadata -->
-			{#if imageMetadata.has(`${base}/content/projects/${project.slug}/thumbnail.jpg`)}
-				{@const metadata = imageMetadata.get(
-					`${base}/content/projects/${project.slug}/thumbnail.jpg`
-				)}
-				{@const creditLine = formatCreditLine(metadata)}
-				{@const copyrightNotice = formatCopyrightNotice(metadata)}
-				{@const licenseInfo = getLicenseInfo(metadata)}
 
-				{#if creditLine || copyrightNotice || licenseInfo}
-					<div class="mt-2 space-y-1 text-xs text-neutral-600">
-						{#if creditLine}
-							<div>Photo: {creditLine}</div>
-						{/if}
-						{#if copyrightNotice}
-							<div>{copyrightNotice}</div>
-						{/if}
-						{#if licenseInfo}
-							<div>
-								License:
-								{#if licenseInfo.url}
-									<a
-										href={licenseInfo.url}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="underline hover:no-underline"
-									>
-										{licenseInfo.text || 'View License'}
-									</a>
-								{:else}
-									{licenseInfo.text}
-								{/if}
-							</div>
-						{/if}
-					</div>
-				{/if}
-			{/if}
+			<!-- Thumbnail metadata -->
 		</div>
 
 		<!-- Content -->
@@ -270,40 +215,6 @@
 						</button>
 
 						<!-- Image metadata -->
-						{#if imageMetadata.has(image.path)}
-							{@const metadata = imageMetadata.get(image.path)}
-							{@const creditLine = formatCreditLine(metadata)}
-							{@const copyrightNotice = formatCopyrightNotice(metadata)}
-							{@const licenseInfo = getLicenseInfo(metadata)}
-
-							{#if creditLine || copyrightNotice || licenseInfo}
-								<div class="mt-2 space-y-1 text-xs text-neutral-600">
-									{#if creditLine}
-										<div>Photo: {creditLine}</div>
-									{/if}
-									{#if copyrightNotice}
-										<div>© {copyrightNotice}</div>
-									{/if}
-									{#if licenseInfo}
-										<div>
-											License:
-											{#if licenseInfo.url}
-												<a
-													href={licenseInfo.url}
-													target="_blank"
-													rel="noopener noreferrer"
-													class="underline hover:no-underline"
-												>
-													{licenseInfo.text || 'View License'}
-												</a>
-											{:else}
-												{licenseInfo.text}
-											{/if}
-										</div>
-									{/if}
-								</div>
-							{/if}
-						{/if}
 					</div>
 				{/each}
 			</div>
@@ -438,47 +349,21 @@
 
 							<!-- Basic info -->
 							<div class="space-y-2">
-								<div><strong>Filename:</strong> {selectedImage.name}</div>
-								{#if metadata.description}
-									<div><strong>Description:</strong> {metadata.description}</div>
-								{/if}
 								{#if metadata.headline}
 									<div><strong>Headline:</strong> {metadata.headline}</div>
 								{/if}
-							</div>
+								{#if metadata.description}
+									<div><strong>Description:</strong> {metadata.description}</div>
+								{/if}
+								<!-- Credit information -->
+								{#if formatCreditLine(metadata)}
+									{@const creditLine = formatCreditLine(metadata)}
 
-							<!-- Credit information -->
-							{#if formatCreditLine(metadata) || formatCopyrightNotice(metadata) || getLicenseInfo(metadata)}
-								{@const creditLine = formatCreditLine(metadata)}
-								{@const copyrightNotice = formatCopyrightNotice(metadata)}
-								{@const licenseInfo = getLicenseInfo(metadata)}
-								<div class="space-y-2 border-t pt-4">
-									<h4 class="font-semibold">Credits & Rights</h4>
 									{#if creditLine}
 										<div><strong>Credit:</strong> {creditLine}</div>
 									{/if}
-									{#if copyrightNotice}
-										<div><strong>Copyright:</strong> {copyrightNotice}</div>
-									{/if}
-									{#if licenseInfo}
-										<div>
-											<strong>License:</strong>
-											{#if licenseInfo.url}
-												<a
-													href={licenseInfo.url}
-													target="_blank"
-													rel="noopener noreferrer"
-													class="text-blue-600 underline hover:no-underline"
-												>
-													{licenseInfo.text || 'View License'}
-												</a>
-											{:else}
-												{licenseInfo.text}
-											{/if}
-										</div>
-									{/if}
-								</div>
-							{/if}
+								{/if}
+							</div>
 
 							<!-- Technical details -->
 							{#if metadata.camera || metadata.lens || metadata.focalLength || metadata.aperture || metadata.shutterSpeed || metadata.iso}
@@ -525,7 +410,8 @@
 										<div>
 											<strong>Coordinates:</strong>
 											<a
-												href="https://www.openstreetmap.org/?mlat={metadata.gps.latitude}&mlon={metadata.gps.longitude}&zoom=15"
+												href="https://www.openstreetmap.org/?mlat={metadata.gps
+													.latitude}&mlon={metadata.gps.longitude}&zoom=15"
 												target="_blank"
 												rel="noopener noreferrer"
 												class="text-blue-600 underline hover:no-underline"

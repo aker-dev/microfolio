@@ -25,17 +25,8 @@ export async function extractImageMetadata(imageUrl) {
 		// Extract relevant IPTC/EXIF fields for credits and licensing
 		const result = {
 			// Credit information
-			credit: metadata.Credit || metadata.Artist || metadata.Creator || null,
+			credit: metadata.Credit || null,
 			source: metadata.Source || null,
-			byline: metadata['By-line'] || metadata.Artist || null,
-			bylineTitle: metadata['By-line Title'] || null,
-
-			// Copyright and licensing
-			copyright: metadata.Copyright || metadata.CopyrightNotice || null,
-			copyrightNotice: metadata.CopyrightNotice || metadata.Copyright || null,
-			rightsUsageTerms: metadata.RightsUsageTerms || null,
-			usageTerms: metadata.UsageTerms || null,
-			licenseUrl: metadata.LicenseUrl || metadata.WebStatement || null,
 
 			// Description and keywords
 			description: metadata.ImageDescription || metadata.Description || metadata.Caption || null,
@@ -98,20 +89,20 @@ function formatShutterSpeed(exposureTime) {
  */
 function parseKeywords(keywords) {
 	if (!keywords) return null;
-	
+
 	// If it's already an array, return it
 	if (Array.isArray(keywords)) {
 		return keywords;
 	}
-	
+
 	// If it's a string, split by comma or semicolon
 	if (typeof keywords === 'string') {
 		return keywords
 			.split(/[,;]/)
-			.map(keyword => keyword.trim())
-			.filter(keyword => keyword.length > 0);
+			.map((keyword) => keyword.trim())
+			.filter((keyword) => keyword.length > 0);
 	}
-	
+
 	return null;
 }
 
@@ -136,54 +127,4 @@ export function formatCreditLine(metadata) {
 	}
 
 	return parts.length > 0 ? parts.join(' / ') : null;
-}
-
-/**
- * Generate a copyright notice from metadata
- * @param {Object} metadata - Extracted metadata
- * @returns {string|null} Formatted copyright notice
- */
-export function formatCopyrightNotice(metadata) {
-	if (!metadata) return null;
-
-	let copyright = metadata.copyright || metadata.copyrightNotice;
-	
-	if (!copyright) return null;
-	
-	// Remove duplicate © symbols if present
-	copyright = copyright.replace(/^©\s*©\s*/, '© ');
-	copyright = copyright.replace(/^©\s+©\s+/, '© ');
-	
-	// Ensure it starts with © if it doesn't already
-	if (!copyright.startsWith('©')) {
-		copyright = '© ' + copyright;
-	}
-	
-	return copyright;
-}
-
-/**
- * Get license information from metadata
- * @param {Object} metadata - Extracted metadata
- * @returns {Object|null} License information with text and URL
- */
-export function getLicenseInfo(metadata) {
-	if (!metadata) return null;
-
-	const licenseInfo = {
-		text: null,
-		url: null
-	};
-
-	if (metadata.rightsUsageTerms) {
-		licenseInfo.text = metadata.rightsUsageTerms;
-	} else if (metadata.usageTerms) {
-		licenseInfo.text = metadata.usageTerms;
-	}
-
-	if (metadata.licenseUrl) {
-		licenseInfo.url = metadata.licenseUrl;
-	}
-
-	return licenseInfo.text || licenseInfo.url ? licenseInfo : null;
 }

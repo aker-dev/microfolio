@@ -106,20 +106,19 @@
 		<p class="text-lg">{project.description}</p>
 
 		<!-- Back to projects link -->
-		<a href="{base}/projects" class="mb-4 block text-sm hover:underline">← Back to Projects</a>
+		<a href="{base}/projects" class="my-4 block text-sm hover:underline">← Back to Projects</a>
 
 		<!-- Main thumbnail -->
-		<div class="mb-4">
-			<img
-				src="{base}/content/projects/{project.slug}/thumbnail.jpg"
-				alt={project.title}
-				class="w-full"
-			/>
-			<!-- Thumbnail metadata -->
-		</div>
+
+		<img
+			src="{base}/content/projects/{project.slug}/thumbnail.jpg"
+			alt={project.title}
+			class="w-full"
+		/>
+		<!-- Thumbnail metadata -->
 
 		<!-- Content -->
-		<article class="prose prose-neutral text-primary">
+		<article class="prose prose-neutral text-primary mt-8">
 			{@html project.content}
 		</article>
 	</div>

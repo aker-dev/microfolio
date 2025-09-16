@@ -116,9 +116,7 @@ export function formatCreditLine(metadata) {
 
 	const parts = [];
 
-	if (metadata.byline) {
-		parts.push(metadata.byline);
-	} else if (metadata.credit) {
+	if (metadata.credit) {
 		parts.push(metadata.credit);
 	}
 

@@ -72,17 +72,19 @@
 	// Load metadata for all images
 	onMount(async () => {
 		if (project.resources?.images) {
+			const newMetadata = new Map();
 			for (const image of project.resources.images) {
 				try {
 					const metadata = await extractImageMetadata(image.path);
 					if (metadata) {
-						imageMetadata.set(image.path, metadata);
-						metadataCount = imageMetadata.size;
+						newMetadata.set(image.path, metadata);
 					}
 				} catch (error) {
 					console.warn('Failed to load metadata for image:', image.path, error);
 				}
 			}
+			imageMetadata = newMetadata;
+			metadataCount = newMetadata.size;
 		}
 	});
 </script>
@@ -214,25 +216,27 @@
 							/>
 						</button>
 						<!-- Image metadata -->
-						<div class="text-primary mt-2 text-sm">
-							<p class="font-medium">{image.name}</p>
-							{#if imageMetadata.has(image.path)}
-								{@const metadata = imageMetadata.get(image.path)}
+						{#if imageMetadata.has(image.path)}
+							{@const metadata = imageMetadata.get(image.path)}
+							<div class="text-primary mt-2 text-sm">
 								{#if metadata.headline}
-									<p class="italic">{metadata.headline}</p>
+									<p>{metadata.headline}</p>
 								{/if}
 								{#if metadata.description}
-									<p>{metadata.description}</p>
+									<p class="italic">{metadata.description}</p>
 								{/if}
 								{#if formatCreditLine(metadata)}
 									{@const creditLine = formatCreditLine(metadata)}
-
 									{#if creditLine}
-										<p class="mt-1 text-xs text-gray-500">Credit: {creditLine}</p>
+										<p class="mt-1 text-xs">Credit: {creditLine}</p>
 									{/if}
 								{/if}
-							{/if}
-						</div>
+							</div>
+						{:else}
+							<div class="text-primary mt-2 text-sm">
+								<p class="font-medium">{image.name}</p>
+							</div>
+						{/if}
 					</div>
 				{/each}
 			</div>

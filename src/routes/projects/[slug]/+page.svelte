@@ -213,8 +213,26 @@
 								loading="lazy"
 							/>
 						</button>
-
 						<!-- Image metadata -->
+						<div class="text-primary mt-2 text-sm">
+							<p class="font-medium">{image.name}</p>
+							{#if imageMetadata.has(image.path)}
+								{@const metadata = imageMetadata.get(image.path)}
+								{#if metadata.headline}
+									<p class="italic">{metadata.headline}</p>
+								{/if}
+								{#if metadata.description}
+									<p>{metadata.description}</p>
+								{/if}
+								{#if formatCreditLine(metadata)}
+									{@const creditLine = formatCreditLine(metadata)}
+
+									{#if creditLine}
+										<p class="mt-1 text-xs text-gray-500">Credit: {creditLine}</p>
+									{/if}
+								{/if}
+							{/if}
+						</div>
 					</div>
 				{/each}
 			</div>

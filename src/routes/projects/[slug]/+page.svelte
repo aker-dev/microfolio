@@ -96,79 +96,87 @@
 	<meta name="description" content={project.description} />
 </svelte:head>
 
-<div class="order-last grid grid-cols-1 lg:order-first lg:grid-cols-3 lg:gap-6">
+<div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
 	<!-- Main content -->
-	<article class="prose prose-neutral text-primary col-span-2 mb-12 max-w-none">
+	<div class="col-span-2 mb-12 max-w-none">
 		<!-- Title & Description -->
-		<h2 class="text-4xl font-bold">{project.title}</h2>
+		<div>
+			<h2 class="inline-block text-3xl font-bold">{project.title}</h2>
+		</div>
 		<p class="text-lg">{project.description}</p>
+
+		<!-- Back to projects link -->
+		<a href="{base}/projects" class="mb-4 block text-sm hover:underline">← Back to Projects</a>
 
 		<!-- Main thumbnail -->
 		<div class="mb-4">
 			<img
 				src="{base}/content/projects/{project.slug}/thumbnail.jpg"
 				alt={project.title}
-				class="w-full bg-neutral-500"
+				class="w-full"
 			/>
 			<!-- Thumbnail metadata -->
 		</div>
 
 		<!-- Content -->
-		{@html project.content}
-	</article>
+		<article class="prose prose-neutral text-primary">
+			{@html project.content}
+		</article>
+	</div>
 
-	<!-- Header -->
-	<header
-		class="bg-box order-first mb-6 p-6 text-sm lg:sticky lg:top-40 lg:order-last lg:self-start"
-	>
-		<a href="{base}/projects" class="mb-4 block text-sm hover:underline">← Back to Projects</a>
+	<!-- Sidebar -->
+	<aside class="bg-box mb-6 space-y-3 p-6 text-sm lg:sticky lg:top-40 lg:self-start">
+		<div class="flex items-center justify-between">
+			<AkBadge>{project.type}</AkBadge>
 
-		<AkBadge class="mb-2">{project.type}</AkBadge>
+			{#if project.featured}
+				<Icon icon="carbon:star-filled" class="inline-block size-6 pb-1" />
+			{/if}
+		</div>
 
-		{#if project.featured}
-			<Icon icon="carbon:star-filled" class="inline-block size-6 pb-1" />
-		{/if}
-
+		<!-- <h3 class="text-lg font-semibold text-balance">
+			{project.title}
+		</h3> -->
+		<hr />
 		<!-- Location & Date -->
-
 		<div>
+			<h3 class="text-base font-medium">Infos</h3>
 			<span class="font-medium">Location & Date ›</span>
 			<span>{project.location} / </span>
 			<span>{new Date(project.date).toISOString().slice(0, 7)}</span>
+
+			<!-- Status -->
+			{#if project.status}
+				<div>
+					<span class="font-medium">Status › </span>
+					<span class="capitalize">{project.status}</span>
+				</div>
+			{/if}
+
+			<!-- Project Owner -->
+			{#if project.owner}
+				<div>
+					<span class="font-medium">Project Owner › </span>
+					<span>{project.owner}</span>
+				</div>
+			{/if}
+
+			<!-- Surface Area -->
+			{#if project.surface_area}
+				<div>
+					<span class="font-medium">Surface Area › </span>
+					<span>{project.surface_area}</span>
+				</div>
+			{/if}
+
+			<!-- Cost -->
+			{#if project.cost}
+				<div>
+					<span class="font-medium">Cost ›</span>
+					<span>{project.cost}</span>
+				</div>
+			{/if}
 		</div>
-
-		<!-- Status -->
-		{#if project.status}
-			<div>
-				<span class="font-medium">Status › </span>
-				<span class="capitalize">{project.status}</span>
-			</div>
-		{/if}
-
-		<!-- Project Owner -->
-		{#if project.owner}
-			<div class="mt-2">
-				<span class="font-medium">Project Owner › </span>
-				<span>{project.owner}</span>
-			</div>
-		{/if}
-
-		<!-- Surface Area -->
-		{#if project.surface_area}
-			<div>
-				<span class="font-medium">Surface Area › </span>
-				<span>{project.surface_area}</span>
-			</div>
-		{/if}
-
-		<!-- Cost -->
-		{#if project.cost}
-			<div>
-				<span class="font-medium">Cost ›</span>
-				<span>{project.cost}</span>
-			</div>
-		{/if}
-
 		<!-- Authors -->
 		{#if project.authors && project.authors.length > 0}
 			<div class="mt-2">
@@ -195,7 +203,7 @@
 				</div>
 			</div>
 		{/if}
-	</header>
+	</aside>
 </div>
 
 <!-- Resources -->
@@ -215,7 +223,7 @@
 							<img
 								src={image.path}
 								alt={image.name}
-								class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
+								class="image-hover-effect h-full w-full object-cover"
 								loading="lazy"
 							/>
 						</button>

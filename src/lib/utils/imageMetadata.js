@@ -2,6 +2,33 @@ import ExifReader from 'exifreader';
 import { readFile } from 'fs/promises';
 
 /**
+ * Format EXIF date string to ISO date string
+ * @param {string} exifDate - EXIF date string (format: "YYYY:MM:DD HH:MM:SS")
+ * @returns {string|null} ISO date string or null
+ */
+function formatExifDate(exifDate) {
+	if (!exifDate || typeof exifDate !== 'string') return null;
+	
+	try {
+		// EXIF dates are in format "YYYY:MM:DD HH:MM:SS"
+		// Convert to ISO format "YYYY-MM-DD HH:MM:SS"
+		const isoDateString = exifDate.replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3');
+		const date = new Date(isoDateString);
+		
+		// Check if the date is valid
+		if (isNaN(date.getTime())) {
+			console.warn('Invalid EXIF date format:', exifDate);
+			return null;
+		}
+		
+		return date.toISOString();
+	} catch (error) {
+		console.warn('Error parsing EXIF date:', exifDate, error);
+		return null;
+	}
+}
+
+/**
  * Extract EXIF and IPTC metadata from an image
  * @param {string} imageUrl - URL or file path of the image
  * @returns {Promise<Object>} Object containing extracted metadata
@@ -26,13 +53,13 @@ export async function extractImageMetadata(imageUrl) {
 
 		// Parse metadata with ExifReader
 		const metadata = ExifReader.load(arrayBuffer, {
-			expanded: true,
-			includeUnknown: false
+			expanded: true
 		});
 
 		if (!metadata) {
 			return null;
 		}
+
 
 		// Helper function to safely get tag value with UTF-8 encoding
 		const getTagValue = (tagPath) => {
@@ -55,20 +82,52 @@ export async function extractImageMetadata(imageUrl) {
 				}
 				return value;
 			}
+			// Handle arrays (like keywords)
+			if (Array.isArray(current)) {
+				return current.map(item => {
+					if (item && typeof item === 'object' && item.description !== undefined) {
+						return item.description;
+					}
+					return item;
+				});
+			}
 			return current;
 		};
 
 		// GPS coordinates helper
 		const getGpsCoordinates = () => {
-			const gpsLat = getTagValue('gps.GPSLatitude');
-			const gpsLatRef = getTagValue('gps.GPSLatitudeRef');
-			const gpsLon = getTagValue('gps.GPSLongitude');
-			const gpsLonRef = getTagValue('gps.GPSLongitudeRef');
+			// In ExifReader expanded mode, GPS data is in metadata.exif with GPS prefix
+			const exifData = metadata.exif || {};
+			
+			const gpsLat = exifData.GPSLatitude;
+			const gpsLatRef = exifData.GPSLatitudeRef;
+			const gpsLon = exifData.GPSLongitude;
+			const gpsLonRef = exifData.GPSLongitudeRef;
 
-			if (gpsLat && gpsLon) {
-				const lat = gpsLatRef === 'S' ? -gpsLat : gpsLat;
-				const lon = gpsLonRef === 'W' ? -gpsLon : gpsLon;
-				return { latitude: lat, longitude: lon };
+			if (gpsLat && gpsLon && gpsLatRef && gpsLonRef) {
+				try {
+					// ExifReader in expanded mode provides the decimal degrees directly
+					let latDD = gpsLat.description || gpsLat;
+					let lonDD = gpsLon.description || gpsLon;
+					
+					// Convert to numbers if they're strings
+					if (typeof latDD === 'string') latDD = parseFloat(latDD);
+					if (typeof lonDD === 'string') lonDD = parseFloat(lonDD);
+					
+					// Get reference direction
+					const latRef = gpsLatRef.description || gpsLatRef;
+					const lonRef = gpsLonRef.description || gpsLonRef;
+					
+					// Apply direction (negative for South/West)
+					if (latRef === 'S') latDD = -latDD;
+					if (lonRef === 'W') lonDD = -lonDD;
+
+					if (!isNaN(latDD) && !isNaN(lonDD)) {
+						return { latitude: latDD, longitude: lonDD };
+					}
+				} catch (error) {
+					console.warn('Error processing GPS coordinates:', error);
+				}
 			}
 			return null;
 		};
@@ -102,11 +161,11 @@ export async function extractImageMetadata(imageUrl) {
 			iso: getTagValue('exif.ISOSpeedRatings') || getTagValue('exif.ISO') || null,
 
 			// Date and location
-			dateTime:
+			dateTime: formatExifDate(
 				getTagValue('exif.DateTime') ||
 				getTagValue('exif.DateTimeOriginal') ||
-				getTagValue('exif.DateTimeDigitized') ||
-				null,
+				getTagValue('exif.DateTimeDigitized')
+			),
 			gps: getGpsCoordinates(),
 
 			// City and location from IPTC
@@ -142,15 +201,26 @@ function formatShutterSpeed(exposureTime) {
 
 /**
  * Parse keywords from various formats
- * @param {string|array} keywords - Keywords in various formats
+ * @param {string|array|object} keywords - Keywords in various formats
  * @returns {array|null} Array of keyword strings
  */
 function parseKeywords(keywords) {
 	if (!keywords) return null;
 
-	// If it's already an array, return it
+	// If it's already an array, process each item
 	if (Array.isArray(keywords)) {
-		return keywords;
+		return keywords
+			.map(item => {
+				if (typeof item === 'string') {
+					return item;
+				} else if (item && typeof item === 'object' && item.description) {
+					return item.description;
+				} else if (typeof item === 'object') {
+					return String(item);
+				}
+				return item;
+			})
+			.filter(keyword => keyword && keyword.length > 0);
 	}
 
 	// If it's a string, split by comma or semicolon
@@ -159,6 +229,17 @@ function parseKeywords(keywords) {
 			.split(/[,;]/)
 			.map((keyword) => keyword.trim())
 			.filter((keyword) => keyword.length > 0);
+	}
+
+	// If it's an object with description property
+	if (keywords && typeof keywords === 'object' && keywords.description) {
+		const keywordStr = keywords.description;
+		if (typeof keywordStr === 'string') {
+			return keywordStr
+				.split(/[,;]/)
+				.map((keyword) => keyword.trim())
+				.filter((keyword) => keyword.length > 0);
+		}
 	}
 
 	return null;

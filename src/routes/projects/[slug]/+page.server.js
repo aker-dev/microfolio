@@ -1,8 +1,9 @@
-import { readFile, readdir } from 'fs/promises';
+import { readFile, readdir, access } from 'fs/promises';
 import { join } from 'path';
 import { parse } from 'yaml';
 import { marked } from 'marked';
 import { error } from '@sveltejs/kit';
+import { extractImageMetadata } from '$lib/utils/imageMetadata.js';
 
 // Get base path from environment
 const basePath = process.env.NODE_ENV === 'production' ? '/microfolio' : '';
@@ -22,13 +23,17 @@ export async function load({ params }) {
 
 		// Get project resources
 		const resources = await getProjectResources(projectPath, slug);
+		
+		// Load thumbnail metadata
+		const thumbnailMetadata = await loadThumbnailMetadata(projectPath, slug);
 
 		return {
 			project: {
 				slug,
 				...metadata,
 				content: htmlContent,
-				resources
+				resources,
+				thumbnailMetadata
 			}
 		};
 	} catch (err) {
@@ -49,12 +54,27 @@ async function getProjectResources(projectPath, slug) {
 		const imagesPath = join(projectPath, 'images');
 		try {
 			const imageFiles = await readdir(imagesPath);
-			resources.images = imageFiles
+			const imageList = imageFiles
 				.filter((file) => /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(file))
 				.map((file) => ({
 					name: file,
 					path: `${basePath}/content/projects/${slug}/images/${file}`
 				}));
+
+			// Load metadata for each image
+			for (const image of imageList) {
+				try {
+					// Use local file path for metadata extraction
+					const localImagePath = join(imagesPath, image.name);
+					const metadata = await extractImageMetadata(localImagePath);
+					image.metadata = metadata;
+				} catch (error) {
+					console.warn('Failed to load metadata for image:', image.name, error);
+					image.metadata = null;
+				}
+			}
+
+			resources.images = imageList;
 		} catch {
 			// Images folder doesn't exist, skip
 		}
@@ -91,4 +111,20 @@ async function getProjectResources(projectPath, slug) {
 	}
 
 	return resources;
+}
+
+async function loadThumbnailMetadata(projectPath, slug) {
+	const localThumbnailPath = join(projectPath, 'thumbnail.jpg');
+	
+	try {
+		// Check if thumbnail exists
+		await access(localThumbnailPath);
+		
+		// Load metadata using local file path
+		const metadata = await extractImageMetadata(localThumbnailPath);
+		return metadata;
+	} catch (error) {
+		console.warn('Failed to load thumbnail metadata:', localThumbnailPath, error);
+		return null;
+	}
 }

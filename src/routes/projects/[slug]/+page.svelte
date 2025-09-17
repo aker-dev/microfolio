@@ -2,18 +2,17 @@
 	import { base } from '$app/paths';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import Icon from '@iconify/svelte';
-	import { onMount } from 'svelte';
-	import { extractImageMetadata, formatCreditLine } from '$lib/utils/imageMetadata.js';
+	import { formatCreditLine } from '$lib/utils/imageMetadata.js';
 
 	let { data } = $props();
 	let project = $derived(data.project);
 
-	// Store metadata for each image
-	let imageMetadata = $state(new Map());
-	let metadataCount = $state(0);
-
-	// Store thumbnail metadata
-	let thumbnailMetadata = $state(null);
+	// Get server-loaded metadata
+	let thumbnailMetadata = $derived(data.project.thumbnailMetadata);
+	let imageMetadata = $derived(
+		new Map(project.resources?.images?.map(img => [img.path, img.metadata]) || [])
+	);
+	let metadataCount = $derived(imageMetadata.size);
 
 	// Image gallery state
 	let selectedImage = $state(null);
@@ -72,36 +71,7 @@
 		}
 	}
 
-	// Load metadata for all images and thumbnail
-	onMount(async () => {
-		// Load thumbnail metadata
-		const thumbnailPath = `${base}/content/projects/${project.slug}/thumbnail.jpg`;
-		try {
-			const metadata = await extractImageMetadata(thumbnailPath);
-			if (metadata) {
-				thumbnailMetadata = metadata;
-			}
-		} catch (error) {
-			console.warn('Failed to load thumbnail metadata:', thumbnailPath, error);
-		}
-
-		// Load gallery images metadata
-		if (project.resources?.images) {
-			const newMetadata = new Map();
-			for (const image of project.resources.images) {
-				try {
-					const metadata = await extractImageMetadata(image.path);
-					if (metadata) {
-						newMetadata.set(image.path, metadata);
-					}
-				} catch (error) {
-					console.warn('Failed to load metadata for image:', image.path, error);
-				}
-			}
-			imageMetadata = newMetadata;
-			metadataCount = newMetadata.size;
-		}
-	});
+	// No client-side metadata loading needed - data comes from server
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -261,8 +231,8 @@
 							/>
 						</button>
 						<!-- Image metadata -->
-						{#if imageMetadata.has(image.path)}
-							{@const metadata = imageMetadata.get(image.path)}
+						{#if image.metadata}
+							{@const metadata = image.metadata}
 							<div class="text-primary mt-2 text-sm">
 								{#if metadata.headline}
 									<p class="font-medium">{metadata.headline}</p>
@@ -405,8 +375,8 @@
 					</div>
 
 					<!-- Metadata panel -->
-					{#if imageMetadata.has(selectedImage.path)}
-						{@const metadata = imageMetadata.get(selectedImage.path)}
+					{#if selectedImage.metadata}
+						{@const metadata = selectedImage.metadata}
 						<div
 							class="pointer-events-auto max-h-[70vh] max-w-[90vw] space-y-4 overflow-y-auto bg-white/95 p-6 text-sm text-black shadow-xl backdrop-blur-sm lg:max-w-[30vw]"
 						>

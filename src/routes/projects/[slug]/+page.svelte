@@ -9,7 +9,7 @@
 	// Get server-loaded metadata
 	let thumbnailMetadata = $derived(data.project.thumbnailMetadata);
 	let imageMetadata = $derived(
-		new Map(project.resources?.images?.map(img => [img.path, img.metadata]) || [])
+		new Map(project.resources?.images?.map((img) => [img.path, img.metadata]) || [])
 	);
 	let metadataCount = $derived(imageMetadata.size);
 

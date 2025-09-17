@@ -23,7 +23,7 @@ export async function load({ params }) {
 
 		// Get project resources
 		const resources = await getProjectResources(projectPath, slug);
-		
+
 		// Load thumbnail metadata
 		const thumbnailMetadata = await loadThumbnailMetadata(projectPath, slug);
 
@@ -67,12 +67,12 @@ async function getProjectResources(projectPath, slug) {
 					// Use local file path for metadata extraction
 					const localImagePath = join(imagesPath, image.name);
 					const metadata = await extractImageMetadata(localImagePath);
-					
+
 					// Add formatted credit line to metadata
 					if (metadata) {
 						metadata.creditLine = formatCreditLine(metadata);
 					}
-					
+
 					image.metadata = metadata;
 				} catch (error) {
 					console.warn('Failed to load metadata for image:', image.name, error);
@@ -121,19 +121,19 @@ async function getProjectResources(projectPath, slug) {
 
 async function loadThumbnailMetadata(projectPath, slug) {
 	const localThumbnailPath = join(projectPath, 'thumbnail.jpg');
-	
+
 	try {
 		// Check if thumbnail exists
 		await access(localThumbnailPath);
-		
+
 		// Load metadata using local file path
 		const metadata = await extractImageMetadata(localThumbnailPath);
-		
+
 		// Add formatted credit line to metadata
 		if (metadata) {
 			metadata.creditLine = formatCreditLine(metadata);
 		}
-		
+
 		return metadata;
 	} catch (error) {
 		console.warn('Failed to load thumbnail metadata:', localThumbnailPath, error);

@@ -141,11 +141,9 @@ export async function extractImageMetadata(imagePath) {
 					? `${getTagValue('exif.Make')} ${getTagValue('exif.Model')}`
 					: null,
 			lens: getTagValue('exif.LensModel') || null,
-			focalLength: getTagValue('exif.FocalLength') ? `${getTagValue('exif.FocalLength')}mm` : null,
-			aperture: getTagValue('exif.FNumber') ? `f/${getTagValue('exif.FNumber')}` : null,
-			shutterSpeed: getTagValue('exif.ExposureTime')
-				? formatShutterSpeed(getTagValue('exif.ExposureTime'))
-				: null,
+			focalLength: formatFocalLength(getTagValue('exif.FocalLength')),
+			aperture: formatAperture(getTagValue('exif.FNumber')),
+			shutterSpeed: formatShutterSpeed(getTagValue('exif.ExposureTime')),
 			iso: getTagValue('exif.ISOSpeedRatings') || getTagValue('exif.ISO') || null,
 
 			// Date and location
@@ -174,15 +172,96 @@ export async function extractImageMetadata(imagePath) {
 }
 
 /**
+ * Format focal length for display
+ * @param {any} focalLength - Focal length value from EXIF
+ * @returns {string|null} Formatted focal length
+ */
+function formatFocalLength(focalLength) {
+	if (!focalLength) return null;
+	
+	// Extract numeric value from ExifReader object or string
+	let value = focalLength;
+	if (typeof focalLength === 'object' && focalLength.description) {
+		value = focalLength.description;
+	}
+	
+	// If it's a string, extract the number
+	if (typeof value === 'string') {
+		const match = value.match(/(\d+(?:\.\d+)?)/);
+		if (match) {
+			value = parseFloat(match[1]);
+		} else {
+			return value; // Return as-is if we can't parse it
+		}
+	}
+	
+	// If it's a number, format it
+	if (typeof value === 'number' && !isNaN(value)) {
+		return `${value}mm`;
+	}
+	
+	return null;
+}
+
+/**
+ * Format aperture for display
+ * @param {any} fNumber - F-number value from EXIF
+ * @returns {string|null} Formatted aperture
+ */
+function formatAperture(fNumber) {
+	if (!fNumber) return null;
+	
+	// Extract numeric value from ExifReader object or string
+	let value = fNumber;
+	if (typeof fNumber === 'object' && fNumber.description) {
+		value = fNumber.description;
+	}
+	
+	// If it's a string, extract the number
+	if (typeof value === 'string') {
+		const match = value.match(/(\d+(?:\.\d+)?)/);
+		if (match) {
+			value = parseFloat(match[1]);
+		}
+	}
+	
+	// If it's a number, format it
+	if (typeof value === 'number' && !isNaN(value)) {
+		return `f/${value}`;
+	}
+	
+	return null;
+}
+
+/**
  * Format shutter speed for display
- * @param {number} exposureTime - Exposure time in seconds
- * @returns {string} Formatted shutter speed
+ * @param {any} exposureTime - Exposure time value from EXIF
+ * @returns {string|null} Formatted shutter speed
  */
 function formatShutterSpeed(exposureTime) {
-	if (exposureTime >= 1) {
-		return `${exposureTime}s`;
+	if (!exposureTime) return null;
+	
+	// Extract numeric value from ExifReader object or string
+	let value = exposureTime;
+	if (typeof exposureTime === 'object' && exposureTime.description) {
+		value = exposureTime.description;
+	}
+	
+	// If it's a string, try to parse it as a number
+	if (typeof value === 'string') {
+		value = parseFloat(value);
+	}
+	
+	// If it's not a valid number, return null
+	if (typeof value !== 'number' || isNaN(value)) {
+		return null;
+	}
+	
+	// Format based on value
+	if (value >= 1) {
+		return `${value}s`;
 	} else {
-		const fraction = Math.round(1 / exposureTime);
+		const fraction = Math.round(1 / value);
 		return `1/${fraction}s`;
 	}
 }

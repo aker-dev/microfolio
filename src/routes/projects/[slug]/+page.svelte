@@ -2,7 +2,6 @@
 	import { base } from '$app/paths';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import Icon from '@iconify/svelte';
-	import { formatCreditLine } from '$lib/utils/imageMetadata.js';
 
 	let { data } = $props();
 	let project = $derived(data.project);
@@ -108,11 +107,8 @@
 				{#if thumbnailMetadata.description}
 					<p class="italic">{thumbnailMetadata.description}</p>
 				{/if}
-				{#if formatCreditLine(thumbnailMetadata)}
-					{@const creditLine = formatCreditLine(thumbnailMetadata)}
-					{#if creditLine}
-						<p class="mt-1 text-xs">Credit: {creditLine}</p>
-					{/if}
+				{#if thumbnailMetadata.creditLine}
+					<p class="mt-1 text-xs">Credit: {thumbnailMetadata.creditLine}</p>
 				{/if}
 			</div>
 		{:else}
@@ -240,11 +236,8 @@
 								{#if metadata.description}
 									<p class="italic">{metadata.description}</p>
 								{/if}
-								{#if formatCreditLine(metadata)}
-									{@const creditLine = formatCreditLine(metadata)}
-									{#if creditLine}
-										<p class="mt-1 text-xs">Credit: {creditLine}</p>
-									{/if}
+								{#if metadata.creditLine}
+									<p class="mt-1 text-xs">Credit: {metadata.creditLine}</p>
 								{/if}
 							</div>
 						{:else}
@@ -391,12 +384,8 @@
 									<div><strong>Description:</strong> {metadata.description}</div>
 								{/if}
 								<!-- Credit information -->
-								{#if formatCreditLine(metadata)}
-									{@const creditLine = formatCreditLine(metadata)}
-
-									{#if creditLine}
-										<div><strong>Credit:</strong> {creditLine}</div>
-									{/if}
+								{#if metadata.creditLine}
+									<div><strong>Credit:</strong> {metadata.creditLine}</div>
 								{/if}
 							</div>
 

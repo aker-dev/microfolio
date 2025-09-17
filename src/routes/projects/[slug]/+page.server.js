@@ -3,7 +3,7 @@ import { join } from 'path';
 import { parse } from 'yaml';
 import { marked } from 'marked';
 import { error } from '@sveltejs/kit';
-import { extractImageMetadata } from '$lib/utils/imageMetadata.js';
+import { extractImageMetadata, formatCreditLine } from '$lib/utils/imageMetadata.js';
 
 // Get base path from environment
 const basePath = process.env.NODE_ENV === 'production' ? '/microfolio' : '';
@@ -67,6 +67,12 @@ async function getProjectResources(projectPath, slug) {
 					// Use local file path for metadata extraction
 					const localImagePath = join(imagesPath, image.name);
 					const metadata = await extractImageMetadata(localImagePath);
+					
+					// Add formatted credit line to metadata
+					if (metadata) {
+						metadata.creditLine = formatCreditLine(metadata);
+					}
+					
 					image.metadata = metadata;
 				} catch (error) {
 					console.warn('Failed to load metadata for image:', image.name, error);
@@ -122,6 +128,12 @@ async function loadThumbnailMetadata(projectPath, slug) {
 		
 		// Load metadata using local file path
 		const metadata = await extractImageMetadata(localThumbnailPath);
+		
+		// Add formatted credit line to metadata
+		if (metadata) {
+			metadata.creditLine = formatCreditLine(metadata);
+		}
+		
 		return metadata;
 	} catch (error) {
 		console.warn('Failed to load thumbnail metadata:', localThumbnailPath, error);

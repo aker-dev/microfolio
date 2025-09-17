@@ -12,6 +12,9 @@
 	let imageMetadata = $state(new Map());
 	let metadataCount = $state(0);
 
+	// Store thumbnail metadata
+	let thumbnailMetadata = $state(null);
+
 	// Image gallery state
 	let selectedImage = $state(null);
 	let showLightbox = $state(false);
@@ -69,8 +72,20 @@
 		}
 	}
 
-	// Load metadata for all images
+	// Load metadata for all images and thumbnail
 	onMount(async () => {
+		// Load thumbnail metadata
+		const thumbnailPath = `${base}/content/projects/${project.slug}/thumbnail.jpg`;
+		try {
+			const metadata = await extractImageMetadata(thumbnailPath);
+			if (metadata) {
+				thumbnailMetadata = metadata;
+			}
+		} catch (error) {
+			console.warn('Failed to load thumbnail metadata:', thumbnailPath, error);
+		}
+
+		// Load gallery images metadata
 		if (project.resources?.images) {
 			const newMetadata = new Map();
 			for (const image of project.resources.images) {
@@ -109,13 +124,32 @@
 		<a href="{base}/projects" class="my-4 block text-sm hover:underline">← Back to Projects</a>
 
 		<!-- Main thumbnail -->
-
 		<img
 			src="{base}/content/projects/{project.slug}/thumbnail.jpg"
 			alt={project.title}
 			class="w-full"
 		/>
 		<!-- Thumbnail metadata -->
+		{#if thumbnailMetadata}
+			<div class="text-primary mt-4 text-sm">
+				{#if thumbnailMetadata.headline}
+					<p class="font-medium">{thumbnailMetadata.headline}</p>
+				{/if}
+				{#if thumbnailMetadata.description}
+					<p class="italic">{thumbnailMetadata.description}</p>
+				{/if}
+				{#if formatCreditLine(thumbnailMetadata)}
+					{@const creditLine = formatCreditLine(thumbnailMetadata)}
+					{#if creditLine}
+						<p class="mt-1 text-xs">Credit: {creditLine}</p>
+					{/if}
+				{/if}
+			</div>
+		{:else}
+			<div class="text-primary mt-4 text-sm">
+				<p class="font-medium">thumbnail.jpg</p>
+			</div>
+		{/if}
 
 		<!-- Content -->
 		<article class="prose prose-neutral text-primary mt-8">

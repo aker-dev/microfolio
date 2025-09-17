@@ -30,26 +30,14 @@ function formatExifDate(exifDate) {
 
 /**
  * Extract EXIF and IPTC metadata from an image
- * @param {string} imageUrl - URL or file path of the image
+ * @param {string} imagePath - Local file path of the image
  * @returns {Promise<Object>} Object containing extracted metadata
  */
-export async function extractImageMetadata(imageUrl) {
+export async function extractImageMetadata(imagePath) {
 	try {
-		let arrayBuffer;
-
-		// Check if this is a local file path (for server-side rendering)
-		if (imageUrl.startsWith('/') || imageUrl.includes(':\\')) {
-			// Local file path - read directly from filesystem
-			const buffer = await readFile(imageUrl);
-			arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
-		} else {
-			// URL - fetch via HTTP
-			const response = await fetch(imageUrl);
-			if (!response.ok) {
-				throw new Error(`Failed to fetch image: ${response.status}`);
-			}
-			arrayBuffer = await response.arrayBuffer();
-		}
+		// Read image file directly from filesystem
+		const buffer = await readFile(imagePath);
+		const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
 
 		// Parse metadata with ExifReader
 		const metadata = ExifReader.load(arrayBuffer, {
@@ -180,7 +168,7 @@ export async function extractImageMetadata(imageUrl) {
 
 		return result;
 	} catch (error) {
-		console.warn('Failed to extract metadata from image:', imageUrl, error);
+		console.warn('Failed to extract metadata from image:', imagePath, error);
 		return null;
 	}
 }

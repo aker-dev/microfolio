@@ -241,29 +241,54 @@ function formatAperture(fNumber) {
 function formatShutterSpeed(exposureTime) {
 	if (!exposureTime) return null;
 	
-	// Extract numeric value from ExifReader object or string
+	// Extract value from ExifReader object if needed
 	let value = exposureTime;
 	if (typeof exposureTime === 'object' && exposureTime.description) {
 		value = exposureTime.description;
 	}
 	
-	// If it's a string, try to parse it as a number
+	// Handle string values
 	if (typeof value === 'string') {
-		value = parseFloat(value);
+		// Check if it's already a proper fraction like "1/80"
+		const fractionMatch = value.match(/^1\/(\d+)$/);
+		if (fractionMatch) {
+			return `${value}s`;
+		}
+		
+		// Check if it's a general fraction like "3/10"
+		const generalFractionMatch = value.match(/^(\d+)\/(\d+)$/);
+		if (generalFractionMatch) {
+			const numerator = parseInt(generalFractionMatch[1]);
+			const denominator = parseInt(generalFractionMatch[2]);
+			const decimalValue = numerator / denominator;
+			
+			if (decimalValue >= 1) {
+				return `${decimalValue}s`;
+			} else {
+				return `${value}s`;
+			}
+		}
+		
+		// Try to parse as decimal number
+		const numericValue = parseFloat(value);
+		if (!isNaN(numericValue)) {
+			value = numericValue;
+		} else {
+			return null;
+		}
 	}
 	
-	// If it's not a valid number, return null
-	if (typeof value !== 'number' || isNaN(value)) {
-		return null;
+	// Handle numeric values
+	if (typeof value === 'number' && !isNaN(value)) {
+		if (value >= 1) {
+			return `${value}s`;
+		} else {
+			const fraction = Math.round(1 / value);
+			return `1/${fraction}s`;
+		}
 	}
 	
-	// Format based on value
-	if (value >= 1) {
-		return `${value}s`;
-	} else {
-		const fraction = Math.round(1 / value);
-		return `1/${fraction}s`;
-	}
+	return null;
 }
 
 /**

@@ -53,9 +53,9 @@ export async function extractImageMetadata(imageUrl) {
 
 			// City and location from IPTC
 			city: metadata.City || null,
-			state: metadata['Province-State'] || metadata.State || null,
-			country: metadata['Country-Primary Location Name'] || metadata.Country || null,
-			location: metadata['Sub-location'] || metadata.Location || null,
+			state: metadata.State || null,
+			country: metadata.Country || null,
+			location: metadata.Location || null,
 
 			// Raw metadata for advanced display
 			raw: metadata

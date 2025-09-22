@@ -4,8 +4,13 @@ import { parse } from 'yaml';
 import { marked } from 'marked';
 import { error } from '@sveltejs/kit';
 
-// Get base path from environment
-const basePath = process.env.NODE_ENV === 'production' ? '/microfolio' : '';
+// Get base path from environment - same logic as svelte.config.js
+const basePath =
+	process.env.CUSTOM_DOMAIN === 'true'
+		? ''
+		: process.env.NODE_ENV === 'production'
+			? '/microfolio'
+			: '';
 
 export async function load() {
 	const indexPath = join(process.cwd(), 'content/index.md');

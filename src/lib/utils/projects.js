@@ -2,7 +2,13 @@ import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import { parse } from 'yaml';
 
-const basePath = process.env.NODE_ENV === 'production' ? '/microfolio' : '';
+// Get base path from environment - same logic as svelte.config.js
+const basePath =
+	process.env.CUSTOM_DOMAIN === 'true'
+		? ''
+		: process.env.NODE_ENV === 'production'
+			? '/microfolio'
+			: '';
 
 export async function loadProjects() {
 	const projectsPath = join(process.cwd(), 'content/projects');
@@ -14,25 +20,31 @@ export async function loadProjects() {
 		for (const folder of projectFolders) {
 			if (folder.startsWith('.') || folder.endsWith('.zip')) continue;
 
-			const projectPath = join(projectsPath, folder);
-			const indexPath = join(projectPath, 'index.md');
+			const indexPath = join(projectsPath, folder, 'index.md');
 
 			try {
 				const content = await readFile(indexPath, 'utf-8');
 				const [, frontmatter] = content.split('---');
 				const metadata = parse(frontmatter);
 
-				projects.push({
+				const project = {
 					slug: folder,
 					...metadata,
-					thumbnailPath: `${basePath}/content/projects/${folder}/thumbnail.jpg`
-				});
-			} catch (error) {
-				console.warn(`Error reading project ${folder}:`, error);
+					thumbnailSrc: basePath + '/content/projects/' + folder + '/thumbnail.jpg'
+				};
+
+				projects.push(project);
+			} catch (err) {
+				console.warn('Error loading project ' + folder + ':', err);
 			}
 		}
 
-		projects.sort((a, b) => new Date(b.date) - new Date(a.date));
+		// Sort projects by date (newest first) then by featured status
+		projects.sort((a, b) => {
+			if (a.featured && !b.featured) return -1;
+			if (!a.featured && b.featured) return 1;
+			return new Date(b.date) - new Date(a.date);
+		});
 
 		return projects;
 	} catch (error) {

@@ -219,7 +219,9 @@
 
 		<!-- Project Card Overlay -->
 		{#if selectedProject}
-			<div class="bg-box/50 absolute inset-0 z-1000 flex items-center justify-center">
+			<div
+				class="bg-box/60 absolute inset-0 z-1000 flex items-center justify-center backdrop-blur-sm"
+			>
 				<div class="relative max-w-sm">
 					<AkBtnClose class="absolute -top-2 -right-2" onclick={closeProjectCard} />
 					<AkProjectCard project={selectedProject} />

@@ -1,6 +1,7 @@
 <script>
 	import { base } from '$app/paths';
 	import AkBadge from '$lib/components/AkBadge.svelte';
+	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
 	import Icon from '@iconify/svelte';
 
 	let { data } = $props();
@@ -347,17 +348,13 @@
 			{/if}
 
 			<!-- Close button -->
-			<button
-				type="button"
+			<AkBtnClose
+				class="absolute top-4 right-4"
 				onclick={(e) => {
 					e.stopPropagation();
 					closeLightbox();
 				}}
-				class="absolute top-4 right-4 z-30 cursor-pointer rounded-full bg-black p-2 text-white"
-				aria-label="Close lightbox"
-			>
-				<Icon icon="carbon:close" class="h-6 w-6" />
-			</button>
+			/>
 
 			<!-- Navigation arrows -->
 			{#if project.resources?.images && project.resources.images.length > 1}
@@ -368,7 +365,7 @@
 						e.stopPropagation();
 						previousImage();
 					}}
-					class="absolute left-4 top-1/2 z-30 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-3 text-white transition-all hover:bg-black"
+					class="absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-3 text-white transition-all hover:bg-black"
 					aria-label="Previous image"
 				>
 					<Icon icon="carbon:chevron-left" class="h-8 w-8" />
@@ -381,7 +378,7 @@
 						e.stopPropagation();
 						nextImage();
 					}}
-					class="absolute right-4 top-1/2 z-30 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-3 text-white transition-all hover:bg-black"
+					class="absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-3 text-white transition-all hover:bg-black"
 					aria-label="Next image"
 				>
 					<Icon icon="carbon:chevron-right" class="h-8 w-8" />
@@ -441,8 +438,8 @@
 								<div>
 									<strong>Coordinates:</strong>
 									<a
-										href="https://www.openstreetmap.org/?mlat={metadata.gps
-											.latitude}&mlon={metadata.gps.longitude}&zoom=15"
+										href="https://www.openstreetmap.org/?mlat={metadata.gps.latitude}&mlon={metadata
+											.gps.longitude}&zoom=15"
 										target="_blank"
 										rel="noopener noreferrer"
 										class="text-blue-600 underline hover:no-underline"
@@ -477,7 +474,7 @@
 							alt={selectedImage.name}
 							class="max-h-[60vh] max-w-[90vw] object-contain shadow-2xl lg:max-w-[60vw]"
 						/>
-						
+
 						<!-- Basic info under image -->
 						<div class="pointer-events-auto max-w-[90vw] text-center text-white lg:max-w-[60vw]">
 							{#if selectedImage.metadata?.headline}
@@ -492,7 +489,7 @@
 								<p class="mt-1 text-xs">Credit: {selectedImage.metadata.creditLine}</p>
 							{/if}
 						</div>
-						
+
 						<!-- Image counter -->
 						{#if project.resources?.images && project.resources.images.length > 1}
 							<div class="rounded-full bg-black px-3 py-1 text-sm text-white">
@@ -500,7 +497,6 @@
 							</div>
 						{/if}
 					</div>
-
 				</div>
 			</div>
 		</div>

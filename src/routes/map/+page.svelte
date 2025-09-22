@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
+	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
 	import Icon from '@iconify/svelte';
 
 	let { data } = $props();
@@ -218,17 +219,9 @@
 
 		<!-- Project Card Overlay -->
 		{#if selectedProject}
-			<div
-				class="bg-opacity-50 absolute inset-0 z-1000 flex items-center justify-center bg-black/80"
-			>
+			<div class="absolute inset-0 z-1000 flex items-center justify-center bg-black/80">
 				<div class="relative max-w-sm">
-					<button
-						onclick={closeProjectCard}
-						class="absolute -top-2 -right-2 z-20 cursor-pointer rounded-full bg-white p-2 text-black"
-						aria-label="Close project card"
-					>
-						<Icon icon="carbon:close" class="h-6 w-6" />
-					</button>
+					<AkBtnClose class="absolute -top-2 -right-2" onclick={closeProjectCard} />
 					<AkProjectCard project={selectedProject} />
 				</div>
 			</div>

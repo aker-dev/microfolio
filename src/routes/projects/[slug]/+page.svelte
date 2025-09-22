@@ -359,6 +359,35 @@
 				<Icon icon="carbon:close" class="h-6 w-6" />
 			</button>
 
+			<!-- Navigation arrows -->
+			{#if project.resources?.images && project.resources.images.length > 1}
+				<!-- Previous arrow -->
+				<button
+					type="button"
+					onclick={(e) => {
+						e.stopPropagation();
+						previousImage();
+					}}
+					class="absolute left-4 top-1/2 z-30 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-3 text-white transition-all hover:bg-black"
+					aria-label="Previous image"
+				>
+					<Icon icon="carbon:chevron-left" class="h-8 w-8" />
+				</button>
+
+				<!-- Next arrow -->
+				<button
+					type="button"
+					onclick={(e) => {
+						e.stopPropagation();
+						nextImage();
+					}}
+					class="absolute right-4 top-1/2 z-30 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-3 text-white transition-all hover:bg-black"
+					aria-label="Next image"
+				>
+					<Icon icon="carbon:chevron-right" class="h-8 w-8" />
+				</button>
+			{/if}
+
 			<!-- Technical info overlay -->
 			{#if showTechnicalInfo && selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
 				{@const metadata = selectedImage.metadata}

@@ -14,6 +14,9 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 - **🏷️ Smart Tagging** - Advanced filtering system
 - **🗺️ Interactive Map** - Leaflet integration
 - **🚀 Static Generation** - Optimal performance
+- **🖼️ Image Lightbox** - Enhanced gallery with navigation arrows and metadata display
+- **📊 EXIF/IPTC Metadata** - Automatic extraction and display of image technical information
+- **🌙 Dark Mode** - Built-in theme support for better viewing experience
 
 ## 🧪 Beta Testing Program
 

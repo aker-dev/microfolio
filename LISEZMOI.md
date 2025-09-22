@@ -14,6 +14,9 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 - **🏷️ Étiquetage intelligent** - Système de filtrage avancé
 - **🗺️ Carte interactive** - Intégration Leaflet
 - **🚀 Génération statique** - Performances optimisées
+- **🖼️ Lightbox d'images** - Galerie améliorée avec navigation et affichage des métadonnées
+- **📊 Métadonnées EXIF/IPTC** - Extraction et affichage automatique des informations techniques d'images
+- **🌙 Mode sombre** - Support de thème intégré pour une meilleure expérience de visualisation
 
 ## 🧪 Programme de beta tests
 

@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0-beta.1] - 2025-09-22
+
+### Added
+- Navigation arrows for image lightbox for better gallery navigation
+- Toggle for displaying technical information in image lightbox
+- Image metadata display in project gallery with EXIF/IPTC data
+- Thumbnail metadata loading and display in project view
+- Server-side image metadata loading for improved performance
+- GitHub Sponsors funding configuration
+- Initial landing page with Tailwind CSS styling for microfolio.net
+
+### Changed
+- Migrated image metadata loading to server-side for better performance
+- Enhanced project display with improved title, description, and metadata styling
+- Replaced exifr with ExifReader for improved metadata extraction
+- Moved formatCreditLine processing to server-side
+- Updated packages to latest versions
+- Moved loadProjects function to utils and updated imports
+
+### Fixed
+- Enhanced lightbox display functionality
+- Improved thumbnail and image metadata rendering with optional chaining
+- Added custom color for list item markers in prose styles
+- Corrected shutter speed formatting for fractional values
+- Improved technical metadata formatting consistency
+- Simplified metadata extraction for location fields
+- Fixed GPS coordinates display
+- Adjusted spacing and layout for project description and thumbnail
+- Improved layout and styling of project details and sidebar
+- Adjusted featured project icon placement and improved layout consistency
+- Optimized image metadata loading and display formatting
+- Streamlined credit line formatting by prioritizing credit over byline
+
+### Refactored
+- Simplified imageMetadata to only handle local files
+- Simplified image metadata extraction and removed unused functions
+
 ## [0.2.0-beta.2] - 2025-08-24
 
 ### Added

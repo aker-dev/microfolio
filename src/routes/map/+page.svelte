@@ -74,7 +74,7 @@
 		// Fix default marker icons
 		delete L.Icon.Default.prototype._getIconUrl;
 		L.Icon.Default.mergeOptions({
-			iconRetinaUrl: '/marker-icon-2x.png',
+			iconRetinaUrl: '/marker-icon@2x.png',
 			iconUrl: '/marker-icon.png',
 			shadowUrl: '/marker-shadow.png'
 		});
@@ -156,10 +156,28 @@
 				console.log('Creating marker at', lat, lng);
 
 				try {
+					// Create custom icon based on featured status
+					const iconOptions = project.featured
+						? {
+								iconUrl: '/marker-featured.png',
+								iconRetinaUrl: '/marker-featured@2x.png',
+								shadowUrl: '/marker-shadow.png',
+								iconSize: [25, 41],
+								iconAnchor: [12, 41],
+								popupAnchor: [1, -34],
+								shadowSize: [41, 41]
+						  }
+						: undefined; // Use default icons
+
 					// Create custom marker
-					const marker = L.marker([lat, lng], {
-						title: project.title
-					}).addTo(map);
+					const marker = iconOptions
+						? L.marker([lat, lng], {
+								title: project.title,
+								icon: L.icon(iconOptions)
+						  }).addTo(map)
+						: L.marker([lat, lng], {
+								title: project.title
+						  }).addTo(map);
 
 					// Add click handler to show project card
 					marker.on('click', () => {

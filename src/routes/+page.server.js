@@ -43,7 +43,7 @@ export async function load() {
 				projects.push({
 					slug: folder,
 					...projectMetadata,
-					thumbnailPath: `${basePath}/content/projects/${folder}/thumbnail.jpg`
+					thumbnailSrc: `${basePath}/content/projects/${folder}/thumbnail.jpg`
 				});
 			} catch (error) {
 				console.warn(`Error reading project ${folder}:`, error);

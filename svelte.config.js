@@ -1,6 +1,10 @@
 import adapter from '@sveltejs/adapter-static';
 import { readdir } from 'fs/promises';
 import { join } from 'path';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 async function createConfig() {
 	const entries = [
@@ -36,7 +40,7 @@ async function createConfig() {
 				strict: true
 			}),
 			paths: {
-				base: process.env.CUSTOM_DOMAIN
+				base: process.env.CUSTOM_DOMAIN === 'true'
 					? ''
 					: process.env.NODE_ENV === 'production'
 						? '/microfolio'

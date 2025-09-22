@@ -34,7 +34,7 @@
 			type="text"
 			placeholder="Search projects..."
 			bind:value={searchTerm}
-			class="rounded-lg border border-primary px-4 py-2 focus:bg-box focus:outline-none"
+			class="border-primary focus:bg-box rounded-lg border px-4 py-2 focus:outline-none"
 		/>
 		<div class="flex flex-wrap gap-2">
 			{#each projectTypes as type}
@@ -42,7 +42,7 @@
 					onclick={() => (selectedType = type)}
 					class="rounded-full border px-3 py-1 text-sm capitalize {selectedType === type
 						? 'border-primary bg-primary text-box'
-						: 'cursor-pointer border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
+						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer'}"
 				>
 					{type}
 				</button>

@@ -338,53 +338,50 @@
 				<Icon icon="carbon:close" class="h-6 w-6" />
 			</button>
 
-			<!-- Image counter -->
-			{#if project.resources?.images && project.resources.images.length > 1}
-				<div
-					class="absolute -bottom-2 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black px-3 py-1 text-sm text-white"
-				>
-					{currentImageIndex + 1} / {project.resources.images.length}
-				</div>
-			{/if}
-
 			<div class="pointer-events-none flex h-full w-full items-center justify-center">
 				<div class="flex max-h-[90vh] max-w-[95vw] flex-col items-center gap-6 lg:flex-row">
-					<!-- Image -->
-					<div class="flex-shrink-0">
+					<!-- Image section -->
+					<div class="flex flex-col items-center gap-4">
 						<img
 							src={selectedImage.path}
 							alt={selectedImage.name}
-							class="max-h-[70vh] max-w-[90vw] object-contain shadow-2xl lg:max-w-[60vw]"
+							class="max-h-[60vh] max-w-[90vw] object-contain shadow-2xl lg:max-w-[60vw]"
 						/>
+						
+						<!-- Basic info under image -->
+						<div class="pointer-events-auto max-w-[90vw] text-center text-white lg:max-w-[60vw]">
+							{#if selectedImage.metadata?.headline}
+								<p class="text-lg font-medium">{selectedImage.metadata.headline}</p>
+							{:else}
+								<p class="text-lg font-medium">{selectedImage.name}</p>
+							{/if}
+							{#if selectedImage.metadata?.description}
+								<p class="mt-1 text-sm italic">{selectedImage.metadata.description}</p>
+							{/if}
+							{#if selectedImage.metadata?.creditLine}
+								<p class="mt-1 text-xs">Credit: {selectedImage.metadata.creditLine}</p>
+							{/if}
+						</div>
+						
+						<!-- Image counter -->
+						{#if project.resources?.images && project.resources.images.length > 1}
+							<div class="rounded-full bg-black px-3 py-1 text-sm text-white">
+								{currentImageIndex + 1} / {project.resources.images.length}
+							</div>
+						{/if}
 					</div>
 
-					<!-- Metadata panel -->
-					{#if selectedImage.metadata || selectedImage.name}
+					<!-- Technical Metadata panel -->
+					{#if selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
 						{@const metadata = selectedImage.metadata}
 						<div
 							class="pointer-events-auto max-h-[70vh] max-w-[90vw] space-y-4 overflow-y-auto bg-white/95 p-6 text-sm text-black shadow-xl backdrop-blur-sm lg:max-w-[30vw]"
 						>
-							<h3 class="mb-4 text-lg font-bold">Image Information</h3>
-
-							<!-- Basic info -->
-							<div class="space-y-2">
-								{#if metadata?.headline}
-									<div><strong>Headline:</strong> {metadata.headline}</div>
-								{:else}
-									<div><strong>Filename:</strong> {selectedImage.name}</div>
-								{/if}
-								{#if metadata?.description}
-									<div><strong>Description:</strong> {metadata.description}</div>
-								{/if}
-								<!-- Credit information -->
-								{#if metadata?.creditLine}
-									<div><strong>Credit:</strong> {metadata.creditLine}</div>
-								{/if}
-							</div>
+							<h3 class="mb-4 text-lg font-bold">Technical Information</h3>
 
 							<!-- Technical details -->
 							{#if metadata?.camera || metadata?.lens || metadata?.focalLength || metadata?.aperture || metadata?.shutterSpeed || metadata?.iso}
-								<div class="space-y-2 border-t pt-4">
+								<div class="space-y-2">
 									<h4 class="font-semibold">Technical Details</h4>
 									{#if metadata.camera}
 										<div><strong>Camera:</strong> {metadata.camera}</div>

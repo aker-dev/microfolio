@@ -94,3 +94,11 @@ body {
 .prose code {
 	color: var(--color-primary);
 }
+
+.prose ul > li::marker {
+	color: var(--color-primary);
+}
+
+.prose ol > li::marker {
+	color: var(--color-primary);
+}

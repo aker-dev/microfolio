@@ -10,15 +10,20 @@
 	let projectTypes = $derived(['all', ...new Set(projects.map((p) => p.type))]);
 
 	$effect(() => {
-		filteredProjects = projects.filter((project) => {
-			const matchesType = selectedType === 'all' || project.type === selectedType;
-			const matchesSearch =
-				searchTerm === '' ||
-				project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				project.tags?.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-			return matchesType && matchesSearch;
-		});
+		filteredProjects = projects
+			.filter((project) => {
+				const matchesType = selectedType === 'all' || project.type === selectedType;
+				const matchesSearch =
+					searchTerm === '' ||
+					project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					project.tags?.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+				return matchesType && matchesSearch;
+			})
+			.sort((a, b) => {
+				// Sort by date only (newest first)
+				return new Date(b.date) - new Date(a.date);
+			});
 	});
 </script>
 

@@ -39,10 +39,8 @@ export async function loadProjects() {
 			}
 		}
 
-		// Sort projects by date (newest first) then by featured status
+		// Sort projects by date only (newest first)
 		projects.sort((a, b) => {
-			if (a.featured && !b.featured) return -1;
-			if (!a.featured && b.featured) return 1;
 			return new Date(b.date) - new Date(a.date);
 		});
 

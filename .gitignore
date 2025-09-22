@@ -15,6 +15,7 @@ content/projects/*
 # OS
 .DS_Store
 Thumbs.db
+*~lock~
 
 # Env
 .env

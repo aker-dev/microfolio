@@ -1,21 +1,17 @@
 #!/usr/bin/env node
 
-import { config } from 'dotenv';
+import dotenv from 'dotenv';
 import { spawn } from 'child_process';
 
 // Load environment variables from .env file
-config();
+dotenv.config();
 
-// Pass all environment variables to the child process
-const env = { ...process.env };
-
-// Run vite build with the loaded environment variables
-const child = spawn('vite', ['build'], {
+// Run vite build
+const vite = spawn('npx', ['vite', 'build'], {
 	stdio: 'inherit',
-	env,
-	shell: true
+	env: process.env
 });
 
-child.on('exit', (code) => {
+vite.on('close', (code) => {
 	process.exit(code);
 });

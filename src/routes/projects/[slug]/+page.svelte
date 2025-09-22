@@ -17,6 +17,7 @@
 	let selectedImage = $state(null);
 	let showLightbox = $state(false);
 	let currentImageIndex = $state(0);
+	let showTechnicalInfo = $state(false);
 
 	function openLightbox(image) {
 		selectedImage = image;
@@ -31,6 +32,11 @@
 		showLightbox = false;
 		selectedImage = null;
 		currentImageIndex = 0;
+		showTechnicalInfo = false;
+	}
+
+	function toggleTechnicalInfo() {
+		showTechnicalInfo = !showTechnicalInfo;
 	}
 
 	function navigateToImage(index) {
@@ -325,6 +331,21 @@
 				></button>
 			{/if}
 
+			<!-- Technical info button -->
+			{#if selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
+				<button
+					type="button"
+					onclick={(e) => {
+						e.stopPropagation();
+						toggleTechnicalInfo();
+					}}
+					class="absolute top-4 right-16 z-30 cursor-pointer rounded-full bg-black p-2 text-white"
+					aria-label="Toggle technical information"
+				>
+					<Icon icon="carbon:information" class="h-6 w-6" />
+				</button>
+			{/if}
+
 			<!-- Close button -->
 			<button
 				type="button"
@@ -337,6 +358,86 @@
 			>
 				<Icon icon="carbon:close" class="h-6 w-6" />
 			</button>
+
+			<!-- Technical info overlay -->
+			{#if showTechnicalInfo && selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
+				{@const metadata = selectedImage.metadata}
+				<div
+					class="absolute top-16 right-4 z-30 max-h-[60vh] w-80 space-y-4 overflow-y-auto bg-white/95 p-6 text-sm text-black shadow-xl backdrop-blur-sm"
+				>
+					<h3 class="mb-4 text-lg font-bold">Technical Information</h3>
+
+					<!-- Technical details -->
+					{#if metadata?.camera || metadata?.lens || metadata?.focalLength || metadata?.aperture || metadata?.shutterSpeed || metadata?.iso}
+						<div class="space-y-2">
+							<h4 class="font-semibold">Technical Details</h4>
+							{#if metadata.camera}
+								<div><strong>Camera:</strong> {metadata.camera}</div>
+							{/if}
+							{#if metadata.lens}
+								<div><strong>Lens:</strong> {metadata.lens}</div>
+							{/if}
+							{#if metadata.focalLength}
+								<div><strong>Focal Length:</strong> {metadata.focalLength}</div>
+							{/if}
+							{#if metadata.aperture}
+								<div><strong>Aperture:</strong> {metadata.aperture}</div>
+							{/if}
+							{#if metadata.shutterSpeed}
+								<div><strong>Shutter Speed:</strong> {metadata.shutterSpeed}</div>
+							{/if}
+							{#if metadata.iso}
+								<div><strong>ISO:</strong> {metadata.iso}</div>
+							{/if}
+						</div>
+					{/if}
+
+					<!-- Location and date -->
+					{#if metadata?.dateTime || metadata?.city || metadata?.state || metadata?.country || metadata?.location || metadata?.gps}
+						<div class="space-y-2 border-t pt-4">
+							<h4 class="font-semibold">Location & Date</h4>
+							{#if metadata.dateTime}
+								<div><strong>Date:</strong> {new Date(metadata.dateTime).toLocaleString()}</div>
+							{/if}
+							{#if metadata.location}
+								<div><strong>Location:</strong> {metadata.location}</div>
+							{/if}
+							{#if metadata.city || metadata.state || metadata.country}
+								<div>
+									<strong>Address:</strong>
+									{[metadata.city, metadata.state, metadata.country].filter(Boolean).join(', ')}
+								</div>
+							{/if}
+							{#if metadata.gps}
+								<div>
+									<strong>Coordinates:</strong>
+									<a
+										href="https://www.openstreetmap.org/?mlat={metadata.gps
+											.latitude}&mlon={metadata.gps.longitude}&zoom=15"
+										target="_blank"
+										rel="noopener noreferrer"
+										class="text-blue-600 underline hover:no-underline"
+									>
+										{metadata.gps.latitude.toFixed(6)}, {metadata.gps.longitude.toFixed(6)}
+									</a>
+								</div>
+							{/if}
+						</div>
+					{/if}
+
+					<!-- Keywords -->
+					{#if metadata?.keywords && metadata.keywords.length > 0}
+						<div class="space-y-2 border-t pt-4">
+							<h4 class="font-semibold">Keywords</h4>
+							<div class="flex flex-wrap gap-1">
+								{#each metadata.keywords as keyword}
+									<span class="bg-gray-200 px-2 py-1 text-xs">{keyword}</span>
+								{/each}
+							</div>
+						</div>
+					{/if}
+				</div>
+			{/if}
 
 			<div class="pointer-events-none flex h-full w-full items-center justify-center">
 				<div class="flex max-h-[90vh] max-w-[95vw] flex-col items-center gap-6 lg:flex-row">
@@ -371,85 +472,6 @@
 						{/if}
 					</div>
 
-					<!-- Technical Metadata panel -->
-					{#if selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
-						{@const metadata = selectedImage.metadata}
-						<div
-							class="pointer-events-auto max-h-[70vh] max-w-[90vw] space-y-4 overflow-y-auto bg-white/95 p-6 text-sm text-black shadow-xl backdrop-blur-sm lg:max-w-[30vw]"
-						>
-							<h3 class="mb-4 text-lg font-bold">Technical Information</h3>
-
-							<!-- Technical details -->
-							{#if metadata?.camera || metadata?.lens || metadata?.focalLength || metadata?.aperture || metadata?.shutterSpeed || metadata?.iso}
-								<div class="space-y-2">
-									<h4 class="font-semibold">Technical Details</h4>
-									{#if metadata.camera}
-										<div><strong>Camera:</strong> {metadata.camera}</div>
-									{/if}
-									{#if metadata.lens}
-										<div><strong>Lens:</strong> {metadata.lens}</div>
-									{/if}
-									{#if metadata.focalLength}
-										<div><strong>Focal Length:</strong> {metadata.focalLength}</div>
-									{/if}
-									{#if metadata.aperture}
-										<div><strong>Aperture:</strong> {metadata.aperture}</div>
-									{/if}
-									{#if metadata.shutterSpeed}
-										<div><strong>Shutter Speed:</strong> {metadata.shutterSpeed}</div>
-									{/if}
-									{#if metadata.iso}
-										<div><strong>ISO:</strong> {metadata.iso}</div>
-									{/if}
-								</div>
-							{/if}
-
-							<!-- Location and date -->
-							{#if metadata?.dateTime || metadata?.city || metadata?.state || metadata?.country || metadata?.location || metadata?.gps}
-								<div class="space-y-2 border-t pt-4">
-									<h4 class="font-semibold">Location & Date</h4>
-									{#if metadata.dateTime}
-										<div><strong>Date:</strong> {new Date(metadata.dateTime).toLocaleString()}</div>
-									{/if}
-									{#if metadata.location}
-										<div><strong>Location:</strong> {metadata.location}</div>
-									{/if}
-									{#if metadata.city || metadata.state || metadata.country}
-										<div>
-											<strong>Address:</strong>
-											{[metadata.city, metadata.state, metadata.country].filter(Boolean).join(', ')}
-										</div>
-									{/if}
-									{#if metadata.gps}
-										<div>
-											<strong>Coordinates:</strong>
-											<a
-												href="https://www.openstreetmap.org/?mlat={metadata.gps
-													.latitude}&mlon={metadata.gps.longitude}&zoom=15"
-												target="_blank"
-												rel="noopener noreferrer"
-												class="text-blue-600 underline hover:no-underline"
-											>
-												{metadata.gps.latitude.toFixed(6)}, {metadata.gps.longitude.toFixed(6)}
-											</a>
-										</div>
-									{/if}
-								</div>
-							{/if}
-
-							<!-- Keywords -->
-							{#if metadata?.keywords && metadata.keywords.length > 0}
-								<div class="space-y-2 border-t pt-4">
-									<h4 class="font-semibold">Keywords</h4>
-									<div class="flex flex-wrap gap-1">
-										{#each metadata.keywords as keyword}
-											<span class="bg-gray-200 px-2 py-1 text-xs">{keyword}</span>
-										{/each}
-									</div>
-								</div>
-							{/if}
-						</div>
-					{/if}
 				</div>
 			</div>
 		</div>

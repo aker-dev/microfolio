@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0-beta.2] - 2025-09-22
+
+### Added
+- Custom featured marker icons for map display
+- Marker source file (Affinity Designer) for design reference
+
+### Fixed
+- Updated marker icon URLs to use local assets instead of external sources
+- Enhanced marker display with custom featured project markers
+- Improved lightbox navigation button styles for better visibility and consistency
+
+### Changed
+- Optimized marker asset loading for improved performance
+
 ## [0.3.0-beta.1] - 2025-09-22
 
 ### Added

@@ -362,10 +362,10 @@
 						e.stopPropagation();
 						previousImage();
 					}}
-					class="absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-3 text-white transition-all hover:bg-black"
+					class="border-primary bg-box text-primary absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
 					aria-label="Previous image"
 				>
-					<Icon icon="carbon:chevron-left" class="h-8 w-8" />
+					<Icon icon="carbon:chevron-left" class="size-6 hover:scale-120" />
 				</button>
 
 				<!-- Next arrow -->
@@ -375,10 +375,10 @@
 						e.stopPropagation();
 						nextImage();
 					}}
-					class="absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-3 text-white transition-all hover:bg-black"
+					class="boder-primary bg-box text-primary absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
 					aria-label="Next image"
 				>
-					<Icon icon="carbon:chevron-right" class="h-8 w-8" />
+					<Icon icon="carbon:chevron-right" class="size-6 hover:scale-120" />
 				</button>
 			{/if}
 

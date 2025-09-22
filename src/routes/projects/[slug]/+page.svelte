@@ -99,23 +99,19 @@
 			class="w-full"
 		/>
 		<!-- Thumbnail metadata -->
-		{#if thumbnailMetadata}
-			<div class="text-primary mt-4 text-sm">
-				{#if thumbnailMetadata.headline}
-					<p class="font-medium">{thumbnailMetadata.headline}</p>
-				{/if}
-				{#if thumbnailMetadata.description}
-					<p class="italic">{thumbnailMetadata.description}</p>
-				{/if}
-				{#if thumbnailMetadata.creditLine}
-					<p class="mt-1 text-xs">Credit: {thumbnailMetadata.creditLine}</p>
-				{/if}
-			</div>
-		{:else}
-			<div class="text-primary mt-4 text-sm">
+		<div class="text-primary mt-4 text-sm">
+			{#if thumbnailMetadata?.headline}
+				<p class="font-medium">{thumbnailMetadata.headline}</p>
+			{:else}
 				<p class="font-medium">thumbnail.jpg</p>
-			</div>
-		{/if}
+			{/if}
+			{#if thumbnailMetadata?.description}
+				<p class="italic">{thumbnailMetadata.description}</p>
+			{/if}
+			{#if thumbnailMetadata?.creditLine}
+				<p class="mt-1 text-xs">Credit: {thumbnailMetadata.creditLine}</p>
+			{/if}
+		</div>
 
 		<!-- Content -->
 		<article class="prose prose-neutral text-primary mt-8">
@@ -227,24 +223,19 @@
 							/>
 						</button>
 						<!-- Image metadata -->
-						{#if image.metadata}
-							{@const metadata = image.metadata}
-							<div class="text-primary mt-2 text-sm">
-								{#if metadata.headline}
-									<p class="font-medium">{metadata.headline}</p>
-								{/if}
-								{#if metadata.description}
-									<p class="italic">{metadata.description}</p>
-								{/if}
-								{#if metadata.creditLine}
-									<p class="mt-1 text-xs">Credit: {metadata.creditLine}</p>
-								{/if}
-							</div>
-						{:else}
-							<div class="text-primary mt-2 text-sm">
+						<div class="text-primary mt-2 text-sm">
+							{#if image.metadata?.headline}
+								<p class="font-medium">{image.metadata.headline}</p>
+							{:else}
 								<p class="font-medium">{image.name}</p>
-							</div>
-						{/if}
+							{/if}
+							{#if image.metadata?.description}
+								<p class="italic">{image.metadata.description}</p>
+							{/if}
+							{#if image.metadata?.creditLine}
+								<p class="mt-1 text-xs">Credit: {image.metadata.creditLine}</p>
+							{/if}
+						</div>
 					</div>
 				{/each}
 			</div>
@@ -368,7 +359,7 @@
 					</div>
 
 					<!-- Metadata panel -->
-					{#if selectedImage.metadata}
+					{#if selectedImage.metadata || selectedImage.name}
 						{@const metadata = selectedImage.metadata}
 						<div
 							class="pointer-events-auto max-h-[70vh] max-w-[90vw] space-y-4 overflow-y-auto bg-white/95 p-6 text-sm text-black shadow-xl backdrop-blur-sm lg:max-w-[30vw]"
@@ -377,20 +368,22 @@
 
 							<!-- Basic info -->
 							<div class="space-y-2">
-								{#if metadata.headline}
+								{#if metadata?.headline}
 									<div><strong>Headline:</strong> {metadata.headline}</div>
+								{:else}
+									<div><strong>Filename:</strong> {selectedImage.name}</div>
 								{/if}
-								{#if metadata.description}
+								{#if metadata?.description}
 									<div><strong>Description:</strong> {metadata.description}</div>
 								{/if}
 								<!-- Credit information -->
-								{#if metadata.creditLine}
+								{#if metadata?.creditLine}
 									<div><strong>Credit:</strong> {metadata.creditLine}</div>
 								{/if}
 							</div>
 
 							<!-- Technical details -->
-							{#if metadata.camera || metadata.lens || metadata.focalLength || metadata.aperture || metadata.shutterSpeed || metadata.iso}
+							{#if metadata?.camera || metadata?.lens || metadata?.focalLength || metadata?.aperture || metadata?.shutterSpeed || metadata?.iso}
 								<div class="space-y-2 border-t pt-4">
 									<h4 class="font-semibold">Technical Details</h4>
 									{#if metadata.camera}
@@ -415,7 +408,7 @@
 							{/if}
 
 							<!-- Location and date -->
-							{#if metadata.dateTime || metadata.city || metadata.state || metadata.country || metadata.location || metadata.gps}
+							{#if metadata?.dateTime || metadata?.city || metadata?.state || metadata?.country || metadata?.location || metadata?.gps}
 								<div class="space-y-2 border-t pt-4">
 									<h4 class="font-semibold">Location & Date</h4>
 									{#if metadata.dateTime}
@@ -448,7 +441,7 @@
 							{/if}
 
 							<!-- Keywords -->
-							{#if metadata.keywords && metadata.keywords.length > 0}
+							{#if metadata?.keywords && metadata.keywords.length > 0}
 								<div class="space-y-2 border-t pt-4">
 									<h4 class="font-semibold">Keywords</h4>
 									<div class="flex flex-wrap gap-1">

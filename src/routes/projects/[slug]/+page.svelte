@@ -301,7 +301,7 @@
 		aria-modal="true"
 		aria-label="Image lightbox"
 		tabindex="-1"
-		class="fixed inset-0 z-10000 flex items-center justify-center bg-black/80 p-4"
+		class="bg-box/80 fixed inset-0 z-10000 flex items-center justify-center p-4"
 		onclick={closeLightbox}
 		onkeydown={handleKeydown}
 	>

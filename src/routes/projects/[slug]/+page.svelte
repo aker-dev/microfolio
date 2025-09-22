@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
+	import AkBtnMetadata from '$lib/components/AkBtnMetadata.svelte';
 	import Icon from '@iconify/svelte';
 
 	let { data } = $props();
@@ -200,7 +201,7 @@
 
 				<div class="flex flex-wrap gap-2">
 					{#each project.tags as tag}
-						<AkBadge small>#{tag}</AkBadge>
+						<AkBadge small>{tag}</AkBadge>
 					{/each}
 				</div>
 			</div>
@@ -301,7 +302,7 @@
 		aria-modal="true"
 		aria-label="Image lightbox"
 		tabindex="-1"
-		class="bg-box/80 fixed inset-0 z-10000 flex items-center justify-center p-4"
+		class="bg-box/95 fixed inset-0 z-10000 flex items-center justify-center p-4"
 		onclick={closeLightbox}
 		onkeydown={handleKeydown}
 	>
@@ -334,17 +335,13 @@
 
 			<!-- Technical info button -->
 			{#if selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
-				<button
-					type="button"
+				<AkBtnMetadata
+					class="absolute top-4 right-16 z-30"
 					onclick={(e) => {
 						e.stopPropagation();
 						toggleTechnicalInfo();
 					}}
-					class="absolute top-4 right-16 z-30 cursor-pointer rounded-full bg-black p-2 text-white"
-					aria-label="Toggle technical information"
-				>
-					<Icon icon="carbon:information" class="h-6 w-6" />
-				</button>
+				/>
 			{/if}
 
 			<!-- Close button -->
@@ -389,63 +386,91 @@
 			{#if showTechnicalInfo && selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
 				{@const metadata = selectedImage.metadata}
 				<div
-					class="absolute top-16 right-4 z-30 max-h-[60vh] w-80 space-y-4 overflow-y-auto bg-white/95 p-6 text-sm text-black shadow-xl backdrop-blur-sm"
+					class="text-primary absolute top-16 right-4 z-30 max-h-[60vh] w-80 space-y-3 overflow-y-auto bg-transparent p-6 text-sm"
 				>
-					<h3 class="mb-4 text-lg font-bold">Technical Information</h3>
-
 					<!-- Technical details -->
 					{#if metadata?.camera || metadata?.lens || metadata?.focalLength || metadata?.aperture || metadata?.shutterSpeed || metadata?.iso}
-						<div class="space-y-2">
-							<h4 class="font-semibold">Technical Details</h4>
+						<div>
+							<h3 class="text-base font-medium">Technical Details</h3>
 							{#if metadata.camera}
-								<div><strong>Camera:</strong> {metadata.camera}</div>
+								<div>
+									<span class="font-medium">Camera › </span>
+									<span>{metadata.camera}</span>
+								</div>
 							{/if}
 							{#if metadata.lens}
-								<div><strong>Lens:</strong> {metadata.lens}</div>
+								<div>
+									<span class="font-medium">Lens › </span>
+									<span>{metadata.lens}</span>
+								</div>
 							{/if}
 							{#if metadata.focalLength}
-								<div><strong>Focal Length:</strong> {metadata.focalLength}</div>
+								<div>
+									<span class="font-medium">Focal Length › </span>
+									<span>{metadata.focalLength}</span>
+								</div>
 							{/if}
 							{#if metadata.aperture}
-								<div><strong>Aperture:</strong> {metadata.aperture}</div>
+								<div>
+									<span class="font-medium">Aperture › </span>
+									<span>{metadata.aperture}</span>
+								</div>
 							{/if}
 							{#if metadata.shutterSpeed}
-								<div><strong>Shutter Speed:</strong> {metadata.shutterSpeed}</div>
+								<div>
+									<span class="font-medium">Shutter Speed › </span>
+									<span>{metadata.shutterSpeed}</span>
+								</div>
 							{/if}
 							{#if metadata.iso}
-								<div><strong>ISO:</strong> {metadata.iso}</div>
+								<div>
+									<span class="font-medium">ISO › </span>
+									<span>{metadata.iso}</span>
+								</div>
 							{/if}
 						</div>
 					{/if}
 
 					<!-- Location and date -->
 					{#if metadata?.dateTime || metadata?.city || metadata?.state || metadata?.country || metadata?.location || metadata?.gps}
-						<div class="space-y-2 border-t pt-4">
-							<h4 class="font-semibold">Location & Date</h4>
+						<div>
+							<h3 class="text-base font-medium">Location & Date</h3>
 							{#if metadata.dateTime}
-								<div><strong>Date:</strong> {new Date(metadata.dateTime).toLocaleString()}</div>
+								<div>
+									<span class="font-medium">Date › </span>
+									<span>{new Date(metadata.dateTime).toLocaleString()}</span>
+								</div>
 							{/if}
 							{#if metadata.location}
-								<div><strong>Location:</strong> {metadata.location}</div>
+								<div>
+									<span class="font-medium">Location › </span>
+									<span>{metadata.location}</span>
+								</div>
 							{/if}
 							{#if metadata.city || metadata.state || metadata.country}
 								<div>
-									<strong>Address:</strong>
-									{[metadata.city, metadata.state, metadata.country].filter(Boolean).join(', ')}
+									<span class="font-medium">Address › </span>
+									<span
+										>{[metadata.city, metadata.state, metadata.country]
+											.filter(Boolean)
+											.join(', ')}</span
+									>
 								</div>
 							{/if}
 							{#if metadata.gps}
 								<div>
-									<strong>Coordinates:</strong>
-									<a
-										href="https://www.openstreetmap.org/?mlat={metadata.gps.latitude}&mlon={metadata
-											.gps.longitude}&zoom=15"
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-blue-600 underline hover:no-underline"
-									>
-										{metadata.gps.latitude.toFixed(6)}, {metadata.gps.longitude.toFixed(6)}
-									</a>
+									<span class="font-medium">Coordinates › </span>
+									<span>
+										<a
+											href="https://www.openstreetmap.org/?mlat={metadata.gps
+												.latitude}&mlon={metadata.gps.longitude}&zoom=15"
+											target="_blank"
+											rel="noopener noreferrer"
+											class="text-blue-600 underline hover:no-underline"
+										>
+											{metadata.gps.latitude.toFixed(6)}, {metadata.gps.longitude.toFixed(6)}
+										</a>
+									</span>
 								</div>
 							{/if}
 						</div>
@@ -453,11 +478,11 @@
 
 					<!-- Keywords -->
 					{#if metadata?.keywords && metadata.keywords.length > 0}
-						<div class="space-y-2 border-t pt-4">
-							<h4 class="font-semibold">Keywords</h4>
+						<div>
+							<h3 class="mb-1 text-base font-medium">Keywords</h3>
 							<div class="flex flex-wrap gap-1">
 								{#each metadata.keywords as keyword}
-									<span class="bg-gray-200 px-2 py-1 text-xs">{keyword}</span>
+									<AkBadge small>{keyword}</AkBadge>
 								{/each}
 							</div>
 						</div>
@@ -476,7 +501,7 @@
 						/>
 
 						<!-- Basic info under image -->
-						<div class="pointer-events-auto max-w-[90vw] text-center text-white lg:max-w-[60vw]">
+						<div class="text-primary pointer-events-auto max-w-[90vw] text-center lg:max-w-[60vw]">
 							{#if selectedImage.metadata?.headline}
 								<p class="text-lg font-medium">{selectedImage.metadata.headline}</p>
 							{:else}
@@ -492,7 +517,9 @@
 
 						<!-- Image counter -->
 						{#if project.resources?.images && project.resources.images.length > 1}
-							<div class="rounded-full bg-black px-3 py-1 text-sm text-white">
+							<div
+								class="bg-box text-primary border-primary rounded-full border-1 px-3 py-1 text-sm"
+							>
 								{currentImageIndex + 1} / {project.resources.images.length}
 							</div>
 						{/if}

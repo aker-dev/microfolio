@@ -169,7 +169,7 @@
 									{#if project.tags}
 										<div class="flex flex-wrap gap-1">
 											{#each project.tags.slice(0, 3) as tag}
-												<AkBadge small>#{tag}</AkBadge>
+												<AkBadge small>{tag}</AkBadge>
 											{/each}
 											{#if project.tags.length > 3}
 												<AkBadge small>

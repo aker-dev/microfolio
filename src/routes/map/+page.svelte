@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
@@ -74,9 +75,9 @@
 		// Fix default marker icons
 		delete L.Icon.Default.prototype._getIconUrl;
 		L.Icon.Default.mergeOptions({
-			iconRetinaUrl: '/marker-icon@2x.png',
-			iconUrl: '/marker-icon.png',
-			shadowUrl: '/marker-shadow.png'
+			iconRetinaUrl: `${base}/marker-icon@2x.png`,
+			iconUrl: `${base}/marker-icon.png`,
+			shadowUrl: `${base}/marker-shadow.png`
 		});
 
 		// Create map with greyscale theme
@@ -159,14 +160,14 @@
 					// Create custom icon based on featured status
 					const iconOptions = project.featured
 						? {
-								iconUrl: '/marker-featured.png',
-								iconRetinaUrl: '/marker-featured@2x.png',
-								shadowUrl: '/marker-shadow.png',
+								iconUrl: `${base}/marker-featured.png`,
+								iconRetinaUrl: `${base}/marker-featured@2x.png`,
+								shadowUrl: `${base}/marker-shadow.png`,
 								iconSize: [25, 41],
 								iconAnchor: [12, 41],
 								popupAnchor: [1, -34],
 								shadowSize: [41, 41]
-						  }
+							}
 						: undefined; // Use default icons
 
 					// Create custom marker
@@ -174,10 +175,10 @@
 						? L.marker([lat, lng], {
 								title: project.title,
 								icon: L.icon(iconOptions)
-						  }).addTo(map)
+							}).addTo(map)
 						: L.marker([lat, lng], {
 								title: project.title
-						  }).addTo(map);
+							}).addTo(map);
 
 					// Add click handler to show project card
 					marker.on('click', () => {

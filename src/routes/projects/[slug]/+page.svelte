@@ -108,6 +108,7 @@
 			src="{base}/content/projects/{project.slug}/thumbnail.jpg"
 			alt={project.title}
 			class="w-full"
+			fetchpriority="high"
 		/>
 		<!-- Thumbnail metadata -->
 		<div class="text-primary mt-4 text-sm">
@@ -230,6 +231,7 @@
 								src={image.path}
 								alt={image.name}
 								class="image-hover-effect h-full w-full object-cover"
+								fetchpriority="high"
 							/>
 						</button>
 						<!-- Image metadata -->
@@ -393,6 +395,7 @@
 								src={selectedImage.path}
 								alt={selectedImage.name}
 								class="max-h-[60vh] max-w-[90vw] object-contain shadow-2xl lg:max-w-[60vw]"
+								fetchpriority="high"
 							/>
 
 							<!-- Technical info overlay -->

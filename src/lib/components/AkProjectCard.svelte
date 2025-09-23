@@ -13,6 +13,7 @@
 			src={project.thumbnailSrc}
 			alt={project.title}
 			class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
+			fetchpriority="high"
 		/>
 	</div>
 

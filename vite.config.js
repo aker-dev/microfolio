@@ -36,7 +36,7 @@ export default defineConfig({
 		}
 	},
 	build: {
-		cssCodeSplit: false, // Combine	 all CSS into a single file
+		// cssCodeSplit: false, // Combine	 all CSS into a single file
 		rollupOptions: {
 			output: {
 				// Deduplicate Svelte in vendor chunk to prevent multiple instances error

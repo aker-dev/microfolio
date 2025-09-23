@@ -9,7 +9,7 @@
 	import RowCount from '$lib/components/RowCount.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
 	import AkBadge from '$lib/components/AkBadge.svelte';
-	import Icon from '@iconify/svelte';
+	import IconArrowRight from '~icons/carbon/arrow-right';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -185,7 +185,7 @@
 										class="border-primary bg-box hover:bg-primary hover:text-box flex h-8 w-8 items-center justify-center rounded border"
 										title="View project"
 									>
-										<Icon icon="carbon:arrow-right" class="pointer-events-none h-4 w-4" />
+										<IconArrowRight class="pointer-events-none h-4 w-4" />
 									</a>
 								</td>
 							</tr>

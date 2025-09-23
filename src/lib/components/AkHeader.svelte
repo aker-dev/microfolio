@@ -2,7 +2,8 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { siteConfig } from '../config.js';
-	import Icon from '@iconify/svelte';
+	import IconMenu from '~icons/carbon/menu';
+	import IconCloseLarge from '~icons/carbon/close-large';
 
 	// Current page URL - reactive to page changes
 	let currentPage = $derived($page.url.pathname);
@@ -78,10 +79,11 @@
 			onclick={toggleMobileMenu}
 			aria-label="Toggle mobile menu"
 		>
-			<Icon
-				icon={mobileMenuOpen ? 'carbon:close-large' : 'carbon:menu'}
-				class="pointer-events-none size-6 hover:scale-110"
-			/>
+			{#if mobileMenuOpen}
+				<IconCloseLarge class="pointer-events-none size-6 hover:scale-110" />
+			{:else}
+				<IconMenu class="pointer-events-none size-6 hover:scale-110" />
+			{/if}
 		</button>
 	</div>
 

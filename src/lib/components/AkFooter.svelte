@@ -1,5 +1,7 @@
 <script>
-	import Icon from '@iconify/svelte';
+	import IconInstagram from '~icons/akar-icons/instagram-fill';
+	import IconLinkedin from '~icons/akar-icons/linkedin-fill';
+	import IconGithub from '~icons/akar-icons/github-fill';
 	import { siteConfig } from '../config.js';
 </script>
 
@@ -20,17 +22,17 @@
 			<ul class="flex justify-center gap-4 md:justify-end">
 				<li>
 					<a href={siteConfig.socialLinks.instagram} target="_blank" aria-label="Instagram">
-						<Icon icon="akar-icons:instagram-fill" class="pointer-events-none h-5 w-5" />
+						<IconInstagram class="pointer-events-none h-5 w-5" />
 					</a>
 				</li>
 				<li>
 					<a href={siteConfig.socialLinks.linkedin} target="_blank" aria-label="LinkedIn">
-						<Icon icon="akar-icons:linkedin-fill" class="pointer-events-none h-5 w-5" />
+						<IconLinkedin class="pointer-events-none h-5 w-5" />
 					</a>
 				</li>
 				<li>
 					<a href={siteConfig.socialLinks.github} target="_blank" aria-label="GitHub">
-						<Icon icon="akar-icons:github-fill" class="pointer-events-none h-5 w-5" />
+						<IconGithub class="pointer-events-none h-5 w-5" />
 					</a>
 				</li>
 			</ul>

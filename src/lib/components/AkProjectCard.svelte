@@ -1,7 +1,7 @@
 <script>
 	import { base } from '$app/paths';
 	import AkBadge from './AkBadge.svelte';
-	import Icon from '@iconify/svelte';
+	import IconStarFilled from '~icons/carbon/star-filled';
 
 	let { project, class: className } = $props();
 </script>
@@ -23,7 +23,7 @@
 			<AkBadge>{project.type}</AkBadge>
 
 			{#if project.featured}
-				<Icon icon="carbon:star-filled" class="inline-block size-6 pb-1" />
+				<IconStarFilled class="inline-block size-6 pb-1" />
 			{/if}
 		</div>
 

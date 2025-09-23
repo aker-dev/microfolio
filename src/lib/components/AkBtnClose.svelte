@@ -1,5 +1,5 @@
 <script>
-	import Icon from '@iconify/svelte';
+	import IconClose from '~icons/carbon/close';
 
 	let { onclick = () => {}, class: className = '', ariaLabel = 'Close' } = $props();
 </script>
@@ -9,5 +9,5 @@
 	class="bg-box text-primary border-primary z-100 cursor-pointer rounded-full border-1 p-2 {className}"
 	aria-label={ariaLabel}
 >
-	<Icon icon="carbon:close" class="pointer-events-none size-6 hover:scale-120" />
+	<IconClose class="pointer-events-none size-6 hover:scale-120" />
 </button>

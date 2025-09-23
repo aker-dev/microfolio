@@ -4,7 +4,6 @@
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
-	import Icon from '@iconify/svelte';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);

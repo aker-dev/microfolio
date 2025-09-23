@@ -3,7 +3,10 @@
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
 	import AkBtnMetadata from '$lib/components/AkBtnMetadata.svelte';
-	import Icon from '@iconify/svelte';
+	import IconStarFilled from '~icons/carbon/star-filled';
+	import IconDocument from '~icons/carbon/document';
+	import IconChevronLeft from '~icons/carbon/chevron-left';
+	import IconChevronRight from '~icons/carbon/chevron-right';
 
 	let { data } = $props();
 	let project = $derived(data.project);
@@ -133,7 +136,7 @@
 			<AkBadge>{project.type}</AkBadge>
 
 			{#if project.featured}
-				<Icon icon="carbon:star-filled" class="inline-block size-6 pb-1" />
+				<IconStarFilled class="inline-block size-6 pb-1" />
 			{/if}
 		</div>
 
@@ -282,7 +285,7 @@
 						class="bg-box flex items-center gap-3 p-4"
 					>
 						<div class="flex-shrink-0">
-							<Icon icon="carbon:document" class="pointer-events-none text-primary h-6 w-6" />
+							<IconDocument class="pointer-events-none text-primary h-6 w-6" />
 						</div>
 						<div class="flex-1">
 							<p class="text-primary text-sm font-medium">{document.name}</p>
@@ -365,7 +368,7 @@
 					class="border-primary bg-box text-primary absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
 					aria-label="Previous image"
 				>
-					<Icon icon="carbon:chevron-left" class="pointer-events-none size-6 hover:scale-120" />
+					<IconChevronLeft class="pointer-events-none size-6 hover:scale-120" />
 				</button>
 
 				<!-- Next arrow -->
@@ -378,7 +381,7 @@
 					class="boder-primary bg-box text-primary absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
 					aria-label="Next image"
 				>
-					<Icon icon="carbon:chevron-right" class="pointer-events-none size-6 hover:scale-120" />
+					<IconChevronRight class="pointer-events-none size-6 hover:scale-120" />
 				</button>
 			{/if}
 

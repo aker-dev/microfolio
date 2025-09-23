@@ -9,5 +9,5 @@
 	class="bg-box text-primary border-primary z-100 cursor-pointer rounded-full border-1 p-2 {className}"
 	aria-label={ariaLabel}
 >
-	<Icon icon="carbon:tag-group" class="size-6 hover:scale-110" />
+	<Icon icon="carbon:tag-group" class="pointer-events-none size-6 hover:scale-110" />
 </button>

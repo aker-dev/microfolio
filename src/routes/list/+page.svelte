@@ -185,7 +185,7 @@
 										class="border-primary bg-box hover:bg-primary hover:text-box flex h-8 w-8 items-center justify-center rounded border"
 										title="View project"
 									>
-										<Icon icon="carbon:arrow-right" class="h-4 w-4" />
+										<Icon icon="carbon:arrow-right" class="pointer-events-none h-4 w-4" />
 									</a>
 								</td>
 							</tr>

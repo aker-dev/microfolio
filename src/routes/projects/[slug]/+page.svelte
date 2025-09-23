@@ -282,7 +282,7 @@
 						class="bg-box flex items-center gap-3 p-4"
 					>
 						<div class="flex-shrink-0">
-							<Icon icon="carbon:document" class="text-primary h-6 w-6" />
+							<Icon icon="carbon:document" class="pointer-events-none text-primary h-6 w-6" />
 						</div>
 						<div class="flex-1">
 							<p class="text-primary text-sm font-medium">{document.name}</p>
@@ -365,7 +365,7 @@
 					class="border-primary bg-box text-primary absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
 					aria-label="Previous image"
 				>
-					<Icon icon="carbon:chevron-left" class="size-6 hover:scale-120" />
+					<Icon icon="carbon:chevron-left" class="pointer-events-none size-6 hover:scale-120" />
 				</button>
 
 				<!-- Next arrow -->
@@ -378,7 +378,7 @@
 					class="boder-primary bg-box text-primary absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
 					aria-label="Next image"
 				>
-					<Icon icon="carbon:chevron-right" class="size-6 hover:scale-120" />
+					<Icon icon="carbon:chevron-right" class="pointer-events-none size-6 hover:scale-120" />
 				</button>
 			{/if}
 

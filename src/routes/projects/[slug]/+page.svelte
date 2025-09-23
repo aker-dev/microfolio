@@ -230,7 +230,6 @@
 								src={image.path}
 								alt={image.name}
 								class="image-hover-effect h-full w-full object-cover"
-								loading="lazy"
 							/>
 						</button>
 						<!-- Image metadata -->
@@ -285,7 +284,7 @@
 						class="bg-box flex items-center gap-3 p-4"
 					>
 						<div class="flex-shrink-0">
-							<IconDocument class="pointer-events-none text-primary h-6 w-6" />
+							<IconDocument class="text-primary pointer-events-none h-6 w-6" />
 						</div>
 						<div class="flex-1">
 							<p class="text-primary text-sm font-medium">{document.name}</p>

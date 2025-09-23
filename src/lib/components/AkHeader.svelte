@@ -80,7 +80,7 @@
 		>
 			<Icon
 				icon={mobileMenuOpen ? 'carbon:close-large' : 'carbon:menu'}
-				class="size-6 hover:scale-110"
+				class="pointer-events-none size-6 hover:scale-110"
 			/>
 		</button>
 	</div>

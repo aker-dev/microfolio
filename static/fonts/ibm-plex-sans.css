@@ -4,7 +4,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('./IBMPlexSans-Regular.ttf') format('truetype');
+  src: url('./IBMPlexSans-Regular.woff2') format('woff2'),
+       url('./IBMPlexSans-Regular.ttf') format('truetype');
 }
 
 /* IBM Plex Sans - Regular Italic */
@@ -13,7 +14,8 @@
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url('./IBMPlexSans-Italic.ttf') format('truetype');
+  src: url('./IBMPlexSans-Italic.woff2') format('woff2'),
+       url('./IBMPlexSans-Italic.ttf') format('truetype');
 }
 
 /* IBM Plex Sans - Medium */
@@ -22,7 +24,8 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('./IBMPlexSans-Medium.ttf') format('truetype');
+  src: url('./IBMPlexSans-Medium.woff2') format('woff2'),
+       url('./IBMPlexSans-Medium.ttf') format('truetype');
 }
 
 /* IBM Plex Sans - Medium Italic */
@@ -31,7 +34,8 @@
   font-style: italic;
   font-weight: 500;
   font-display: swap;
-  src: url('./IBMPlexSans-MediumItalic.ttf') format('truetype');
+  src: url('./IBMPlexSans-MediumItalic.woff2') format('woff2'),
+       url('./IBMPlexSans-MediumItalic.ttf') format('truetype');
 }
 
 /* IBM Plex Sans - SemiBold */
@@ -40,7 +44,8 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('./IBMPlexSans-SemiBold.ttf') format('truetype');
+  src: url('./IBMPlexSans-SemiBold.woff2') format('woff2'),
+       url('./IBMPlexSans-SemiBold.ttf') format('truetype');
 }
 
 /* IBM Plex Sans - SemiBold Italic */
@@ -49,7 +54,8 @@
   font-style: italic;
   font-weight: 600;
   font-display: swap;
-  src: url('./IBMPlexSans-SemiBoldItalic.ttf') format('truetype');
+  src: url('./IBMPlexSans-SemiBoldItalic.woff2') format('woff2'),
+       url('./IBMPlexSans-SemiBoldItalic.ttf') format('truetype');
 }
 
 /* IBM Plex Sans - Bold */
@@ -58,7 +64,8 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('./IBMPlexSans-Bold.ttf') format('truetype');
+  src: url('./IBMPlexSans-Bold.woff2') format('woff2'),
+       url('./IBMPlexSans-Bold.ttf') format('truetype');
 }
 
 /* IBM Plex Sans - Bold Italic */
@@ -67,5 +74,6 @@
   font-style: italic;
   font-weight: 700;
   font-display: swap;
-  src: url('./IBMPlexSans-BoldItalic.ttf') format('truetype');
+  src: url('./IBMPlexSans-BoldItalic.woff2') format('woff2'),
+       url('./IBMPlexSans-BoldItalic.ttf') format('truetype');
 }

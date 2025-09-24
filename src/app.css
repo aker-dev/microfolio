@@ -1,4 +1,4 @@
-@import url(https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,500,600,700);
+@import '../static/fonts/ibm-plex-sans.css';
 
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';

@@ -10,6 +10,7 @@
 	import Pagination from '$lib/components/Pagination.svelte';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import IconArrowRight from '~icons/carbon/arrow-right';
+	import { siteConfig } from '$lib/config.js';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -75,7 +76,7 @@
 </script>
 
 <svelte:head>
-	<title>Projects List</title>
+	<title>{siteConfig.title} • Projects List</title>
 	<meta name="description" content="Searchable and sortable projects list" />
 </svelte:head>
 

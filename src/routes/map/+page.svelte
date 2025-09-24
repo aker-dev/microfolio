@@ -4,6 +4,7 @@
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
+	import { siteConfig } from '$lib/config.js';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -215,7 +216,7 @@
 </script>
 
 <svelte:head>
-	<title>Projects Map</title>
+	<title>{siteConfig.title} • Projects Map</title>
 	<meta name="description" content="Interactive map of projects" />
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </svelte:head>

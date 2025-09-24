@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
-	import { siteConfig } from '../config.js';
+	import { siteConfig } from '$lib/config.js';
 	import IconMenu from '~icons/carbon/menu';
 	import IconCloseLarge from '~icons/carbon/close-large';
 

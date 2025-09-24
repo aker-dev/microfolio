@@ -1,17 +1,18 @@
 <script>
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
+	import { siteConfig } from '$lib/config.js';
 	let { data } = $props();
 	let page = $derived(data.page);
 	let featuredProjects = $derived(data.featuredProjects);
 </script>
 
 <svelte:head>
-	<title>{page.title}</title>
+	<title>{siteConfig.title} • {page.title}</title>
 	<meta name="description" content={page.description} />
 </svelte:head>
 
 <header class="mb-8">
-	<h2 class="mb-4 text-4xl font-bold text-primary">
+	<h2 class="text-primary mb-4 text-4xl font-bold">
 		{page.title}
 	</h2>
 	{#if page.description}
@@ -21,7 +22,7 @@
 	{/if}
 </header>
 
-<article class="prose prose-neutral max-w-none bg-box p-6 text-primary">
+<article class="prose prose-neutral bg-box text-primary max-w-none p-6">
 	{@html page.content}
 </article>
 <!-- Featured Projects Section -->

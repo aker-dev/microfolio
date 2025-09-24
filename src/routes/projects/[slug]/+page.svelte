@@ -1,5 +1,6 @@
 <script>
 	import { base } from '$app/paths';
+	import { siteConfig } from '$lib/config.js';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
 	import AkBtnMetadata from '$lib/components/AkBtnMetadata.svelte';
@@ -87,7 +88,7 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <svelte:head>
-	<title>{project.title}</title>
+	<title>{siteConfig.title} • {project.title}</title>
 	<meta name="description" content={project.description} />
 </svelte:head>
 

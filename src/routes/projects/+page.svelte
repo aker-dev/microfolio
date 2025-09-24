@@ -2,6 +2,7 @@
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
+	import { siteConfig } from '$lib/config.js';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -12,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>Projects</title>
+	<title>{siteConfig.title} • Projects</title>
 	<meta name="description" content="Projects list" />
 </svelte:head>
 

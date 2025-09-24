@@ -1,6 +1,7 @@
 <script>
 	import { base } from '$app/paths';
 	import AkBadge from './AkBadge.svelte';
+	import OptimizedImage from './OptimizedImage.svelte';
 	import IconStarFilled from '~icons/carbon/star-filled';
 
 	let { project, class: className } = $props();
@@ -9,11 +10,14 @@
 <a href="{base}/projects/{project.slug}" class="group bg-box block overflow-hidden {className}">
 	<!-- Thumbnail -->
 	<div class="aspect-[4/3] overflow-hidden">
-		<img
+		<OptimizedImage
 			src={project.thumbnailSrc}
 			alt={project.title}
 			class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
 			fetchpriority="high"
+			loading="lazy"
+			isProjectThumbnail={true}
+			sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
 		/>
 	</div>
 

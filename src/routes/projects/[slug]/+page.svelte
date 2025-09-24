@@ -4,6 +4,7 @@
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
 	import AkBtnMetadata from '$lib/components/AkBtnMetadata.svelte';
+	import OptimizedImage from '$lib/components/OptimizedImage.svelte';
 	import IconStarFilled from '~icons/carbon/star-filled';
 	import IconDocument from '~icons/carbon/document';
 	import IconChevronLeft from '~icons/carbon/chevron-left';
@@ -228,11 +229,14 @@
 							onclick={() => openLightbox(image)}
 							class="block aspect-[4/3] w-full cursor-pointer overflow-hidden"
 						>
-							<img
+							<OptimizedImage
 								src={image.path}
 								alt={image.name}
 								class="image-hover-effect h-full w-full object-cover"
 								fetchpriority="high"
+								loading="lazy"
+								isGalleryThumbnail={true}
+								sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
 							/>
 						</button>
 						<!-- Image metadata -->

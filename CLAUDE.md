@@ -27,8 +27,14 @@ pnpm format
 # Deploy (production build with NODE_ENV=production)
 pnpm deploy
 
-# Custom build script (uses build.js)
+# Build only (without image optimization)
 pnpm build
+
+# Generate optimized images (AVIF/WebP thumbnails)
+pnpm optimize-images
+
+# Full build with image optimization
+pnpm build:full
 ```
 
 ### Package Management

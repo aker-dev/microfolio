@@ -10,7 +10,9 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
-		"deploy": "NODE_ENV=production pnpm run build"
+		"deploy": "NODE_ENV=production pnpm run build",
+		"optimize-images": "node scripts/generate-optimized-images.js",
+		"clean-images": "node scripts/clean-optimized-images.js"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.4.0",
@@ -31,6 +33,7 @@
 		"prettier": "^3.6.2",
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.6.14",
+		"sharp": "^0.34.4",
 		"svelte": "^5.39.4",
 		"tailwindcss": "^4.1.13",
 		"unplugin-icons": "^22.3.0",

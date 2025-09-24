@@ -10,16 +10,16 @@
 </svelte:head>
 
 <header class="mb-8">
-	<h2 class="text-primary mb-4 text-4xl font-bold">
+	<h1 class="text-primary mb-2 text-3xl font-bold">
 		{page.title}
-	</h2>
+	</h1>
 	{#if page.description}
-		<p class="text-xl">
+		<p class="text-lg">
 			{page.description}
 		</p>
 	{/if}
 </header>
 
-<article class="prose prose-neutral bg-box text-primary max-w-none p-6">
+<article class="prose prose-neutral text-primary">
 	{@html page.content}
 </article>

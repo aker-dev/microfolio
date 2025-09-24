@@ -19,8 +19,10 @@
 
 <div class="space-y-8">
 	<!-- Header -->
-	<h2 class="text-4xl font-bold">Projects</h2>
-
+	<header>
+		<h1 class="text-primary mb-2 text-3xl font-bold">Projects</h1>
+		<p class="text-lg">Explore our diverse range of projects.</p>
+	</header>
 	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects />
 
 	<!-- Mosaic Grid -->

@@ -223,7 +223,10 @@
 
 <div class="space-y-8">
 	<!-- Header -->
-	<h2 class="text-4xl font-bold">Projects Map</h2>
+	<header>
+		<h1 class="text-primary mb-2 text-3xl font-bold">Projects Maps</h1>
+		<p class="text-lg">Interactive map of projects</p>
+	</header>
 
 	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects />
 

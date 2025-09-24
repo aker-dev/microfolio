@@ -82,7 +82,10 @@
 
 <div class="space-y-8">
 	<!-- Header -->
-	<h2 class="text-4xl font-bold">Projects List</h2>
+	<header>
+		<h1 class="text-primary mb-2 text-3xl font-bold">Projects List</h1>
+		<p class="text-lg">Searchable and sortable projects list</p>
+	</header>
 
 	<!-- Filters and Search -->
 	<div class="space-y-4">

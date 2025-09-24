@@ -97,7 +97,7 @@
 	<div class="col-span-2 mb-12 max-w-none">
 		<!-- Title & Description -->
 		<div>
-			<h2 class="inline-block text-3xl font-bold">{project.title}</h2>
+			<h1 class="text-primary mb-2 text-3xl font-bold">{project.title}</h1>
 		</div>
 		<p class="text-lg">{project.description}</p>
 

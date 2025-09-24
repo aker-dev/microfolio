@@ -51,8 +51,8 @@
 	>
 		<section class="h-15 flex-1">
 			<a href="{base}/">
-				<h1 class="text-2xl font-medium">{siteConfig.title}</h1>
-				<h2 class="text-sm">{siteConfig.description}</h2>
+				<div class="text-2xl font-medium">{siteConfig.title}</div>
+				<div class="text-sm">{siteConfig.description}</div>
 			</a>
 		</section>
 

@@ -37,14 +37,8 @@ async function cleanOptimizedImagesInDirectory(dirPath) {
 				// Recursively clean subdirectories
 				removedCount += await cleanOptimizedImagesInDirectory(fullPath);
 			} else if (entry.isFile()) {
-				// Remove old optimized files 
-				if (
-					entry.name.endsWith('.avif') ||
-					entry.name.endsWith('_thumb.avif') ||
-					entry.name.endsWith('_thumb.webp') ||
-					entry.name.includes('_optimized.webp') ||
-					entry.name.includes('_optimized.avif')
-				) {
+				// Remove WebP files 
+				if (entry.name.endsWith('.webp')) {
 					try {
 						await rm(fullPath);
 						console.log(`🗑️  Removed: ${fullPath}`);

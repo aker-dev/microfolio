@@ -10,9 +10,8 @@ const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, '..');
 const contentDir = join(projectRoot, 'content/projects');
 
-// Size configuration
-const THUMBNAIL_SIZE = { width: 300, height: 400 };
-const GALLERY_THUMBNAIL_SIZE = { width: 300, height: 300 };
+// Unified size configuration - one size fits all
+const OPTIMIZED_SIZE = { width: 600, maxHeight: 800 };
 
 /**
  * Check if a file exists
@@ -54,19 +53,18 @@ async function needsRegeneration(sourcePath, targetPath) {
 }
 
 /**
- * Generate an optimized AVIF image
+ * Generate an optimized WebP thumbnail
  */
-async function generateAVIF(inputPath, outputPath, size, quality = 80) {
+async function generateOptimizedWebP(inputPath, outputPath, quality = 80) {
 	try {
 		await sharp(inputPath)
-			.resize(size.width, size.height, {
-				fit: 'cover',
-				position: 'center'
+			.resize(OPTIMIZED_SIZE.width, OPTIMIZED_SIZE.maxHeight, {
+				fit: 'inside',
+				withoutEnlargement: true
 			})
-			.avif({
+			.webp({
 				quality,
-				effort: 6, // Maximum compression
-				chromaSubsampling: '4:2:0'
+				effort: 6
 			})
 			.toFile(outputPath);
 
@@ -79,34 +77,10 @@ async function generateAVIF(inputPath, outputPath, size, quality = 80) {
 }
 
 /**
- * Generate a WebP fallback image
- */
-async function generateWebP(inputPath, outputPath, size, quality = 85) {
-	try {
-		await sharp(inputPath)
-			.resize(size.width, size.height, {
-				fit: 'cover',
-				position: 'center'
-			})
-			.webp({
-				quality,
-				effort: 6
-			})
-			.toFile(outputPath);
-
-		console.log(`✅ Generated WebP: ${outputPath}`);
-		return true;
-	} catch (error) {
-		console.error(`❌ Error generating WebP ${outputPath}:`, error.message);
-		return false;
-	}
-}
-
-/**
- * Process main project thumbnails
+ * Process project thumbnails (main project thumbnails for AkProjectCard)
  */
 async function processProjectThumbnails() {
-	console.log('🎯 Processing project thumbnails...');
+	console.log('🎯 Processing project thumbnails for AkProjectCard...');
 
 	const projects = await readdir(contentDir);
 	let processed = 0;
@@ -127,30 +101,19 @@ async function processProjectThumbnails() {
 			continue;
 		}
 
-		// Output paths in /content
-		const avifPath = join(projectPath, 'thumbnail.avif');
+		// Output path with simple extension change
 		const webpPath = join(projectPath, 'thumbnail.webp');
 
 		// Check if we need to regenerate
-		const needsAvif = await needsRegeneration(thumbnailPath, avifPath);
-		const needsWebp = await needsRegeneration(thumbnailPath, webpPath);
-
-		if (!needsAvif && !needsWebp) {
+		if (!(await needsRegeneration(thumbnailPath, webpPath))) {
 			skipped++;
 			continue;
 		}
 
 		console.log(`📸 Processing thumbnail for: ${projectName}`);
 
-		// Generate AVIF
-		if (needsAvif) {
-			await generateAVIF(thumbnailPath, avifPath, THUMBNAIL_SIZE, 75);
-		}
-
 		// Generate WebP
-		if (needsWebp) {
-			await generateWebP(thumbnailPath, webpPath, THUMBNAIL_SIZE, 80);
-		}
+		await generateOptimizedWebP(thumbnailPath, webpPath)
 
 		processed++;
 	}
@@ -159,10 +122,10 @@ async function processProjectThumbnails() {
 }
 
 /**
- * Process project gallery images
+ * Process gallery thumbnails (thumbnails in project galleries)
  */
-async function processGalleryImages() {
-	console.log('🖼️  Processing gallery images...');
+async function processGalleryThumbnails() {
+	console.log('🖼️  Processing gallery thumbnails...');
 
 	const projects = await readdir(contentDir);
 	let processed = 0;
@@ -181,50 +144,42 @@ async function processGalleryImages() {
 			continue;
 		}
 
-		// Direct generation in /content/images
-
-		// List images
+		// List images in the gallery
 		const images = await readdir(imagesPath);
 
 		for (const imageName of images) {
 			const imagePath = join(imagesPath, imageName);
 			const ext = extname(imageName).toLowerCase();
 
-			// Process only images
-			if (!['.jpg', '.jpeg', '.png', '.webp'].includes(ext)) {
+			// Process only original image formats
+			if (!['.jpg', '.jpeg', '.png'].includes(ext)) {
+				continue;
+			}
+
+			// Skip WebP files (already optimized)
+			if (ext === '.webp') {
 				continue;
 			}
 
 			const baseName = basename(imageName, ext);
-			const avifPath = join(imagesPath, `${baseName}_thumb.avif`);
-			const webpPath = join(imagesPath, `${baseName}_thumb.webp`);
+			const webpPath = join(imagesPath, `${baseName}.webp`);
 
 			// Check if we need to regenerate
-			const needsAvif = await needsRegeneration(imagePath, avifPath);
-			const needsWebp = await needsRegeneration(imagePath, webpPath);
-
-			if (!needsAvif && !needsWebp) {
+			if (!(await needsRegeneration(imagePath, webpPath))) {
 				skipped++;
 				continue;
 			}
 
 			console.log(`📷 Processing gallery image: ${projectName}/${imageName}`);
 
-			// Generate AVIF
-			if (needsAvif) {
-				await generateAVIF(imagePath, avifPath, GALLERY_THUMBNAIL_SIZE, 70);
-			}
-
 			// Generate WebP
-			if (needsWebp) {
-				await generateWebP(imagePath, webpPath, GALLERY_THUMBNAIL_SIZE, 75);
-			}
+			await generateOptimizedWebP(imagePath, webpPath)
 
 			processed++;
 		}
 	}
 
-	console.log(`✨ Processed ${processed} gallery images, skipped ${skipped}`);
+	console.log(`✨ Processed ${processed} gallery thumbnails, skipped ${skipped}`);
 }
 
 /**
@@ -233,9 +188,8 @@ async function processGalleryImages() {
 async function showStats() {
 	console.log('📊 Final statistics:');
 
-	// Count generated files
-	let avifCount = 0;
-	let webpCount = 0;
+	// Count optimized thumbnails
+	let optimizedCount = 0;
 
 	async function countFiles(dir) {
 		try {
@@ -244,10 +198,8 @@ async function showStats() {
 			for (const entry of entries) {
 				if (entry.isDirectory()) {
 					await countFiles(join(dir, entry.name));
-				} else if (entry.name.endsWith('.avif')) {
-					avifCount++;
 				} else if (entry.name.endsWith('.webp')) {
-					webpCount++;
+					optimizedCount++;
 				}
 			}
 		} catch (error) {
@@ -257,8 +209,7 @@ async function showStats() {
 
 	await countFiles(contentDir);
 
-	console.log(`📈 Total AVIF files: ${avifCount}`);
-	console.log(`📈 Total WebP files: ${webpCount}`);
+	console.log(`📈 Total optimized thumbnails: ${optimizedCount} WebP files`);
 }
 
 /**
@@ -271,14 +222,11 @@ async function main() {
 	const startTime = Date.now();
 
 	try {
-		// Create build folder if it doesn't exist
-		// Images are generated in /content, no need to create buildDir
-
-		// Process project thumbnails
+		// Process project thumbnails for AkProjectCard
 		await processProjectThumbnails();
 
-		// Process gallery images
-		await processGalleryImages();
+		// Process gallery thumbnails
+		await processGalleryThumbnails();
 
 		// Display statistics
 		await showStats();

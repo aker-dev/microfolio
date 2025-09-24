@@ -1,4 +1,5 @@
 import { readFile, readdir } from 'fs/promises';
+import { existsSync } from 'fs';
 import { join } from 'path';
 import { parse } from 'yaml';
 import { marked } from 'marked';
@@ -40,10 +41,15 @@ export async function load() {
 				const [, projectFrontmatter] = projectContent.split('---');
 				const projectMetadata = parse(projectFrontmatter);
 
+				// Check if WebP thumbnail exists
+				const webpPath = join(projectPath, 'thumbnail.webp');
+				const hasWebP = existsSync(webpPath);
+
 				projects.push({
 					slug: folder,
 					...projectMetadata,
-					thumbnailSrc: `${basePath}/content/projects/${folder}/thumbnail.jpg`
+					thumbnailSrc: `${basePath}/content/projects/${folder}/thumbnail.jpg`,
+					hasWebP
 				});
 			} catch (error) {
 				console.warn(`Error reading project ${folder}:`, error);

@@ -14,10 +14,7 @@
 			src={project.thumbnailSrc}
 			alt={project.title}
 			class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
-			fetchpriority="high"
-			loading="lazy"
-			isProjectThumbnail={true}
-			sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+			hasWebP={project.hasWebP || false}
 		/>
 	</div>
 

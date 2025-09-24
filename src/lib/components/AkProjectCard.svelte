@@ -1,7 +1,7 @@
 <script>
 	import { base } from '$app/paths';
 	import AkBadge from './AkBadge.svelte';
-	import OptimizedImage from './OptimizedImage.svelte';
+	import AkOptimizedImage from './AkOptimizedImage.svelte';
 	import IconStarFilled from '~icons/carbon/star-filled';
 
 	let { project, class: className } = $props();
@@ -10,7 +10,7 @@
 <a href="{base}/projects/{project.slug}" class="group bg-box block overflow-hidden {className}">
 	<!-- Thumbnail -->
 	<div class="aspect-[4/3] overflow-hidden">
-		<OptimizedImage
+		<AkOptimizedImage
 			src={project.thumbnailSrc}
 			alt={project.title}
 			class="image-hover-effect h-full w-full bg-neutral-500 object-cover"

@@ -1,4 +1,5 @@
 import { readdir, readFile } from 'fs/promises';
+import { existsSync } from 'fs';
 import { join } from 'path';
 import { parse } from 'yaml';
 
@@ -27,10 +28,16 @@ export async function loadProjects() {
 				const [, frontmatter] = content.split('---');
 				const metadata = parse(frontmatter);
 
+				// Check if WebP thumbnail exists
+				const projectPath = join(projectsPath, folder);
+				const webpPath = join(projectPath, 'thumbnail.webp');
+				const hasWebP = existsSync(webpPath);
+
 				const project = {
 					slug: folder,
 					...metadata,
-					thumbnailSrc: basePath + '/content/projects/' + folder + '/thumbnail.jpg'
+					thumbnailSrc: basePath + '/content/projects/' + folder + '/thumbnail.jpg',
+					hasWebP
 				};
 
 				projects.push(project);

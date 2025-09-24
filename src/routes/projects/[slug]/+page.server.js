@@ -7,11 +7,12 @@ import { error } from '@sveltejs/kit';
 import { extractImageMetadata, formatCreditLine } from '$lib/utils/imageMetadata.js';
 
 // Get base path from environment - same logic as svelte.config.js
-const basePath = process.env.CUSTOM_DOMAIN === 'true'
-	? ''
-	: process.env.NODE_ENV === 'production'
-		? '/microfolio'
-		: '';
+const basePath =
+	process.env.CUSTOM_DOMAIN === 'true'
+		? ''
+		: process.env.NODE_ENV === 'production'
+			? '/microfolio'
+			: '';
 
 export async function load({ params }) {
 	const { slug } = params;
@@ -60,12 +61,12 @@ async function getProjectResources(projectPath, slug) {
 		try {
 			const imageFiles = await readdir(imagesPath);
 			const imageList = imageFiles
-				.filter((file) => /\.(jpg|jpeg|png|gif|svg)$/i.test(file))
+				.filter((file) => /\.(jpg|jpeg|png)$/i.test(file))
 				.map((file) => {
 					// Check if WebP version exists
 					const webpPath = join(imagesPath, file.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
 					const hasWebP = existsSyncSync(webpPath);
-					
+
 					return {
 						name: file,
 						path: `${basePath}/content/projects/${slug}/images/${file}`,

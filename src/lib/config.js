@@ -2,7 +2,7 @@ export const siteConfig = {
 	title: 'microfolio',
 	description: 'static portfolio generator',
 	author: 'AKER',
-	version: '0.4.0-beta.5',
+	version: '0.4.0-beta.6',
 
 	// Social links
 	socialLinks: {

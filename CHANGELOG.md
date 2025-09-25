@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0-beta.6] - 2025-09-25
+
+### Added
+- WebP thumbnail generation command (`pnpm optimize-images`)
+- Image cleanup script (`pnpm run clean-images`) to remove optimized thumbnails when needed
+- AkOptimizedImage component for improved image loading with WebP support
+- Open Graph metadata for improved social sharing on project pages
+- SEO and accessibility audit documentation
+
+### Changed
+- Enhanced build process with optional image optimization step
+- Improved image loading performance with optimized WebP thumbnails
+- Updated packages to latest versions
+
+### Fixed
+- Enhanced button hover effects and accessibility attributes across components
+- Improved map height calculation for better responsiveness
+- Standardized header elements across pages for consistency and accessibility
+- Updated page titles to include siteConfig.title for consistency across routes
+- Improved font loading by using local IBM Plex Sans file
+
 ## [0.3.0-beta.2] - 2025-09-22
 
 ### Added

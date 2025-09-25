@@ -17,6 +17,7 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 - **🖼️ Lightbox d'images** - Galerie améliorée avec navigation et affichage des métadonnées
 - **📊 Métadonnées EXIF/IPTC** - Extraction et affichage automatique des informations techniques d'images
 - **🌙 Mode sombre** - Support de thème intégré pour une meilleure expérience de visualisation
+- **⚡ Optimisation des images** - Génération de thumbnails WebP avec commande `pnpm optimize-images`
 
 ## 🧪 Programme de beta tests
 

@@ -17,6 +17,7 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 - **🖼️ Image Lightbox** - Enhanced gallery with navigation arrows and metadata display
 - **📊 EXIF/IPTC Metadata** - Automatic extraction and display of image technical information
 - **🌙 Dark Mode** - Built-in theme support for better viewing experience
+- **⚡ Image Optimization** - WebP thumbnail generation with `pnpm optimize-images` command
 
 ## 🧪 Beta Testing Program
 

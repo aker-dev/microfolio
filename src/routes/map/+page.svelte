@@ -25,7 +25,7 @@
 	// Update map height and invalidate size when window height changes
 	$effect(() => {
 		if (windowHeight > 0) {
-			const height = Math.max(400, Math.min(600, windowHeight * 0.5));
+			const height = Math.max(600, Math.min(600, windowHeight * 0.5));
 			const newMapHeight = `${height}px`;
 
 			// Only update if height actually changed

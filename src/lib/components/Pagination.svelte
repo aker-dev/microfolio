@@ -25,7 +25,11 @@
 		<button
 			onclick={previousPage}
 			disabled={$pageNumber === 1}
-			class="rounded border border-primary bg-box px-3 py-1 text-sm hover:bg-primary hover:text-box disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-box disabled:hover:text-primary"
+			class="border-primary bg-box cursor-pointer rounded border px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-50 {$pageNumber !==
+			1
+				? 'hover:bg-primary hover:text-box'
+				: ''}"
+			aria-label="Go to previous page"
 		>
 			Previous
 		</button>
@@ -33,13 +37,14 @@
 		<!-- Page numbers -->
 		{#each $pages as page}
 			{#if page === '...'}
-				<span class="px-2 py-1 text-sm text-primary">...</span>
+				<span class="text-primary px-2 py-1 text-sm">...</span>
 			{:else}
 				<button
 					onclick={() => goToPage(page)}
-					class="rounded border px-3 py-1 text-sm {$pageNumber === page
+					class="cursor-pointer rounded border px-3 py-1 text-sm {$pageNumber === page
 						? 'border-primary bg-primary text-box'
 						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
+					aria-label={'Go to page ' + page}
 				>
 					{page}
 				</button>
@@ -50,7 +55,11 @@
 		<button
 			onclick={nextPage}
 			disabled={$pageNumber === $pageCount}
-			class="rounded border border-primary bg-box px-3 py-1 text-sm hover:bg-primary hover:text-box disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-box disabled:hover:text-primary"
+			class="border-primary bg-box cursor-pointer rounded border px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-50 {$pageNumber !==
+			$pageCount
+				? 'hover:bg-primary hover:text-box'
+				: ''}"
+			aria-label="Go to next page"
 		>
 			Next
 		</button>

@@ -186,10 +186,10 @@
 								<td class="px-4 py-3">
 									<a
 										href="{base}/projects/{project.slug}"
-										class="border-primary bg-box hover:bg-primary hover:text-box flex h-8 w-8 items-center justify-center rounded border"
-										title="View project"
+										class="group bg-box text-primary border-primary inline-block cursor-pointer rounded-full border-1 p-2"
+										aria-label="View project"
 									>
-										<IconArrowRight class="pointer-events-none h-4 w-4" />
+										<IconArrowRight class="pointer-events-none size-4 group-hover:scale-120" />
 									</a>
 								</td>
 							</tr>

@@ -374,10 +374,10 @@
 						e.stopPropagation();
 						previousImage();
 					}}
-					class="border-primary bg-box text-primary absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
+					class="border-primary group bg-box text-primary absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
 					aria-label="Previous image"
 				>
-					<IconChevronLeft class="pointer-events-none size-6 hover:scale-120" />
+					<IconChevronLeft class="pointer-events-none size-6 group-hover:scale-120" />
 				</button>
 
 				<!-- Next arrow -->
@@ -387,10 +387,10 @@
 						e.stopPropagation();
 						nextImage();
 					}}
-					class="boder-primary bg-box text-primary absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
+					class="boder-primary group bg-box text-primary absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
 					aria-label="Next image"
 				>
-					<IconChevronRight class="pointer-events-none size-6 hover:scale-120" />
+					<IconChevronRight class="pointer-events-none size-6 group-hover:scale-120" />
 				</button>
 			{/if}
 

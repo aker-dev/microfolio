@@ -91,6 +91,13 @@
 <svelte:head>
 	<title>{siteConfig.title} • {project.title}</title>
 	<meta name="description" content={project.description} />
+
+	<!-- OG metadata -->
+	<meta property="og:title" content={project.title} />
+	<meta property="og:description" content={project.description} />
+	<meta property="og:image" content="{base}/content/projects/{project.slug}/thumbnail.jpg" />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content={siteConfig.title} />
 </svelte:head>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">

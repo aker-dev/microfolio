@@ -115,7 +115,7 @@
 		<!-- Main thumbnail -->
 		<img
 			src="{base}/content/projects/{project.slug}/thumbnail.jpg"
-			alt={project.title}
+			alt={thumbnailMetadata?.description || project.title}
 			class="w-full"
 		/>
 		<!-- Thumbnail metadata -->
@@ -237,7 +237,7 @@
 						>
 							<AkOptimizedImage
 								src={image.path}
-								alt={image.name}
+								alt={image.metadata?.description || image.name}
 								class="image-hover-effect h-full w-full object-cover"
 								hasWebP={image.hasWebP || false}
 							/>

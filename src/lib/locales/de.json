@@ -1,0 +1,102 @@
+{
+	"nav": {
+		"home": "Startseite",
+		"about": "Über uns",
+		"projects": "Projekte",
+		"list": "Liste",
+		"map": "Karte"
+	},
+	"pages": {
+		"list": {
+			"title": "Listenansicht",
+			"description": "Projekte suchen und filtern"
+		},
+		"map": {
+			"title": "Kartenansicht",
+			"description": "Projekte nach Standort erkunden"
+		},
+		"projects": {
+			"title": "Projekte",
+			"description": "Entdecken Sie unsere Arbeiten"
+		}
+	},
+	"ui": {
+		"loading": "Lädt...",
+		"error": "Fehler",
+		"close": "Schließen",
+		"display_metadata": "Details anzeigen",
+		"search_placeholder": "Suchen...",
+		"search_projects_placeholder": "Projekte suchen...",
+		"project_singular": "Projekt",
+		"project_plural": "Projekte",
+		"results_found": "Ergebnis(se)",
+		"no_projects_found": "Keine Projekte für Ihre Suche gefunden.",
+		"not_available": "Nicht verfügbar",
+		"view_project": "Projekt ansehen",
+		"loading_projects": "Projekte werden geladen...",
+		"generated_with": "generiert mit",
+		"toggle_mobile_menu": "Menü",
+		"featured_projects": "Ausgewählte Projekte",
+		"back_to_projects": "← Projekte",
+		"video_not_supported": "Ihr Browser kann dieses Video nicht abspielen.",
+		"click_to_download": "Herunterladen",
+		"image_lightbox": "Galerie",
+		"previous_image": "Vorheriges Bild",
+		"next_image": "Nächstes Bild",
+		"credit": "Kredit:",
+		"social": {
+			"instagram": "Instagram",
+			"linkedin": "LinkedIn",
+			"github": "GitHub"
+		},
+		"table": {
+			"title": "Titel",
+			"type": "Typ",
+			"location": "Standort",
+			"date": "Datum",
+			"description": "Beschreibung",
+			"tags": "Schlagwörter",
+			"actions": "Aktionen"
+		},
+		"pagination": {
+			"previous": "Zurück",
+			"next": "Weiter",
+			"previous_page": "Vorherige Seite",
+			"next_page": "Nächste Seite",
+			"go_to_page": "Seite ",
+			"showing": "Anzeige:",
+			"to": "bis",
+			"of": "von",
+			"entries": "Einträgen",
+			"show": "Anzeigen:"
+		},
+		"project": {
+			"infos": "Informationen",
+			"location_date": "Standort und Datum ›",
+			"status": "Status",
+			"owner": "Auftraggeber",
+			"surface_area": "Fläche",
+			"cost": "Budget ›",
+			"team": "Team",
+			"tags": "Schlagwörter",
+			"gallery": "Galerie",
+			"videos": "Videos",
+			"documents": "Dokumente"
+		},
+		"metadata": {
+			"technical_details": "Technische Details",
+			"camera": "Kamera",
+			"lens": "Objektiv",
+			"focal_length": "Brennweite",
+			"aperture": "Blende",
+			"shutter_speed": "Verschlusszeit",
+			"iso": "ISO",
+			"location_date": "Standort und Datum",
+			"date": "Datum",
+			"location": "Standort",
+			"address": "Adresse",
+			"coordinates": "Koordinaten",
+			"keywords": "Schlagwörter"
+		}
+	}
+}

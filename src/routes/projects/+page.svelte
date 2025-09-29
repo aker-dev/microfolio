@@ -22,7 +22,7 @@
 	<!-- Header -->
 	<header>
 		<h1 class="text-primary mb-2 text-3xl font-bold">{$_('pages.projects.title')}</h1>
-		<p class="text-lg">{$_('pages.projects.subtitle')}</p>
+		<p class="text-lg">{$_('pages.projects.description')}</p>
 	</header>
 	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects />
 

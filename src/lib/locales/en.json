@@ -1,103 +1,102 @@
 {
-  "nav": {
-    "home": "Home",
-    "about": "About",
-    "projects": "Projects",
-    "list": "List",
-    "map": "Map"
-  },
-  "pages": {
-    "list": {
-      "title": "Projects List",
-      "description": "Searchable and sortable projects list"
-    },
-    "map": {
-      "title": "Projects Map",
-      "description": "Interactive map of projects"
-    },
-    "projects": {
-      "title": "Projects",
-      "description": "Projects list",
-      "subtitle": "Explore our diverse range of projects."
-    }
-  },
-  "ui": {
-    "loading": "Loading...",
-    "error": "Error",
-    "close": "Close",
-    "display_metadata": "Display metadata",
-    "search_placeholder": "Search...",
-    "search_projects_placeholder": "Search projects...",
-    "project_singular": "project",
-    "project_plural": "projects",
-    "results_found": "found",
-    "no_projects_found": "No projects found matching your criteria.",
-    "not_available": "N/A",
-    "view_project": "View project",
-    "loading_projects": "Loading projects...",
-    "generated_with": "generated with",
-    "toggle_mobile_menu": "Toggle mobile menu",
-    "featured_projects": "Featured Projects",
-    "back_to_projects": "Back to Projects",
-    "video_not_supported": "Your browser does not support the video tag.",
-    "click_to_download": "Click to download",
-    "image_lightbox": "Image lightbox",
-    "previous_image": "Previous image",
-    "next_image": "Next image",
-    "credit": "Credit:",
-    "social": {
-      "instagram": "Instagram",
-      "linkedin": "LinkedIn",
-      "github": "GitHub"
-    },
-    "table": {
-      "title": "Title",
-      "type": "Type",
-      "location": "Location",
-      "date": "Date",
-      "description": "Description",
-      "tags": "Tags",
-      "actions": "Actions"
-    },
-    "pagination": {
-      "previous": "Previous",
-      "next": "Next",
-      "previous_page": "Go to previous page",
-      "next_page": "Go to next page",
-      "go_to_page": "Go to page ",
-      "showing": "Showing",
-      "to": "to",
-      "of": "of",
-      "entries": "entries",
-      "show": "Show:"
-    },
-    "project": {
-      "infos": "Infos",
-      "location_date": "Location & Date",
-      "status": "Status",
-      "owner": "Project Owner",
-      "surface_area": "Surface Area",
-      "cost": "Cost",
-      "team": "Team",
-      "tags": "Tags",
-      "gallery": "Gallery",
-      "videos": "Videos",
-      "documents": "Documents"
-    },
-    "metadata": {
-      "technical_details": "Technical Details",
-      "camera": "Camera",
-      "lens": "Lens",
-      "focal_length": "Focal Length",
-      "aperture": "Aperture",
-      "shutter_speed": "Shutter Speed",
-      "iso": "ISO",
-      "location_date": "Location & Date",
-      "date": "Date",
-      "location": "Location",
-      "address": "Address",
-      "coordinates": "Coordinates",
-      "keywords": "Keywords"
-    }
-  }
+	"nav": {
+		"home": "Home",
+		"about": "About",
+		"projects": "Projects",
+		"list": "List",
+		"map": "Map"
+	},
+	"pages": {
+		"list": {
+			"title": "Projects List",
+			"description": "Searchable and sortable projects list"
+		},
+		"map": {
+			"title": "Projects Map",
+			"description": "Interactive map of projects"
+		},
+		"projects": {
+			"title": "Projects",
+			"description": "Explore our diverse range of projects"
+		}
+	},
+	"ui": {
+		"loading": "Loading...",
+		"error": "Error",
+		"close": "Close",
+		"display_metadata": "Display metadata",
+		"search_placeholder": "Search...",
+		"search_projects_placeholder": "Search projects...",
+		"project_singular": "project",
+		"project_plural": "projects",
+		"results_found": "found",
+		"no_projects_found": "No projects found matching your criteria.",
+		"not_available": "N/A",
+		"view_project": "View project",
+		"loading_projects": "Loading projects...",
+		"generated_with": "generated with",
+		"toggle_mobile_menu": "Toggle mobile menu",
+		"featured_projects": "Featured Projects",
+		"back_to_projects": "Back to Projects",
+		"video_not_supported": "Your browser does not support the video tag.",
+		"click_to_download": "Click to download",
+		"image_lightbox": "Image lightbox",
+		"previous_image": "Previous image",
+		"next_image": "Next image",
+		"credit": "Credit:",
+		"social": {
+			"instagram": "Instagram",
+			"linkedin": "LinkedIn",
+			"github": "GitHub"
+		},
+		"table": {
+			"title": "Title",
+			"type": "Type",
+			"location": "Location",
+			"date": "Date",
+			"description": "Description",
+			"tags": "Tags",
+			"actions": "Actions"
+		},
+		"pagination": {
+			"previous": "Previous",
+			"next": "Next",
+			"previous_page": "Go to previous page",
+			"next_page": "Go to next page",
+			"go_to_page": "Go to page ",
+			"showing": "Showing",
+			"to": "to",
+			"of": "of",
+			"entries": "entries",
+			"show": "Show:"
+		},
+		"project": {
+			"infos": "Infos",
+			"location_date": "Location & Date",
+			"status": "Status",
+			"owner": "Project Owner",
+			"surface_area": "Surface Area",
+			"cost": "Cost",
+			"team": "Team",
+			"tags": "Tags",
+			"gallery": "Gallery",
+			"videos": "Videos",
+			"documents": "Documents"
+		},
+		"metadata": {
+			"technical_details": "Technical Details",
+			"camera": "Camera",
+			"lens": "Lens",
+			"focal_length": "Focal Length",
+			"aperture": "Aperture",
+			"shutter_speed": "Shutter Speed",
+			"iso": "ISO",
+			"location_date": "Location & Date",
+			"date": "Date",
+			"location": "Location",
+			"address": "Address",
+			"coordinates": "Coordinates",
+			"keywords": "Keywords"
+		}
+	}
 }

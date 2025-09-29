@@ -6,7 +6,6 @@ export const siteConfig = {
 
 	// Internationalization - manual configuration
 	locale: 'en', // 'en' or 'fr'
-	locales: ['en', 'fr'],
 
 	// Social links
 	socialLinks: {

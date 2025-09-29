@@ -1,0 +1,102 @@
+{
+	"nav": {
+		"home": "Inicio",
+		"about": "Acerca de",
+		"projects": "Proyectos",
+		"list": "Lista",
+		"map": "Mapa"
+	},
+	"pages": {
+		"list": {
+			"title": "Vista Lista",
+			"description": "Busca y ordena los proyectos"
+		},
+		"map": {
+			"title": "Vista Mapa",
+			"description": "Explora los proyectos en el mapa"
+		},
+		"projects": {
+			"title": "Proyectos",
+			"description": "Descubre nuestras realizaciones"
+		}
+	},
+	"ui": {
+		"loading": "Cargando...",
+		"error": "Error",
+		"close": "Cerrar",
+		"display_metadata": "Ver detalles",
+		"search_placeholder": "Buscar...",
+		"search_projects_placeholder": "Buscar en proyectos...",
+		"project_singular": "proyecto",
+		"project_plural": "proyectos",
+		"results_found": "resultado(s)",
+		"no_projects_found": "No se encontraron proyectos que coincidan con tu búsqueda.",
+		"not_available": "N/A",
+		"view_project": "Ver proyecto",
+		"loading_projects": "Cargando proyectos...",
+		"generated_with": "generado con",
+		"toggle_mobile_menu": "Menú",
+		"featured_projects": "Destacados",
+		"back_to_projects": "Volver a proyectos",
+		"video_not_supported": "Tu navegador no puede reproducir este vídeo.",
+		"click_to_download": "Descargar",
+		"image_lightbox": "Galería de fotos",
+		"previous_image": "Imagen anterior",
+		"next_image": "Imagen siguiente",
+		"credit": "Crédito:",
+		"social": {
+			"instagram": "Instagram",
+			"linkedin": "LinkedIn",
+			"github": "GitHub"
+		},
+		"table": {
+			"title": "Título",
+			"type": "Categoría",
+			"location": "Lugar",
+			"date": "Fecha",
+			"description": "Descripción",
+			"tags": "Palabras clave",
+			"actions": "Acciones"
+		},
+		"pagination": {
+			"previous": "Anterior",
+			"next": "Siguiente",
+			"previous_page": "Página anterior",
+			"next_page": "Página siguiente",
+			"go_to_page": "Página ",
+			"showing": "Mostrando:",
+			"to": "a",
+			"of": "de",
+			"entries": "elementos",
+			"show": "Mostrar:"
+		},
+		"project": {
+			"infos": "Información",
+			"location_date": "Lugar y fecha ›",
+			"status": "Estado",
+			"owner": "Cliente",
+			"surface_area": "Superficie",
+			"cost": "Presupuesto ›",
+			"team": "Equipo",
+			"tags": "Palabras clave",
+			"gallery": "Fotos",
+			"videos": "Vídeos",
+			"documents": "Documentos"
+		},
+		"metadata": {
+			"technical_details": "Datos técnicos",
+			"camera": "Cámara",
+			"lens": "Objetivo",
+			"focal_length": "Focal",
+			"aperture": "Apertura",
+			"shutter_speed": "Velocidad",
+			"iso": "ISO",
+			"location_date": "Lugar y fecha",
+			"date": "Fecha",
+			"location": "Lugar",
+			"address": "Dirección",
+			"coordinates": "Coordenadas",
+			"keywords": "Palabras clave"
+		}
+	}
+}

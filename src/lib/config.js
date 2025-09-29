@@ -4,6 +4,10 @@ export const siteConfig = {
 	author: 'AKER',
 	version: '0.5.0-beta.0',
 
+	// Internationalization - manual configuration
+	locale: 'fr', // 'en' or 'fr'
+	locales: ['en', 'fr'],
+
 	// Social links
 	socialLinks: {
 		github: 'https://github.com/yourusername',
@@ -13,11 +17,11 @@ export const siteConfig = {
 
 	// Navigation
 	navigation: [
-		{ name: 'Home', href: '/' },
-		{ name: 'About', href: '/about' },
-		{ name: 'Projects', href: '/projects' },
-		{ name: 'List', href: '/list' },
-		{ name: 'Map', href: '/map' }
+		{ name: 'nav.home', href: '/' },
+		{ name: 'nav.about', href: '/about' },
+		{ name: 'nav.projects', href: '/projects' },
+		{ name: 'nav.list', href: '/list' },
+		{ name: 'nav.map', href: '/map' }
 		// ...
 	]
 };

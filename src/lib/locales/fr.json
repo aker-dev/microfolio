@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "projects": "Projets",
+    "list": "Liste",
+    "map": "Carte"
+  },
+  "ui": {
+    "loading": "Chargement...",
+    "error": "Erreur"
+  }
+}

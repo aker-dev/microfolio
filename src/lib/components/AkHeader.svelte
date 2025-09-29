@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { base } from '$app/paths';
 	import { siteConfig } from '$lib/config.js';
+	import { _ } from 'svelte-i18n';
 	import IconMenu from '~icons/carbon/menu';
 	import IconCloseLarge from '~icons/carbon/close-large';
 
@@ -43,6 +44,7 @@
 	$effect(() => {
 		console.log('Current page:', currentPage);
 	});
+
 </script>
 
 <header class="bg-background sticky top-0 z-5000 mb-8">
@@ -67,7 +69,7 @@
 							? 'border-primary border-b-2 font-medium'
 							: ''}"
 					>
-						<a href="{base}{item.href}">{item.name}</a>
+						<a href="{base}{item.href}">{$_(item.name)}</a>
 					</li>
 				{/each}
 			</ul>
@@ -104,7 +106,7 @@
 									: ''}"
 								onclick={closeMobileMenu}
 							>
-								{item.name}
+								{$_(item.name)}
 							</a>
 						</li>
 					{/each}

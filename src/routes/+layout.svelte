@@ -1,5 +1,6 @@
 <script>
 	import '../app.css';
+	import '$lib/i18n.js';
 	import AkHeader from '$lib/components/AkHeader.svelte';
 	import AkFooter from '$lib/components/AkFooter.svelte';
 

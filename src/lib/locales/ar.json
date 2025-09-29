@@ -1,0 +1,102 @@
+{
+	"nav": {
+		"home": "الرئيسية",
+		"about": "من نحن",
+		"projects": "المشاريع",
+		"list": "القائمة",
+		"map": "الخريطة"
+	},
+	"pages": {
+		"list": {
+			"title": "عرض القائمة",
+			"description": "البحث وتصفية المشاريع"
+		},
+		"map": {
+			"title": "عرض الخريطة",
+			"description": "استكشاف المشاريع حسب الموقع"
+		},
+		"projects": {
+			"title": "المشاريع",
+			"description": "اكتشف أعمالنا"
+		}
+	},
+	"ui": {
+		"loading": "جاري التحميل...",
+		"error": "خطأ",
+		"close": "إغلاق",
+		"display_metadata": "عرض التفاصيل",
+		"search_placeholder": "البحث...",
+		"search_projects_placeholder": "البحث في المشاريع...",
+		"project_singular": "مشروع",
+		"project_plural": "مشاريع",
+		"results_found": "نتيجة",
+		"no_projects_found": "لم يتم العثور على مشاريع تطابق بحثك.",
+		"not_available": "غير متاح",
+		"view_project": "عرض المشروع",
+		"loading_projects": "جاري تحميل المشاريع...",
+		"generated_with": "تم إنشاؤه بواسطة",
+		"toggle_mobile_menu": "القائمة",
+		"featured_projects": "المشاريع المميزة",
+		"back_to_projects": "المشاريع ←",
+		"video_not_supported": "متصفحك لا يستطيع تشغيل هذا الفيديو.",
+		"click_to_download": "تحميل",
+		"image_lightbox": "معرض الصور",
+		"previous_image": "الصورة السابقة",
+		"next_image": "الصورة التالية",
+		"credit": "المصدر:",
+		"social": {
+			"instagram": "إنستغرام",
+			"linkedin": "لينكد إن",
+			"github": "جيت هاب"
+		},
+		"table": {
+			"title": "العنوان",
+			"type": "النوع",
+			"location": "الموقع",
+			"date": "التاريخ",
+			"description": "الوصف",
+			"tags": "العلامات",
+			"actions": "الإجراءات"
+		},
+		"pagination": {
+			"previous": "السابق",
+			"next": "التالي",
+			"previous_page": "الصفحة السابقة",
+			"next_page": "الصفحة التالية",
+			"go_to_page": "الصفحة ",
+			"showing": "عرض:",
+			"to": "إلى",
+			"of": "من",
+			"entries": "عنصر",
+			"show": "عرض:"
+		},
+		"project": {
+			"infos": "المعلومات",
+			"location_date": "الموقع والتاريخ ›",
+			"status": "الحالة",
+			"owner": "العميل",
+			"surface_area": "المساحة",
+			"cost": "الميزانية ›",
+			"team": "الفريق",
+			"tags": "العلامات",
+			"gallery": "المعرض",
+			"videos": "الفيديوهات",
+			"documents": "المستندات"
+		},
+		"metadata": {
+			"technical_details": "التفاصيل التقنية",
+			"camera": "الكاميرا",
+			"lens": "العدسة",
+			"focal_length": "البعد البؤري",
+			"aperture": "فتحة العدسة",
+			"shutter_speed": "سرعة الغالق",
+			"iso": "حساسية الضوء",
+			"location_date": "الموقع والتاريخ",
+			"date": "التاريخ",
+			"location": "الموقع",
+			"address": "العنوان",
+			"coordinates": "الإحداثيات",
+			"keywords": "العلامات"
+		}
+	}
+}

@@ -12,7 +12,7 @@
 <th class={className} {...props}>
 	<button
 		onclick={handleSort}
-		class="flex w-full items-center gap-1 rounded px-1 py-1 text-left hover:bg-gray-100"
+		class="flex w-full items-center gap-1 rounded px-1 py-1 text-start hover:bg-gray-100"
 	>
 		{@render children()}
 		{#if $sortState && $sortState.identifier === orderBy}

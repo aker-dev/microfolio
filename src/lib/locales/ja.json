@@ -1,0 +1,102 @@
+{
+	"nav": {
+		"home": "ホーム",
+		"about": "私たちについて",
+		"projects": "プロジェクト",
+		"list": "一覧",
+		"map": "マップ"
+	},
+	"pages": {
+		"list": {
+			"title": "一覧表示",
+			"description": "プロジェクトを検索・絞り込み"
+		},
+		"map": {
+			"title": "マップ表示",
+			"description": "場所別でプロジェクトを探索"
+		},
+		"projects": {
+			"title": "プロジェクト",
+			"description": "私たちの作品をご覧ください"
+		}
+	},
+	"ui": {
+		"loading": "読み込み中...",
+		"error": "エラー",
+		"close": "閉じる",
+		"display_metadata": "詳細を表示",
+		"search_placeholder": "検索...",
+		"search_projects_placeholder": "プロジェクトを検索...",
+		"project_singular": "プロジェクト",
+		"project_plural": "プロジェクト",
+		"results_found": "件の結果",
+		"no_projects_found": "検索条件に一致するプロジェクトが見つかりませんでした。",
+		"not_available": "なし",
+		"view_project": "プロジェクトを見る",
+		"loading_projects": "プロジェクトを読み込み中...",
+		"generated_with": "で生成",
+		"toggle_mobile_menu": "メニュー",
+		"featured_projects": "注目プロジェクト",
+		"back_to_projects": "← プロジェクト",
+		"video_not_supported": "お使いのブラウザではこの動画を再生できません。",
+		"click_to_download": "ダウンロード",
+		"image_lightbox": "ギャラリー",
+		"previous_image": "前の画像",
+		"next_image": "次の画像",
+		"credit": "クレジット：",
+		"social": {
+			"instagram": "Instagram",
+			"linkedin": "LinkedIn",
+			"github": "GitHub"
+		},
+		"table": {
+			"title": "タイトル",
+			"type": "種類",
+			"location": "場所",
+			"date": "日付",
+			"description": "説明",
+			"tags": "タグ",
+			"actions": "操作"
+		},
+		"pagination": {
+			"previous": "前へ",
+			"next": "次へ",
+			"previous_page": "前のページ",
+			"next_page": "次のページ",
+			"go_to_page": "ページ ",
+			"showing": "表示中：",
+			"to": "〜",
+			"of": "件中",
+			"entries": "件",
+			"show": "表示件数："
+		},
+		"project": {
+			"infos": "情報",
+			"location_date": "場所・日付 ›",
+			"status": "ステータス",
+			"owner": "クライアント",
+			"surface_area": "面積",
+			"cost": "予算 ›",
+			"team": "チーム",
+			"tags": "タグ",
+			"gallery": "ギャラリー",
+			"videos": "動画",
+			"documents": "資料"
+		},
+		"metadata": {
+			"technical_details": "技術詳細",
+			"camera": "カメラ",
+			"lens": "レンズ",
+			"focal_length": "焦点距離",
+			"aperture": "絞り",
+			"shutter_speed": "シャッター速度",
+			"iso": "ISO",
+			"location_date": "場所・日付",
+			"date": "日付",
+			"location": "場所",
+			"address": "住所",
+			"coordinates": "座標",
+			"keywords": "タグ"
+		}
+	}
+}

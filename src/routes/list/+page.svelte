@@ -129,25 +129,25 @@
 				<table class="w-full">
 					<thead class="bg-box">
 						<tr>
-							<ThSort {handler} orderBy="title" class="px-4 py-3 text-left">
+							<ThSort {handler} orderBy="title" class="px-4 py-3 text-start">
 								<span class="font-semibold">{$_('ui.table.title')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="type" class="px-4 py-3 text-left">
+							<ThSort {handler} orderBy="type" class="px-4 py-3 text-start">
 								<span class="font-semibold">{$_('ui.table.type')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="location" class="px-4 py-3 text-left">
+							<ThSort {handler} orderBy="location" class="px-4 py-3 text-start">
 								<span class="font-semibold">{$_('ui.table.location')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="date" class="px-4 py-3 text-left">
+							<ThSort {handler} orderBy="date" class="px-4 py-3 text-start">
 								<span class="font-semibold">{$_('ui.table.date')}</span>
 							</ThSort>
-							<th class="px-4 py-3 text-left">
+							<th class="px-4 py-3 text-start">
 								<span class="font-semibold">{$_('ui.table.description')}</span>
 							</th>
-							<th class="px-4 py-3 text-left">
+							<th class="px-4 py-3 text-start">
 								<span class="font-semibold">{$_('ui.table.tags')}</span>
 							</th>
-							<th class="px-4 py-3 text-left">
+							<th class="px-4 py-3 text-start">
 								<span class="font-semibold">{$_('ui.table.actions')}</span>
 							</th>
 						</tr>

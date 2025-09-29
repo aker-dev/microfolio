@@ -49,7 +49,7 @@
 
 <header class="bg-background sticky top-0 z-5000 mb-8">
 	<div
-		class="border-primary mr-auto ml-auto flex h-32 max-w-7xl items-end justify-between border-b border-solid pr-4 pl-4 md:h-32"
+		class="border-primary mx-auto flex h-32 max-w-7xl items-end justify-between border-b border-solid px-4 md:h-32"
 	>
 		<section class="h-15 flex-1">
 			<a href="{base}/">

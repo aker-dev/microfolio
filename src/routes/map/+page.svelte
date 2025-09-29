@@ -5,6 +5,7 @@
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
 	import { siteConfig } from '$lib/config.js';
+	import { _ } from 'svelte-i18n';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -216,16 +217,16 @@
 </script>
 
 <svelte:head>
-	<title>{siteConfig.title} • Projects Map</title>
-	<meta name="description" content="Interactive map of projects" />
+	<title>{siteConfig.title} • {$_('pages.map.title')}</title>
+	<meta name="description" content={$_('pages.map.description')} />
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </svelte:head>
 
 <div class="space-y-8">
 	<!-- Header -->
 	<header>
-		<h1 class="text-primary mb-2 text-3xl font-bold">Projects Maps</h1>
-		<p class="text-lg">Interactive map of projects</p>
+		<h1 class="text-primary mb-2 text-3xl font-bold">{$_('pages.map.title')}</h1>
+		<p class="text-lg">{$_('pages.map.description')}</p>
 	</header>
 
 	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects />

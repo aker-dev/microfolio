@@ -1,4 +1,5 @@
 <script>
+	import { _ } from 'svelte-i18n';
 	let { handler, class: className = '', ...props } = $props();
 
 	// Get row information from the DataHandler
@@ -6,5 +7,5 @@
 </script>
 
 <div class="text-sm text-primary {className}" {...props}>
-	Showing {$rowCount.start} to {$rowCount.end} of {$rowCount.total} entries
+	{$_('ui.pagination.showing')} {$rowCount.start} {$_('ui.pagination.to')} {$rowCount.end} {$_('ui.pagination.of')} {$rowCount.total} {$_('ui.pagination.entries')}
 </div>

@@ -1,4 +1,5 @@
 <script>
+	import { _ } from 'svelte-i18n';
 	let { handler, class: className = '', ...props } = $props();
 
 	// Get pagination info from DataHandler
@@ -29,9 +30,9 @@
 			1
 				? 'hover:bg-primary hover:text-box'
 				: ''}"
-			aria-label="Go to previous page"
+			aria-label={$_('ui.pagination.previous_page')}
 		>
-			Previous
+			{$_('ui.pagination.previous')}
 		</button>
 
 		<!-- Page numbers -->
@@ -44,7 +45,7 @@
 					class="cursor-pointer rounded border px-3 py-1 text-sm {$pageNumber === page
 						? 'border-primary bg-primary text-box'
 						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
-					aria-label={'Go to page ' + page}
+					aria-label={$_('ui.pagination.go_to_page') + page}
 				>
 					{page}
 				</button>
@@ -59,9 +60,9 @@
 			$pageCount
 				? 'hover:bg-primary hover:text-box'
 				: ''}"
-			aria-label="Go to next page"
+			aria-label={$_('ui.pagination.next_page')}
 		>
-			Next
+			{$_('ui.pagination.next')}
 		</button>
 	</nav>
 {/if}

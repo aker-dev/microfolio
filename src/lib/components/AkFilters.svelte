@@ -1,4 +1,5 @@
 <script>
+	import { _ } from 'svelte-i18n';
 	let {
 		projects,
 		searchTerm = $bindable(''),
@@ -32,7 +33,7 @@
 	<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
 		<input
 			type="text"
-			placeholder="Search projects..."
+			placeholder={$_('ui.search_projects_placeholder')}
 			bind:value={searchTerm}
 			class="border-primary focus:bg-box rounded-lg border px-4 py-2 focus:outline-none"
 		/>
@@ -53,7 +54,7 @@
 	<!-- Results count -->
 	{#if showResultsCount}
 		<p class="mt-2 text-sm">
-			{filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''} found
+			{filteredProjects.length} {filteredProjects.length === 1 ? $_('ui.project_singular') : $_('ui.project_plural')} {$_('ui.results_found')}
 		</p>
 	{/if}
 </div>

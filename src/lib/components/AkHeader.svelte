@@ -79,7 +79,7 @@
 		<button
 			class="bg-box text-primary border-primary z-100 mb-3 cursor-pointer rounded-full border-1 p-2 md:hidden"
 			onclick={toggleMobileMenu}
-			aria-label="Toggle mobile menu"
+			aria-label={$_('ui.toggle_mobile_menu')}
 		>
 			{#if mobileMenuOpen}
 				<IconCloseLarge class="pointer-events-none size-6 hover:scale-110" />

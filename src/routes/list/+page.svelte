@@ -11,6 +11,7 @@
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import IconArrowRight from '~icons/carbon/arrow-right';
 	import { siteConfig } from '$lib/config.js';
+	import { _ } from 'svelte-i18n';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -76,15 +77,15 @@
 </script>
 
 <svelte:head>
-	<title>{siteConfig.title} • Projects List</title>
-	<meta name="description" content="Searchable and sortable projects list" />
+	<title>{siteConfig.title} • {$_('pages.list.title')}</title>
+	<meta name="description" content={$_('pages.list.description')} />
 </svelte:head>
 
 <div class="space-y-8">
 	<!-- Header -->
 	<header>
-		<h1 class="text-primary mb-2 text-3xl font-bold">Projects List</h1>
-		<p class="text-lg">Searchable and sortable projects list</p>
+		<h1 class="text-primary mb-2 text-3xl font-bold">{$_('pages.list.title')}</h1>
+		<p class="text-lg">{$_('pages.list.description')}</p>
 	</header>
 
 	<!-- Filters and Search -->
@@ -92,7 +93,7 @@
 		<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
 			<input
 				type="text"
-				placeholder="Search projects..."
+				placeholder={$_('ui.search_projects_placeholder')}
 				bind:value={searchTerm}
 				class="border-primary focus:bg-box rounded-lg border px-4 py-2 focus:outline-none"
 			/>
@@ -129,25 +130,25 @@
 					<thead class="bg-box">
 						<tr>
 							<ThSort {handler} orderBy="title" class="px-4 py-3 text-left">
-								<span class="font-semibold">Title</span>
+								<span class="font-semibold">{$_('ui.table.title')}</span>
 							</ThSort>
 							<ThSort {handler} orderBy="type" class="px-4 py-3 text-left">
-								<span class="font-semibold">Type</span>
+								<span class="font-semibold">{$_('ui.table.type')}</span>
 							</ThSort>
 							<ThSort {handler} orderBy="location" class="px-4 py-3 text-left">
-								<span class="font-semibold">Location</span>
+								<span class="font-semibold">{$_('ui.table.location')}</span>
 							</ThSort>
 							<ThSort {handler} orderBy="date" class="px-4 py-3 text-left">
-								<span class="font-semibold">Date</span>
+								<span class="font-semibold">{$_('ui.table.date')}</span>
 							</ThSort>
 							<th class="px-4 py-3 text-left">
-								<span class="font-semibold">Description</span>
+								<span class="font-semibold">{$_('ui.table.description')}</span>
 							</th>
 							<th class="px-4 py-3 text-left">
-								<span class="font-semibold">Tags</span>
+								<span class="font-semibold">{$_('ui.table.tags')}</span>
 							</th>
 							<th class="px-4 py-3 text-left">
-								<span class="font-semibold">Actions</span>
+								<span class="font-semibold">{$_('ui.table.actions')}</span>
 							</th>
 						</tr>
 					</thead>
@@ -161,7 +162,7 @@
 									<AkBadge>{project.type}</AkBadge>
 								</td>
 								<td class="text-primary px-4 py-3 text-sm">
-									{project.location || 'N/A'}
+									{project.location || $_('ui.not_available')}
 								</td>
 								<td class="text-primary px-4 py-3 text-sm">
 									{formatDate(project.date)}
@@ -187,7 +188,7 @@
 									<a
 										href="{base}/projects/{project.slug}"
 										class="group bg-box text-primary border-primary inline-block cursor-pointer rounded-full border-1 p-2"
-										aria-label="View project"
+										aria-label={$_('ui.view_project')}
 									>
 										<IconArrowRight class="pointer-events-none size-4 group-hover:scale-120" />
 									</a>
@@ -205,7 +206,7 @@
 		</div>
 	{:else}
 		<div class="flex items-center justify-center py-8">
-			<p class="text-neutral-500">Loading projects...</p>
+			<p class="text-neutral-500">{$_('ui.loading_projects')}</p>
 		</div>
 	{/if}
 </div>

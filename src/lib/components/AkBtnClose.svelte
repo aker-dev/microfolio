@@ -1,7 +1,8 @@
 <script>
 	import IconClose from '~icons/carbon/close';
+	import { _ } from 'svelte-i18n';
 
-	let { onclick = () => {}, class: className = '', ariaLabel = 'Close' } = $props();
+	let { onclick = () => {}, class: className = '', ariaLabel = $_('ui.close') } = $props();
 </script>
 
 <button

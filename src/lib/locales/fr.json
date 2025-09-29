@@ -6,8 +6,98 @@
     "list": "Liste",
     "map": "Carte"
   },
+  "pages": {
+    "list": {
+      "title": "Liste des Projets",
+      "description": "Liste recherchable et triable des projets"
+    },
+    "map": {
+      "title": "Carte des Projets",
+      "description": "Carte interactive des projets"
+    },
+    "projects": {
+      "title": "Projets",
+      "description": "Liste des projets",
+      "subtitle": "Explorez notre gamme variée de projets."
+    }
+  },
   "ui": {
     "loading": "Chargement...",
-    "error": "Erreur"
+    "error": "Erreur",
+    "close": "Fermer",
+    "display_metadata": "Afficher les métadonnées",
+    "search_placeholder": "Rechercher...",
+    "search_projects_placeholder": "Rechercher des projets...",
+    "project_singular": "projet",
+    "project_plural": "projets",
+    "results_found": "trouvé(s)",
+    "no_projects_found": "Aucun projet trouvé correspondant à vos critères.",
+    "not_available": "N/A",
+    "view_project": "Voir le projet",
+    "loading_projects": "Chargement des projets...",
+    "generated_with": "généré avec",
+    "toggle_mobile_menu": "Basculer le menu mobile",
+    "featured_projects": "Projets Vedettes",
+    "back_to_projects": "Retour aux Projets",
+    "video_not_supported": "Votre navigateur ne supporte pas la balise vidéo.",
+    "click_to_download": "Cliquer pour télécharger",
+    "image_lightbox": "Visionneuse d'images",
+    "previous_image": "Image précédente",
+    "next_image": "Image suivante",
+    "credit": "Crédit :",
+    "social": {
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "github": "GitHub"
+    },
+    "table": {
+      "title": "Titre",
+      "type": "Type",
+      "location": "Localisation",
+      "date": "Date",
+      "description": "Description",
+      "tags": "Étiquettes",
+      "actions": "Actions"
+    },
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant",
+      "previous_page": "Aller à la page précédente",
+      "next_page": "Aller à la page suivante",
+      "go_to_page": "Aller à la page ",
+      "showing": "Affichage de",
+      "to": "à",
+      "of": "sur",
+      "entries": "entrées",
+      "show": "Afficher :"
+    },
+    "project": {
+      "infos": "Infos",
+      "location_date": "Lieu et Date ›",
+      "status": "Statut",
+      "owner": "Propriétaire du Projet",
+      "surface_area": "Surface",
+      "cost": "Coût ›",
+      "team": "Équipe",
+      "tags": "Étiquettes",
+      "gallery": "Galerie",
+      "videos": "Vidéos",
+      "documents": "Documents"
+    },
+    "metadata": {
+      "technical_details": "Détails Techniques",
+      "camera": "Appareil",
+      "lens": "Objectif",
+      "focal_length": "Longueur Focale",
+      "aperture": "Ouverture",
+      "shutter_speed": "Vitesse d'Obturation",
+      "iso": "ISO",
+      "location_date": "Lieu et Date",
+      "date": "Date",
+      "location": "Lieu",
+      "address": "Adresse",
+      "coordinates": "Coordonnées",
+      "keywords": "Mots-clés"
+    }
   }
 }

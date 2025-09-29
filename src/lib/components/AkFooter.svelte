@@ -3,6 +3,7 @@
 	import IconLinkedin from '~icons/akar-icons/linkedin-fill';
 	import IconGithub from '~icons/akar-icons/github-fill';
 	import { siteConfig } from '$lib/config.js';
+	import { _ } from 'svelte-i18n';
 </script>
 
 <footer>
@@ -11,7 +12,7 @@
 	>
 		<p class="text-center text-sm md:text-left">
 			© {siteConfig.author}
-			{new Date().getFullYear()} — generated with
+			{new Date().getFullYear()} — {$_('ui.generated_with')}
 			<a
 				href="https://github.com/aker-dev/microfolio"
 				target="_blank"
@@ -21,17 +22,17 @@
 		<nav>
 			<ul class="flex justify-center gap-4 md:justify-end">
 				<li>
-					<a href={siteConfig.socialLinks.instagram} target="_blank" aria-label="Instagram">
+					<a href={siteConfig.socialLinks.instagram} target="_blank" aria-label={$_('ui.social.instagram')}>
 						<IconInstagram class="pointer-events-none h-5 w-5" />
 					</a>
 				</li>
 				<li>
-					<a href={siteConfig.socialLinks.linkedin} target="_blank" aria-label="LinkedIn">
+					<a href={siteConfig.socialLinks.linkedin} target="_blank" aria-label={$_('ui.social.linkedin')}>
 						<IconLinkedin class="pointer-events-none h-5 w-5" />
 					</a>
 				</li>
 				<li>
-					<a href={siteConfig.socialLinks.github} target="_blank" aria-label="GitHub">
+					<a href={siteConfig.socialLinks.github} target="_blank" aria-label={$_('ui.social.github')}>
 						<IconGithub class="pointer-events-none h-5 w-5" />
 					</a>
 				</li>

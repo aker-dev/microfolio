@@ -72,11 +72,11 @@
 		},
 		"project": {
 			"infos": "Informazioni",
-			"location_date": "Località e data ›",
+			"location_date": "Località e data",
 			"status": "Stato",
 			"owner": "Cliente",
 			"surface_area": "Superficie",
-			"cost": "Budget ›",
+			"cost": "Budget",
 			"team": "Team",
 			"tags": "Tag",
 			"gallery": "Galleria",

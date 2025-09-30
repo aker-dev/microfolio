@@ -72,11 +72,11 @@
 		},
 		"project": {
 			"infos": "Informations",
-			"location_date": "Lieu et date ›",
+			"location_date": "Lieu et date",
 			"status": "Statut",
 			"owner": "Maître d'ouvrage",
 			"surface_area": "Surface",
-			"cost": "Budget ›",
+			"cost": "Budget",
 			"team": "Équipe",
 			"tags": "Mots-clés",
 			"gallery": "Photos",

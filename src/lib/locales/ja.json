@@ -72,11 +72,11 @@
 		},
 		"project": {
 			"infos": "情報",
-			"location_date": "場所・日付 ›",
+			"location_date": "場所・日付",
 			"status": "ステータス",
 			"owner": "クライアント",
 			"surface_area": "面積",
-			"cost": "予算 ›",
+			"cost": "予算",
 			"team": "チーム",
 			"tags": "タグ",
 			"gallery": "ギャラリー",

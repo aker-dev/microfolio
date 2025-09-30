@@ -31,7 +31,7 @@ async function createConfig() {
 				assets: 'build',
 				fallback: undefined,
 				precompress: false,
-				strict: true
+				strict: false
 			}),
 			paths: {
 				base:

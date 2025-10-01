@@ -1,6 +1,6 @@
 <script>
 	import { base } from '$app/paths';
-	import { DataHandler } from '@vincjo/datatables/legacy';
+	import { TableHandler } from '@vincjo/datatables';
 	import Datatable from '$lib/components/Datatable.svelte';
 	import ThFilter from '$lib/components/ThFilter.svelte';
 	import ThSort from '$lib/components/ThSort.svelte';
@@ -16,46 +16,38 @@
 	let { data } = $props();
 	let projects = $derived(data.projects);
 
-	// Initialize DataHandler with reactive data
+	// Initialize TableHandler with reactive data
 	let handler = $state();
+	let search = $state();
+	let typeFilter = $state();
 
 	// Filter state
 	let selectedType = $state('all');
-	let searchTerm = $state('');
 
 	// Get unique project types
 	let projectTypes = $derived(['all', ...new Set(projects.map((p) => p.type))]);
 
-	// Get rows from handler
-	let rows = $derived(handler ? handler.getRows() : []);
-
-	// Initialize handler when projects are available
+	// Initialize handler when projects are available (only once)
 	$effect(() => {
-		if (projects && projects.length > 0) {
-			handler = new DataHandler(projects, { rowsPerPage: 10 });
+		if (projects && projects.length > 0 && !handler) {
+			handler = new TableHandler(projects, { rowsPerPage: 10 });
+			search = handler.createSearch();
+			typeFilter = handler.createFilter('type');
 		}
 	});
 
-	// Apply filters to DataHandler when they change
-	$effect(() => {
-		if (!handler) return;
-		// Apply type filter
-		if (selectedType === 'all') {
-			handler.clearFilters();
+	// Handle type filter change
+	function handleTypeFilterChange(type) {
+		selectedType = type;
+		if (!typeFilter) return;
+
+		if (type === 'all') {
+			typeFilter.value = '';
 		} else {
-			handler.filter(selectedType, 'type');
+			typeFilter.value = type;
 		}
-	});
-
-	$effect(() => {
-		if (!handler) return;
-		// Apply search filter
-		if (searchTerm === '') {
-			handler.clearSearch();
-		} else {
-			handler.search(searchTerm, ['title', 'description', 'tags', 'location']);
-		}
-	});
+		typeFilter.set();
+	}
 
 	// Format date function
 	function formatDate(dateString) {
@@ -68,12 +60,6 @@
 		if (!text) return '';
 		return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 	}
-
-	// Get filtered count for display
-	let filteredCount = $derived(() => {
-		if (!handler) return 0;
-		return handler.getFilteredRows().length;
-	});
 </script>
 
 <svelte:head>
@@ -91,16 +77,19 @@
 	<!-- Filters and Search -->
 	<div class="space-y-4">
 		<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-			<input
-				type="text"
-				placeholder={$_('ui.search_projects_placeholder')}
-				bind:value={searchTerm}
-				class="border-primary focus:bg-box rounded-lg border px-4 py-2 focus:outline-none"
-			/>
+			{#if search}
+				<input
+					type="text"
+					placeholder={$_('ui.search_projects_placeholder')}
+					bind:value={search.value}
+					oninput={() => search.set()}
+					class="border-primary focus:bg-box rounded-lg border px-4 py-2 focus:outline-none"
+				/>
+			{/if}
 			<div class="flex flex-wrap gap-2">
 				{#each projectTypes as type}
 					<button
-						onclick={() => (selectedType = type)}
+						onclick={() => handleTypeFilterChange(type)}
 						class="rounded-full border px-3 py-1 text-sm capitalize {selectedType === type
 							? 'border-primary bg-primary text-box'
 							: 'border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer'}"
@@ -153,7 +142,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{#each $rows as project (project.slug)}
+						{#each handler.rows as project (project.slug)}
 							<tr class="border-primary hover:bg-box border-t">
 								<td class="px-4 py-3">
 									<div class="font-medium">{project.title}</div>

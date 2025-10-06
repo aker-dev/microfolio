@@ -4,7 +4,7 @@ export const siteConfig = {
 	author: 'AKER',
 	version: '0.5.0-beta.2',
 
-	// Internationalization - manual configuration
+	// Internationalization config
 	locale: 'en', // 'en', 'fr'
 
 	// Social links

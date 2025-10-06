@@ -8,7 +8,7 @@
 
 <footer>
 	<div
-		class="border-primary mx-auto flex h-auto max-w-7xl flex-col items-center justify-between gap-4 border-t-2 border-solid py-4 px-4 md:h-12 md:flex-row md:gap-0 md:py-0"
+		class="border-primary mx-auto flex h-auto max-w-7xl flex-col items-center justify-between gap-4 border-t-2 border-solid px-4 py-4 md:h-12 md:flex-row md:gap-0 md:py-0"
 	>
 		<p class="text-center text-sm md:text-start">
 			© {siteConfig.author}
@@ -21,21 +21,39 @@
 		</p>
 		<nav>
 			<ul class="flex justify-center gap-4 md:justify-end">
-				<li>
-					<a href={siteConfig.socialLinks.instagram} target="_blank" aria-label={$_('ui.social.instagram')}>
-						<IconInstagram class="pointer-events-none h-5 w-5" />
-					</a>
-				</li>
-				<li>
-					<a href={siteConfig.socialLinks.linkedin} target="_blank" aria-label={$_('ui.social.linkedin')}>
-						<IconLinkedin class="pointer-events-none h-5 w-5" />
-					</a>
-				</li>
-				<li>
-					<a href={siteConfig.socialLinks.github} target="_blank" aria-label={$_('ui.social.github')}>
-						<IconGithub class="pointer-events-none h-5 w-5" />
-					</a>
-				</li>
+				{#if siteConfig.socialLinks.instagram}
+					<li>
+						<a
+							href={siteConfig.socialLinks.instagram}
+							target="_blank"
+							aria-label={$_('ui.social.instagram')}
+						>
+							<IconInstagram class="pointer-events-none h-5 w-5" />
+						</a>
+					</li>
+				{/if}
+				{#if siteConfig.socialLinks.linkedin}
+					<li>
+						<a
+							href={siteConfig.socialLinks.linkedin}
+							target="_blank"
+							aria-label={$_('ui.social.linkedin')}
+						>
+							<IconLinkedin class="pointer-events-none h-5 w-5" />
+						</a>
+					</li>
+				{/if}
+				{#if siteConfig.socialLinks.github}
+					<li>
+						<a
+							href={siteConfig.socialLinks.github}
+							target="_blank"
+							aria-label={$_('ui.social.github')}
+						>
+							<IconGithub class="pointer-events-none h-5 w-5" />
+						</a>
+					</li>
+				{/if}
 			</ul>
 		</nav>
 	</div>

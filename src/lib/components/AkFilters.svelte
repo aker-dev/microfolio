@@ -171,7 +171,7 @@
 					</select>
 					<button
 						onclick={toggleSortOrder}
-						class="border-primary bg-box text-primary hover:bg-primary hover:text-box rounded-full border p-2 transition-colors"
+						class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded-full border p-2 transition-colors"
 						aria-label={$_('ui.sort.toggle_order')}
 						title={sortOrder === 'asc' ? $_('ui.sort.ascending') : $_('ui.sort.descending')}
 					>

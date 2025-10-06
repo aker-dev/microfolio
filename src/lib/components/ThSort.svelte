@@ -49,7 +49,9 @@
 <th class={className} {...props}>
 	<button
 		onclick={handleSort}
-		class="flex w-full items-center gap-1 rounded px-1 py-1 text-start hover:bg-gray-100"
+		class="hover:bg-background flex w-full cursor-pointer items-center gap-1 rounded px-1 py-1 text-start {sort.isActive
+			? 'bg-background'
+			: ''}"
 	>
 		{@render children()}
 		{#if sort.isActive}

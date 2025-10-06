@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0-beta.8] - 2025-10-06
+
+### Added
+- Featured project indicator with star icon in project list
+- Featured projects filter option
+- Bidirectional sort controls with dropdown and table headers
+- Sorting functionality to project filters with localization for sort options
+- Error handling component to display status messages
+- Custom 404 error page with improved user experience
+- Internationalization infrastructure with locale configuration (ready for multi-language support)
+
+### Changed
+- Integrated datatables into all project views with unified filtering
+- Updated button styles for sort order toggle and header sorting for better UX
+- Enhanced sort dropdown and toggle button styles for consistency
+
+### Fixed
+- Select-none class on error page container for improved user experience
+- Prevent pointer events on sort icons in AkFilters component
+- Set fallback to 404.html in Svelte configuration
+- Conditional rendering for author role
+- Vite configuration to only run static-copy during build to prevent file locking issues on Windows
+
 ## [0.4.0-beta.6] - 2025-09-25
 
 ### Added

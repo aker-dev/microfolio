@@ -11,6 +11,9 @@ importers:
       '@iconify/svelte':
         specifier: ^5.0.2
         version: 5.0.2(svelte@5.39.6)
+      cursor-effects:
+        specifier: ^1.0.17
+        version: 1.0.17
       exifreader:
         specifier: ^4.32.0
         version: 4.32.0
@@ -1017,6 +1020,9 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+
+  cursor-effects@1.0.17:
+    resolution: {integrity: sha512-IUMgMgc9Ii/BZnngHZmg/SpUvHaJAC+zqxmWIU4DnJY9RN5eb2xEGB9yL2jrdihMs+9xLgRuNNPYVaUrhASTNA==}
 
   d@1.0.2:
     resolution: {integrity: sha512-MOqHvMWF9/9MX6nza0KgvFH4HpMU0EF5uUDXqX/BtxtU8NfB0QzRtJ8Oe/6SuS4kbhyzVJwjd97EA4PKrzJ8bw==}
@@ -2570,6 +2576,8 @@ snapshots:
       which: 2.0.2
 
   cssesc@3.0.0: {}
+
+  cursor-effects@1.0.17: {}
 
   d@1.0.2:
     dependencies:

@@ -111,7 +111,9 @@
 		<p class="text-lg">{project.description}</p>
 
 		<!-- Back to projects link -->
-		<a href="{base}/projects" class="my-4 block text-sm hover:underline">← {$_('ui.back_to_projects')}</a>
+		<a href="{base}/projects" class="my-4 block text-sm hover:underline"
+			>← {$_('ui.back_to_projects')}</a
+		>
 
 		<!-- Main thumbnail -->
 		<img
@@ -201,7 +203,9 @@
 				{#each project.authors as author}
 					<div>
 						<span class="font-medium">{author.name}</span>
-						<span>› {author.role}</span>
+						{#if author.role}
+							<span> › {author.role}</span>
+						{/if}
 					</div>
 				{/each}
 			</div>

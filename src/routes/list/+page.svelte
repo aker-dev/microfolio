@@ -6,6 +6,7 @@
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import IconArrowRight from '~icons/carbon/arrow-right';
+	import IconStarFilled from '~icons/carbon/star-filled';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
 
@@ -96,7 +97,12 @@
 									<div class="font-medium">{project.title}</div>
 								</td>
 								<td class="px-4 py-3">
-									<AkBadge>{project.type}</AkBadge>
+									<div class="flex items-center gap-2">
+										<AkBadge>{project.type}</AkBadge>
+										{#if project.featured}
+											<IconStarFilled class="size-4" />
+										{/if}
+									</div>
 								</td>
 								<td class="text-primary px-4 py-3 text-sm">
 									{project.location || $_('ui.not_available')}

@@ -22,6 +22,7 @@
 	},
 	"ui": {
 		"all": "Tous",
+		"featured": "En vedette",
 		"loading": "Chargement...",
 		"error": "Erreur",
 		"close": "Fermer",

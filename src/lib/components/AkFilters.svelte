@@ -23,10 +23,11 @@
 
 	let search = $state();
 	let typeFilter = $state();
+	let featuredFilter = $state();
 	let sort = $state();
 	let isInitialized = $state(false);
 
-	let projectTypes = $derived(['all', ...new Set(projects.map((p) => p.type))]);
+	let projectTypes = $derived(['all', 'featured', ...new Set(projects.map((p) => p.type))]);
 
 	// Initialize handler when projects are available (only once)
 	$effect(() => {
@@ -34,6 +35,7 @@
 			handler = new TableHandler(projects, { rowsPerPage });
 			search = handler.createSearch();
 			typeFilter = handler.createFilter('type');
+			featuredFilter = handler.createFilter('featured', (value) => value === true);
 			sort = handler.createSort('date');
 			// Set initial sort (date descending by default)
 			sort.set(); // First click sets ascending
@@ -53,13 +55,33 @@
 	// Handle type filter change
 	function handleTypeChange(type) {
 		selectedType = type;
-		if (typeFilter) {
-			if (type === 'all') {
-				typeFilter.value = '';
-			} else {
-				typeFilter.value = type;
+
+		// Handle featured filter
+		if (type === 'featured') {
+			if (featuredFilter) {
+				featuredFilter.value = true;
+				featuredFilter.set();
 			}
-			typeFilter.set();
+			// Clear type filter
+			if (typeFilter) {
+				typeFilter.value = '';
+				typeFilter.set();
+			}
+		} else {
+			// Clear featured filter
+			if (featuredFilter) {
+				featuredFilter.value = '';
+				featuredFilter.set();
+			}
+			// Apply type filter
+			if (typeFilter) {
+				if (type === 'all') {
+					typeFilter.value = '';
+				} else {
+					typeFilter.value = type;
+				}
+				typeFilter.set();
+			}
 		}
 	}
 
@@ -116,7 +138,13 @@
 						? 'border-primary bg-primary text-box'
 						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer'}"
 				>
-					{type === 'all' ? $_('ui.all') : type}
+					{#if type === 'all'}
+						{$_('ui.all')}
+					{:else if type === 'featured'}
+						{$_('ui.featured')}
+					{:else}
+						{type}
+					{/if}
 				</button>
 			{/each}
 		</div>

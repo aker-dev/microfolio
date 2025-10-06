@@ -51,6 +51,7 @@
 		bind:handler
 		rowsPerPage={20}
 		showRowsPerPage={true}
+		showSort={true}
 		showResultsCount={true}
 	/>
 

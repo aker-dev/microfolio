@@ -71,6 +71,16 @@
 			"entries": "entries",
 			"show": "Show:"
 		},
+		"sort": {
+			"sort_by": "Sort by:",
+			"date": "Date",
+			"title": "Title",
+			"type": "Type",
+			"location": "Location",
+			"toggle_order": "Toggle sort order",
+			"ascending": "Ascending",
+			"descending": "Descending"
+		},
 		"project": {
 			"infos": "Infos",
 			"location_date": "Location & Date",

@@ -71,6 +71,16 @@
 			"entries": "éléments",
 			"show": "Afficher :"
 		},
+		"sort": {
+			"sort_by": "Trier par :",
+			"date": "Date",
+			"title": "Titre",
+			"type": "Catégorie",
+			"location": "Lieu",
+			"toggle_order": "Inverser l'ordre de tri",
+			"ascending": "Croissant",
+			"descending": "Décroissant"
+		},
 		"project": {
 			"infos": "Informations",
 			"location_date": "Lieu et date",

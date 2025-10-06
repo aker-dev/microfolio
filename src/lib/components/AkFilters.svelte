@@ -2,6 +2,8 @@
 	import { TableHandler } from '@vincjo/datatables';
 	import RowsPerPage from '$lib/components/RowsPerPage.svelte';
 	import RowCount from '$lib/components/RowCount.svelte';
+	import IconChevronUp from '~icons/carbon/chevron-up';
+	import IconChevronDown from '~icons/carbon/chevron-down';
 	import { _ } from 'svelte-i18n';
 	import { untrack } from 'svelte';
 
@@ -11,6 +13,7 @@
 		selectedType = $bindable('all'),
 		showRowsPerPage = false,
 		showResultsCount = true,
+		showSort = false,
 		filteredProjects = $bindable([]),
 		handler = $bindable(),
 		rowsPerPage = projects.length
@@ -18,7 +21,10 @@
 
 	let search = $state();
 	let typeFilter = $state();
+	let sort = $state();
 	let isInitialized = $state(false);
+	let sortBy = $state('date');
+	let sortOrder = $state('desc'); // 'asc' or 'desc'
 
 	let projectTypes = $derived(['all', ...new Set(projects.map((p) => p.type))]);
 
@@ -28,6 +34,10 @@
 			handler = new TableHandler(projects, { rowsPerPage });
 			search = handler.createSearch();
 			typeFilter = handler.createFilter('type');
+			sort = handler.createSort('date');
+			// Set initial sort (date descending by default)
+			sort.set(); // First click sets ascending
+			sort.set(); // Second click sets descending
 			isInitialized = true;
 		}
 	});
@@ -50,6 +60,31 @@
 				typeFilter.value = type;
 			}
 			typeFilter.set();
+		}
+	}
+
+	// Handle sort change
+	function handleSortChange(e) {
+		const newSortBy = e.target.value;
+		sortBy = newSortBy;
+		// Create new sort instance for the new field
+		if (handler) {
+			sort = handler.createSort(sortBy);
+			// Apply current sort order
+			if (sortOrder === 'desc') {
+				sort.set(); // asc
+				sort.set(); // desc
+			} else {
+				sort.set(); // asc
+			}
+		}
+	}
+
+	// Toggle sort order
+	function toggleSortOrder() {
+		sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+		if (sort) {
+			sort.set();
 		}
 	}
 
@@ -87,11 +122,38 @@
 		</div>
 	</div>
 
-	<!-- RowsPerPage and Count -->
-	{#if handler && (showRowsPerPage || showResultsCount)}
-		<div class="flex items-center gap-4">
+	<!-- RowsPerPage, Sort, and Count -->
+	{#if handler && (showRowsPerPage || showSort || showResultsCount)}
+		<div class="flex flex-wrap items-center gap-4">
 			{#if showRowsPerPage}
 				<RowsPerPage {handler} />
+			{/if}
+			{#if showSort}
+				<div class="flex items-center gap-2">
+					<span class="text-sm">{$_('ui.sort.sort_by')}</span>
+					<select
+						bind:value={sortBy}
+						onchange={handleSortChange}
+						class="rounded border border-primary bg-box px-2 py-1 text-sm focus:outline-none"
+					>
+						<option value="date">{$_('ui.sort.date')}</option>
+						<option value="title">{$_('ui.sort.title')}</option>
+						<option value="type">{$_('ui.sort.type')}</option>
+						<option value="location">{$_('ui.sort.location')}</option>
+					</select>
+					<button
+						onclick={toggleSortOrder}
+						class="border-primary bg-box text-primary hover:bg-primary hover:text-box rounded border p-2 transition-colors"
+						aria-label={$_('ui.sort.toggle_order')}
+						title={sortOrder === 'asc' ? $_('ui.sort.ascending') : $_('ui.sort.descending')}
+					>
+						{#if sortOrder === 'asc'}
+							<IconChevronUp class="size-4" />
+						{:else}
+							<IconChevronDown class="size-4" />
+						{/if}
+					</button>
+				</div>
 			{/if}
 			{#if showResultsCount}
 				<RowCount {handler} />

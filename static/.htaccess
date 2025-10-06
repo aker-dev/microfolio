@@ -1,4 +1,8 @@
 # .htaccess file for Apache to set caching headers
+
+# Custom 404 error page
+ErrorDocument 404 /404.html
+
 <IfModule mod_expires.c>
     ExpiresActive On
     

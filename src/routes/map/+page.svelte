@@ -13,6 +13,7 @@
 	let selectedType = $state('all');
 	let searchTerm = $state('');
 	let filteredProjects = $state([]);
+	let handler = $state();
 
 	// Map variables
 	let mapContainer;
@@ -229,7 +230,7 @@
 		<p class="text-lg">{$_('pages.map.description')}</p>
 	</header>
 
-	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects />
+	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects bind:handler />
 
 	<!-- Map Container -->
 	<div class="border-primary relative overflow-hidden border">

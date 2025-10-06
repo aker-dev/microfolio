@@ -1,13 +1,9 @@
 <script>
 	import { base } from '$app/paths';
-	import { TableHandler } from '@vincjo/datatables';
 	import Datatable from '$lib/components/Datatable.svelte';
-	import ThFilter from '$lib/components/ThFilter.svelte';
 	import ThSort from '$lib/components/ThSort.svelte';
-	import Search from '$lib/components/Search.svelte';
-	import RowsPerPage from '$lib/components/RowsPerPage.svelte';
-	import RowCount from '$lib/components/RowCount.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
+	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import IconArrowRight from '~icons/carbon/arrow-right';
 	import { siteConfig } from '$lib/config.js';
@@ -16,38 +12,10 @@
 	let { data } = $props();
 	let projects = $derived(data.projects);
 
-	// Initialize TableHandler with reactive data
-	let handler = $state();
-	let search = $state();
-	let typeFilter = $state();
-
-	// Filter state
 	let selectedType = $state('all');
-
-	// Get unique project types
-	let projectTypes = $derived(['all', ...new Set(projects.map((p) => p.type))]);
-
-	// Initialize handler when projects are available (only once)
-	$effect(() => {
-		if (projects && projects.length > 0 && !handler) {
-			handler = new TableHandler(projects, { rowsPerPage: 10 });
-			search = handler.createSearch();
-			typeFilter = handler.createFilter('type');
-		}
-	});
-
-	// Handle type filter change
-	function handleTypeFilterChange(type) {
-		selectedType = type;
-		if (!typeFilter) return;
-
-		if (type === 'all') {
-			typeFilter.value = '';
-		} else {
-			typeFilter.value = type;
-		}
-		typeFilter.set();
-	}
+	let searchTerm = $state('');
+	let filteredProjects = $state([]);
+	let handler = $state();
 
 	// Format date function
 	function formatDate(dateString) {
@@ -74,42 +42,17 @@
 		<p class="text-lg">{$_('pages.list.description')}</p>
 	</header>
 
-	<!-- Filters and Search -->
-	<div class="space-y-4">
-		<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-			{#if search}
-				<input
-					type="text"
-					placeholder={$_('ui.search_projects_placeholder')}
-					bind:value={search.value}
-					oninput={() => search.set()}
-					class="border-primary focus:bg-box rounded-lg border px-4 py-2 focus:outline-none"
-				/>
-			{/if}
-			<div class="flex flex-wrap gap-2">
-				{#each projectTypes as type}
-					<button
-						onclick={() => handleTypeFilterChange(type)}
-						class="rounded-full border px-3 py-1 text-sm capitalize {selectedType === type
-							? 'border-primary bg-primary text-box'
-							: 'border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer'}"
-					>
-						{type === 'all' ? $_('ui.all') : type}
-					</button>
-				{/each}
-			</div>
-		</div>
-
-		<!-- Table Controls -->
-		{#if handler}
-			<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-				<div class="flex items-center gap-4">
-					<RowsPerPage {handler} />
-					<RowCount {handler} />
-				</div>
-			</div>
-		{/if}
-	</div>
+	<!-- Filters -->
+	<AkFilters
+		{projects}
+		bind:searchTerm
+		bind:selectedType
+		bind:filteredProjects
+		bind:handler
+		rowsPerPage={20}
+		showRowsPerPage={true}
+		showResultsCount={true}
+	/>
 
 	<!-- Data Table -->
 	{#if handler}

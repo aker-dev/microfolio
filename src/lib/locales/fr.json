@@ -21,6 +21,7 @@
 		}
 	},
 	"ui": {
+		"all": "Tous",
 		"loading": "Chargement...",
 		"error": "Erreur",
 		"close": "Fermer",

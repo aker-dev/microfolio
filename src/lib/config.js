@@ -5,7 +5,7 @@ export const siteConfig = {
 	version: '0.5.0-beta.2',
 
 	// Internationalization config
-	locale: 'en', // 'en', 'fr'
+	locale: 'fr', // 'en', 'fr'
 
 	// Social links
 	socialLinks: {

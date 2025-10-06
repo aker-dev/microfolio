@@ -21,6 +21,7 @@
 		}
 	},
 	"ui": {
+		"all": "All",
 		"loading": "Loading...",
 		"error": "Error",
 		"close": "Close",

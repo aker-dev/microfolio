@@ -45,7 +45,7 @@
 						? 'border-primary bg-primary text-box'
 						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer'}"
 				>
-					{type}
+					{type === 'all' ? $_('ui.all') : type}
 				</button>
 			{/each}
 		</div>

@@ -134,7 +134,7 @@
 					<select
 						bind:value={sortBy}
 						onchange={handleSortChange}
-						class="rounded border border-primary bg-box px-2 py-1 text-sm focus:outline-none"
+						class="border-primary bg-box rounded border px-2 py-1 text-sm focus:outline-none"
 					>
 						<option value="date">{$_('ui.sort.date')}</option>
 						<option value="title">{$_('ui.sort.title')}</option>
@@ -143,7 +143,7 @@
 					</select>
 					<button
 						onclick={toggleSortOrder}
-						class="border-primary bg-box text-primary hover:bg-primary hover:text-box rounded border p-2 transition-colors"
+						class="border-primary bg-box text-primary hover:bg-primary hover:text-box rounded-full border p-2 transition-colors"
 						aria-label={$_('ui.sort.toggle_order')}
 						title={sortOrder === 'asc' ? $_('ui.sort.ascending') : $_('ui.sort.descending')}
 					>

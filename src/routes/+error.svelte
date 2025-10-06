@@ -19,7 +19,7 @@
 	});
 </script>
 
-<div class="flex min-h-[70vh] flex-col items-center justify-center text-center">
+<div class="flex min-h-[70vh] flex-col items-center justify-center text-center select-none">
 	<h1 class="mb-4 text-6xl font-bold">{status}</h1>
 	<p class="text-xl">
 		{#if status === 404}

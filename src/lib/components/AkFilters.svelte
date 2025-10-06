@@ -16,15 +16,15 @@
 		showSort = false,
 		filteredProjects = $bindable([]),
 		handler = $bindable(),
-		rowsPerPage = projects.length
+		rowsPerPage = projects.length,
+		sortBy = $bindable('date'),
+		sortOrder = $bindable('desc')
 	} = $props();
 
 	let search = $state();
 	let typeFilter = $state();
 	let sort = $state();
 	let isInitialized = $state(false);
-	let sortBy = $state('date');
-	let sortOrder = $state('desc'); // 'asc' or 'desc'
 
 	let projectTypes = $derived(['all', ...new Set(projects.map((p) => p.type))]);
 

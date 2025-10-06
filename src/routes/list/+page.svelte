@@ -16,6 +16,8 @@
 	let searchTerm = $state('');
 	let filteredProjects = $state([]);
 	let handler = $state();
+	let sortBy = $state('date');
+	let sortOrder = $state('desc');
 
 	// Format date function
 	function formatDate(dateString) {
@@ -49,6 +51,8 @@
 		bind:selectedType
 		bind:filteredProjects
 		bind:handler
+		bind:sortBy
+		bind:sortOrder
 		rowsPerPage={20}
 		showRowsPerPage={true}
 		showSort={true}
@@ -62,16 +66,16 @@
 				<table class="w-full">
 					<thead class="bg-box">
 						<tr>
-							<ThSort {handler} orderBy="title" class="px-4 py-3 text-start">
+							<ThSort {handler} orderBy="title" class="px-4 py-3 text-start" bind:sortBy bind:sortOrder>
 								<span class="font-semibold">{$_('ui.table.title')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="type" class="px-4 py-3 text-start">
+							<ThSort {handler} orderBy="type" class="px-4 py-3 text-start" bind:sortBy bind:sortOrder>
 								<span class="font-semibold">{$_('ui.table.type')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="location" class="px-4 py-3 text-start">
+							<ThSort {handler} orderBy="location" class="px-4 py-3 text-start" bind:sortBy bind:sortOrder>
 								<span class="font-semibold">{$_('ui.table.location')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="date" class="px-4 py-3 text-start">
+							<ThSort {handler} orderBy="date" class="px-4 py-3 text-start" bind:sortBy bind:sortOrder>
 								<span class="font-semibold">{$_('ui.table.date')}</span>
 							</ThSort>
 							<th class="px-4 py-3 text-start">

@@ -2,7 +2,7 @@ export const siteConfig = {
 	title: 'microfolio',
 	description: 'static portfolio generator',
 	author: 'AKER',
-	version: '0.5.0-beta.4',
+	version: '0.5.0-beta.5',
 
 	// Internationalization config
 	locale: 'en', // 'en', 'fr'

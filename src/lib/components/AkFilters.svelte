@@ -176,9 +176,9 @@
 						title={sortOrder === 'asc' ? $_('ui.sort.ascending') : $_('ui.sort.descending')}
 					>
 						{#if sortOrder === 'asc'}
-							<IconChevronUp class="size-4" />
+							<IconChevronUp class="pointer-events-none size-4" />
 						{:else}
-							<IconChevronDown class="size-4" />
+							<IconChevronDown class="pointer-events-none size-4" />
 						{/if}
 					</button>
 				</div>

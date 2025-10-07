@@ -44,7 +44,6 @@
 	$effect(() => {
 		console.log('Current page:', currentPage);
 	});
-
 </script>
 
 <header class="bg-background sticky top-0 z-5000 mb-8">
@@ -53,7 +52,7 @@
 	>
 		<section class="h-15 flex-1">
 			<a href="{base}/">
-				<div class="text-2xl font-medium">{siteConfig.title}</div>
+				<div class="text-2xl font-bold">{siteConfig.title}</div>
 				<div class="text-sm">{siteConfig.description}</div>
 			</a>
 		</section>
@@ -63,10 +62,10 @@
 			<ul class="flex h-8 gap-4">
 				{#each siteConfig.navigation as item}
 					<li
-						class="hover:border-primary px-2 hover:font-medium {currentPage === base + item.href ||
+						class="hover:border-primary px-2 hover:font-bold {currentPage === base + item.href ||
 						currentPage === base + item.href + '/+page' ||
 						currentPage.startsWith(base + item.href + '/')
-							? 'border-primary border-b-2 font-medium'
+							? 'border-primary border-b-2 font-bold'
 							: ''}"
 					>
 						<a href="{base}{item.href}">{$_(item.name)}</a>
@@ -98,11 +97,11 @@
 						<li>
 							<a
 								href="{base}{item.href}"
-								class="block px-2 py-2 text-lg hover:font-medium hover:underline {currentPage ===
+								class="block px-2 py-2 text-lg hover:font-bold hover:underline {currentPage ===
 									base + item.href ||
 								currentPage === base + item.href + '/+page' ||
 								currentPage.startsWith(base + item.href + '/')
-									? 'font-medium underline'
+									? 'font-bold underline'
 									: ''}"
 								onclick={closeMobileMenu}
 							>

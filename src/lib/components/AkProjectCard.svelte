@@ -28,7 +28,7 @@
 			{/if}
 		</div>
 
-		<h3 class="text-lg font-semibold text-balance">
+		<h3 class="text-lg font-bold text-balance">
 			{project.title}
 		</h3>
 

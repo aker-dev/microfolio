@@ -1,4 +1,4 @@
-@import url(https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,700);
+@import url(https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600);
 
 @import 'tailwindcss';
 
@@ -9,6 +9,7 @@
 
 @theme {
 	--default-font-family: 'IBM Plex Sans', 'sans-serif';
+	--font-weight-bold: 600;
 
 	/* Light theme colors (default) */
 	--color-primary: black;

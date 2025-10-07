@@ -4,6 +4,7 @@
 	import IconGithub from '~icons/akar-icons/github-fill';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
+	import { version } from '$lib/version.js';
 </script>
 
 <footer>
@@ -16,7 +17,7 @@
 			<a
 				href="https://github.com/aker-dev/microfolio"
 				target="_blank"
-				class="font-medium hover:underline">microfolio {siteConfig.version}</a
+				class="font-medium hover:underline">microfolio {version}</a
 			>
 		</p>
 		<nav>

@@ -124,9 +124,9 @@
 		<!-- Thumbnail metadata -->
 		<div class="text-primary mt-4 text-sm">
 			{#if thumbnailMetadata?.headline}
-				<p class="font-medium">{thumbnailMetadata.headline}</p>
+				<p class="font-bold">{thumbnailMetadata.headline}</p>
 			{:else}
-				<p class="font-medium">thumbnail.jpg</p>
+				<p class="font-bold">thumbnail.jpg</p>
 			{/if}
 			{#if thumbnailMetadata?.description}
 				<p class="italic">{thumbnailMetadata.description}</p>
@@ -152,21 +152,21 @@
 			{/if}
 		</div>
 
-		<!-- <h3 class="text-lg font-semibold text-balance">
+		<!-- <h3 class="text-lg font-bold text-balance">
 			{project.title}
 		</h3> -->
 		<hr />
 		<!-- Location & Date -->
 		<div>
-			<h3 class="text-base font-medium">{$_('ui.project.infos')}</h3>
-			<span class="font-medium">{$_('ui.project.location_date')} ›</span>
+			<h3 class="text-base font-bold">{$_('ui.project.infos')}</h3>
+			<span class="font-bold">{$_('ui.project.location_date')} ›</span>
 			<span>{project.location} / </span>
 			<span>{new Date(project.date).toISOString().slice(0, 7)}</span>
 
 			<!-- Status -->
 			{#if project.status}
 				<div>
-					<span class="font-medium">{$_('ui.project.status')} › </span>
+					<span class="font-bold">{$_('ui.project.status')} › </span>
 					<span class="capitalize">{project.status}</span>
 				</div>
 			{/if}
@@ -174,7 +174,7 @@
 			<!-- Project Owner -->
 			{#if project.owner}
 				<div>
-					<span class="font-medium">{$_('ui.project.owner')} ›</span>
+					<span class="font-bold">{$_('ui.project.owner')} ›</span>
 					<span>{project.owner}</span>
 				</div>
 			{/if}
@@ -182,7 +182,7 @@
 			<!-- Surface Area -->
 			{#if project.surface_area}
 				<div>
-					<span class="font-medium">{$_('ui.project.surface_area')} › </span>
+					<span class="font-bold">{$_('ui.project.surface_area')} › </span>
 					<span>{project.surface_area}</span>
 				</div>
 			{/if}
@@ -190,7 +190,7 @@
 			<!-- Cost -->
 			{#if project.cost}
 				<div>
-					<span class="font-medium">{$_('ui.project.cost')} ›</span>
+					<span class="font-bold">{$_('ui.project.cost')} ›</span>
 					<span>{project.cost}</span>
 				</div>
 			{/if}
@@ -198,11 +198,11 @@
 		<!-- Authors -->
 		{#if project.authors && project.authors.length > 0}
 			<div class="mt-2">
-				<h3 class="text-base font-medium">{$_('ui.project.team')}</h3>
+				<h3 class="text-base font-bold">{$_('ui.project.team')}</h3>
 
 				{#each project.authors as author}
 					<div>
-						<span class="font-medium">{author.name}</span>
+						<span class="font-bold">{author.name}</span>
 						{#if author.role}
 							<span> › {author.role}</span>
 						{/if}
@@ -214,7 +214,7 @@
 		<!-- Tags -->
 		{#if project.tags && project.tags.length > 0}
 			<div class="mt-2">
-				<h3 class="mb-1 text-base font-medium">{$_('ui.project.tags')}</h3>
+				<h3 class="mb-1 text-base font-bold">{$_('ui.project.tags')}</h3>
 
 				<div class="flex flex-wrap gap-2">
 					{#each project.tags as tag}
@@ -250,9 +250,9 @@
 						<!-- Image metadata -->
 						<div class="text-primary mt-2 text-sm">
 							{#if image.metadata?.headline}
-								<p class="font-medium">{image.metadata.headline}</p>
+								<p class="font-bold">{image.metadata.headline}</p>
 							{:else}
-								<p class="font-medium">{image.name}</p>
+								<p class="font-bold">{image.name}</p>
 							{/if}
 							{#if image.metadata?.description}
 								<p class="italic">{image.metadata.description}</p>
@@ -279,7 +279,7 @@
 							<track kind="captions" />
 							{$_('ui.video_not_supported')}
 						</video>
-						<p class="text-primary mt-2 text-sm font-medium">{video.name}</p>
+						<p class="text-primary mt-2 text-sm font-bold">{video.name}</p>
 					</div>
 				{/each}
 			</div>
@@ -302,7 +302,7 @@
 							<IconDocument class="text-primary pointer-events-none h-6 w-6" />
 						</div>
 						<div class="flex-1">
-							<p class="text-primary text-sm font-medium">{document.name}</p>
+							<p class="text-primary text-sm font-bold">{document.name}</p>
 							<p class="text-primary text-xs">{$_('ui.click_to_download')}</p>
 						</div>
 					</a>
@@ -420,40 +420,40 @@
 									<!-- Technical details -->
 									{#if metadata?.camera || metadata?.lens || metadata?.focalLength || metadata?.aperture || metadata?.shutterSpeed || metadata?.iso}
 										<div>
-											<h3 class="text-base font-medium">{$_('ui.metadata.technical_details')}</h3>
+											<h3 class="text-base font-bold">{$_('ui.metadata.technical_details')}</h3>
 											{#if metadata.camera}
 												<div>
-													<span class="font-medium">{$_('ui.metadata.camera')} ›</span>
+													<span class="font-bold">{$_('ui.metadata.camera')} ›</span>
 													<span>{metadata.camera}</span>
 												</div>
 											{/if}
 											{#if metadata.lens}
 												<div>
-													<span class="font-medium">{$_('ui.metadata.lens')} ›</span>
+													<span class="font-bold">{$_('ui.metadata.lens')} ›</span>
 													<span>{metadata.lens}</span>
 												</div>
 											{/if}
 											{#if metadata.focalLength}
 												<div>
-													<span class="font-medium">{$_('ui.metadata.focal_length')} ›</span>
+													<span class="font-bold">{$_('ui.metadata.focal_length')} ›</span>
 													<span>{metadata.focalLength}</span>
 												</div>
 											{/if}
 											{#if metadata.aperture}
 												<div>
-													<span class="font-medium">{$_('ui.metadata.aperture')} ›</span>
+													<span class="font-bold">{$_('ui.metadata.aperture')} ›</span>
 													<span>{metadata.aperture}</span>
 												</div>
 											{/if}
 											{#if metadata.shutterSpeed}
 												<div>
-													<span class="font-medium">{$_('ui.metadata.shutter_speed')} ›</span>
+													<span class="font-bold">{$_('ui.metadata.shutter_speed')} ›</span>
 													<span>{metadata.shutterSpeed}</span>
 												</div>
 											{/if}
 											{#if metadata.iso}
 												<div>
-													<span class="font-medium">{$_('ui.metadata.iso')} ›</span>
+													<span class="font-bold">{$_('ui.metadata.iso')} ›</span>
 													<span>{metadata.iso}</span>
 												</div>
 											{/if}
@@ -463,22 +463,22 @@
 									<!-- Location and date -->
 									{#if metadata?.dateTime || metadata?.city || metadata?.state || metadata?.country || metadata?.location || metadata?.gps}
 										<div>
-											<h3 class="text-base font-medium">{$_('ui.metadata.location_date')}</h3>
+											<h3 class="text-base font-bold">{$_('ui.metadata.location_date')}</h3>
 											{#if metadata.dateTime}
 												<div>
-													<span class="font-medium">{$_('ui.metadata.date')} ›</span>
+													<span class="font-bold">{$_('ui.metadata.date')} ›</span>
 													<span>{new Date(metadata.dateTime).toLocaleString()}</span>
 												</div>
 											{/if}
 											{#if metadata.location}
 												<div>
-													<span class="font-medium">{$_('ui.metadata.location')} ›</span>
+													<span class="font-bold">{$_('ui.metadata.location')} ›</span>
 													<span>{metadata.location}</span>
 												</div>
 											{/if}
 											{#if metadata.city || metadata.state || metadata.country}
 												<div>
-													<span class="font-medium">{$_('ui.metadata.address')} ›</span>
+													<span class="font-bold">{$_('ui.metadata.address')} ›</span>
 													<span
 														>{[metadata.city, metadata.state, metadata.country]
 															.filter(Boolean)
@@ -488,7 +488,7 @@
 											{/if}
 											{#if metadata.gps}
 												<div>
-													<span class="font-medium">{$_('ui.metadata.coordinates')} ›</span>
+													<span class="font-bold">{$_('ui.metadata.coordinates')} ›</span>
 													<span>
 														<a
 															href="https://www.openstreetmap.org/?mlat={metadata.gps
@@ -510,7 +510,7 @@
 									<!-- Keywords -->
 									{#if metadata?.keywords && metadata.keywords.length > 0}
 										<div>
-											<h3 class="mb-1 text-base font-medium">{$_('ui.metadata.keywords')}</h3>
+											<h3 class="mb-1 text-base font-bold">{$_('ui.metadata.keywords')}</h3>
 											<div class="flex flex-wrap gap-1">
 												{#each metadata.keywords as keyword}
 													<AkBadge small>{keyword}</AkBadge>
@@ -525,9 +525,9 @@
 						<!-- Basic info under image -->
 						<div class="text-primary pointer-events-auto max-w-[90vw] text-center lg:max-w-[60vw]">
 							{#if selectedImage.metadata?.headline}
-								<p class="text-lg font-medium">{selectedImage.metadata.headline}</p>
+								<p class="text-lg font-bold">{selectedImage.metadata.headline}</p>
 							{:else}
-								<p class="text-lg font-medium">{selectedImage.name}</p>
+								<p class="text-lg font-bold">{selectedImage.name}</p>
 							{/if}
 							{#if selectedImage.metadata?.description}
 								<p class="mt-1 text-sm italic">{selectedImage.metadata.description}</p>

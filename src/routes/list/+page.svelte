@@ -67,26 +67,50 @@
 				<table class="w-full">
 					<thead class="bg-box">
 						<tr>
-							<ThSort {handler} orderBy="title" class="px-4 py-3 text-start" bind:sortBy bind:sortOrder>
-								<span class="font-semibold">{$_('ui.table.title')}</span>
+							<ThSort
+								{handler}
+								orderBy="title"
+								class="px-4 py-3 text-start"
+								bind:sortBy
+								bind:sortOrder
+							>
+								<span class="font-bold">{$_('ui.table.title')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="type" class="px-4 py-3 text-start" bind:sortBy bind:sortOrder>
-								<span class="font-semibold">{$_('ui.table.type')}</span>
+							<ThSort
+								{handler}
+								orderBy="type"
+								class="px-4 py-3 text-start"
+								bind:sortBy
+								bind:sortOrder
+							>
+								<span class="font-bold">{$_('ui.table.type')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="location" class="px-4 py-3 text-start" bind:sortBy bind:sortOrder>
-								<span class="font-semibold">{$_('ui.table.location')}</span>
+							<ThSort
+								{handler}
+								orderBy="location"
+								class="px-4 py-3 text-start"
+								bind:sortBy
+								bind:sortOrder
+							>
+								<span class="font-bold">{$_('ui.table.location')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="date" class="px-4 py-3 text-start" bind:sortBy bind:sortOrder>
-								<span class="font-semibold">{$_('ui.table.date')}</span>
+							<ThSort
+								{handler}
+								orderBy="date"
+								class="px-4 py-3 text-start"
+								bind:sortBy
+								bind:sortOrder
+							>
+								<span class="font-bold">{$_('ui.table.date')}</span>
 							</ThSort>
 							<th class="px-4 py-3 text-start">
-								<span class="font-semibold">{$_('ui.table.description')}</span>
+								<span class="font-bold">{$_('ui.table.description')}</span>
 							</th>
 							<th class="px-4 py-3 text-start">
-								<span class="font-semibold">{$_('ui.table.tags')}</span>
+								<span class="font-bold">{$_('ui.table.tags')}</span>
 							</th>
 							<th class="px-4 py-3 text-start">
-								<span class="font-semibold">{$_('ui.table.actions')}</span>
+								<span class="font-bold">{$_('ui.table.actions')}</span>
 							</th>
 						</tr>
 					</thead>
@@ -94,7 +118,7 @@
 						{#each handler.rows as project (project.slug)}
 							<tr class="border-primary hover:bg-box border-t">
 								<td class="px-4 py-3">
-									<div class="font-medium">{project.title}</div>
+									<div class="font-bold">{project.title}</div>
 								</td>
 								<td class="px-4 py-3">
 									<div class="flex items-center gap-2">

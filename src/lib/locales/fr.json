@@ -61,19 +61,20 @@
 			"actions": "Actions"
 		},
 		"pagination": {
+			"rows_per_page": "Lignes par page",
 			"previous": "Précédent",
 			"next": "Suivant",
 			"previous_page": "Page précédente",
 			"next_page": "Page suivante",
 			"go_to_page": "Page ",
-			"showing": "Affichage :",
+			"showing": "Affichage",
 			"to": "à",
 			"of": "sur",
 			"entries": "éléments",
-			"show": "Afficher :"
+			"show": "Afficher"
 		},
 		"sort": {
-			"sort_by": "Trier par :",
+			"sort_by": "Trier par",
 			"date": "Date",
 			"title": "Titre",
 			"type": "Catégorie",

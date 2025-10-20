@@ -108,7 +108,7 @@
 		<div>
 			<h1 class="text-primary mb-2 text-3xl font-bold">{project.title}</h1>
 		</div>
-		<p class="text-lg">{project.description}</p>
+		<h2 class="text-lg">{project.description}</h2>
 
 		<!-- Back to projects link -->
 		<a href="{base}/projects" class="my-4 block text-sm hover:underline"
@@ -132,7 +132,7 @@
 				<p class="italic">{thumbnailMetadata.description}</p>
 			{/if}
 			{#if thumbnailMetadata?.creditLine}
-				<p class="mt-1 text-xs">{$_('ui.credit')} {thumbnailMetadata.creditLine}</p>
+				<p class="mt-1 text-xs">{$_('ui.credit')} › {thumbnailMetadata.creditLine}</p>
 			{/if}
 		</div>
 
@@ -258,7 +258,7 @@
 								<p class="italic">{image.metadata.description}</p>
 							{/if}
 							{#if image.metadata?.creditLine}
-								<p class="mt-1 text-xs">{$_('ui.credit')} {image.metadata.creditLine}</p>
+								<p class="mt-1 text-xs">{$_('ui.credit')} › {image.metadata.creditLine}</p>
 							{/if}
 						</div>
 					</div>
@@ -533,7 +533,7 @@
 								<p class="mt-1 text-sm italic">{selectedImage.metadata.description}</p>
 							{/if}
 							{#if selectedImage.metadata?.creditLine}
-								<p class="mt-1 text-xs">{$_('ui.credit')} {selectedImage.metadata.creditLine}</p>
+								<p class="mt-1 text-xs">{$_('ui.credit')} › {selectedImage.metadata.creditLine}</p>
 							{/if}
 						</div>
 

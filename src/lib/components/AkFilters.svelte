@@ -160,6 +160,7 @@
 				<div class="flex items-center gap-2">
 					<span class="text-sm">{$_('ui.sort.sort_by')}</span>
 					<select
+						aria-label={$_('ui.sort.sort_by')}
 						bind:value={sortBy}
 						onchange={handleSortChange}
 						class="border-primary bg-box rounded border px-2 py-1 text-sm focus:outline-none"

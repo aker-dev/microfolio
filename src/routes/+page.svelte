@@ -17,9 +17,9 @@
 		{page.title}
 	</h1>
 	{#if page.description}
-		<p class="text-lg">
+		<h2 class="text-lg">
 			{page.description}
-		</p>
+		</h2>
 	{/if}
 </header>
 

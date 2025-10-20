@@ -42,7 +42,7 @@
 	<!-- Header -->
 	<header>
 		<h1 class="text-primary mb-2 text-3xl font-bold">{$_('pages.list.title')}</h1>
-		<p class="text-lg">{$_('pages.list.description')}</p>
+		<h2 class="text-lg">{$_('pages.list.description')}</h2>
 	</header>
 
 	<!-- Filters -->
@@ -118,7 +118,7 @@
 						{#each handler.rows as project (project.slug)}
 							<tr class="border-primary hover:bg-box border-t">
 								<td class="px-4 py-3">
-									<div class="font-bold">{project.title}</div>
+									<div class="font-bold"><h3>{project.title}</h3></div>
 								</td>
 								<td class="px-4 py-3">
 									<div class="flex items-center gap-2">

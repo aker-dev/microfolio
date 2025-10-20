@@ -24,7 +24,7 @@
 	<!-- Header -->
 	<header>
 		<h1 class="text-primary mb-2 text-3xl font-bold">{$_('pages.projects.title')}</h1>
-		<p class="text-lg">{$_('pages.projects.description')}</p>
+		<h2 class="text-lg">{$_('pages.projects.description')}</h2>
 	</header>
 	<AkFilters
 		{projects}

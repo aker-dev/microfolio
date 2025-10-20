@@ -14,9 +14,10 @@
 <div class="flex items-center gap-2 {className}" {...props}>
 	<span class="text-sm">{$_('ui.pagination.show')}</span>
 	<select
+		aria-label={$_('ui.pagination.rows_per_page')}
 		value={rowsPerPage}
 		onchange={handleChange}
-		class="rounded border border-primary bg-box px-2 py-1 text-sm focus:outline-none"
+		class="border-primary bg-box rounded border px-2 py-1 text-sm focus:outline-none"
 	>
 		{#each options as option}
 			<option value={option}>{option}</option>

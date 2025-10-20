@@ -227,7 +227,7 @@
 	<!-- Header -->
 	<header>
 		<h1 class="text-primary mb-2 text-3xl font-bold">{$_('pages.map.title')}</h1>
-		<p class="text-lg">{$_('pages.map.description')}</p>
+		<h2 class="text-lg">{$_('pages.map.description')}</h2>
 	</header>
 
 	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects bind:handler />

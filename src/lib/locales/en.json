@@ -45,7 +45,7 @@
 		"image_lightbox": "Image lightbox",
 		"previous_image": "Previous image",
 		"next_image": "Next image",
-		"credit": "Credit:",
+		"credit": "Credit",
 		"social": {
 			"instagram": "Instagram",
 			"linkedin": "LinkedIn",
@@ -61,6 +61,7 @@
 			"actions": "Actions"
 		},
 		"pagination": {
+			"rows_per_page": "Rows per page",
 			"previous": "Previous",
 			"next": "Next",
 			"previous_page": "Go to previous page",
@@ -70,10 +71,10 @@
 			"to": "to",
 			"of": "of",
 			"entries": "entries",
-			"show": "Show:"
+			"show": "Show"
 		},
 		"sort": {
-			"sort_by": "Sort by:",
+			"sort_by": "Sort by",
 			"date": "Date",
 			"title": "Title",
 			"type": "Type",

@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0-beta.5] - 2025-12-07
+
+### Added
+- Version handling system with dedicated version.js module for centralized version management
+
+### Changed
+- Refactored version handling in components to use centralized version module
+- Updated font weights to bold (weight 600) for improved emphasis across multiple components
+- Improved font import strategy for better loading performance
+- Updated IBM Plex Sans font loading to use CSS imports instead of local font files
+- Updated packages to latest versions
+
+### Fixed
+- Improved accessibility across multiple pages and components
+- Enhanced accessibility labels and ARIA attributes in filters and rows per page components
+- Fixed IBM Plex Sans font-bold weight consistency (set to 600)
+
+### Removed
+- IBM Plex Sans font files (migrated to CSS imports)
+- Unused index.js file from lib directory
+
 ## [0.5.0-beta.8] - 2025-10-06
 
 ### Added

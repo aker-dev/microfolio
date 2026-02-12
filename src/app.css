@@ -22,13 +22,22 @@
 	--color-box-dark: oklch(26.9% 0 0); /* neutral-800 */
 }
 
-/* Apply dark theme colors based on system preference */
+/* System preference: applies when no manual override (.light) is set */
 @media (prefers-color-scheme: dark) {
-	:root {
+	:root:not(.light) {
 		--color-primary: var(--color-primary-dark);
 		--color-background: var(--color-background-dark);
 		--color-box: var(--color-box-dark);
+		color-scheme: dark;
 	}
+}
+
+/* User forced dark mode via toggle */
+:root.dark {
+	--color-primary: var(--color-primary-dark);
+	--color-background: var(--color-background-dark);
+	--color-box: var(--color-box-dark);
+	color-scheme: dark;
 }
 
 /* Custom utility classes */

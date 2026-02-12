@@ -7,6 +7,15 @@
 		<link rel="dns-prefetch" href="https://fonts.bunny.net" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
+		<script>
+			(function () {
+				try {
+					var t = localStorage.getItem('theme');
+					if (t === 'dark') document.documentElement.classList.add('dark');
+					else if (t === 'light') document.documentElement.classList.add('light');
+				} catch (e) {}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body class="bg-background px-4" data-sveltekit-preload-data="hover">

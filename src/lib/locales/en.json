@@ -37,6 +37,8 @@
 		"view_project": "View project",
 		"clear_tags": "Clear",
 		"clear_search": "Clear search",
+		"show_more_tags": "more",
+		"show_less_tags": "show less",
 		"loading_projects": "Loading projects...",
 		"generated_with": "generated with",
 		"toggle_mobile_menu": "Toggle mobile menu",

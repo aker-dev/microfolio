@@ -30,16 +30,48 @@
 	let isInitialized = $state(false);
 	let isUrlInitialized = $state(false);
 
-	let projectTypes = $derived(['all', 'featured', ...new Set(projects.map((p) => p.type))]);
+	let projectTypesWithCounts = $derived.by(() => {
+		const typeCounts = new Map();
+		for (const p of projects) {
+			typeCounts.set(p.type, (typeCounts.get(p.type) || 0) + 1);
+		}
+		const featuredCount = projects.filter((p) => p.featured).length;
+		const dynamicTypes = [...typeCounts.entries()]
+			.sort((a, b) => b[1] - a[1])
+			.map(([type, count]) => ({ type, count }));
+		return [
+			{ type: 'all', count: projects.length },
+			{ type: 'featured', count: featuredCount },
+			...dynamicTypes
+		];
+	});
+	let projectTypes = $derived(projectTypesWithCounts.map((t) => t.type));
+
 	let typeFilteredProjects = $derived.by(() => {
 		if (selectedType === 'all') return projects;
 		if (selectedType === 'featured') return projects.filter((p) => p.featured);
 		return projects.filter((p) => p.type === selectedType);
 	});
 
-	let allTags = $derived(
-		[...new Set(typeFilteredProjects.flatMap((p) => p.tags || []))].sort()
+	let allTagsWithCounts = $derived.by(() => {
+		const tagCounts = new Map();
+		for (const p of typeFilteredProjects) {
+			for (const tag of p.tags || []) {
+				tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+			}
+		}
+		return [...tagCounts.entries()]
+			.sort((a, b) => b[1] - a[1])
+			.map(([tag, count]) => ({ tag, count }));
+	});
+	let allTags = $derived(allTagsWithCounts.map((t) => t.tag));
+
+	let tagsExpanded = $state(false);
+	const TAG_DISPLAY_LIMIT = 10;
+	let visibleTagsWithCounts = $derived(
+		tagsExpanded ? allTagsWithCounts : allTagsWithCounts.slice(0, TAG_DISPLAY_LIMIT)
 	);
+	let hiddenTagCount = $derived(Math.max(0, allTags.length - TAG_DISPLAY_LIMIT));
 
 	function getAvailableTags(type) {
 		let subset;
@@ -196,6 +228,8 @@
 				tagFilter.set();
 			}
 		}
+
+		tagsExpanded = false;
 	}
 
 	// Handle tag toggle
@@ -279,7 +313,7 @@
 			{/if}
 		</div>
 		<div class="flex flex-wrap gap-2">
-			{#each projectTypes as type}
+			{#each projectTypesWithCounts as { type, count }}
 				<button
 					onclick={() => handleTypeChange(type)}
 					class="cursor-pointer rounded-full border px-3 py-1 text-sm capitalize {selectedType === type
@@ -293,6 +327,7 @@
 					{:else}
 						{type}
 					{/if}
+					<span class="ml-1">({count})</span>
 				</button>
 			{/each}
 		</div>
@@ -300,16 +335,28 @@
 	<!-- Tag Filters -->
 	{#if allTags.length > 0}
 		<div class="flex flex-wrap items-center gap-2">
-{#each allTags as tag}
+			{#each visibleTagsWithCounts as { tag, count }}
 				<button
 					onclick={() => handleTagToggle(tag)}
 					class="cursor-pointer rounded border px-2 py-1 text-xs {selectedTags.includes(tag)
 						? 'border-primary bg-primary text-box'
 						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
 				>
-					{tag}
+					{tag}<span class="ml-1">({count})</span>
 				</button>
 			{/each}
+			{#if hiddenTagCount > 0}
+				<button
+					onclick={() => (tagsExpanded = !tagsExpanded)}
+					class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs"
+				>
+					{#if tagsExpanded}
+						{$_('ui.show_less_tags')}
+					{:else}
+						+ {hiddenTagCount} {$_('ui.show_more_tags')}
+					{/if}
+				</button>
+			{/if}
 			{#if selectedTags.length > 0}
 				<button
 					onclick={clearTags}

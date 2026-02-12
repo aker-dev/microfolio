@@ -11,6 +11,7 @@
 		projects,
 		searchTerm = $bindable(''),
 		selectedType = $bindable('all'),
+		selectedTags = $bindable([]),
 		showRowsPerPage = false,
 		showResultsCount = true,
 		showSort = false,
@@ -24,10 +25,28 @@
 	let search = $state();
 	let typeFilter = $state();
 	let featuredFilter = $state();
+	let tagFilter = $state();
 	let sort = $state();
 	let isInitialized = $state(false);
 
 	let projectTypes = $derived(['all', 'featured', ...new Set(projects.map((p) => p.type))]);
+	let typeFilteredProjects = $derived.by(() => {
+		if (selectedType === 'all') return projects;
+		if (selectedType === 'featured') return projects.filter((p) => p.featured);
+		return projects.filter((p) => p.type === selectedType);
+	});
+
+	let allTags = $derived(
+		[...new Set(typeFilteredProjects.flatMap((p) => p.tags || []))].sort()
+	);
+
+	function getAvailableTags(type) {
+		let subset;
+		if (type === 'all') subset = projects;
+		else if (type === 'featured') subset = projects.filter((p) => p.featured);
+		else subset = projects.filter((p) => p.type === type);
+		return [...new Set(subset.flatMap((p) => p.tags || []))];
+	}
 
 	// Initialize handler when projects are available (only once)
 	$effect(() => {
@@ -36,6 +55,14 @@
 			search = handler.createSearch();
 			typeFilter = handler.createFilter('type');
 			featuredFilter = handler.createFilter('featured', (value) => value === true);
+			tagFilter = handler.createFilter(
+				(row) => row.tags,
+				(entry, value) => {
+					if (!entry || !Array.isArray(entry)) return false;
+					const selected = JSON.parse(value);
+					return selected.some((tag) => entry.includes(tag));
+				}
+			);
 			sort = handler.createSort('date');
 			// Set initial sort (date descending by default)
 			sort.set(); // First click sets ascending
@@ -82,6 +109,39 @@
 				}
 				typeFilter.set();
 			}
+		}
+
+		// Auto-clean tags that don't exist in the new category
+		const available = getAvailableTags(type);
+		const cleaned = selectedTags.filter((t) => available.includes(t));
+		if (cleaned.length !== selectedTags.length) {
+			selectedTags = cleaned;
+			if (tagFilter) {
+				tagFilter.value = selectedTags.length > 0 ? JSON.stringify(selectedTags) : '';
+				tagFilter.set();
+			}
+		}
+	}
+
+	// Handle tag toggle
+	function handleTagToggle(tag) {
+		if (selectedTags.includes(tag)) {
+			selectedTags = selectedTags.filter((t) => t !== tag);
+		} else {
+			selectedTags = [...selectedTags, tag];
+		}
+		if (tagFilter) {
+			tagFilter.value = selectedTags.length > 0 ? JSON.stringify(selectedTags) : '';
+			tagFilter.set();
+		}
+	}
+
+	// Clear all selected tags
+	function clearTags() {
+		selectedTags = [];
+		if (tagFilter) {
+			tagFilter.value = '';
+			tagFilter.set();
 		}
 	}
 
@@ -134,9 +194,9 @@
 			{#each projectTypes as type}
 				<button
 					onclick={() => handleTypeChange(type)}
-					class="rounded-full border px-3 py-1 text-sm capitalize {selectedType === type
+					class="cursor-pointer rounded-full border px-3 py-1 text-sm capitalize {selectedType === type
 						? 'border-primary bg-primary text-box'
-						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer'}"
+						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
 				>
 					{#if type === 'all'}
 						{$_('ui.all')}
@@ -149,6 +209,29 @@
 			{/each}
 		</div>
 	</div>
+	<!-- Tag Filters -->
+	{#if allTags.length > 0}
+		<div class="flex flex-wrap items-center gap-2">
+{#each allTags as tag}
+				<button
+					onclick={() => handleTagToggle(tag)}
+					class="cursor-pointer rounded border px-2 py-1 text-xs {selectedTags.includes(tag)
+						? 'border-primary bg-primary text-box'
+						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
+				>
+					{tag}
+				</button>
+			{/each}
+			{#if selectedTags.length > 0}
+				<button
+					onclick={clearTags}
+					class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs underline"
+				>
+					✕ {$_('ui.clear_tags').toLowerCase()}
+				</button>
+			{/if}
+		</div>
+	{/if}
 
 	<!-- RowsPerPage, Sort, and Count -->
 	{#if handler && (showRowsPerPage || showSort || showResultsCount)}

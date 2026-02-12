@@ -11,12 +11,17 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 - ✨ **Interface moderne et épurée**
 - 📱 **Responsive design** (mobile, tablette, desktop)
 - 🎨 **Personnalisable** facilement
-- 🚀 **Performances optimales**
-- 🔍 **SEO friendly**
+- 🚀 **Performances optimales** avec génération statique
+- 🔍 **SEO friendly** avec métadonnées OG pour le partage social
 - 🗺️ **Affichage sur carte** des projets géolocalisés
-- 🏷️ **Système de tags et filtres**
+- 🏷️ **Système de tags et filtres** avec compteurs et liste repliable
 - 📊 **Différents modes d'affichage** (grille, liste, carte)
 - 🌐 **Prêt pour domaine personnalisé**
+- 🌙 **Mode sombre** avec toggle et préférence persistante
+- 🔗 **URLs partageables** — filtres, recherche, tri et pagination synchronisés dans l'URL
+- 🌍 **Internationalisation** — anglais/français via svelte-i18n, support RTL
+- 📄 **Pagination et tri** — lignes par page personnalisable, tri par date, titre, type ou localisation
+- 🖼️ **Lightbox d'images** avec affichage des métadonnées EXIF/IPTC
 
 ## Structure de la documentation
 
@@ -30,6 +35,8 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 - Personnalisation des pages
 - Configuration du domaine
 - Customisation des couleurs et styles
+- Configuration du mode sombre
+- Internationalisation (locale)
 - Métadonnées et SEO
 - Fonctionnalités avancées
 
@@ -157,11 +164,7 @@ Vos contributions sont les bienvenues ! N'hésitez pas à :
 
 ## Changelog
 
-### Version 0.1.0-beta.1
-- Documentation complète en français
-- Guides détaillés pour non-développeurs
-- Exemples pratiques
-- Structure modulaire
+Consultez le changelog complet dans [CHANGELOG.md](../../CHANGELOG.md).
 
 ## Licence
 

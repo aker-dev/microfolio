@@ -6,18 +6,24 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 
 **Démo en ligne** : [https://aker-dev.github.io/microfolio/](https://aker-dev.github.io/microfolio/)
 
+> **Nous recherchons des traducteurs !** Aidez-nous à rendre microfolio accessible dans plus de langues. Contactez-nous à **hello@aker.pro** si vous souhaitez contribuer une traduction.
+
 ## ✅ Fonctionnalités
 
-- **📁 CMS basé sur des fichiers** - Fonctionnement sans base de données
-- **🎨 Vues multiples** - Modes Projets, Liste et Carte
-- **📱 Design responsive** - Conçu avec une approche mobile-first
-- **🏷️ Étiquetage intelligent** - Système de filtrage avancé
-- **🗺️ Carte interactive** - Intégration Leaflet
-- **🚀 Génération statique** - Performances optimisées
-- **🖼️ Lightbox d'images** - Galerie améliorée avec navigation et affichage des métadonnées
-- **📊 Métadonnées EXIF/IPTC** - Extraction et affichage automatique des informations techniques d'images
-- **🌙 Mode sombre** - Support de thème intégré pour une meilleure expérience de visualisation
-- **⚡ Optimisation des images** - Génération de thumbnails WebP avec commande `pnpm optimize-images`
+- **📁 CMS basé sur des fichiers** — Pas de base de données, juste des dossiers et des fichiers Markdown
+- **🎨 Vues multiples** — Grille de projets, Liste et Carte
+- **📱 Design responsive** — Conçu avec une approche mobile-first
+- **🏷️ Étiquetage intelligent** — Compteurs de filtres et liste de tags repliable
+- **🗺️ Carte interactive** — Intégration Leaflet avec projets géolocalisés
+- **🚀 Génération statique** — Performances optimales avec SvelteKit adapter-static
+- **🖼️ Lightbox d'images** — Galerie améliorée avec flèches de navigation et affichage des métadonnées
+- **📊 Métadonnées EXIF/IPTC** — Extraction et affichage automatique des informations techniques d'images
+- **🌙 Mode sombre** — Toggle dans le footer avec préférence persistante (système / manuel / localStorage)
+- **⚡ Optimisation des images** — Génération de thumbnails WebP avec `pnpm optimize-images`
+- **🔗 URLs partageables** — Filtres, recherche, tri et pagination synchronisés dans les paramètres d'URL
+- **🌐 Internationalisation** — Anglais/Français via svelte-i18n, support RTL
+- **🏷️ Métadonnées OG** — Aperçus de partage social pour les projets et pages
+- **📄 Pagination et tri** — Lignes par page personnalisable, tri par date, titre, type ou localisation
 
 ## 🧪 Programme de beta tests
 
@@ -112,13 +118,14 @@ microfolio build  # ou pnpm build
 
 Les contributions sont les bienvenues ! N'hésitez pas à forker le projet, créer une branche de fonctionnalité et soumettre une Pull Request.
 
-### Fonctionnalités récentes
+### Fonctionnalités récentes (v0.7.0)
 
-- Carte interactive avec Leaflet
-- Vue Liste avancée avec filtrage
-- Design entièrement responsive
-- Déploiement automatisé via GitHub Actions
-- Support des domaines personnalisés
+- Toggle mode sombre dans le footer avec préférence persistante
+- Compteurs de filtres et liste de tags repliable
+- URLs partageables avec synchronisation des filtres, recherche, tri et pagination
+- Champ de recherche avec bouton d'effacement et fond rempli
+- Réglage lignes par page synchronisé avec les paramètres d'URL
+- Internationalisation (anglais/français) avec support RTL
 
 ## 📞 Support
 

@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2026-02-12
+
+### Added
+- Dark mode toggle in footer with persistent user preference (localStorage)
+- Reactive tag filters with automatic cleanup on category change
+- Filter state synchronization with URL query parameters for shareable/bookmarkable links
+- Rows-per-page setting synchronization with URL query parameters
+- Counters on filters and collapsible tag list for improved UX
+- Clear button and filled background on search input
+
+### Changed
+- Updated project tags display layout
+- Streamlined CLAUDE.md project overview and development commands
+- Updated packages to latest versions
+
+### Fixed
+- Corrected border class definitions in multiple components
+- Applied code review improvements for client-side quality and performance
+
+### Removed
+- Unused authors section from project display
+- Image optimization system and SEO accessibility audit documentation (redundant)
+- Code review recommendations document (superseded)
+
 ## [0.6.0-beta.5] - 2025-12-07
 
 ### Added

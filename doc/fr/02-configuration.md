@@ -60,7 +60,7 @@ Présentez-vous ici. Parlez de votre parcours, vos passions, votre approche cré
 Décrivez votre style, vos domaines d'expertise, ce qui vous inspire.
 ```
 
-### 2. Page À propos
+### 3. Page À propos
 
 Modifiez le fichier `content/about.md` :
 
@@ -95,7 +95,7 @@ Expliquez votre approche du design/art, vos valeurs, ce qui vous motive.
 - **Année** - Projet, Client
 ```
 
-### 3. Configuration du domaine personnalisé
+### 4. Configuration du domaine personnalisé
 
 Si vous avez un nom de domaine personnalisé :
 
@@ -110,14 +110,14 @@ Si vous avez un nom de domaine personnalisé :
    CUSTOM_DOMAIN=true
    ```
 
-### 4. Personnalisation des couleurs et du style
+### 5. Personnalisation des couleurs et du style
 
 Le site utilise Tailwind CSS v4. Vous pouvez personnaliser les couleurs et le style dans le fichier `src/app.css`.
 
 **Exemple de personnalisation :**
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url(https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap);
 
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
@@ -134,6 +134,82 @@ Le site utilise Tailwind CSS v4. Vous pouvez personnaliser les couleurs et le st
 	--spacing-custom: 2.5rem;
 }
 ```
+
+### 6. Mode sombre
+
+microfolio inclut un toggle de mode sombre dans le footer. Le comportement suit une priorité à trois niveaux :
+
+1. **Préférence système** — par défaut, le site respecte `prefers-color-scheme: dark`
+2. **Choix manuel** — l'utilisateur peut cliquer sur le toggle pour forcer le mode clair ou sombre
+3. **Persistance** — le mode choisi est sauvegardé dans le `localStorage` et restauré à la prochaine visite
+
+Les couleurs du mode sombre sont définies comme propriétés CSS personnalisées dans `src/app.css` :
+
+```css
+@theme {
+	/* Couleurs du thème clair (par défaut) */
+	--color-primary: black;
+	--color-background: oklch(97% 0 0);
+	--color-box: white;
+
+	/* Couleurs du thème sombre */
+	--color-primary-dark: white;
+	--color-background-dark: oklch(20.5% 0 0);
+	--color-box-dark: oklch(26.9% 0 0);
+}
+
+/* Préférence système : s'applique quand aucun choix manuel (.light) n'est défini */
+@media (prefers-color-scheme: dark) {
+	:root:not(.light) {
+		--color-primary: var(--color-primary-dark);
+		--color-background: var(--color-background-dark);
+		--color-box: var(--color-box-dark);
+		color-scheme: dark;
+	}
+}
+
+/* Mode sombre forcé par l'utilisateur via le toggle */
+:root.dark {
+	--color-primary: var(--color-primary-dark);
+	--color-background: var(--color-background-dark);
+	--color-box: var(--color-box-dark);
+	color-scheme: dark;
+}
+```
+
+Pour personnaliser les couleurs du mode sombre, modifiez les variables `--color-*-dark` dans le bloc `@theme`.
+
+### 7. Internationalisation (i18n)
+
+microfolio supporte plusieurs langues via `svelte-i18n`. L'anglais et le français sont actifs par défaut.
+
+**Changer la locale par défaut :**
+
+Modifiez le champ `locale` dans `src/lib/config.js` :
+
+```javascript
+export const siteConfig = {
+	// ...
+	locale: 'en', // Changez en 'fr' pour le français
+	// ...
+};
+```
+
+**Les fichiers de traduction** se trouvent dans `src/lib/locales/` :
+- `en.json` — chaînes en anglais
+- `fr.json` — chaînes en français
+
+**Ajouter une nouvelle langue :**
+
+1. Créez un nouveau fichier JSON dans `src/lib/locales/` (ex : `es.json`) en utilisant un fichier existant comme modèle
+2. Décommentez l'import et la ligne `addMessages` correspondante dans `src/lib/i18n.js` :
+   ```javascript
+   import es from './locales/es.json';
+   addMessages('es', es);
+   ```
+3. Définissez `locale: 'es'` dans `src/lib/config.js`
+
+**Support RTL :** Le layout détecte automatiquement les locales RTL (ex : arabe) et définit l'attribut `dir` sur l'élément HTML.
 
 ## Configuration avancée
 

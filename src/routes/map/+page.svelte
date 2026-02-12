@@ -16,6 +16,7 @@
 	let handler = $state();
 
 	// Map variables
+	let L;
 	let mapContainer;
 	let map;
 	let selectedProject = $state(null);
@@ -72,7 +73,7 @@
 		window.addEventListener('resize', handleResize);
 
 		// Dynamic import to avoid SSR issues
-		const L = await import('leaflet');
+		L = await import('leaflet');
 
 		// Fix default marker icons
 		delete L.Icon.Default.prototype._getIconUrl;
@@ -136,19 +137,14 @@
 	});
 
 	async function updateMarkers() {
-		if (!map) return;
-
-		const L = await import('leaflet');
+		if (!map || !L) return;
 
 		// Clear existing markers
 		markers.forEach((marker) => map.removeLayer(marker));
 		markers = [];
 
-		console.log('Updating markers for', filteredProjects.length, 'projects');
-
 		// Add new markers for filtered projects
 		filteredProjects.forEach((project) => {
-			console.log('Processing project:', project.title, 'coordinates:', project.coordinates);
 			if (
 				project.coordinates &&
 				Array.isArray(project.coordinates) &&
@@ -156,7 +152,16 @@
 			) {
 				const [lat, lng] = project.coordinates;
 
-				console.log('Creating marker at', lat, lng);
+				// Validate coordinate ranges
+				if (
+					typeof lat !== 'number' ||
+					typeof lng !== 'number' ||
+					lat < -90 ||
+					lat > 90 ||
+					lng < -180 ||
+					lng > 180
+				)
+					return;
 
 				try {
 					// Create custom icon based on featured status
@@ -194,14 +199,11 @@
 					});
 
 					markers.push(marker);
-					console.log('Marker created successfully');
 				} catch (error) {
 					console.error('Error creating marker:', error);
 				}
 			}
 		});
-
-		console.log('Created', markers.length, 'markers');
 
 		// Fit map to show all markers or default view
 		if (markers.length > 0) {

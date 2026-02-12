@@ -19,7 +19,6 @@
 	// Update document direction and lang when locale changes using $effect
 	$effect(() => {
 		if (typeof document !== 'undefined' && $locale) {
-			console.log('Updating document attributes:', { locale: $locale, direction: textDirection });
 			document.documentElement.setAttribute('dir', textDirection);
 			document.documentElement.setAttribute('lang', $locale);
 		}

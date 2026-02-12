@@ -2,14 +2,9 @@ import { readdir, readFile } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { parse } from 'yaml';
+import { getBasePath } from '$lib/utils/paths.js';
 
-// Get base path from environment - same logic as svelte.config.js
-const basePath =
-	process.env.CUSTOM_DOMAIN === 'true'
-		? ''
-		: process.env.NODE_ENV === 'production'
-			? '/microfolio'
-			: '';
+const basePath = getBasePath();
 
 export async function loadProjects() {
 	const projectsPath = join(process.cwd(), 'content/projects');

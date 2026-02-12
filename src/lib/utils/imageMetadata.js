@@ -49,7 +49,7 @@ export async function extractImageMetadata(imagePath) {
 		}
 
 
-		// Helper function to safely get tag value with UTF-8 encoding
+		// Helper function to safely get tag value
 		const getTagValue = (tagPath) => {
 			const keys = tagPath.split('.');
 			let current = metadata;
@@ -58,17 +58,7 @@ export async function extractImageMetadata(imagePath) {
 				current = current[key];
 			}
 			if (current && typeof current === 'object' && current.description !== undefined) {
-				// Ensure UTF-8 encoding for text values
-				const value = current.description;
-				if (typeof value === 'string') {
-					try {
-						// Try to decode as UTF-8 if it looks like encoded text
-						return decodeURIComponent(escape(value));
-					} catch {
-						return value;
-					}
-				}
-				return value;
+				return current.description;
 			}
 			// Handle arrays (like keywords)
 			if (Array.isArray(current)) {

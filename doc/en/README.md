@@ -11,12 +11,17 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 - ✨ **Modern and clean interface**
 - 📱 **Responsive design** (mobile, tablet, desktop)
 - 🎨 **Easily customizable**
-- 🚀 **Optimal performance**
-- 🔍 **SEO friendly**
+- 🚀 **Optimal performance** with static generation
+- 🔍 **SEO friendly** with OG metadata for social sharing
 - 🗺️ **Map display** for geolocated projects
-- 🏷️ **Tag and filter system**
+- 🏷️ **Tag and filter system** with counters and collapsible tag list
 - 📊 **Different display modes** (grid, list, map)
 - 🌐 **Ready for custom domain**
+- 🌙 **Dark mode** with toggle and persistent preference
+- 🔗 **Shareable URLs** — filter, search, sort, and pagination state synced to URL
+- 🌍 **Internationalization** — English/French via svelte-i18n, RTL-ready
+- 📄 **Pagination & sorting** — customizable rows-per-page, sort by date, title, type, or location
+- 🖼️ **Image lightbox** with EXIF/IPTC metadata display
 
 ## Documentation Structure
 
@@ -30,6 +35,8 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 - Page customization
 - Domain configuration
 - Color and style customization
+- Dark mode configuration
+- Internationalization (locale)
 - Metadata and SEO
 - Advanced features
 
@@ -157,11 +164,7 @@ Your contributions are welcome! Feel free to:
 
 ## Changelog
 
-### Version 0.1.0-beta.1
-- Complete documentation in French
-- Detailed guides for non-developers
-- Practical examples
-- Modular structure
+See the full changelog in [CHANGELOG.md](../../CHANGELOG.md).
 
 ## License
 

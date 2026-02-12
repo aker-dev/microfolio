@@ -5,6 +5,109 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2026-02-12
+
+### Added
+- Dark mode toggle in footer with persistent user preference (localStorage)
+- Reactive tag filters with automatic cleanup on category change
+- Filter state synchronization with URL query parameters for shareable/bookmarkable links
+- Rows-per-page setting synchronization with URL query parameters
+- Counters on filters and collapsible tag list for improved UX
+- Clear button and filled background on search input
+
+### Changed
+- Updated project tags display layout
+- Streamlined CLAUDE.md project overview and development commands
+- Updated packages to latest versions
+
+### Fixed
+- Corrected border class definitions in multiple components
+- Applied code review improvements for client-side quality and performance
+
+### Removed
+- Unused authors section from project display
+- Image optimization system and SEO accessibility audit documentation (redundant)
+- Code review recommendations document (superseded)
+
+## [0.6.0-beta.5] - 2025-12-07
+
+### Added
+- Version handling system with dedicated version.js module for centralized version management
+
+### Changed
+- Refactored version handling in components to use centralized version module
+- Updated font weights to bold (weight 600) for improved emphasis across multiple components
+- Improved font import strategy for better loading performance
+- Updated IBM Plex Sans font loading to use CSS imports instead of local font files
+- Updated packages to latest versions
+
+### Fixed
+- Improved accessibility across multiple pages and components
+- Enhanced accessibility labels and ARIA attributes in filters and rows per page components
+- Fixed IBM Plex Sans font-bold weight consistency (set to 600)
+
+### Removed
+- IBM Plex Sans font files (migrated to CSS imports)
+- Unused index.js file from lib directory
+
+## [0.5.0-beta.8] - 2025-10-06
+
+### Added
+- Featured project indicator with star icon in project list
+- Featured projects filter option
+- Bidirectional sort controls with dropdown and table headers
+- Sorting functionality to project filters with localization for sort options
+- Error handling component to display status messages
+- Custom 404 error page with improved user experience
+- Internationalization infrastructure with locale configuration (ready for multi-language support)
+
+### Changed
+- Integrated datatables into all project views with unified filtering
+- Updated button styles for sort order toggle and header sorting for better UX
+- Enhanced sort dropdown and toggle button styles for consistency
+
+### Fixed
+- Select-none class on error page container for improved user experience
+- Prevent pointer events on sort icons in AkFilters component
+- Set fallback to 404.html in Svelte configuration
+- Conditional rendering for author role
+- Vite configuration to only run static-copy during build to prevent file locking issues on Windows
+
+## [0.4.0-beta.6] - 2025-09-25
+
+### Added
+- WebP thumbnail generation command (`pnpm optimize-images`)
+- Image cleanup script (`pnpm run clean-images`) to remove optimized thumbnails when needed
+- AkOptimizedImage component for improved image loading with WebP support
+- Open Graph metadata for improved social sharing on project pages
+- SEO and accessibility audit documentation
+
+### Changed
+- Enhanced build process with optional image optimization step
+- Improved image loading performance with optimized WebP thumbnails
+- Updated packages to latest versions
+
+### Fixed
+- Enhanced button hover effects and accessibility attributes across components
+- Improved map height calculation for better responsiveness
+- Standardized header elements across pages for consistency and accessibility
+- Updated page titles to include siteConfig.title for consistency across routes
+- Improved font loading by using local IBM Plex Sans file
+
+## [0.3.0-beta.2] - 2025-09-22
+
+### Added
+- Custom featured marker icons for map display
+- Marker source file (Affinity Designer) for design reference
+
+### Fixed
+- Updated marker icon URLs to use local assets instead of external sources
+- Enhanced marker display with custom featured project markers
+- Improved lightbox navigation button styles for better visibility and consistency
+
+### Changed
+- Optimized marker asset loading for improved performance
+
 ## [0.3.0-beta.1] - 2025-09-22
 
 ### Added

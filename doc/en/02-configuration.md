@@ -60,7 +60,7 @@ Introduce yourself here. Talk about your journey, your passions, your creative a
 Describe your style, your areas of expertise, what inspires you.
 ```
 
-### 2. About page
+### 3. About page
 
 Modify the `content/about.md` file:
 
@@ -95,7 +95,7 @@ Explain your approach to design/art, your values, what motivates you.
 - **Year** - Project, Client
 ```
 
-### 3. Custom domain configuration
+### 4. Custom domain configuration
 
 If you have a custom domain name:
 
@@ -110,14 +110,14 @@ If you have a custom domain name:
    CUSTOM_DOMAIN=true
    ```
 
-### 4. Color and style customization
+### 5. Color and style customization
 
 The site uses Tailwind CSS v4. You can customize colors and styles in the `src/app.css` file.
 
 **Customization example:**
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url(https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap);
 
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
@@ -134,6 +134,82 @@ The site uses Tailwind CSS v4. You can customize colors and styles in the `src/a
 	--spacing-custom: 2.5rem;
 }
 ```
+
+### 6. Dark mode
+
+microfolio includes a dark mode toggle in the footer. The behavior follows a three-tier priority:
+
+1. **System preference** — by default, the site respects `prefers-color-scheme: dark`
+2. **Manual override** — users can click the toggle to force light or dark mode
+3. **Persistence** — the chosen mode is saved in `localStorage` and restored on next visit
+
+The dark mode colors are defined as CSS custom properties in `src/app.css`:
+
+```css
+@theme {
+	/* Light theme colors (default) */
+	--color-primary: black;
+	--color-background: oklch(97% 0 0);
+	--color-box: white;
+
+	/* Dark theme colors */
+	--color-primary-dark: white;
+	--color-background-dark: oklch(20.5% 0 0);
+	--color-box-dark: oklch(26.9% 0 0);
+}
+
+/* System preference: applies when no manual override (.light) is set */
+@media (prefers-color-scheme: dark) {
+	:root:not(.light) {
+		--color-primary: var(--color-primary-dark);
+		--color-background: var(--color-background-dark);
+		--color-box: var(--color-box-dark);
+		color-scheme: dark;
+	}
+}
+
+/* User forced dark mode via toggle */
+:root.dark {
+	--color-primary: var(--color-primary-dark);
+	--color-background: var(--color-background-dark);
+	--color-box: var(--color-box-dark);
+	color-scheme: dark;
+}
+```
+
+To customize dark mode colors, edit the `--color-*-dark` variables in the `@theme` block.
+
+### 7. Internationalization (i18n)
+
+microfolio supports multiple languages via `svelte-i18n`. English and French are active by default.
+
+**Changing the default locale:**
+
+Edit the `locale` field in `src/lib/config.js`:
+
+```javascript
+export const siteConfig = {
+	// ...
+	locale: 'en', // Change to 'fr' for French
+	// ...
+};
+```
+
+**Translation files** are located in `src/lib/locales/`:
+- `en.json` — English strings
+- `fr.json` — French strings
+
+**Adding a new language:**
+
+1. Create a new JSON file in `src/lib/locales/` (e.g., `es.json`) using an existing file as template
+2. Uncomment the corresponding import and `addMessages` line in `src/lib/i18n.js`:
+   ```javascript
+   import es from './locales/es.json';
+   addMessages('es', es);
+   ```
+3. Set `locale: 'es'` in `src/lib/config.js`
+
+**RTL support:** The layout automatically detects RTL locales (e.g., Arabic) and sets the `dir` attribute on the HTML element.
 
 ## Advanced Configuration
 

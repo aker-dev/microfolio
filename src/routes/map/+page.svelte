@@ -1,8 +1,11 @@
 <script>
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
-	import Icon from '@iconify/svelte';
+	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
+	import { siteConfig } from '$lib/config.js';
+	import { _ } from 'svelte-i18n';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -10,8 +13,10 @@
 	let selectedType = $state('all');
 	let searchTerm = $state('');
 	let filteredProjects = $state([]);
+	let handler = $state();
 
 	// Map variables
+	let L;
 	let mapContainer;
 	let map;
 	let selectedProject = $state(null);
@@ -23,7 +28,7 @@
 	// Update map height and invalidate size when window height changes
 	$effect(() => {
 		if (windowHeight > 0) {
-			const height = Math.max(400, Math.min(600, windowHeight * 0.5));
+			const height = Math.max(600, Math.min(600, windowHeight * 0.5));
 			const newMapHeight = `${height}px`;
 
 			// Only update if height actually changed
@@ -68,15 +73,14 @@
 		window.addEventListener('resize', handleResize);
 
 		// Dynamic import to avoid SSR issues
-		const L = await import('leaflet');
+		L = await import('leaflet');
 
 		// Fix default marker icons
 		delete L.Icon.Default.prototype._getIconUrl;
 		L.Icon.Default.mergeOptions({
-			iconRetinaUrl:
-				'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-			iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-			shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png'
+			iconRetinaUrl: `${base}/marker-icon@2x.png`,
+			iconUrl: `${base}/marker-icon.png`,
+			shadowUrl: `${base}/marker-shadow.png`
 		});
 
 		// Create map with greyscale theme
@@ -133,19 +137,14 @@
 	});
 
 	async function updateMarkers() {
-		if (!map) return;
-
-		const L = await import('leaflet');
+		if (!map || !L) return;
 
 		// Clear existing markers
 		markers.forEach((marker) => map.removeLayer(marker));
 		markers = [];
 
-		console.log('Updating markers for', filteredProjects.length, 'projects');
-
 		// Add new markers for filtered projects
 		filteredProjects.forEach((project) => {
-			console.log('Processing project:', project.title, 'coordinates:', project.coordinates);
 			if (
 				project.coordinates &&
 				Array.isArray(project.coordinates) &&
@@ -153,13 +152,40 @@
 			) {
 				const [lat, lng] = project.coordinates;
 
-				console.log('Creating marker at', lat, lng);
+				// Validate coordinate ranges
+				if (
+					typeof lat !== 'number' ||
+					typeof lng !== 'number' ||
+					lat < -90 ||
+					lat > 90 ||
+					lng < -180 ||
+					lng > 180
+				)
+					return;
 
 				try {
+					// Create custom icon based on featured status
+					const iconOptions = project.featured
+						? {
+								iconUrl: `${base}/marker-featured.png`,
+								iconRetinaUrl: `${base}/marker-featured@2x.png`,
+								shadowUrl: `${base}/marker-shadow.png`,
+								iconSize: [25, 41],
+								iconAnchor: [12, 41],
+								popupAnchor: [1, -34],
+								shadowSize: [41, 41]
+							}
+						: undefined; // Use default icons
+
 					// Create custom marker
-					const marker = L.marker([lat, lng], {
-						title: project.title
-					}).addTo(map);
+					const marker = iconOptions
+						? L.marker([lat, lng], {
+								title: project.title,
+								icon: L.icon(iconOptions)
+							}).addTo(map)
+						: L.marker([lat, lng], {
+								title: project.title
+							}).addTo(map);
 
 					// Add click handler to show project card
 					marker.on('click', () => {
@@ -173,14 +199,11 @@
 					});
 
 					markers.push(marker);
-					console.log('Marker created successfully');
 				} catch (error) {
 					console.error('Error creating marker:', error);
 				}
 			}
 		});
-
-		console.log('Created', markers.length, 'markers');
 
 		// Fit map to show all markers or default view
 		if (markers.length > 0) {
@@ -197,16 +220,19 @@
 </script>
 
 <svelte:head>
-	<title>Projects Map</title>
-	<meta name="description" content="Interactive map of projects" />
+	<title>{siteConfig.title} • {$_('pages.map.title')}</title>
+	<meta name="description" content={$_('pages.map.description')} />
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </svelte:head>
 
 <div class="space-y-8">
 	<!-- Header -->
-	<h2 class="text-4xl font-bold">Projects Map</h2>
+	<header>
+		<h1 class="text-primary mb-2 text-3xl font-bold">{$_('pages.map.title')}</h1>
+		<h2 class="text-lg">{$_('pages.map.description')}</h2>
+	</header>
 
-	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects />
+	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects bind:handler />
 
 	<!-- Map Container -->
 	<div class="border-primary relative overflow-hidden border">
@@ -219,16 +245,10 @@
 		<!-- Project Card Overlay -->
 		{#if selectedProject}
 			<div
-				class="bg-opacity-50 absolute inset-0 z-1000 flex items-center justify-center bg-black/80"
+				class="bg-box/60 absolute inset-0 z-1000 flex items-center justify-center backdrop-blur-sm"
 			>
 				<div class="relative max-w-sm">
-					<button
-						onclick={closeProjectCard}
-						class="absolute -top-2 -right-2 z-20 cursor-pointer rounded-full bg-white p-2 text-black"
-						aria-label="Close project card"
-					>
-						<Icon icon="carbon:close" class="h-6 w-6" />
-					</button>
+					<AkBtnClose class="absolute -top-2 -right-2" onclick={closeProjectCard} />
 					<AkProjectCard project={selectedProject} />
 				</div>
 			</div>

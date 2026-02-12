@@ -1,12 +1,13 @@
 import { readFile, readdir, access } from 'fs/promises';
+import { existsSync as existsSyncSync } from 'fs';
 import { join } from 'path';
 import { parse } from 'yaml';
 import { marked } from 'marked';
 import { error } from '@sveltejs/kit';
 import { extractImageMetadata, formatCreditLine } from '$lib/utils/imageMetadata.js';
+import { getBasePath } from '$lib/utils/paths.js';
 
-// Get base path from environment
-const basePath = process.env.NODE_ENV === 'production' ? '/microfolio' : '';
+const basePath = getBasePath();
 
 export async function load({ params }) {
 	const { slug } = params;
@@ -55,11 +56,18 @@ async function getProjectResources(projectPath, slug) {
 		try {
 			const imageFiles = await readdir(imagesPath);
 			const imageList = imageFiles
-				.filter((file) => /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(file))
-				.map((file) => ({
-					name: file,
-					path: `${basePath}/content/projects/${slug}/images/${file}`
-				}));
+				.filter((file) => /\.(jpg|jpeg|png)$/i.test(file))
+				.map((file) => {
+					// Check if WebP version exists
+					const webpPath = join(imagesPath, file.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
+					const hasWebP = existsSyncSync(webpPath);
+
+					return {
+						name: file,
+						path: `${basePath}/content/projects/${slug}/images/${file}`,
+						hasWebP
+					};
+				});
 
 			// Load metadata for each image
 			for (const image of imageList) {

@@ -1,10 +1,11 @@
 <script>
+	import { _ } from 'svelte-i18n';
 	let { handler, class: className = '', ...props } = $props();
 
-	// Get pagination info from DataHandler
-	let pageNumber = $derived(handler.getPageNumber());
-	let pageCount = $derived(handler.getPageCount());
-	let pages = $derived(handler.getPages({ ellipsis: true }));
+	// Access pagination info directly from table handler
+	let currentPage = $derived(handler.currentPage);
+	let pageCount = $derived(handler.pageCount);
+	let pages = $derived(handler.pagesWithEllipsis);
 
 	function goToPage(page) {
 		handler.setPage(page);
@@ -19,27 +20,32 @@
 	}
 </script>
 
-{#if $pageCount > 1}
+{#if pageCount > 1}
 	<nav class="flex items-center gap-1 {className}" {...props}>
 		<!-- Previous button -->
 		<button
 			onclick={previousPage}
-			disabled={$pageNumber === 1}
-			class="rounded border border-primary bg-box px-3 py-1 text-sm hover:bg-primary hover:text-box disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-box disabled:hover:text-primary"
+			disabled={currentPage === 1}
+			class="border-primary bg-box cursor-pointer rounded border px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-50 {currentPage !==
+			1
+				? 'hover:bg-primary hover:text-box'
+				: ''}"
+			aria-label={$_('ui.pagination.previous_page')}
 		>
-			Previous
+			{$_('ui.pagination.previous')}
 		</button>
 
 		<!-- Page numbers -->
-		{#each $pages as page}
-			{#if page === '...'}
-				<span class="px-2 py-1 text-sm text-primary">...</span>
+		{#each pages as page}
+			{#if page === null || page === '...'}
+				<span class="text-primary px-2 py-1 text-sm">…</span>
 			{:else}
 				<button
 					onclick={() => goToPage(page)}
-					class="rounded border px-3 py-1 text-sm {$pageNumber === page
+					class="cursor-pointer rounded border px-3 py-1 text-sm {currentPage === page
 						? 'border-primary bg-primary text-box'
 						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
+					aria-label={$_('ui.pagination.go_to_page') + page}
 				>
 					{page}
 				</button>
@@ -49,10 +55,14 @@
 		<!-- Next button -->
 		<button
 			onclick={nextPage}
-			disabled={$pageNumber === $pageCount}
-			class="rounded border border-primary bg-box px-3 py-1 text-sm hover:bg-primary hover:text-box disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-box disabled:hover:text-primary"
+			disabled={currentPage === pageCount}
+			class="border-primary bg-box cursor-pointer rounded border px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-50 {currentPage !==
+			pageCount
+				? 'hover:bg-primary hover:text-box'
+				: ''}"
+			aria-label={$_('ui.pagination.next_page')}
 		>
-			Next
+			{$_('ui.pagination.next')}
 		</button>
 	</nav>
 {/if}

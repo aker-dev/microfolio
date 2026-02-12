@@ -6,17 +6,24 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 
 **Live Demo**: [https://aker-dev.github.io/microfolio/](https://aker-dev.github.io/microfolio/)
 
+> **We're looking for translators!** Help us make microfolio accessible in more languages. Contact us at **hello@aker.pro** if you'd like to contribute a translation.
+
 ## ✅ Features
 
-- **📁 File-based CMS** - No database needed
-- **🎨 Multiple Views** - Projects, List, Map modes
-- **📱 Responsive Design** - Mobile-first approach
-- **🏷️ Smart Tagging** - Advanced filtering system
-- **🗺️ Interactive Map** - Leaflet integration
-- **🚀 Static Generation** - Optimal performance
-- **🖼️ Image Lightbox** - Enhanced gallery with navigation arrows and metadata display
-- **📊 EXIF/IPTC Metadata** - Automatic extraction and display of image technical information
-- **🌙 Dark Mode** - Built-in theme support for better viewing experience
+- **📁 File-based CMS** — No database needed, just folders and Markdown files
+- **🎨 Multiple Views** — Projects grid, List, and Map modes
+- **📱 Responsive Design** — Mobile-first approach
+- **🏷️ Smart Tagging** — Filter counters and collapsible tag list
+- **🗺️ Interactive Map** — Leaflet integration with geolocated projects
+- **🚀 Static Generation** — Optimal performance with SvelteKit adapter-static
+- **🖼️ Image Lightbox** — Enhanced gallery with navigation arrows and metadata display
+- **📊 EXIF/IPTC Metadata** — Automatic extraction and display of image technical information
+- **🌙 Dark Mode** — Toggle in footer with persistent preference (system / manual / localStorage)
+- **⚡ Image Optimization** — WebP thumbnail generation with `pnpm optimize-images`
+- **🔗 Shareable URLs** — Filter, search, sort, and pagination state synced to URL query params
+- **🌐 Internationalization** — English/French via svelte-i18n, RTL-ready
+- **🏷️ OG Metadata** — Social sharing previews for projects and pages
+- **📄 Pagination & Sorting** — Customizable rows-per-page, sort by date, title, type, or location
 
 ## 🧪 Beta Testing Program
 
@@ -111,13 +118,14 @@ microfolio build  # or pnpm build
 
 Contributions are welcome! Fork the project, create a feature branch, and submit a Pull Request.
 
-### Recent Features
+### Recent Features (v0.7.0)
 
-- Interactive Map with Leaflet
-- Advanced List View with filtering
-- Mobile-responsive design
-- GitHub Actions deployment
-- Custom domain support
+- Dark mode toggle in footer with persistent preference
+- Filter counters and collapsible tag list
+- Shareable URLs with synced filter, search, sort, and pagination state
+- Search input with clear button and filled background
+- Rows-per-page setting synced with URL query params
+- Internationalization (English/French) with RTL support
 
 ## 📞 Support
 

@@ -1,11 +1,12 @@
 import { readFile, readdir } from 'fs/promises';
+import { existsSync } from 'fs';
 import { join } from 'path';
 import { parse } from 'yaml';
 import { marked } from 'marked';
 import { error } from '@sveltejs/kit';
+import { getBasePath } from '$lib/utils/paths.js';
 
-// Get base path from environment
-const basePath = process.env.NODE_ENV === 'production' ? '/microfolio' : '';
+const basePath = getBasePath();
 
 export async function load() {
 	const indexPath = join(process.cwd(), 'content/index.md');
@@ -35,10 +36,15 @@ export async function load() {
 				const [, projectFrontmatter] = projectContent.split('---');
 				const projectMetadata = parse(projectFrontmatter);
 
+				// Check if WebP thumbnail exists
+				const webpPath = join(projectPath, 'thumbnail.webp');
+				const hasWebP = existsSync(webpPath);
+
 				projects.push({
 					slug: folder,
 					...projectMetadata,
-					thumbnailPath: `${basePath}/content/projects/${folder}/thumbnail.jpg`
+					thumbnailSrc: `${basePath}/content/projects/${folder}/thumbnail.jpg`,
+					hasWebP
 				});
 			} catch (error) {
 				console.warn(`Error reading project ${folder}:`, error);

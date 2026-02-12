@@ -2,26 +2,42 @@
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
-	
+	import Pagination from '$lib/components/Pagination.svelte';
+	import { siteConfig } from '$lib/config.js';
+	import { _ } from 'svelte-i18n';
+
 	let { data } = $props();
 	let projects = $derived(data.projects);
 
 	let selectedType = $state('all');
 	let searchTerm = $state('');
-	let filteredProjects = $state([]);
+	let filteredProjects = $state(data.projects);
+	let handler = $state();
 </script>
 
 <svelte:head>
-	<title>Projects</title>
-	<meta name="description" content="Projects list" />
+	<title>{siteConfig.title} • {$_('pages.projects.title')}</title>
+	<meta name="description" content={$_('pages.projects.description')} />
 </svelte:head>
 
 <div class="space-y-8">
 	<!-- Header -->
-	<h2 class="text-4xl font-bold">Projects</h2>
+	<header>
+		<h1 class="text-primary mb-2 text-3xl font-bold">{$_('pages.projects.title')}</h1>
+		<h2 class="text-lg">{$_('pages.projects.description')}</h2>
+	</header>
+	<AkFilters
+		{projects}
+		bind:searchTerm
+		bind:selectedType
+		bind:filteredProjects
+		bind:handler
+		rowsPerPage={20}
+		showRowsPerPage={true}
+		showSort={true}
+		showResultsCount={true}
+	/>
 
-	<AkFilters {projects} bind:searchTerm bind:selectedType bind:filteredProjects />
-	
 	<!-- Mosaic Grid -->
 	<div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
 		{#each filteredProjects as project}
@@ -32,7 +48,14 @@
 	<!-- Empty state -->
 	{#if filteredProjects.length === 0}
 		<div class="py-12 text-center">
-			<p class="">No projects found matching your criteria.</p>
+			<p class="">{$_('ui.no_projects_found')}</p>
+		</div>
+	{/if}
+
+	<!-- Pagination -->
+	{#if handler}
+		<div class="flex justify-center">
+			<Pagination {handler} />
 		</div>
 	{/if}
 </div>

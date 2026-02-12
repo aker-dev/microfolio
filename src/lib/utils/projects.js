@@ -1,8 +1,10 @@
 import { readdir, readFile } from 'fs/promises';
+import { existsSync } from 'fs';
 import { join } from 'path';
 import { parse } from 'yaml';
+import { getBasePath } from '$lib/utils/paths.js';
 
-const basePath = process.env.NODE_ENV === 'production' ? '/microfolio' : '';
+const basePath = getBasePath();
 
 export async function loadProjects() {
 	const projectsPath = join(process.cwd(), 'content/projects');
@@ -14,25 +16,35 @@ export async function loadProjects() {
 		for (const folder of projectFolders) {
 			if (folder.startsWith('.') || folder.endsWith('.zip')) continue;
 
-			const projectPath = join(projectsPath, folder);
-			const indexPath = join(projectPath, 'index.md');
+			const indexPath = join(projectsPath, folder, 'index.md');
 
 			try {
 				const content = await readFile(indexPath, 'utf-8');
 				const [, frontmatter] = content.split('---');
 				const metadata = parse(frontmatter);
 
-				projects.push({
+				// Check if WebP thumbnail exists
+				const projectPath = join(projectsPath, folder);
+				const webpPath = join(projectPath, 'thumbnail.webp');
+				const hasWebP = existsSync(webpPath);
+
+				const project = {
 					slug: folder,
 					...metadata,
-					thumbnailPath: `${basePath}/content/projects/${folder}/thumbnail.jpg`
-				});
-			} catch (error) {
-				console.warn(`Error reading project ${folder}:`, error);
+					thumbnailSrc: basePath + '/content/projects/' + folder + '/thumbnail.jpg',
+					hasWebP
+				};
+
+				projects.push(project);
+			} catch (err) {
+				console.warn('Error loading project ' + folder + ':', err);
 			}
 		}
 
-		projects.sort((a, b) => new Date(b.date) - new Date(a.date));
+		// Sort projects by date only (newest first)
+		projects.sort((a, b) => {
+			return new Date(b.date) - new Date(a.date);
+		});
 
 		return projects;
 	} catch (error) {

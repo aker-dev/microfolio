@@ -1,0 +1,120 @@
+{
+	"nav": {
+		"home": "Accueil",
+		"about": "À propos",
+		"projects": "Projets",
+		"list": "Liste",
+		"map": "Carte"
+	},
+	"pages": {
+		"list": {
+			"title": "Vue Liste",
+			"description": "Recherchez et triez les projets"
+		},
+		"map": {
+			"title": "Vue Carte",
+			"description": "Explorez les projets sur la carte"
+		},
+		"projects": {
+			"title": "Projets",
+			"description": "Découvrez nos réalisations"
+		}
+	},
+	"ui": {
+		"all": "Tous",
+		"featured": "En vedette",
+		"loading": "Chargement...",
+		"error": "Erreur",
+		"close": "Fermer",
+		"display_metadata": "Voir les détails",
+		"search_placeholder": "Rechercher...",
+		"search_projects_placeholder": "Rechercher dans les projets...",
+		"project_singular": "projet",
+		"project_plural": "projets",
+		"results_found": "résultat(s)",
+		"no_projects_found": "Aucun projet ne correspond à votre recherche.",
+		"not_available": "N/A",
+		"view_project": "Voir le projet",
+		"clear_tags": "Effacer",
+		"clear_search": "Effacer la recherche",
+		"show_more_tags": "de plus",
+		"show_less_tags": "voir moins",
+		"loading_projects": "Chargement des projets...",
+		"generated_with": "généré avec",
+		"toggle_mobile_menu": "Menu",
+		"toggle_theme": "Changer le thème",
+		"featured_projects": "À la Une",
+		"back_to_projects": "Retour aux projets",
+		"video_not_supported": "Votre navigateur ne peut pas lire cette vidéo.",
+		"click_to_download": "Télécharger",
+		"image_lightbox": "Galerie photo",
+		"previous_image": "Image précédente",
+		"next_image": "Image suivante",
+		"credit": "Crédit :",
+		"social": {
+			"instagram": "Instagram",
+			"linkedin": "LinkedIn",
+			"github": "GitHub"
+		},
+		"table": {
+			"title": "Titre",
+			"type": "Catégorie",
+			"location": "Lieu",
+			"date": "Date",
+			"description": "Description",
+			"tags": "Mots-clés",
+			"actions": "Actions"
+		},
+		"pagination": {
+			"rows_per_page": "Lignes par page",
+			"previous": "Précédent",
+			"next": "Suivant",
+			"previous_page": "Page précédente",
+			"next_page": "Page suivante",
+			"go_to_page": "Page ",
+			"showing": "Affichage",
+			"to": "à",
+			"of": "sur",
+			"entries": "éléments",
+			"show": "Afficher"
+		},
+		"sort": {
+			"sort_by": "Trier par",
+			"date": "Date",
+			"title": "Titre",
+			"type": "Catégorie",
+			"location": "Lieu",
+			"toggle_order": "Inverser l'ordre de tri",
+			"ascending": "Croissant",
+			"descending": "Décroissant"
+		},
+		"project": {
+			"infos": "Informations",
+			"location_date": "Lieu et date",
+			"status": "Statut",
+			"owner": "Maître d'ouvrage",
+			"surface_area": "Surface",
+			"cost": "Budget",
+			"team": "Équipe",
+			"tags": "Mots-clés",
+			"gallery": "Photos",
+			"videos": "Vidéos",
+			"documents": "Documents"
+		},
+		"metadata": {
+			"technical_details": "Données techniques",
+			"camera": "Appareil photo",
+			"lens": "Objectif",
+			"focal_length": "Focale",
+			"aperture": "Ouverture",
+			"shutter_speed": "Vitesse",
+			"iso": "ISO",
+			"location_date": "Lieu et date",
+			"date": "Date",
+			"location": "Lieu",
+			"address": "Adresse",
+			"coordinates": "Coordonnées",
+			"keywords": "Mots-clés"
+		}
+	}
+}

@@ -1,59 +1,24 @@
 <script>
 	import { base } from '$app/paths';
-	import { DataHandler } from '@vincjo/datatables/legacy';
 	import Datatable from '$lib/components/Datatable.svelte';
-	import ThFilter from '$lib/components/ThFilter.svelte';
 	import ThSort from '$lib/components/ThSort.svelte';
-	import Search from '$lib/components/Search.svelte';
-	import RowsPerPage from '$lib/components/RowsPerPage.svelte';
-	import RowCount from '$lib/components/RowCount.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
+	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBadge from '$lib/components/AkBadge.svelte';
-	import Icon from '@iconify/svelte';
+	import IconArrowRight from '~icons/carbon/arrow-right';
+	import IconStarFilled from '~icons/carbon/star-filled';
+	import { siteConfig } from '$lib/config.js';
+	import { _ } from 'svelte-i18n';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
 
-	// Initialize DataHandler with reactive data
-	let handler = $state();
-
-	// Filter state
 	let selectedType = $state('all');
 	let searchTerm = $state('');
-
-	// Get unique project types
-	let projectTypes = $derived(['all', ...new Set(projects.map((p) => p.type))]);
-
-	// Get rows from handler
-	let rows = $derived(handler ? handler.getRows() : []);
-
-	// Initialize handler when projects are available
-	$effect(() => {
-		if (projects && projects.length > 0) {
-			handler = new DataHandler(projects, { rowsPerPage: 10 });
-		}
-	});
-
-	// Apply filters to DataHandler when they change
-	$effect(() => {
-		if (!handler) return;
-		// Apply type filter
-		if (selectedType === 'all') {
-			handler.clearFilters();
-		} else {
-			handler.filter(selectedType, 'type');
-		}
-	});
-
-	$effect(() => {
-		if (!handler) return;
-		// Apply search filter
-		if (searchTerm === '') {
-			handler.clearSearch();
-		} else {
-			handler.search(searchTerm, ['title', 'description', 'tags', 'location']);
-		}
-	});
+	let filteredProjects = $state([]);
+	let handler = $state();
+	let sortBy = $state('date');
+	let sortOrder = $state('desc');
 
 	// Format date function
 	function formatDate(dateString) {
@@ -66,56 +31,34 @@
 		if (!text) return '';
 		return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 	}
-
-	// Get filtered count for display
-	let filteredCount = $derived(() => {
-		if (!handler) return 0;
-		return handler.getFilteredRows().length;
-	});
 </script>
 
 <svelte:head>
-	<title>Projects List</title>
-	<meta name="description" content="Searchable and sortable projects list" />
+	<title>{siteConfig.title} • {$_('pages.list.title')}</title>
+	<meta name="description" content={$_('pages.list.description')} />
 </svelte:head>
 
 <div class="space-y-8">
 	<!-- Header -->
-	<h2 class="text-4xl font-bold">Projects List</h2>
+	<header>
+		<h1 class="text-primary mb-2 text-3xl font-bold">{$_('pages.list.title')}</h1>
+		<h2 class="text-lg">{$_('pages.list.description')}</h2>
+	</header>
 
-	<!-- Filters and Search -->
-	<div class="space-y-4">
-		<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-			<input
-				type="text"
-				placeholder="Search projects..."
-				bind:value={searchTerm}
-				class="border-primary focus:bg-box rounded-lg border px-4 py-2 focus:outline-none"
-			/>
-			<div class="flex flex-wrap gap-2">
-				{#each projectTypes as type}
-					<button
-						onclick={() => (selectedType = type)}
-						class="rounded-full border px-3 py-1 text-sm capitalize {selectedType === type
-							? 'border-primary bg-primary text-box'
-							: 'border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer'}"
-					>
-						{type}
-					</button>
-				{/each}
-			</div>
-		</div>
-
-		<!-- Table Controls -->
-		{#if handler}
-			<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-				<div class="flex items-center gap-4">
-					<RowsPerPage {handler} />
-					<RowCount {handler} />
-				</div>
-			</div>
-		{/if}
-	</div>
+	<!-- Filters -->
+	<AkFilters
+		{projects}
+		bind:searchTerm
+		bind:selectedType
+		bind:filteredProjects
+		bind:handler
+		bind:sortBy
+		bind:sortOrder
+		rowsPerPage={20}
+		showRowsPerPage={true}
+		showSort={true}
+		showResultsCount={true}
+	/>
 
 	<!-- Data Table -->
 	{#if handler}
@@ -124,40 +67,69 @@
 				<table class="w-full">
 					<thead class="bg-box">
 						<tr>
-							<ThSort {handler} orderBy="title" class="px-4 py-3 text-left">
-								<span class="font-semibold">Title</span>
+							<ThSort
+								{handler}
+								orderBy="title"
+								class="px-4 py-3 text-start"
+								bind:sortBy
+								bind:sortOrder
+							>
+								<span class="font-bold">{$_('ui.table.title')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="type" class="px-4 py-3 text-left">
-								<span class="font-semibold">Type</span>
+							<ThSort
+								{handler}
+								orderBy="type"
+								class="px-4 py-3 text-start"
+								bind:sortBy
+								bind:sortOrder
+							>
+								<span class="font-bold">{$_('ui.table.type')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="location" class="px-4 py-3 text-left">
-								<span class="font-semibold">Location</span>
+							<ThSort
+								{handler}
+								orderBy="location"
+								class="px-4 py-3 text-start"
+								bind:sortBy
+								bind:sortOrder
+							>
+								<span class="font-bold">{$_('ui.table.location')}</span>
 							</ThSort>
-							<ThSort {handler} orderBy="date" class="px-4 py-3 text-left">
-								<span class="font-semibold">Date</span>
+							<ThSort
+								{handler}
+								orderBy="date"
+								class="px-4 py-3 text-start"
+								bind:sortBy
+								bind:sortOrder
+							>
+								<span class="font-bold">{$_('ui.table.date')}</span>
 							</ThSort>
-							<th class="px-4 py-3 text-left">
-								<span class="font-semibold">Description</span>
+							<th class="px-4 py-3 text-start">
+								<span class="font-bold">{$_('ui.table.description')}</span>
 							</th>
-							<th class="px-4 py-3 text-left">
-								<span class="font-semibold">Tags</span>
+							<th class="px-4 py-3 text-start">
+								<span class="font-bold">{$_('ui.table.tags')}</span>
 							</th>
-							<th class="px-4 py-3 text-left">
-								<span class="font-semibold">Actions</span>
+							<th class="px-4 py-3 text-start">
+								<span class="font-bold">{$_('ui.table.actions')}</span>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						{#each $rows as project (project.slug)}
+						{#each handler.rows as project (project.slug)}
 							<tr class="border-primary hover:bg-box border-t">
 								<td class="px-4 py-3">
-									<div class="font-medium">{project.title}</div>
+									<div class="font-bold"><h3>{project.title}</h3></div>
 								</td>
 								<td class="px-4 py-3">
-									<AkBadge>{project.type}</AkBadge>
+									<div class="flex items-center gap-2">
+										<AkBadge>{project.type}</AkBadge>
+										{#if project.featured}
+											<IconStarFilled class="size-4" />
+										{/if}
+									</div>
 								</td>
 								<td class="text-primary px-4 py-3 text-sm">
-									{project.location || 'N/A'}
+									{project.location || $_('ui.not_available')}
 								</td>
 								<td class="text-primary px-4 py-3 text-sm">
 									{formatDate(project.date)}
@@ -169,7 +141,7 @@
 									{#if project.tags}
 										<div class="flex flex-wrap gap-1">
 											{#each project.tags.slice(0, 3) as tag}
-												<AkBadge small>#{tag}</AkBadge>
+												<AkBadge small>{tag}</AkBadge>
 											{/each}
 											{#if project.tags.length > 3}
 												<AkBadge small>
@@ -182,10 +154,10 @@
 								<td class="px-4 py-3">
 									<a
 										href="{base}/projects/{project.slug}"
-										class="border-primary bg-box hover:bg-primary hover:text-box flex h-8 w-8 items-center justify-center rounded border"
-										title="View project"
+										class="group bg-box text-primary border-primary inline-block cursor-pointer rounded-full border p-2"
+										aria-label={$_('ui.view_project')}
 									>
-										<Icon icon="carbon:arrow-right" class="h-4 w-4" />
+										<IconArrowRight class="pointer-events-none size-4 group-hover:scale-120" />
 									</a>
 								</td>
 							</tr>
@@ -201,7 +173,7 @@
 		</div>
 	{:else}
 		<div class="flex items-center justify-center py-8">
-			<p class="text-neutral-500">Loading projects...</p>
+			<p class="text-neutral-500">{$_('ui.loading_projects')}</p>
 		</div>
 	{/if}
 </div>

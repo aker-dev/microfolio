@@ -2,7 +2,9 @@ export const siteConfig = {
 	title: 'microfolio',
 	description: 'static portfolio generator',
 	author: 'AKER',
-	version: '0.3.0-beta.1',
+
+	// Internationalization config
+	locale: 'en', // 'en', 'fr'
 
 	// Social links
 	socialLinks: {
@@ -13,11 +15,11 @@ export const siteConfig = {
 
 	// Navigation
 	navigation: [
-		{ name: 'Home', href: '/' },
-		{ name: 'About', href: '/about' },
-		{ name: 'Projects', href: '/projects' },
-		{ name: 'List', href: '/list' },
-		{ name: 'Map', href: '/map' }
+		{ name: 'nav.home', href: '/' },
+		{ name: 'nav.about', href: '/about' },
+		{ name: 'nav.projects', href: '/projects' },
+		{ name: 'nav.list', href: '/list' },
+		{ name: 'nav.map', href: '/map' }
 		// ...
 	]
 };

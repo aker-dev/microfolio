@@ -1,7 +1,15 @@
 <script>
 	import { base } from '$app/paths';
+	import { siteConfig } from '$lib/config.js';
+	import { _ } from 'svelte-i18n';
 	import AkBadge from '$lib/components/AkBadge.svelte';
-	import Icon from '@iconify/svelte';
+	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
+	import AkBtnMetadata from '$lib/components/AkBtnMetadata.svelte';
+	import AkOptimizedImage from '$lib/components/AkOptimizedImage.svelte';
+	import IconStarFilled from '~icons/carbon/star-filled';
+	import IconDocument from '~icons/carbon/document';
+	import IconChevronLeft from '~icons/carbon/chevron-left';
+	import IconChevronRight from '~icons/carbon/chevron-right';
 
 	let { data } = $props();
 	let project = $derived(data.project);
@@ -82,8 +90,15 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <svelte:head>
-	<title>{project.title}</title>
+	<title>{siteConfig.title} • {project.title}</title>
 	<meta name="description" content={project.description} />
+
+	<!-- OG metadata -->
+	<meta property="og:title" content={project.title} />
+	<meta property="og:description" content={project.description} />
+	<meta property="og:image" content="{base}/content/projects/{project.slug}/thumbnail.jpg" />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content={siteConfig.title} />
 </svelte:head>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
@@ -91,31 +106,33 @@
 	<div class="col-span-2 mb-12 max-w-none">
 		<!-- Title & Description -->
 		<div>
-			<h2 class="inline-block text-3xl font-bold">{project.title}</h2>
+			<h1 class="text-primary mb-2 text-3xl font-bold">{project.title}</h1>
 		</div>
-		<p class="text-lg">{project.description}</p>
+		<h2 class="text-lg">{project.description}</h2>
 
 		<!-- Back to projects link -->
-		<a href="{base}/projects" class="my-4 block text-sm hover:underline">← Back to Projects</a>
+		<a href="{base}/projects" class="my-4 block text-sm hover:underline"
+			>← {$_('ui.back_to_projects')}</a
+		>
 
 		<!-- Main thumbnail -->
 		<img
 			src="{base}/content/projects/{project.slug}/thumbnail.jpg"
-			alt={project.title}
+			alt={thumbnailMetadata?.description || project.title}
 			class="w-full"
 		/>
 		<!-- Thumbnail metadata -->
 		<div class="text-primary mt-4 text-sm">
 			{#if thumbnailMetadata?.headline}
-				<p class="font-medium">{thumbnailMetadata.headline}</p>
+				<p class="font-bold">{thumbnailMetadata.headline}</p>
 			{:else}
-				<p class="font-medium">thumbnail.jpg</p>
+				<p class="font-bold">thumbnail.jpg</p>
 			{/if}
 			{#if thumbnailMetadata?.description}
 				<p class="italic">{thumbnailMetadata.description}</p>
 			{/if}
 			{#if thumbnailMetadata?.creditLine}
-				<p class="mt-1 text-xs">Credit: {thumbnailMetadata.creditLine}</p>
+				<p class="mt-1 text-xs">{$_('ui.credit')} › {thumbnailMetadata.creditLine}</p>
 			{/if}
 		</div>
 
@@ -131,25 +148,22 @@
 			<AkBadge>{project.type}</AkBadge>
 
 			{#if project.featured}
-				<Icon icon="carbon:star-filled" class="inline-block size-6 pb-1" />
+				<IconStarFilled class="inline-block size-6 pb-1" />
 			{/if}
 		</div>
 
-		<!-- <h3 class="text-lg font-semibold text-balance">
-			{project.title}
-		</h3> -->
 		<hr />
 		<!-- Location & Date -->
 		<div>
-			<h3 class="text-base font-medium">Infos</h3>
-			<span class="font-medium">Location & Date ›</span>
+			<h3 class="text-base font-bold">{$_('ui.project.infos')}</h3>
+			<span class="font-bold">{$_('ui.project.location_date')} ›</span>
 			<span>{project.location} / </span>
 			<span>{new Date(project.date).toISOString().slice(0, 7)}</span>
 
 			<!-- Status -->
 			{#if project.status}
 				<div>
-					<span class="font-medium">Status › </span>
+					<span class="font-bold">{$_('ui.project.status')} › </span>
 					<span class="capitalize">{project.status}</span>
 				</div>
 			{/if}
@@ -157,7 +171,7 @@
 			<!-- Project Owner -->
 			{#if project.owner}
 				<div>
-					<span class="font-medium">Project Owner › </span>
+					<span class="font-bold">{$_('ui.project.owner')} ›</span>
 					<span>{project.owner}</span>
 				</div>
 			{/if}
@@ -165,7 +179,7 @@
 			<!-- Surface Area -->
 			{#if project.surface_area}
 				<div>
-					<span class="font-medium">Surface Area › </span>
+					<span class="font-bold">{$_('ui.project.surface_area')} › </span>
 					<span>{project.surface_area}</span>
 				</div>
 			{/if}
@@ -173,7 +187,7 @@
 			<!-- Cost -->
 			{#if project.cost}
 				<div>
-					<span class="font-medium">Cost ›</span>
+					<span class="font-bold">{$_('ui.project.cost')} ›</span>
 					<span>{project.cost}</span>
 				</div>
 			{/if}
@@ -181,12 +195,14 @@
 		<!-- Authors -->
 		{#if project.authors && project.authors.length > 0}
 			<div class="mt-2">
-				<h3 class="text-base font-medium">Team</h3>
+				<h3 class="text-base font-bold">{$_('ui.project.team')}</h3>
 
 				{#each project.authors as author}
 					<div>
-						<span class="font-medium">{author.name}</span>
-						<span>› {author.role}</span>
+						<span class="font-bold">{author.name}</span>
+						{#if author.role}
+							<span> › {author.role}</span>
+						{/if}
 					</div>
 				{/each}
 			</div>
@@ -195,11 +211,11 @@
 		<!-- Tags -->
 		{#if project.tags && project.tags.length > 0}
 			<div class="mt-2">
-				<h3 class="mb-1 text-base font-medium">Tags</h3>
+				<h3 class="mb-1 text-base font-bold">{$_('ui.project.tags')}</h3>
 
 				<div class="flex flex-wrap gap-2">
 					{#each project.tags as tag}
-						<AkBadge small>#{tag}</AkBadge>
+						<AkBadge small>{tag}</AkBadge>
 					{/each}
 				</div>
 			</div>
@@ -212,34 +228,34 @@
 	<!-- Images Gallery -->
 	{#if project.resources.images && project.resources.images.length > 0}
 		<section class="mb-12">
-			<h2 class="mb-6 text-2xl font-bold">Gallery</h2>
+			<h2 class="mb-6 text-2xl font-bold">{$_('ui.project.gallery')}</h2>
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 				{#each project.resources.images as image}
 					<div class="group">
 						<button
 							type="button"
 							onclick={() => openLightbox(image)}
-							class="block aspect-[4/3] w-full cursor-pointer overflow-hidden"
+							class="block aspect-4/3 w-full cursor-pointer overflow-hidden"
 						>
-							<img
+							<AkOptimizedImage
 								src={image.path}
-								alt={image.name}
+								alt={image.metadata?.description || image.name}
 								class="image-hover-effect h-full w-full object-cover"
-								loading="lazy"
+								hasWebP={image.hasWebP || false}
 							/>
 						</button>
 						<!-- Image metadata -->
 						<div class="text-primary mt-2 text-sm">
 							{#if image.metadata?.headline}
-								<p class="font-medium">{image.metadata.headline}</p>
+								<p class="font-bold">{image.metadata.headline}</p>
 							{:else}
-								<p class="font-medium">{image.name}</p>
+								<p class="font-bold">{image.name}</p>
 							{/if}
 							{#if image.metadata?.description}
 								<p class="italic">{image.metadata.description}</p>
 							{/if}
 							{#if image.metadata?.creditLine}
-								<p class="mt-1 text-xs">Credit: {image.metadata.creditLine}</p>
+								<p class="mt-1 text-xs">{$_('ui.credit')} › {image.metadata.creditLine}</p>
 							{/if}
 						</div>
 					</div>
@@ -251,16 +267,16 @@
 	<!-- Videos -->
 	{#if project.resources.videos && project.resources.videos.length > 0}
 		<section class="mb-12">
-			<h2 class="mb-6 text-2xl font-bold">Videos</h2>
+			<h2 class="mb-6 text-2xl font-bold">{$_('ui.project.videos')}</h2>
 			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 				{#each project.resources.videos as video}
 					<div class="overflow-hidden">
 						<video controls class="w-full" preload="metadata">
 							<source src={video.path} type="video/mp4" />
 							<track kind="captions" />
-							Your browser does not support the video tag.
+							{$_('ui.video_not_supported')}
 						</video>
-						<p class="text-primary mt-2 text-sm font-medium">{video.name}</p>
+						<p class="text-primary mt-2 text-sm font-bold">{video.name}</p>
 					</div>
 				{/each}
 			</div>
@@ -270,7 +286,7 @@
 	<!-- Documents -->
 	{#if project.resources.documents && project.resources.documents.length > 0}
 		<section class="mb-12">
-			<h2 class="mb-6 text-2xl font-bold">Documents</h2>
+			<h2 class="mb-6 text-2xl font-bold">{$_('ui.project.documents')}</h2>
 			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 				{#each project.resources.documents as document}
 					<a
@@ -279,12 +295,12 @@
 						rel="noopener noreferrer"
 						class="bg-box flex items-center gap-3 p-4"
 					>
-						<div class="flex-shrink-0">
-							<Icon icon="carbon:document" class="text-primary h-6 w-6" />
+						<div class="shrink-0">
+							<IconDocument class="text-primary pointer-events-none h-6 w-6" />
 						</div>
 						<div class="flex-1">
-							<p class="text-primary text-sm font-medium">{document.name}</p>
-							<p class="text-primary text-xs">Click to download</p>
+							<p class="text-primary text-sm font-bold">{document.name}</p>
+							<p class="text-primary text-xs">{$_('ui.click_to_download')}</p>
 						</div>
 					</a>
 				{/each}
@@ -298,9 +314,9 @@
 	<div
 		role="dialog"
 		aria-modal="true"
-		aria-label="Image lightbox"
+		aria-label={$_('ui.image_lightbox')}
 		tabindex="-1"
-		class="fixed inset-0 z-10000 flex items-center justify-center bg-black/80 p-4"
+		class="bg-box/95 fixed inset-0 z-10000 flex items-center justify-center p-4"
 		onclick={closeLightbox}
 		onkeydown={handleKeydown}
 	>
@@ -314,7 +330,7 @@
 						previousImage();
 					}}
 					class="absolute top-0 left-0 z-20 h-full w-1/4 cursor-pointer"
-					aria-label="Previous image"
+					aria-label={$_('ui.previous_image')}
 				></button>
 			{/if}
 
@@ -327,37 +343,29 @@
 						nextImage();
 					}}
 					class="absolute top-0 right-0 z-20 h-full w-1/4 cursor-pointer"
-					aria-label="Next image"
+					aria-label={$_('ui.next_image')}
 				></button>
 			{/if}
 
 			<!-- Technical info button -->
 			{#if selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
-				<button
-					type="button"
+				<AkBtnMetadata
+					class="absolute top-4 right-16 z-30"
 					onclick={(e) => {
 						e.stopPropagation();
 						toggleTechnicalInfo();
 					}}
-					class="absolute top-4 right-16 z-30 cursor-pointer rounded-full bg-black p-2 text-white"
-					aria-label="Toggle technical information"
-				>
-					<Icon icon="carbon:information" class="h-6 w-6" />
-				</button>
+				/>
 			{/if}
 
 			<!-- Close button -->
-			<button
-				type="button"
+			<AkBtnClose
+				class="absolute top-4 right-4"
 				onclick={(e) => {
 					e.stopPropagation();
 					closeLightbox();
 				}}
-				class="absolute top-4 right-4 z-30 cursor-pointer rounded-full bg-black p-2 text-white"
-				aria-label="Close lightbox"
-			>
-				<Icon icon="carbon:close" class="h-6 w-6" />
-			</button>
+			/>
 
 			<!-- Navigation arrows -->
 			{#if project.resources?.images && project.resources.images.length > 1}
@@ -368,10 +376,10 @@
 						e.stopPropagation();
 						previousImage();
 					}}
-					class="absolute left-4 top-1/2 z-30 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-3 text-white transition-all hover:bg-black"
-					aria-label="Previous image"
+					class="border-primary group bg-box text-primary absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border p-3"
+					aria-label={$_('ui.previous_image')}
 				>
-					<Icon icon="carbon:chevron-left" class="h-8 w-8" />
+					<IconChevronLeft class="pointer-events-none size-6 group-hover:scale-120" />
 				</button>
 
 				<!-- Next arrow -->
@@ -381,126 +389,160 @@
 						e.stopPropagation();
 						nextImage();
 					}}
-					class="absolute right-4 top-1/2 z-30 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-3 text-white transition-all hover:bg-black"
-					aria-label="Next image"
+					class="boder-primary group bg-box text-primary absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border p-3"
+					aria-label={$_('ui.next_image')}
 				>
-					<Icon icon="carbon:chevron-right" class="h-8 w-8" />
+					<IconChevronRight class="pointer-events-none size-6 group-hover:scale-120" />
 				</button>
-			{/if}
-
-			<!-- Technical info overlay -->
-			{#if showTechnicalInfo && selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
-				{@const metadata = selectedImage.metadata}
-				<div
-					class="absolute top-16 right-4 z-30 max-h-[60vh] w-80 space-y-4 overflow-y-auto bg-white/95 p-6 text-sm text-black shadow-xl backdrop-blur-sm"
-				>
-					<h3 class="mb-4 text-lg font-bold">Technical Information</h3>
-
-					<!-- Technical details -->
-					{#if metadata?.camera || metadata?.lens || metadata?.focalLength || metadata?.aperture || metadata?.shutterSpeed || metadata?.iso}
-						<div class="space-y-2">
-							<h4 class="font-semibold">Technical Details</h4>
-							{#if metadata.camera}
-								<div><strong>Camera:</strong> {metadata.camera}</div>
-							{/if}
-							{#if metadata.lens}
-								<div><strong>Lens:</strong> {metadata.lens}</div>
-							{/if}
-							{#if metadata.focalLength}
-								<div><strong>Focal Length:</strong> {metadata.focalLength}</div>
-							{/if}
-							{#if metadata.aperture}
-								<div><strong>Aperture:</strong> {metadata.aperture}</div>
-							{/if}
-							{#if metadata.shutterSpeed}
-								<div><strong>Shutter Speed:</strong> {metadata.shutterSpeed}</div>
-							{/if}
-							{#if metadata.iso}
-								<div><strong>ISO:</strong> {metadata.iso}</div>
-							{/if}
-						</div>
-					{/if}
-
-					<!-- Location and date -->
-					{#if metadata?.dateTime || metadata?.city || metadata?.state || metadata?.country || metadata?.location || metadata?.gps}
-						<div class="space-y-2 border-t pt-4">
-							<h4 class="font-semibold">Location & Date</h4>
-							{#if metadata.dateTime}
-								<div><strong>Date:</strong> {new Date(metadata.dateTime).toLocaleString()}</div>
-							{/if}
-							{#if metadata.location}
-								<div><strong>Location:</strong> {metadata.location}</div>
-							{/if}
-							{#if metadata.city || metadata.state || metadata.country}
-								<div>
-									<strong>Address:</strong>
-									{[metadata.city, metadata.state, metadata.country].filter(Boolean).join(', ')}
-								</div>
-							{/if}
-							{#if metadata.gps}
-								<div>
-									<strong>Coordinates:</strong>
-									<a
-										href="https://www.openstreetmap.org/?mlat={metadata.gps
-											.latitude}&mlon={metadata.gps.longitude}&zoom=15"
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-blue-600 underline hover:no-underline"
-									>
-										{metadata.gps.latitude.toFixed(6)}, {metadata.gps.longitude.toFixed(6)}
-									</a>
-								</div>
-							{/if}
-						</div>
-					{/if}
-
-					<!-- Keywords -->
-					{#if metadata?.keywords && metadata.keywords.length > 0}
-						<div class="space-y-2 border-t pt-4">
-							<h4 class="font-semibold">Keywords</h4>
-							<div class="flex flex-wrap gap-1">
-								{#each metadata.keywords as keyword}
-									<span class="bg-gray-200 px-2 py-1 text-xs">{keyword}</span>
-								{/each}
-							</div>
-						</div>
-					{/if}
-				</div>
 			{/if}
 
 			<div class="pointer-events-none flex h-full w-full items-center justify-center">
 				<div class="flex max-h-[90vh] max-w-[95vw] flex-col items-center gap-6 lg:flex-row">
 					<!-- Image section -->
 					<div class="flex flex-col items-center gap-4">
-						<img
-							src={selectedImage.path}
-							alt={selectedImage.name}
-							class="max-h-[60vh] max-w-[90vw] object-contain shadow-2xl lg:max-w-[60vw]"
-						/>
-						
+						<div class="relative">
+							<img
+								src={selectedImage.path}
+								alt={selectedImage.name}
+								class="max-h-[60vh] max-w-[90vw] object-contain shadow-2xl lg:max-w-[60vw]"
+								fetchpriority="high"
+							/>
+
+							<!-- Technical info overlay -->
+							{#if showTechnicalInfo && selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
+								{@const metadata = selectedImage.metadata}
+								<div
+									class="text-primary bg-box/60 pointer-events-auto absolute top-0 right-0 z-30 max-h-[60vh] w-80 space-y-3 overflow-y-auto p-4 text-sm shadow-xl backdrop-blur-sm"
+								>
+									<!-- Technical details -->
+									{#if metadata?.camera || metadata?.lens || metadata?.focalLength || metadata?.aperture || metadata?.shutterSpeed || metadata?.iso}
+										<div>
+											<h3 class="text-base font-bold">{$_('ui.metadata.technical_details')}</h3>
+											{#if metadata.camera}
+												<div>
+													<span class="font-bold">{$_('ui.metadata.camera')} ›</span>
+													<span>{metadata.camera}</span>
+												</div>
+											{/if}
+											{#if metadata.lens}
+												<div>
+													<span class="font-bold">{$_('ui.metadata.lens')} ›</span>
+													<span>{metadata.lens}</span>
+												</div>
+											{/if}
+											{#if metadata.focalLength}
+												<div>
+													<span class="font-bold">{$_('ui.metadata.focal_length')} ›</span>
+													<span>{metadata.focalLength}</span>
+												</div>
+											{/if}
+											{#if metadata.aperture}
+												<div>
+													<span class="font-bold">{$_('ui.metadata.aperture')} ›</span>
+													<span>{metadata.aperture}</span>
+												</div>
+											{/if}
+											{#if metadata.shutterSpeed}
+												<div>
+													<span class="font-bold">{$_('ui.metadata.shutter_speed')} ›</span>
+													<span>{metadata.shutterSpeed}</span>
+												</div>
+											{/if}
+											{#if metadata.iso}
+												<div>
+													<span class="font-bold">{$_('ui.metadata.iso')} ›</span>
+													<span>{metadata.iso}</span>
+												</div>
+											{/if}
+										</div>
+									{/if}
+
+									<!-- Location and date -->
+									{#if metadata?.dateTime || metadata?.city || metadata?.state || metadata?.country || metadata?.location || metadata?.gps}
+										<div>
+											<h3 class="text-base font-bold">{$_('ui.metadata.location_date')}</h3>
+											{#if metadata.dateTime}
+												<div>
+													<span class="font-bold">{$_('ui.metadata.date')} ›</span>
+													<span>{new Date(metadata.dateTime).toLocaleString()}</span>
+												</div>
+											{/if}
+											{#if metadata.location}
+												<div>
+													<span class="font-bold">{$_('ui.metadata.location')} ›</span>
+													<span>{metadata.location}</span>
+												</div>
+											{/if}
+											{#if metadata.city || metadata.state || metadata.country}
+												<div>
+													<span class="font-bold">{$_('ui.metadata.address')} ›</span>
+													<span
+														>{[metadata.city, metadata.state, metadata.country]
+															.filter(Boolean)
+															.join(', ')}</span
+													>
+												</div>
+											{/if}
+											{#if metadata.gps}
+												<div>
+													<span class="font-bold">{$_('ui.metadata.coordinates')} ›</span>
+													<span>
+														<a
+															href="https://www.openstreetmap.org/?mlat={metadata.gps
+																.latitude}&mlon={metadata.gps.longitude}&zoom=15"
+															target="_blank"
+															rel="noopener noreferrer"
+															class="underline hover:no-underline"
+														>
+															{metadata.gps.latitude.toFixed(6)}, {metadata.gps.longitude.toFixed(
+																6
+															)}
+														</a>
+													</span>
+												</div>
+											{/if}
+										</div>
+									{/if}
+
+									<!-- Keywords -->
+									{#if metadata?.keywords && metadata.keywords.length > 0}
+										<div>
+											<h3 class="mb-1 text-base font-bold">{$_('ui.metadata.keywords')}</h3>
+											<div class="flex flex-wrap gap-1">
+												{#each metadata.keywords as keyword}
+													<AkBadge small>{keyword}</AkBadge>
+												{/each}
+											</div>
+										</div>
+									{/if}
+								</div>
+							{/if}
+						</div>
+
 						<!-- Basic info under image -->
-						<div class="pointer-events-auto max-w-[90vw] text-center text-white lg:max-w-[60vw]">
+						<div class="text-primary pointer-events-auto max-w-[90vw] text-center lg:max-w-[60vw]">
 							{#if selectedImage.metadata?.headline}
-								<p class="text-lg font-medium">{selectedImage.metadata.headline}</p>
+								<p class="text-lg font-bold">{selectedImage.metadata.headline}</p>
 							{:else}
-								<p class="text-lg font-medium">{selectedImage.name}</p>
+								<p class="text-lg font-bold">{selectedImage.name}</p>
 							{/if}
 							{#if selectedImage.metadata?.description}
 								<p class="mt-1 text-sm italic">{selectedImage.metadata.description}</p>
 							{/if}
 							{#if selectedImage.metadata?.creditLine}
-								<p class="mt-1 text-xs">Credit: {selectedImage.metadata.creditLine}</p>
+								<p class="mt-1 text-xs">{$_('ui.credit')} › {selectedImage.metadata.creditLine}</p>
 							{/if}
 						</div>
-						
+
 						<!-- Image counter -->
 						{#if project.resources?.images && project.resources.images.length > 1}
-							<div class="rounded-full bg-black px-3 py-1 text-sm text-white">
+							<div
+								class="bg-box text-primary border-primary rounded-full border px-3 py-1 text-sm"
+							>
 								{currentImageIndex + 1} / {project.resources.images.length}
 							</div>
 						{/if}
 					</div>
-
 				</div>
 			</div>
 		</div>

@@ -28,6 +28,7 @@
 	let tagFilter = $state();
 	let sort = $state();
 	let isInitialized = $state(false);
+	let isUrlInitialized = $state(false);
 
 	let projectTypes = $derived(['all', 'featured', ...new Set(projects.map((p) => p.type))]);
 	let typeFilteredProjects = $derived.by(() => {
@@ -63,12 +64,76 @@
 					return selected.some((tag) => entry.includes(tag));
 				}
 			);
-			sort = handler.createSort('date');
-			// Set initial sort (date descending by default)
-			sort.set(); // First click sets ascending
-			sort.set(); // Second click sets descending
+
+			// Read URL params to restore filter state
+			const params =
+				typeof window !== 'undefined'
+					? new URLSearchParams(window.location.search)
+					: new URLSearchParams();
+
+			// Type
+			const urlType = params.get('type');
+			if (urlType && projectTypes.includes(urlType)) {
+				handleTypeChange(urlType);
+			}
+
+			// Tags (comma-separated)
+			const urlTags = params.get('tags');
+			if (urlTags) {
+				const available = getAvailableTags(selectedType);
+				urlTags
+					.split(',')
+					.filter((t) => available.includes(t))
+					.forEach((tag) => handleTagToggle(tag));
+			}
+
+			// Search
+			const urlSearch = params.get('search');
+			if (urlSearch) {
+				searchTerm = urlSearch;
+				handleSearchInput();
+			}
+
+			// Sort (with URL fallback to defaults: date/desc)
+			const urlSort = params.get('sort') || 'date';
+			const urlOrder = params.get('order') || 'desc';
+			sortBy = urlSort;
+			sortOrder = urlOrder;
+			sort = handler.createSort(urlSort);
+			if (urlOrder === 'desc') {
+				sort.set(); // asc
+				sort.set(); // desc
+			} else {
+				sort.set(); // asc
+			}
+
+			// Page
+			const urlPage = params.get('page');
+			if (urlPage) {
+				const pageNum = Number(urlPage);
+				if (pageNum > 1) handler.setPage(pageNum);
+			}
+
 			isInitialized = true;
+			isUrlInitialized = true;
 		}
+	});
+
+	// Sync filter state to URL query params
+	$effect(() => {
+		if (!isUrlInitialized || typeof window === 'undefined') return;
+
+		const params = new URLSearchParams();
+		if (searchTerm) params.set('search', searchTerm);
+		if (selectedType !== 'all') params.set('type', selectedType);
+		if (selectedTags.length > 0) params.set('tags', selectedTags.join(','));
+		if (sortBy !== 'date') params.set('sort', sortBy);
+		if (sortOrder !== 'desc') params.set('order', sortOrder);
+		if (handler && handler.currentPage > 1) params.set('page', String(handler.currentPage));
+
+		const query = params.toString();
+		const newUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+		window.history.replaceState(null, '', newUrl);
 	});
 
 	// Sync searchTerm with handler search

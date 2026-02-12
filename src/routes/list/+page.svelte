@@ -154,7 +154,7 @@
 								<td class="px-4 py-3">
 									<a
 										href="{base}/projects/{project.slug}"
-										class="group bg-box text-primary border-primary inline-block cursor-pointer rounded-full border-1 p-2"
+										class="group bg-box text-primary border-primary inline-block cursor-pointer rounded-full border p-2"
 										aria-label={$_('ui.view_project')}
 									>
 										<IconArrowRight class="pointer-events-none size-4 group-hover:scale-120" />

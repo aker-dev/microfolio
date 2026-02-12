@@ -9,7 +9,7 @@
 
 <a href="{base}/projects/{project.slug}" class="group bg-box block overflow-hidden {className}">
 	<!-- Thumbnail -->
-	<div class="aspect-[4/3] overflow-hidden">
+	<div class="aspect-4/3 overflow-hidden">
 		<AkOptimizedImage
 			src={project.thumbnailSrc}
 			alt={project.title}

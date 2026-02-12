@@ -72,7 +72,7 @@
 
 		<!-- Mobile Menu Button -->
 		<button
-			class="bg-box text-primary border-primary z-100 mb-3 cursor-pointer rounded-full border-1 p-2 md:hidden"
+			class="bg-box text-primary border-primary z-100 mb-3 cursor-pointer rounded-full border p-2 md:hidden"
 			onclick={toggleMobileMenu}
 			aria-label={$_('ui.toggle_mobile_menu')}
 		>

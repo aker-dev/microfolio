@@ -235,7 +235,7 @@
 						<button
 							type="button"
 							onclick={() => openLightbox(image)}
-							class="block aspect-[4/3] w-full cursor-pointer overflow-hidden"
+							class="block aspect-4/3 w-full cursor-pointer overflow-hidden"
 						>
 							<AkOptimizedImage
 								src={image.path}
@@ -295,7 +295,7 @@
 						rel="noopener noreferrer"
 						class="bg-box flex items-center gap-3 p-4"
 					>
-						<div class="flex-shrink-0">
+						<div class="shrink-0">
 							<IconDocument class="text-primary pointer-events-none h-6 w-6" />
 						</div>
 						<div class="flex-1">
@@ -376,7 +376,7 @@
 						e.stopPropagation();
 						previousImage();
 					}}
-					class="border-primary group bg-box text-primary absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
+					class="border-primary group bg-box text-primary absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border p-3"
 					aria-label={$_('ui.previous_image')}
 				>
 					<IconChevronLeft class="pointer-events-none size-6 group-hover:scale-120" />
@@ -389,7 +389,7 @@
 						e.stopPropagation();
 						nextImage();
 					}}
-					class="boder-primary group bg-box text-primary absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border-1 p-3"
+					class="boder-primary group bg-box text-primary absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border p-3"
 					aria-label={$_('ui.next_image')}
 				>
 					<IconChevronRight class="pointer-events-none size-6 group-hover:scale-120" />
@@ -537,7 +537,7 @@
 						<!-- Image counter -->
 						{#if project.resources?.images && project.resources.images.length > 1}
 							<div
-								class="bg-box text-primary border-primary rounded-full border-1 px-3 py-1 text-sm"
+								class="bg-box text-primary border-primary rounded-full border px-3 py-1 text-sm"
 							>
 								{currentImageIndex + 1} / {project.resources.images.length}
 							</div>

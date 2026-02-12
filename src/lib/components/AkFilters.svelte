@@ -107,6 +107,15 @@
 				sort.set(); // asc
 			}
 
+			// Rows per page
+			const urlRows = params.get('rows');
+			if (urlRows) {
+				const rowsNum = Number(urlRows);
+				if ([5, 10, 20, 50, 100].includes(rowsNum)) {
+					handler.setRowsPerPage(rowsNum);
+				}
+			}
+
 			// Page
 			const urlPage = params.get('page');
 			if (urlPage) {
@@ -129,6 +138,7 @@
 		if (selectedTags.length > 0) params.set('tags', selectedTags.join(','));
 		if (sortBy !== 'date') params.set('sort', sortBy);
 		if (sortOrder !== 'desc') params.set('order', sortOrder);
+		if (handler && handler.rowsPerPage !== rowsPerPage) params.set('rows', String(handler.rowsPerPage));
 		if (handler && handler.currentPage > 1) params.set('page', String(handler.currentPage));
 
 		const query = params.toString();

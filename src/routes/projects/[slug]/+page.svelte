@@ -152,9 +152,6 @@
 			{/if}
 		</div>
 
-		<!-- <h3 class="text-lg font-bold text-balance">
-			{project.title}
-		</h3> -->
 		<hr />
 		<!-- Location & Date -->
 		<div>

@@ -248,13 +248,26 @@
 <div class="space-y-4">
 	<!-- Search and Type Filters -->
 	<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-		<input
-			type="text"
-			placeholder={$_('ui.search_projects_placeholder')}
-			bind:value={searchTerm}
-			oninput={handleSearchInput}
-			class="border-primary focus:bg-box rounded-lg border px-4 py-2 focus:outline-none"
-		/>
+		<div class="relative">
+			<input
+				type="text"
+				placeholder={$_('ui.search_projects_placeholder')}
+				bind:value={searchTerm}
+				oninput={handleSearchInput}
+				class="border-primary focus:bg-box rounded-lg border px-4 py-2 pr-8 focus:outline-none {searchTerm ? 'bg-box' : ''}"
+			/>
+			{#if searchTerm}
+				<button
+					onclick={() => { searchTerm = ''; handleSearchInput(); }}
+					class="text-primary hover:text-box hover:bg-primary absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full p-0.5 transition-colors"
+					aria-label={$_('ui.clear_search')}
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+						<path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+					</svg>
+				</button>
+			{/if}
+		</div>
 		<div class="flex flex-wrap gap-2">
 			{#each projectTypes as type}
 				<button

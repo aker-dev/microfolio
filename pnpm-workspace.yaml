@@ -1,0 +1,10 @@
+# Dependencies allowed to run install scripts (pnpm blocks them by default).
+allowBuilds:
+  esbuild: true # downloads its platform binary
+  sharp: true # builds/checks the native binding used by optimize-images
+  es5-ext: false # postinstall is only a console notice
+  exifreader: false # no-op without an exifreader config in package.json
+
+# Explicitly accepted despite being newer than the minimumReleaseAge window.
+minimumReleaseAgeExclude:
+  - '@iconify/json@2.2.514'

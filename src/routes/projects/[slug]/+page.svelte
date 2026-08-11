@@ -1,5 +1,6 @@
 <script>
 	import { base } from '$app/paths';
+	import { afterNavigate } from '$app/navigation';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
 	import AkBadge from '$lib/components/AkBadge.svelte';
@@ -14,18 +15,46 @@
 	let { data } = $props();
 	let project = $derived(data.project);
 
+	// `from` is null when the visitor landed here directly — a shared link, a
+	// refresh, a search result — in which case there is nothing to go back to
+	// and the link falls back to the projects index rather than leaving the site.
+	let previousUrl = $state(null);
+	afterNavigate(({ from }) => {
+		previousUrl = from?.url ? from.url.pathname + from.url.search : null;
+	});
+
+	function goBack(event) {
+		// Let the browser handle "open in a new tab" and friends
+		if (!previousUrl || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+		// history.back() rather than following the href: it restores the scroll
+		// position too, and does not grow the history stack
+		event.preventDefault();
+		history.back();
+	}
+
 	// Get server-loaded metadata
 	let thumbnailMetadata = $derived(data.project.thumbnailMetadata);
-	let imageMetadata = $derived(
-		new Map(project.resources?.images?.map((img) => [img.path, img.metadata]) || [])
-	);
-	let metadataCount = $derived(imageMetadata.size);
 
 	// Image gallery state
 	let selectedImage = $state(null);
 	let showLightbox = $state(false);
 	let currentImageIndex = $state(0);
 	let showTechnicalInfo = $state(false);
+
+	// The lightbox's technical panel has three sections. The panel, and the
+	// button that opens it, appear only when at least one of them has content.
+	const CAMERA_FIELDS = ['camera', 'lens', 'focalLength', 'aperture', 'shutterSpeed', 'iso'];
+	const CONTEXT_FIELDS = ['dateTime', 'city', 'state', 'country', 'location', 'gps'];
+
+	function hasAny(metadata, fields) {
+		return fields.some((field) => metadata?.[field]);
+	}
+
+	let hasCameraInfo = $derived(hasAny(selectedImage?.metadata, CAMERA_FIELDS));
+	let hasContextInfo = $derived(hasAny(selectedImage?.metadata, CONTEXT_FIELDS));
+	let hasKeywords = $derived(selectedImage?.metadata?.keywords?.length > 0);
+	let hasTechnicalMetadata = $derived(hasCameraInfo || hasContextInfo || hasKeywords);
 
 	function openLightbox(image) {
 		selectedImage = image;
@@ -96,7 +125,9 @@
 	<!-- OG metadata -->
 	<meta property="og:title" content={project.title} />
 	<meta property="og:description" content={project.description} />
-	<meta property="og:image" content="{base}/content/projects/{project.slug}/thumbnail.jpg" />
+	{#if project.hasThumbnail}
+		<meta property="og:image" content="{base}/content/projects/{project.slug}/thumbnail.jpg" />
+	{/if}
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content={siteConfig.title} />
 </svelte:head>
@@ -110,34 +141,41 @@
 		</div>
 		<h2 class="text-lg">{project.description}</h2>
 
-		<!-- Back to projects link -->
-		<a href="{base}/projects" class="my-4 block text-sm hover:underline"
-			>← {$_('ui.back_to_projects')}</a
+		<!-- Back link: the previous page when there is one, the index otherwise -->
+		<a
+			href={previousUrl ?? `${base}/projects`}
+			onclick={goBack}
+			class="my-4 block text-sm hover:underline">← {$_('ui.back')}</a
 		>
 
 		<!-- Main thumbnail -->
-		<img
-			src="{base}/content/projects/{project.slug}/thumbnail.jpg"
-			alt={thumbnailMetadata?.description || project.title}
-			class="w-full"
-		/>
-		<!-- Thumbnail metadata -->
-		<div class="text-primary mt-4 text-sm">
-			{#if thumbnailMetadata?.headline}
-				<p class="font-bold">{thumbnailMetadata.headline}</p>
-			{:else}
-				<p class="font-bold">thumbnail.jpg</p>
-			{/if}
-			{#if thumbnailMetadata?.description}
-				<p class="italic">{thumbnailMetadata.description}</p>
-			{/if}
-			{#if thumbnailMetadata?.creditLine}
-				<p class="mt-1 text-xs">{$_('ui.credit')} › {thumbnailMetadata.creditLine}</p>
-			{/if}
-		</div>
+		{#if project.hasThumbnail}
+			<img
+				src="{base}/content/projects/{project.slug}/thumbnail.jpg"
+				alt={thumbnailMetadata?.description || project.title}
+				class="w-full"
+			/>
+
+			<!-- Thumbnail metadata -->
+			<div class="text-primary mt-4 text-sm">
+				{#if thumbnailMetadata?.headline}
+					<p class="font-bold">{thumbnailMetadata.headline}</p>
+				{:else}
+					<p class="font-bold">thumbnail.jpg</p>
+				{/if}
+				{#if thumbnailMetadata?.description}
+					<p class="italic">{thumbnailMetadata.description}</p>
+				{/if}
+				{#if thumbnailMetadata?.creditLine}
+					<p class="mt-1 text-xs">{$_('ui.credit')} › {thumbnailMetadata.creditLine}</p>
+				{/if}
+			</div>
+		{/if}
 
 		<!-- Content -->
 		<article class="prose prose-neutral text-primary mt-8">
+			<!-- Markdown authored in the project's index.md and converted at build time, not user input -->
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html project.content}
 		</article>
 	</div>
@@ -197,7 +235,7 @@
 			<div class="mt-2">
 				<h3 class="text-base font-bold">{$_('ui.project.team')}</h3>
 
-				{#each project.authors as author}
+				{#each project.authors as author, i (i)}
 					<div>
 						<span class="font-bold">{author.name}</span>
 						{#if author.role}
@@ -214,7 +252,7 @@
 				<h3 class="mb-1 text-base font-bold">{$_('ui.project.tags')}</h3>
 
 				<div class="flex flex-wrap gap-2">
-					{#each project.tags as tag}
+					{#each project.tags as tag, i (i)}
 						<AkBadge small>{tag}</AkBadge>
 					{/each}
 				</div>
@@ -230,7 +268,7 @@
 		<section class="mb-12">
 			<h2 class="mb-6 text-2xl font-bold">{$_('ui.project.gallery')}</h2>
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each project.resources.images as image}
+				{#each project.resources.images as image (image.path)}
 					<div class="group">
 						<button
 							type="button"
@@ -269,7 +307,7 @@
 		<section class="mb-12">
 			<h2 class="mb-6 text-2xl font-bold">{$_('ui.project.videos')}</h2>
 			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-				{#each project.resources.videos as video}
+				{#each project.resources.videos as video (video.path)}
 					<div class="overflow-hidden">
 						<video controls class="w-full" preload="metadata">
 							<source src={video.path} type="video/mp4" />
@@ -288,7 +326,7 @@
 		<section class="mb-12">
 			<h2 class="mb-6 text-2xl font-bold">{$_('ui.project.documents')}</h2>
 			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-				{#each project.resources.documents as document}
+				{#each project.resources.documents as document (document.path)}
 					<a
 						href={document.path}
 						target="_blank"
@@ -348,7 +386,7 @@
 			{/if}
 
 			<!-- Technical info button -->
-			{#if selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
+			{#if hasTechnicalMetadata}
 				<AkBtnMetadata
 					class="absolute top-4 right-16 z-30"
 					onclick={(e) => {
@@ -409,13 +447,13 @@
 							/>
 
 							<!-- Technical info overlay -->
-							{#if showTechnicalInfo && selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
+							{#if showTechnicalInfo && hasTechnicalMetadata}
 								{@const metadata = selectedImage.metadata}
 								<div
 									class="text-primary bg-box/60 pointer-events-auto absolute top-0 right-0 z-30 max-h-[60vh] w-80 space-y-3 overflow-y-auto p-4 text-sm shadow-xl backdrop-blur-sm"
 								>
 									<!-- Technical details -->
-									{#if metadata?.camera || metadata?.lens || metadata?.focalLength || metadata?.aperture || metadata?.shutterSpeed || metadata?.iso}
+									{#if hasCameraInfo}
 										<div>
 											<h3 class="text-base font-bold">{$_('ui.metadata.technical_details')}</h3>
 											{#if metadata.camera}
@@ -458,7 +496,7 @@
 									{/if}
 
 									<!-- Location and date -->
-									{#if metadata?.dateTime || metadata?.city || metadata?.state || metadata?.country || metadata?.location || metadata?.gps}
+									{#if hasContextInfo}
 										<div>
 											<h3 class="text-base font-bold">{$_('ui.metadata.location_date')}</h3>
 											{#if metadata.dateTime}
@@ -505,11 +543,11 @@
 									{/if}
 
 									<!-- Keywords -->
-									{#if metadata?.keywords && metadata.keywords.length > 0}
+									{#if hasKeywords}
 										<div>
 											<h3 class="mb-1 text-base font-bold">{$_('ui.metadata.keywords')}</h3>
 											<div class="flex flex-wrap gap-1">
-												{#each metadata.keywords as keyword}
+												{#each metadata.keywords as keyword, i (i)}
 													<AkBadge small>{keyword}</AkBadge>
 												{/each}
 											</div>
@@ -536,9 +574,7 @@
 
 						<!-- Image counter -->
 						{#if project.resources?.images && project.resources.images.length > 1}
-							<div
-								class="bg-box text-primary border-primary rounded-full border px-3 py-1 text-sm"
-							>
+							<div class="bg-box text-primary border-primary rounded-full border px-3 py-1 text-sm">
 								{currentImageIndex + 1} / {project.resources.images.length}
 							</div>
 						{/if}

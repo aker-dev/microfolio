@@ -19,7 +19,7 @@
 		onchange={handleChange}
 		class="border-primary bg-box rounded border px-2 py-1 text-sm focus:outline-none"
 	>
-		{#each options as option}
+		{#each options as option (option)}
 			<option value={option}>{option}</option>
 		{/each}
 	</select>

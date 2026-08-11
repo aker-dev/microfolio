@@ -1,54 +1,78 @@
 import { readdir, readFile } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
-import { parse } from 'yaml';
 import { getBasePath } from '$lib/utils/paths.js';
+import { parseProjectFrontmatter } from '$lib/utils/projectFrontmatter.js';
 
 const basePath = getBasePath();
+
+// loadProjects() runs once per route, so the same problems would otherwise be
+// reported four times per build. Only report when the set of problems changes,
+// which still surfaces new ones as content is edited in dev.
+let lastReported = null;
+
+function reportProblems(problems, loadedCount) {
+	const signature = problems.map(({ slug, reason }) => `${slug}:${reason}`).join('|');
+	if (signature === lastReported) return;
+	lastReported = signature;
+
+	if (problems.length === 0) return;
+
+	console.warn(`\n⚠️  ${problems.length} project(s) skipped:`);
+	for (const { slug, reason } of problems) {
+		console.warn(`   • ${slug}/ — ${reason}`);
+	}
+	console.warn(`✓ ${loadedCount} projects loaded\n`);
+}
 
 export async function loadProjects() {
 	const projectsPath = join(process.cwd(), 'content/projects');
 
+	let entries;
 	try {
-		const projectFolders = await readdir(projectsPath);
-		const projects = [];
-
-		for (const folder of projectFolders) {
-			if (folder.startsWith('.') || folder.endsWith('.zip')) continue;
-
-			const indexPath = join(projectsPath, folder, 'index.md');
-
-			try {
-				const content = await readFile(indexPath, 'utf-8');
-				const [, frontmatter] = content.split('---');
-				const metadata = parse(frontmatter);
-
-				// Check if WebP thumbnail exists
-				const projectPath = join(projectsPath, folder);
-				const webpPath = join(projectPath, 'thumbnail.webp');
-				const hasWebP = existsSync(webpPath);
-
-				const project = {
-					slug: folder,
-					...metadata,
-					thumbnailSrc: basePath + '/content/projects/' + folder + '/thumbnail.jpg',
-					hasWebP
-				};
-
-				projects.push(project);
-			} catch (err) {
-				console.warn('Error loading project ' + folder + ':', err);
-			}
-		}
-
-		// Sort projects by date only (newest first)
-		projects.sort((a, b) => {
-			return new Date(b.date) - new Date(a.date);
-		});
-
-		return projects;
+		entries = await readdir(projectsPath, { withFileTypes: true });
 	} catch (error) {
 		console.error('Error loading projects:', error);
 		return [];
 	}
+
+	const projects = [];
+	const problems = [];
+
+	for (const entry of entries) {
+		// Skips .DS_Store, the bundled example_projects.zip and any stray file
+		if (!entry.isDirectory() || entry.name.startsWith('.')) continue;
+
+		const slug = entry.name;
+		const projectPath = join(projectsPath, slug);
+
+		let raw;
+		try {
+			raw = await readFile(join(projectPath, 'index.md'), 'utf-8');
+		} catch {
+			problems.push({ slug, reason: 'no index.md' });
+			continue;
+		}
+
+		const { metadata, problem } = parseProjectFrontmatter(raw, slug);
+		if (problem) {
+			problems.push(problem);
+			continue;
+		}
+
+		projects.push({
+			slug,
+			...metadata,
+			thumbnailSrc: `${basePath}/content/projects/${slug}/thumbnail.jpg`,
+			hasThumbnail: existsSync(join(projectPath, 'thumbnail.jpg')),
+			hasWebP: existsSync(join(projectPath, 'thumbnail.webp'))
+		});
+	}
+
+	// Newest first; parseProjectFrontmatter guarantees every date is parseable
+	projects.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+	reportProblems(problems, projects.length);
+
+	return projects;
 }

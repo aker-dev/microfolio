@@ -6,6 +6,7 @@
 	import IconChevronDown from '~icons/carbon/chevron-down';
 	import { _ } from 'svelte-i18n';
 	import { untrack } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	let {
 		projects,
@@ -31,6 +32,9 @@
 	let isUrlInitialized = $state(false);
 
 	let projectTypesWithCounts = $derived.by(() => {
+		// Local accumulator, converted to an array before it leaves this block:
+		// it never needs to be reactive on its own.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const typeCounts = new Map();
 		for (const p of projects) {
 			typeCounts.set(p.type, (typeCounts.get(p.type) || 0) + 1);
@@ -54,6 +58,8 @@
 	});
 
 	let allTagsWithCounts = $derived.by(() => {
+		// Same as above: a throwaway tally, not reactive state.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const tagCounts = new Map();
 		for (const p of typeFilteredProjects) {
 			for (const tag of p.tags || []) {
@@ -164,18 +170,31 @@
 	$effect(() => {
 		if (!isUrlInitialized || typeof window === 'undefined') return;
 
+		// Built, stringified and discarded within this effect.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const params = new URLSearchParams();
 		if (searchTerm) params.set('search', searchTerm);
 		if (selectedType !== 'all') params.set('type', selectedType);
 		if (selectedTags.length > 0) params.set('tags', selectedTags.join(','));
 		if (sortBy !== 'date') params.set('sort', sortBy);
 		if (sortOrder !== 'desc') params.set('order', sortOrder);
-		if (handler && handler.rowsPerPage !== rowsPerPage) params.set('rows', String(handler.rowsPerPage));
+		if (handler && handler.rowsPerPage !== rowsPerPage)
+			params.set('rows', String(handler.rowsPerPage));
 		if (handler && handler.currentPage > 1) params.set('page', String(handler.currentPage));
 
 		const query = params.toString();
 		const newUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
-		window.history.replaceState(null, '', newUrl);
+
+		// Not window.history.replaceState: passing null as its state argument wipes
+		// the navigation index SvelteKit keeps in history.state, and its popstate
+		// handler then ignores the event entirely — the browser's back button would
+		// change the URL without ever re-rendering the page.
+		//
+		// goto() rather than replaceState() from $app/navigation, because the latter
+		// records page.url in the history entry instead of the URL it is given, so
+		// going back would land on the unfiltered list. keepFocus matters: without it
+		// the search field loses focus on every keystroke.
+		goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
 	});
 
 	// Sync searchTerm with handler search
@@ -298,25 +317,38 @@
 				placeholder={$_('ui.search_projects_placeholder')}
 				bind:value={searchTerm}
 				oninput={handleSearchInput}
-				class="border-primary focus:bg-box rounded-lg border px-4 py-2 pr-8 focus:outline-none {searchTerm ? 'bg-box' : ''}"
+				class="border-primary focus:bg-box rounded-lg border px-4 py-2 pr-8 focus:outline-none {searchTerm
+					? 'bg-box'
+					: ''}"
 			/>
 			{#if searchTerm}
 				<button
-					onclick={() => { searchTerm = ''; handleSearchInput(); }}
+					onclick={() => {
+						searchTerm = '';
+						handleSearchInput();
+					}}
 					class="text-primary hover:text-box hover:bg-primary absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full p-0.5 transition-colors"
 					aria-label={$_('ui.clear_search')}
 				>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
-						<path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						fill="currentColor"
+						class="size-4"
+					>
+						<path
+							d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
+						/>
 					</svg>
 				</button>
 			{/if}
 		</div>
 		<div class="flex flex-wrap gap-2">
-			{#each projectTypesWithCounts as { type, count }}
+			{#each projectTypesWithCounts as { type, count } (type)}
 				<button
 					onclick={() => handleTypeChange(type)}
-					class="cursor-pointer rounded-full border px-3 py-1 text-sm capitalize {selectedType === type
+					class="cursor-pointer rounded-full border px-3 py-1 text-sm capitalize {selectedType ===
+					type
 						? 'border-primary bg-primary text-box'
 						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
 				>
@@ -335,8 +367,9 @@
 	<!-- Tag Filters -->
 	{#if allTags.length > 0}
 		<div class="flex flex-wrap items-center gap-2">
-			{#each visibleTagsWithCounts as { tag, count }}
+			{#each visibleTagsWithCounts as { tag, count } (tag)}
 				<button
+					data-testid="tag-filter"
 					onclick={() => handleTagToggle(tag)}
 					class="cursor-pointer rounded border px-2 py-1 text-xs {selectedTags.includes(tag)
 						? 'border-primary bg-primary text-box'

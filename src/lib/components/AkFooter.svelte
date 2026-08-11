@@ -13,9 +13,7 @@
 
 	if (browser) {
 		const stored = localStorage.getItem('theme');
-		isDark = stored
-			? stored === 'dark'
-			: window.matchMedia('(prefers-color-scheme: dark)').matches;
+		isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
 	}
 
 	function toggleTheme() {

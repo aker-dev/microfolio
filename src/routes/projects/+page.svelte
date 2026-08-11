@@ -1,5 +1,4 @@
 <script>
-	import AkBadge from '$lib/components/AkBadge.svelte';
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
@@ -40,7 +39,7 @@
 
 	<!-- Mosaic Grid -->
 	<div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
-		{#each filteredProjects as project}
+		{#each filteredProjects as project (project.slug)}
 			<AkProjectCard {project} />
 		{/each}
 	</div>

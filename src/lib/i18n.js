@@ -1,4 +1,4 @@
-import { addMessages, init, getLocaleFromNavigator } from 'svelte-i18n';
+import { addMessages, init } from 'svelte-i18n';
 import { siteConfig } from './config.js';
 
 import en from './locales/en.json';

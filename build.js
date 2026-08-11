@@ -17,7 +17,9 @@ const vite = spawn('npx', ['vite', 'build'], {
 vite.on('close', (code) => {
 	if (code === 0) {
 		console.log('✅ Build completed successfully!');
-		console.log('💡 Tip: Run `pnpm run optimize-images` before build to generate optimized thumbnails');
+		console.log(
+			'💡 Tip: Run `pnpm run optimize-images` before build to generate optimized thumbnails'
+		);
 	} else {
 		console.error('❌ Build failed with code:', code);
 	}

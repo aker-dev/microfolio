@@ -1,10 +1,5 @@
 <script>
-	let {
-		src,
-		alt,
-		class: className = '',
-		hasWebP = false
-	} = $props();
+	let { src, alt, class: className = '', hasWebP = false } = $props();
 
 	const effectiveAlt = $derived(alt || 'Image');
 

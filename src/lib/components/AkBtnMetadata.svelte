@@ -2,7 +2,11 @@
 	import IconTagGroup from '~icons/carbon/tag-group';
 	import { _ } from 'svelte-i18n';
 
-	let { onclick = () => {}, class: className = '', ariaLabel = $_('ui.display_metadata') } = $props();
+	let {
+		onclick = () => {},
+		class: className = '',
+		ariaLabel = $_('ui.display_metadata')
+	} = $props();
 </script>
 
 <button

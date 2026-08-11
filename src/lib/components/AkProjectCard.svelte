@@ -1,8 +1,10 @@
 <script>
 	import { base } from '$app/paths';
+	import { _ } from 'svelte-i18n';
 	import AkBadge from './AkBadge.svelte';
 	import AkOptimizedImage from './AkOptimizedImage.svelte';
 	import IconStarFilled from '~icons/carbon/star-filled';
+	import IconImage from '~icons/carbon/image';
 
 	let { project, class: className } = $props();
 </script>
@@ -10,12 +12,22 @@
 <a href="{base}/projects/{project.slug}" class="group bg-box block overflow-hidden {className}">
 	<!-- Thumbnail -->
 	<div class="aspect-4/3 overflow-hidden">
-		<AkOptimizedImage
-			src={project.thumbnailSrc}
-			alt={project.title}
-			class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
-			hasWebP={project.hasWebP || false}
-		/>
+		{#if project.hasThumbnail === false}
+			<div
+				class="flex h-full w-full items-center justify-center bg-neutral-500"
+				role="img"
+				aria-label={$_('ui.project.no_thumbnail')}
+			>
+				<IconImage class="size-10 opacity-60" />
+			</div>
+		{:else}
+			<AkOptimizedImage
+				src={project.thumbnailSrc}
+				alt={project.title}
+				class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
+				hasWebP={project.hasWebP || false}
+			/>
+		{/if}
 	</div>
 
 	<!-- Content -->
@@ -44,7 +56,7 @@
 		<!-- Tags -->
 		{#if project.tags && project.tags.length > 0}
 			<div class="flex flex-wrap gap-1">
-				{#each project.tags.slice(0, 3) as tag}
+				{#each project.tags.slice(0, 3) as tag, i (i)}
 					<AkBadge small>
 						{tag}
 					</AkBadge>
@@ -56,6 +68,5 @@
 				{/if}
 			</div>
 		{/if}
-
 	</div>
 </a>

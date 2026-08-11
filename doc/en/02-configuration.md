@@ -190,12 +190,13 @@ Edit the `locale` field in `src/lib/config.js`:
 ```javascript
 export const siteConfig = {
 	// ...
-	locale: 'en', // Change to 'fr' for French
+	locale: 'en' // Change to 'fr' for French
 	// ...
 };
 ```
 
 **Translation files** are located in `src/lib/locales/`:
+
 - `en.json` — English strings
 - `fr.json` — French strings
 

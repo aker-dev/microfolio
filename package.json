@@ -1,7 +1,10 @@
 {
 	"name": "microfolio",
 	"private": true,
-	"version": "0.7.0",
+	"version": "0.8.1",
+	"engines": {
+		"node": ">=22.13.0"
+	},
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -12,47 +15,47 @@
 		"lint": "prettier --check . && eslint .",
 		"deploy": "NODE_ENV=production pnpm run build",
 		"optimize-images": "node scripts/generate-optimized-images.js",
-		"clean-images": "node scripts/clean-optimized-images.js"
+		"clean-images": "node scripts/clean-optimized-images.js",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:e2e": "playwright test"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.4.1",
-		"@eslint/js": "^9.39.2",
-		"@iconify/json": "^2.2.438",
+		"@eslint/js": "^9.39.5",
+		"@iconify/json": "^2.2.514",
+		"@playwright/test": "^1.62.1",
 		"@sveltejs/adapter-auto": "^6.1.1",
 		"@sveltejs/adapter-static": "^3.0.10",
-		"@sveltejs/kit": "^2.50.2",
+		"@sveltejs/kit": "^2.70.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
-		"@tailwindcss/typography": "^0.5.19",
-		"@tailwindcss/vite": "^4.1.18",
-		"@vincjo/datatables": "^2.8.0",
-		"dotenv": "^17.2.4",
-		"eslint": "^9.39.2",
+		"@tailwindcss/typography": "^0.5.20",
+		"@tailwindcss/vite": "^4.3.3",
+		"@vincjo/datatables": "^2.8.1",
+		"dotenv": "^17.4.2",
+		"eslint": "^9.39.5",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-svelte": "^3.15.0",
+		"eslint-plugin-svelte": "^3.22.0",
 		"globals": "^16.5.0",
-		"prettier": "^3.8.1",
-		"prettier-plugin-svelte": "^3.4.1",
-		"prettier-plugin-tailwindcss": "^0.6.14",
+		"prettier": "^3.9.6",
+		"prettier-plugin-svelte": "^4.1.1",
+		"prettier-plugin-tailwindcss": "^0.8.1",
 		"sharp": "^0.34.5",
-		"svelte": "^5.50.2",
-		"tailwindcss": "^4.1.18",
+		"svelte": "^5.56.8",
+		"tailwindcss": "^4.3.3",
 		"unplugin-icons": "^22.5.0",
-		"vite": "^7.3.1",
-		"vite-plugin-static-copy": "^3.2.0"
+		"vite": "^7.3.6",
+		"vite-plugin-static-copy": "^3.4.0",
+		"vitest": "^4.1.10"
 	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild"
-		]
-	},
-	"packageManager": "pnpm@9.12.0+sha256.a61b67ff6cc97af864564f4442556c22a04f2e5a7714fbee76a1011361d9b726",
+	"packageManager": "pnpm@11.20.0",
 	"dependencies": {
-		"@iconify/svelte": "^5.2.1",
+		"@iconify/svelte": "^5.2.2",
 		"cursor-effects": "^1.0.18",
-		"exifreader": "^4.36.1",
+		"exifreader": "^4.42.0",
 		"leaflet": "^1.9.4",
 		"marked": "^16.4.2",
 		"svelte-i18n": "^4.0.1",
-		"yaml": "^2.8.2"
+		"yaml": "^2.9.0"
 	}
 }

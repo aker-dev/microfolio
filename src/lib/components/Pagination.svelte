@@ -36,7 +36,8 @@
 		</button>
 
 		<!-- Page numbers -->
-		{#each pages as page}
+		<!-- Page numbers are unique, but several ellipsis entries share the same value -->
+		{#each pages as page, i (typeof page === 'number' ? page : `gap-${i}`)}
 			{#if page === null || page === '...'}
 				<span class="text-primary px-2 py-1 text-sm">…</span>
 			{:else}
@@ -46,6 +47,7 @@
 						? 'border-primary bg-primary text-box'
 						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
 					aria-label={$_('ui.pagination.go_to_page') + page}
+					aria-current={currentPage === page ? 'page' : undefined}
 				>
 					{page}
 				</button>

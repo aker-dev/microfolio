@@ -1,11 +1,9 @@
 {
-  "copilot.chat.experimental.docContext": [
-    {
-      "pattern": "**/*.{svelte,js,ts}",
-      "context": "svelte-complete.txt"
-    }
-  ],
-  "copilot.chat.contextFiles": [
-    "svelte-complete.txt"
-  ]
+	"copilot.chat.experimental.docContext": [
+		{
+			"pattern": "**/*.{svelte,js,ts}",
+			"context": "svelte-complete.txt"
+		}
+	],
+	"copilot.chat.contextFiles": ["svelte-complete.txt"]
 }

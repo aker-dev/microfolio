@@ -44,7 +44,6 @@
 		"toggle_mobile_menu": "Toggle mobile menu",
 		"toggle_theme": "Toggle dark mode",
 		"featured_projects": "Featured Projects",
-		"back_to_projects": "Back to Projects",
 		"video_not_supported": "Your browser does not support the video tag.",
 		"click_to_download": "Click to download",
 		"image_lightbox": "Image lightbox",
@@ -99,7 +98,8 @@
 			"tags": "Tags",
 			"gallery": "Gallery",
 			"videos": "Videos",
-			"documents": "Documents"
+			"documents": "Documents",
+			"no_thumbnail": "No thumbnail"
 		},
 		"metadata": {
 			"technical_details": "Technical Details",
@@ -115,6 +115,7 @@
 			"address": "Address",
 			"coordinates": "Coordinates",
 			"keywords": "Keywords"
-		}
+		},
+		"back": "Back"
 	}
 }

@@ -4,12 +4,12 @@
 
 {#if !small}
 	<span
-		class="inline-block rounded-full border border-primary bg-box px-2 py-1 text-sm capitalize {className}"
+		class="border-primary bg-box inline-block rounded-full border px-2 py-1 text-sm capitalize {className}"
 	>
 		{@render children()}
 	</span>
 {:else}
-	<span class="rounded border border-primary bg-box px-2 py-1 text-xs text-primary {className}">
+	<span class="border-primary bg-box text-primary rounded border px-2 py-1 text-xs {className}">
 		{@render children()}
 	</span>
 {/if}

@@ -1,10 +1,5 @@
 import { siteConfig } from '$lib/config.js';
-
-function getTextDirection(locale) {
-	// RTL languages: Arabic, Hebrew, Persian, Urdu, etc.
-	const rtlLanguages = ['ar', 'he', 'fa', 'ur'];
-	return rtlLanguages.includes(locale) ? 'rtl' : 'ltr';
-}
+import { getTextDirection } from '$lib/utils/locale.js';
 
 export async function handle({ event, resolve }) {
 	const locale = siteConfig.locale;
@@ -12,9 +7,7 @@ export async function handle({ event, resolve }) {
 
 	const response = await resolve(event, {
 		transformPageChunk: ({ html }) => {
-			return html
-				.replace('%sveltekit.lang%', locale)
-				.replace('%sveltekit.dir%', direction);
+			return html.replace('%sveltekit.lang%', locale).replace('%sveltekit.dir%', direction);
 		}
 	});
 

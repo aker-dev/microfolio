@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import sharp from 'sharp';
-import { readdir, access, mkdir, stat } from 'fs/promises';
+import { readdir, access, stat } from 'fs/promises';
 import { join, dirname, basename, extname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -22,19 +22,6 @@ async function fileExists(filePath) {
 		return true;
 	} catch {
 		return false;
-	}
-}
-
-/**
- * Create a directory if it doesn't exist
- */
-async function ensureDir(dirPath) {
-	try {
-		await mkdir(dirPath, { recursive: true });
-	} catch (error) {
-		if (error.code !== 'EEXIST') {
-			throw error;
-		}
 	}
 }
 
@@ -113,7 +100,7 @@ async function processProjectThumbnails() {
 		console.log(`📸 Processing thumbnail for: ${projectName}`);
 
 		// Generate WebP
-		await generateOptimizedWebP(thumbnailPath, webpPath)
+		await generateOptimizedWebP(thumbnailPath, webpPath);
 
 		processed++;
 	}
@@ -173,7 +160,7 @@ async function processGalleryThumbnails() {
 			console.log(`📷 Processing gallery image: ${projectName}/${imageName}`);
 
 			// Generate WebP
-			await generateOptimizedWebP(imagePath, webpPath)
+			await generateOptimizedWebP(imagePath, webpPath);
 
 			processed++;
 		}
@@ -202,7 +189,7 @@ async function showStats() {
 					optimizedCount++;
 				}
 			}
-		} catch (error) {
+		} catch {
 			// Directory might not exist
 		}
 	}

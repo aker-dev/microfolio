@@ -10,6 +10,19 @@ async function openFirstProject(page) {
 	await expect(page).toHaveURL(/\/projects\/[^/]+\/$/);
 }
 
+/**
+ * The filter controls are prerendered, so they are clickable before Svelte has
+ * hydrated them — and a click that lands in that window hits markup with no
+ * listener attached and is silently lost. It never showed locally and failed on
+ * the slower CI runner. AkFilters renders the row count only once its table
+ * handler exists, which happens after hydration, so it is a usable signal.
+ */
+async function waitForFiltersReady(page) {
+	// \s+ rather than spaces: getByText does not normalise whitespace for regex
+	// matching, and the markup puts each value on its own line
+	await expect(page.getByText(/Showing\s+\d+\s+to\s+\d+\s+of\s+\d+\s+entries/)).toBeVisible();
+}
+
 test.describe('browser history', () => {
 	test('going back from a project re-renders the list, not just the URL', async ({ page }) => {
 		await page.goto('/list/');
@@ -30,6 +43,7 @@ test.describe('browser history', () => {
 		// Syncing the URL goes through goto(), which moves focus to the body unless
 		// keepFocus is set — that would drop a character on every keystroke
 		await page.goto('/list/');
+		await waitForFiltersReady(page);
 		const search = page.getByPlaceholder('Search projects...');
 
 		await search.click();
@@ -44,6 +58,7 @@ test.describe('browser history', () => {
 	for (const view of ['/projects/', '/list/', '/map/']) {
 		test(`filtering ${view} writes the tag to the URL`, async ({ page }) => {
 			await page.goto(view);
+			await waitForFiltersReady(page);
 			await page.getByTestId('tag-filter').first().click();
 
 			await expect(page).toHaveURL(/[?&]tags=/);
@@ -79,6 +94,7 @@ test.describe('browser history', () => {
 		// The mirroring effect in ThSort now preserves the page; an actual click on
 		// a column header must still reset pagination
 		await page.goto('/list/?page=2');
+		await waitForFiltersReady(page);
 		await expect(page.getByLabel('Go to page 2')).toHaveAttribute('aria-current', 'page');
 
 		await page.getByRole('button', { name: 'Title' }).click();
@@ -111,6 +127,7 @@ test.describe('browser history', () => {
 	test('going back preserves the filters that were applied', async ({ page }) => {
 		await page.goto('/list/');
 		await expect(listHeading(page)).toBeVisible();
+		await waitForFiltersReady(page);
 
 		const firstTag = page.getByTestId('tag-filter').first();
 		const tagLabel = (await firstTag.textContent())?.trim() ?? '';

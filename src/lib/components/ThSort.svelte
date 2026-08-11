@@ -1,4 +1,5 @@
 <script>
+	import { untrack } from 'svelte';
 	import IconChevronUp from '~icons/carbon/chevron-up';
 	import IconChevronDown from '~icons/carbon/chevron-down';
 
@@ -26,23 +27,28 @@
 
 	// Watch for external sort changes and apply them
 	$effect(() => {
-		if (sortBy !== undefined && sortOrder !== undefined) {
-			if (sortBy === orderBy) {
-				// This column should be sorted
-				if (sort.direction !== sortOrder) {
-					// Apply the sort until we get the right direction
-					const currentDirection = sort.direction;
-					if (currentDirection === null) {
-						sort.set(); // null -> asc
-						if (sortOrder === 'desc') {
-							sort.set(); // asc -> desc
-						}
-					} else if (currentDirection !== sortOrder) {
-						sort.set();
-					}
-				}
+		if (sortBy === undefined || sortOrder === undefined) return;
+		if (sortBy !== orderBy) return;
+		// This column should be sorted
+		if (sort.direction === sortOrder) return;
+
+		// Mirroring the parent's sort state is not a user action, but every
+		// sort.set() sends the table back to page 1 — which would discard a page
+		// restored from the URL. Only a click on the header should paginate.
+		// untrack: reading the page here must not make this effect depend on it.
+		const page = untrack(() => handler.currentPage);
+
+		// Apply the sort until we get the right direction
+		if (sort.direction === null) {
+			sort.set(); // null -> asc
+			if (sortOrder === 'desc') {
+				sort.set(); // asc -> desc
 			}
+		} else {
+			sort.set();
 		}
+
+		handler.setPage(page);
 	});
 </script>
 

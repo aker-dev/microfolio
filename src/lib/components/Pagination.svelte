@@ -47,6 +47,7 @@
 						? 'border-primary bg-primary text-box'
 						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
 					aria-label={$_('ui.pagination.go_to_page') + page}
+					aria-current={currentPage === page ? 'page' : undefined}
 				>
 					{page}
 				</button>

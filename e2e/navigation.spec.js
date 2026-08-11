@@ -50,6 +50,42 @@ test.describe('browser history', () => {
 		});
 	}
 
+	test('a deep link to a page number lands on that page', async ({ page }) => {
+		await page.goto('/list/?page=2');
+
+		await expect(page).toHaveURL(/[?&]page=2/);
+		await expect(page.getByLabel('Go to page 2')).toHaveAttribute('aria-current', 'page');
+	});
+
+	test('going back preserves the page number, not just the filters', async ({ page }) => {
+		await page.goto('/list/?tags=digital&page=2');
+		// Asserted against literals, not against whatever URL the page settled on,
+		// so a deep link that silently drops its page cannot make this pass
+		await expect(page).toHaveURL(/[?&]tags=digital/);
+		await expect(page).toHaveURL(/[?&]page=2/);
+		const firstRowOnPageTwo = await page.locator('table tbody tr h3').first().textContent();
+
+		await openFirstProject(page);
+		await page.goBack();
+
+		await expect(page).toHaveURL(/[?&]tags=digital/);
+		await expect(page).toHaveURL(/[?&]page=2/);
+		await expect(listHeading(page)).toBeVisible();
+		await expect(page.getByLabel('Go to page 2')).toHaveAttribute('aria-current', 'page');
+		await expect(page.locator('table tbody tr h3').first()).toHaveText(firstRowOnPageTwo);
+	});
+
+	test('sorting from page 2 still returns to page 1', async ({ page }) => {
+		// The mirroring effect in ThSort now preserves the page; an actual click on
+		// a column header must still reset pagination
+		await page.goto('/list/?page=2');
+		await expect(page.getByLabel('Go to page 2')).toHaveAttribute('aria-current', 'page');
+
+		await page.getByRole('button', { name: 'Title' }).click();
+
+		await expect(page.getByLabel('Go to page 1')).toHaveAttribute('aria-current', 'page');
+	});
+
 	test('going back preserves the filters that were applied', async ({ page }) => {
 		await page.goto('/list/');
 		await expect(listHeading(page)).toBeVisible();
@@ -70,7 +106,7 @@ test.describe('browser history', () => {
 		// Same filtered result set, and the tag chip still reads as selected
 		await expect(listRows(page)).toHaveCount(filteredRowCount);
 		await expect(page.getByTestId('tag-filter').filter({ hasText: tagLabel })).toHaveClass(
-			/bg-primary/
+			/(?:^|\s)bg-primary(?:\s|$)/
 		);
 	});
 });

@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2026-08-11
+
+### Added
+
+- Project frontmatter is validated on load: a project missing `title` or `date`, or carrying invalid YAML, is skipped and named in a summary at the end of the build instead of producing a broken page
+- Projects without a `thumbnail.jpg` now render a labelled placeholder rather than a broken image, and no longer advertise a missing `og:image`
+- Unit tests with Vitest covering the content parsing (`pnpm test`)
+- End-to-end tests with Playwright covering navigation and URL state (`pnpm test:e2e`)
+- Continuous integration now runs lint, unit tests and the end-to-end suite before building
+- `aria-current="page"` on the active pagination button
+
+### Changed
+
+- The project page's "Back to Projects" link is now "Back" and returns to the page you came from, restoring its filters, page number and scroll position; it falls back to the projects index when you arrived directly
+- Migrated to pnpm 11, with its settings moved to `pnpm-workspace.yaml` and each dependency's build scripts explicitly allowed or refused
+- Content loading is shared: the home page uses the same loader as the other views, and reading a Markdown page goes through a single helper
+- Updated dependencies
+
+### Fixed
+
+- The browser's back button changed the URL without re-rendering the page, leaving the previous view on screen — a regression introduced in 0.7.0 by the shareable filtered URLs
+- A `page` query parameter was ignored when a list was loaded, so a shared or bookmarked link always landed on page one
+- An invalid date in a project failed the whole build with an opaque `RangeError` instead of reporting which project was at fault
+- 45 ESLint errors, and a `prettier-plugin-tailwindcss` incompatible with prettier 3.9 that broke `pnpm lint` entirely
+
 ## [0.7.0] - 2026-02-12
 
 ### Added

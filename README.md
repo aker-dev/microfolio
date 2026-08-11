@@ -118,14 +118,13 @@ microfolio build  # or pnpm build
 
 Contributions are welcome! Fork the project, create a feature branch, and submit a Pull Request.
 
-### Recent Features (v0.7.0)
+### Recent Features (v0.8.0)
 
-- Dark mode toggle in footer with persistent preference
-- Filter counters and collapsible tag list
-- Shareable URLs with synced filter, search, sort, and pagination state
-- Search input with clear button and filled background
-- Rows-per-page setting synced with URL query params
-- Internationalization (English/French) with RTL support
+- Broken project content is reported by name at the end of the build instead of failing silently
+- Missing thumbnails fall back to a placeholder rather than a broken image
+- "Back" on a project page returns to where you came from, filters and page number intact
+- Browser back and shared list URLs now restore the view they point at
+- Unit tests (Vitest) and end-to-end tests (Playwright), both run in CI before deployment
 
 ## 📞 Support
 

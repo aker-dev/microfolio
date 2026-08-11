@@ -12,7 +12,9 @@
 		"lint": "prettier --check . && eslint .",
 		"deploy": "NODE_ENV=production pnpm run build",
 		"optimize-images": "node scripts/generate-optimized-images.js",
-		"clean-images": "node scripts/clean-optimized-images.js"
+		"clean-images": "node scripts/clean-optimized-images.js",
+		"test": "vitest run",
+		"test:watch": "vitest"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.4.1",
@@ -38,7 +40,8 @@
 		"tailwindcss": "^4.3.3",
 		"unplugin-icons": "^22.5.0",
 		"vite": "^7.3.6",
-		"vite-plugin-static-copy": "^3.4.0"
+		"vite-plugin-static-copy": "^3.4.0",
+		"vitest": "^4.1.10"
 	},
 	"packageManager": "pnpm@11.20.0",
 	"dependencies": {

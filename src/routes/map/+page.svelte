@@ -23,7 +23,6 @@
 	let markers = [];
 	let windowHeight = $state(0);
 	let mapHeight = $state('600px'); // Default height
-	let lastBounds = null; // Store last bounds for resize
 
 	// Update map height and invalidate size when window height changes
 	$effect(() => {

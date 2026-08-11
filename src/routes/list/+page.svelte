@@ -140,7 +140,7 @@
 								<td class="px-4 py-3">
 									{#if project.tags}
 										<div class="flex flex-wrap gap-1">
-											{#each project.tags.slice(0, 3) as tag}
+											{#each project.tags.slice(0, 3) as tag, i (i)}
 												<AkBadge small>{tag}</AkBadge>
 											{/each}
 											{#if project.tags.length > 3}

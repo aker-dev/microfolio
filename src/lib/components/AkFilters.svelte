@@ -31,6 +31,9 @@
 	let isUrlInitialized = $state(false);
 
 	let projectTypesWithCounts = $derived.by(() => {
+		// Local accumulator, converted to an array before it leaves this block:
+		// it never needs to be reactive on its own.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const typeCounts = new Map();
 		for (const p of projects) {
 			typeCounts.set(p.type, (typeCounts.get(p.type) || 0) + 1);
@@ -54,6 +57,8 @@
 	});
 
 	let allTagsWithCounts = $derived.by(() => {
+		// Same as above: a throwaway tally, not reactive state.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const tagCounts = new Map();
 		for (const p of typeFilteredProjects) {
 			for (const tag of p.tags || []) {
@@ -164,6 +169,8 @@
 	$effect(() => {
 		if (!isUrlInitialized || typeof window === 'undefined') return;
 
+		// Built, stringified and discarded within this effect.
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const params = new URLSearchParams();
 		if (searchTerm) params.set('search', searchTerm);
 		if (selectedType !== 'all') params.set('type', selectedType);
@@ -326,7 +333,7 @@
 			{/if}
 		</div>
 		<div class="flex flex-wrap gap-2">
-			{#each projectTypesWithCounts as { type, count }}
+			{#each projectTypesWithCounts as { type, count } (type)}
 				<button
 					onclick={() => handleTypeChange(type)}
 					class="cursor-pointer rounded-full border px-3 py-1 text-sm capitalize {selectedType ===
@@ -349,7 +356,7 @@
 	<!-- Tag Filters -->
 	{#if allTags.length > 0}
 		<div class="flex flex-wrap items-center gap-2">
-			{#each visibleTagsWithCounts as { tag, count }}
+			{#each visibleTagsWithCounts as { tag, count } (tag)}
 				<button
 					onclick={() => handleTagToggle(tag)}
 					class="cursor-pointer rounded border px-2 py-1 text-xs {selectedTags.includes(tag)

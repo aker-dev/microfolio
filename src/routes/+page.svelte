@@ -24,6 +24,8 @@
 </header>
 
 <article class="prose prose-neutral text-primary">
+	<!-- Markdown authored in content/index.md and converted at build time, not user input -->
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html page.content}
 </article>
 <!-- Featured Projects Section -->
@@ -34,7 +36,7 @@
 
 		<!-- Mosaic Grid -->
 		<div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
-			{#each featuredProjects as project}
+			{#each featuredProjects as project (project.slug)}
 				<AkProjectCard {project} />
 			{/each}
 		</div>

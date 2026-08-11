@@ -55,7 +55,7 @@
 		<!-- Desktop Navigation -->
 		<nav class="hidden md:block">
 			<ul class="flex h-8 gap-4">
-				{#each siteConfig.navigation as item}
+				{#each siteConfig.navigation as item (item.href)}
 					<li
 						class="hover:border-primary px-2 hover:font-bold {currentPage === base + item.href ||
 						currentPage === base + item.href + '/+page' ||
@@ -88,7 +88,7 @@
 		<div class="border-primary bg-box border-t border-solid md:hidden">
 			<nav class="mx-auto max-w-7xl px-4 py-4">
 				<ul class="flex flex-col gap-4">
-					{#each siteConfig.navigation as item}
+					{#each siteConfig.navigation as item (item.href)}
 						<li>
 							<a
 								href="{base}{item.href}"

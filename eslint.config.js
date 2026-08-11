@@ -18,10 +18,21 @@ export default [
 	{
 		languageOptions: {
 			globals: { ...globals.browser, ...globals.node }
+		},
+		rules: {
+			// Components destructure props such as `handler` purely to keep them out
+			// of the `...props` they spread onto an element.
+			'no-unused-vars': ['error', { ignoreRestSiblings: true }]
 		}
 	},
 	{
 		files: ['**/*.svelte', '**/*.svelte.js'],
-		languageOptions: { parserOptions: { svelteConfig } }
+		languageOptions: { parserOptions: { svelteConfig } },
+		rules: {
+			// Navigation is driven by siteConfig.navigation, whose entries are plain
+			// strings rather than route IDs, so internal links are built from `base`
+			// instead of resolve(). External links come from siteConfig.socialLinks.
+			'svelte/no-navigation-without-resolve': 'off'
+		}
 	}
 ];

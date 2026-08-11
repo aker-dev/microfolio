@@ -16,10 +16,6 @@
 
 	// Get server-loaded metadata
 	let thumbnailMetadata = $derived(data.project.thumbnailMetadata);
-	let imageMetadata = $derived(
-		new Map(project.resources?.images?.map((img) => [img.path, img.metadata]) || [])
-	);
-	let metadataCount = $derived(imageMetadata.size);
 
 	// Image gallery state
 	let selectedImage = $state(null);
@@ -138,6 +134,8 @@
 
 		<!-- Content -->
 		<article class="prose prose-neutral text-primary mt-8">
+			<!-- Markdown authored in the project's index.md and converted at build time, not user input -->
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html project.content}
 		</article>
 	</div>
@@ -197,7 +195,7 @@
 			<div class="mt-2">
 				<h3 class="text-base font-bold">{$_('ui.project.team')}</h3>
 
-				{#each project.authors as author}
+				{#each project.authors as author, i (i)}
 					<div>
 						<span class="font-bold">{author.name}</span>
 						{#if author.role}
@@ -214,7 +212,7 @@
 				<h3 class="mb-1 text-base font-bold">{$_('ui.project.tags')}</h3>
 
 				<div class="flex flex-wrap gap-2">
-					{#each project.tags as tag}
+					{#each project.tags as tag, i (i)}
 						<AkBadge small>{tag}</AkBadge>
 					{/each}
 				</div>
@@ -230,7 +228,7 @@
 		<section class="mb-12">
 			<h2 class="mb-6 text-2xl font-bold">{$_('ui.project.gallery')}</h2>
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each project.resources.images as image}
+				{#each project.resources.images as image (image.path)}
 					<div class="group">
 						<button
 							type="button"
@@ -269,7 +267,7 @@
 		<section class="mb-12">
 			<h2 class="mb-6 text-2xl font-bold">{$_('ui.project.videos')}</h2>
 			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-				{#each project.resources.videos as video}
+				{#each project.resources.videos as video (video.path)}
 					<div class="overflow-hidden">
 						<video controls class="w-full" preload="metadata">
 							<source src={video.path} type="video/mp4" />
@@ -288,7 +286,7 @@
 		<section class="mb-12">
 			<h2 class="mb-6 text-2xl font-bold">{$_('ui.project.documents')}</h2>
 			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-				{#each project.resources.documents as document}
+				{#each project.resources.documents as document (document.path)}
 					<a
 						href={document.path}
 						target="_blank"
@@ -509,7 +507,7 @@
 										<div>
 											<h3 class="mb-1 text-base font-bold">{$_('ui.metadata.keywords')}</h3>
 											<div class="flex flex-wrap gap-1">
-												{#each metadata.keywords as keyword}
+												{#each metadata.keywords as keyword, i (i)}
 													<AkBadge small>{keyword}</AkBadge>
 												{/each}
 											</div>

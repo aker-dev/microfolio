@@ -23,6 +23,20 @@
 	let currentImageIndex = $state(0);
 	let showTechnicalInfo = $state(false);
 
+	// The lightbox's technical panel has three sections. The panel, and the
+	// button that opens it, appear only when at least one of them has content.
+	const CAMERA_FIELDS = ['camera', 'lens', 'focalLength', 'aperture', 'shutterSpeed', 'iso'];
+	const CONTEXT_FIELDS = ['dateTime', 'city', 'state', 'country', 'location', 'gps'];
+
+	function hasAny(metadata, fields) {
+		return fields.some((field) => metadata?.[field]);
+	}
+
+	let hasCameraInfo = $derived(hasAny(selectedImage?.metadata, CAMERA_FIELDS));
+	let hasContextInfo = $derived(hasAny(selectedImage?.metadata, CONTEXT_FIELDS));
+	let hasKeywords = $derived(selectedImage?.metadata?.keywords?.length > 0);
+	let hasTechnicalMetadata = $derived(hasCameraInfo || hasContextInfo || hasKeywords);
+
 	function openLightbox(image) {
 		selectedImage = image;
 		showLightbox = true;
@@ -351,7 +365,7 @@
 			{/if}
 
 			<!-- Technical info button -->
-			{#if selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
+			{#if hasTechnicalMetadata}
 				<AkBtnMetadata
 					class="absolute top-4 right-16 z-30"
 					onclick={(e) => {
@@ -412,13 +426,13 @@
 							/>
 
 							<!-- Technical info overlay -->
-							{#if showTechnicalInfo && selectedImage.metadata && (selectedImage.metadata.camera || selectedImage.metadata.lens || selectedImage.metadata.focalLength || selectedImage.metadata.aperture || selectedImage.metadata.shutterSpeed || selectedImage.metadata.iso || selectedImage.metadata.dateTime || selectedImage.metadata.city || selectedImage.metadata.state || selectedImage.metadata.country || selectedImage.metadata.location || selectedImage.metadata.gps || (selectedImage.metadata.keywords && selectedImage.metadata.keywords.length > 0))}
+							{#if showTechnicalInfo && hasTechnicalMetadata}
 								{@const metadata = selectedImage.metadata}
 								<div
 									class="text-primary bg-box/60 pointer-events-auto absolute top-0 right-0 z-30 max-h-[60vh] w-80 space-y-3 overflow-y-auto p-4 text-sm shadow-xl backdrop-blur-sm"
 								>
 									<!-- Technical details -->
-									{#if metadata?.camera || metadata?.lens || metadata?.focalLength || metadata?.aperture || metadata?.shutterSpeed || metadata?.iso}
+									{#if hasCameraInfo}
 										<div>
 											<h3 class="text-base font-bold">{$_('ui.metadata.technical_details')}</h3>
 											{#if metadata.camera}
@@ -461,7 +475,7 @@
 									{/if}
 
 									<!-- Location and date -->
-									{#if metadata?.dateTime || metadata?.city || metadata?.state || metadata?.country || metadata?.location || metadata?.gps}
+									{#if hasContextInfo}
 										<div>
 											<h3 class="text-base font-bold">{$_('ui.metadata.location_date')}</h3>
 											{#if metadata.dateTime}
@@ -508,7 +522,7 @@
 									{/if}
 
 									<!-- Keywords -->
-									{#if metadata?.keywords && metadata.keywords.length > 0}
+									{#if hasKeywords}
 										<div>
 											<h3 class="mb-1 text-base font-bold">{$_('ui.metadata.keywords')}</h3>
 											<div class="flex flex-wrap gap-1">

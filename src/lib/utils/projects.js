@@ -40,8 +40,11 @@ export async function loadProjects() {
 	const problems = [];
 
 	for (const entry of entries) {
-		// Skips .DS_Store, the bundled example_projects.zip and any stray file
-		if (!entry.isDirectory() || entry.name.startsWith('.')) continue;
+		// Skips .DS_Store, the bundled example_projects.zip and any stray file.
+		// __MACOSX is the resource-fork folder macOS puts in archives, so it
+		// appears whenever example_projects.zip is unpacked — reporting it as a
+		// broken project would be alarming noise.
+		if (!entry.isDirectory() || entry.name.startsWith('.') || entry.name === '__MACOSX') continue;
 
 		const slug = entry.name;
 		const projectPath = join(projectsPath, slug);

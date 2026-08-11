@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Node.js 22.13 or later is now required**, because pnpm 11 depends on `node:sqlite`. This is enforced at install time via `engines`, so an unsupported version fails with a message naming the requirement
 - The project page's "Back to Projects" link is now "Back" and returns to the page you came from, restoring its filters, page number and scroll position; it falls back to the projects index when you arrived directly
 - Migrated to pnpm 11, with its settings moved to `pnpm-workspace.yaml` and each dependency's build scripts explicitly allowed or refused
 - Content loading is shared: the home page uses the same loader as the other views, and reading a Markdown page goes through a single helper

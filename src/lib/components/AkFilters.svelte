@@ -6,6 +6,7 @@
 	import IconChevronDown from '~icons/carbon/chevron-down';
 	import { _ } from 'svelte-i18n';
 	import { untrack } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	let {
 		projects,
@@ -183,7 +184,17 @@
 
 		const query = params.toString();
 		const newUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
-		window.history.replaceState(null, '', newUrl);
+
+		// Not window.history.replaceState: passing null as its state argument wipes
+		// the navigation index SvelteKit keeps in history.state, and its popstate
+		// handler then ignores the event entirely — the browser's back button would
+		// change the URL without ever re-rendering the page.
+		//
+		// goto() rather than replaceState() from $app/navigation, because the latter
+		// records page.url in the history entry instead of the URL it is given, so
+		// going back would land on the unfiltered list. keepFocus matters: without it
+		// the search field loses focus on every keystroke.
+		goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
 	});
 
 	// Sync searchTerm with handler search
@@ -358,6 +369,7 @@
 		<div class="flex flex-wrap items-center gap-2">
 			{#each visibleTagsWithCounts as { tag, count } (tag)}
 				<button
+					data-testid="tag-filter"
 					onclick={() => handleTagToggle(tag)}
 					class="cursor-pointer rounded border px-2 py-1 text-xs {selectedTags.includes(tag)
 						? 'border-primary bg-primary text-box'

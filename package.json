@@ -14,12 +14,14 @@
 		"optimize-images": "node scripts/generate-optimized-images.js",
 		"clean-images": "node scripts/clean-optimized-images.js",
 		"test": "vitest run",
-		"test:watch": "vitest"
+		"test:watch": "vitest",
+		"test:e2e": "playwright test"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.4.1",
 		"@eslint/js": "^9.39.5",
 		"@iconify/json": "^2.2.514",
+		"@playwright/test": "^1.62.1",
 		"@sveltejs/adapter-auto": "^6.1.1",
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.70.2",

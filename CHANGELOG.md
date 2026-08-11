@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.1] - 2026-08-11
+
+### Fixed
+
+- The deploy workflow still pinned Node.js 20, which pnpm 11 cannot run on — it loads `node:sqlite` — so 0.8.0 failed to build in CI before reaching any step. The workflow now uses Node 22, the requirement is declared in `engines` so an unsupported version fails at install with a clear message, and the installation guides name 22.13 as the floor instead of suggesting v20.11.0
+
 ## [0.8.0] - 2026-08-11
 
 ### Added

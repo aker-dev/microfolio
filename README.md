@@ -53,7 +53,7 @@ microfolio dev
 
 #### Prerequisites
 
-- Node.js LTS 20+ (tested with 20.x)
+- Node.js 22.13 or later (required by pnpm 11; tested with 22.x and 24.x)
 - pnpm package manager
 - Git for version control
 
@@ -125,6 +125,8 @@ Contributions are welcome! Fork the project, create a feature branch, and submit
 - "Back" on a project page returns to where you came from, filters and page number intact
 - Browser back and shared list URLs now restore the view they point at
 - Unit tests (Vitest) and end-to-end tests (Playwright), both run in CI before deployment
+
+> Node.js 22.13 or later is now required (a pnpm 11 dependency).
 
 ## 📞 Support
 

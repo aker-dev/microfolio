@@ -53,7 +53,7 @@ microfolio dev
 
 #### Prérequis
 
-- Node.js LTS 20+ (testé avec la version 20.x)
+- Node.js 22.13 ou supérieur (requis par pnpm 11 ; testé avec 22.x et 24.x)
 - Gestionnaire de paquets pnpm
 - Git pour le contrôle de version
 
@@ -118,14 +118,15 @@ microfolio build  # ou pnpm build
 
 Les contributions sont les bienvenues ! N'hésitez pas à forker le projet, créer une branche de fonctionnalité et soumettre une Pull Request.
 
-### Fonctionnalités récentes (v0.7.0)
+### Fonctionnalités récentes (v0.8.0)
 
-- Toggle mode sombre dans le footer avec préférence persistante
-- Compteurs de filtres et liste de tags repliable
-- URLs partageables avec synchronisation des filtres, recherche, tri et pagination
-- Champ de recherche avec bouton d'effacement et fond rempli
-- Réglage lignes par page synchronisé avec les paramètres d'URL
-- Internationalisation (anglais/français) avec support RTL
+- Un projet au contenu invalide est nommé en fin de build au lieu d'échouer silencieusement
+- Une vignette manquante affiche un placeholder plutôt qu'une image cassée
+- « Retour » sur une page projet ramène d'où l'on vient, filtres et pagination intacts
+- Le retour navigateur et les URLs de liste partagées restaurent bien la vue visée
+- Tests unitaires (Vitest) et de bout en bout (Playwright), exécutés en CI avant déploiement
+
+> Node.js 22.13 ou supérieur est désormais requis (dépendance de pnpm 11).
 
 ## 📞 Support
 

@@ -92,7 +92,9 @@
 	<!-- OG metadata -->
 	<meta property="og:title" content={project.title} />
 	<meta property="og:description" content={project.description} />
-	<meta property="og:image" content="{base}/content/projects/{project.slug}/thumbnail.jpg" />
+	{#if project.hasThumbnail}
+		<meta property="og:image" content="{base}/content/projects/{project.slug}/thumbnail.jpg" />
+	{/if}
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content={siteConfig.title} />
 </svelte:head>
@@ -112,25 +114,28 @@
 		>
 
 		<!-- Main thumbnail -->
-		<img
-			src="{base}/content/projects/{project.slug}/thumbnail.jpg"
-			alt={thumbnailMetadata?.description || project.title}
-			class="w-full"
-		/>
-		<!-- Thumbnail metadata -->
-		<div class="text-primary mt-4 text-sm">
-			{#if thumbnailMetadata?.headline}
-				<p class="font-bold">{thumbnailMetadata.headline}</p>
-			{:else}
-				<p class="font-bold">thumbnail.jpg</p>
-			{/if}
-			{#if thumbnailMetadata?.description}
-				<p class="italic">{thumbnailMetadata.description}</p>
-			{/if}
-			{#if thumbnailMetadata?.creditLine}
-				<p class="mt-1 text-xs">{$_('ui.credit')} › {thumbnailMetadata.creditLine}</p>
-			{/if}
-		</div>
+		{#if project.hasThumbnail}
+			<img
+				src="{base}/content/projects/{project.slug}/thumbnail.jpg"
+				alt={thumbnailMetadata?.description || project.title}
+				class="w-full"
+			/>
+
+			<!-- Thumbnail metadata -->
+			<div class="text-primary mt-4 text-sm">
+				{#if thumbnailMetadata?.headline}
+					<p class="font-bold">{thumbnailMetadata.headline}</p>
+				{:else}
+					<p class="font-bold">thumbnail.jpg</p>
+				{/if}
+				{#if thumbnailMetadata?.description}
+					<p class="italic">{thumbnailMetadata.description}</p>
+				{/if}
+				{#if thumbnailMetadata?.creditLine}
+					<p class="mt-1 text-xs">{$_('ui.credit')} › {thumbnailMetadata.creditLine}</p>
+				{/if}
+			</div>
+		{/if}
 
 		<!-- Content -->
 		<article class="prose prose-neutral text-primary mt-8">

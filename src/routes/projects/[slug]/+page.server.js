@@ -1,9 +1,10 @@
-import { readdir, access } from 'fs/promises';
+import { readdir, readFile } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { error } from '@sveltejs/kit';
 import { extractImageMetadata, formatCreditLine } from '$lib/utils/imageMetadata.js';
-import { loadMarkdownPage } from '$lib/utils/markdown.js';
+import { renderMarkdownBody } from '$lib/utils/markdown.js';
+import { parseProjectFrontmatter } from '$lib/utils/projectFrontmatter.js';
 import { getBasePath } from '$lib/utils/paths.js';
 
 const basePath = getBasePath();
@@ -13,27 +14,35 @@ export async function load({ params }) {
 	const projectPath = join(process.cwd(), 'content/projects', slug);
 	const indexPath = join(projectPath, 'index.md');
 
+	let raw;
 	try {
-		const page = await loadMarkdownPage(indexPath);
-
-		// Get project resources
-		const resources = await getProjectResources(projectPath, slug);
-
-		// Load thumbnail metadata
-		const thumbnailMetadata = await loadThumbnailMetadata(projectPath);
-
-		return {
-			project: {
-				slug,
-				...page,
-				resources,
-				thumbnailMetadata
-			}
-		};
+		raw = await readFile(indexPath, 'utf-8');
 	} catch (err) {
 		console.error(`Error loading project ${slug}:`, err);
 		throw error(404, `Project not found`);
 	}
+
+	// Same validation as the listings, so a project that is skipped there does
+	// not get a half-rendered page of its own
+	const { metadata, problem } = parseProjectFrontmatter(raw, slug);
+	if (problem) {
+		console.warn(`Skipping project ${problem.slug}/ — ${problem.reason}`);
+		throw error(404, `Project not found`);
+	}
+
+	const thumbnailPath = join(projectPath, 'thumbnail.jpg');
+	const hasThumbnail = existsSync(thumbnailPath);
+
+	return {
+		project: {
+			slug,
+			...metadata,
+			content: renderMarkdownBody(raw),
+			resources: await getProjectResources(projectPath, slug),
+			thumbnailMetadata: hasThumbnail ? await loadThumbnailMetadata(thumbnailPath) : null,
+			hasThumbnail
+		}
+	};
 }
 
 async function getProjectResources(projectPath, slug) {
@@ -120,14 +129,8 @@ async function getProjectResources(projectPath, slug) {
 	return resources;
 }
 
-async function loadThumbnailMetadata(projectPath) {
-	const localThumbnailPath = join(projectPath, 'thumbnail.jpg');
-
+async function loadThumbnailMetadata(localThumbnailPath) {
 	try {
-		// Check if thumbnail exists
-		await access(localThumbnailPath);
-
-		// Load metadata using local file path
 		const metadata = await extractImageMetadata(localThumbnailPath);
 
 		// Add formatted credit line to metadata

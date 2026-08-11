@@ -22,13 +22,21 @@ export function splitFrontmatter(raw) {
 }
 
 /**
+ * Render the body of a Markdown file to HTML, dropping its frontmatter.
+ */
+export function renderMarkdownBody(raw) {
+	return marked(splitFrontmatter(raw).body);
+}
+
+/**
  * Read a content page and return its frontmatter fields alongside the body
- * rendered to HTML. Used for the home page, the about page and each project.
+ * rendered to HTML. Used for the home page and the about page; projects go
+ * through parseProjectFrontmatter() instead, which validates as it parses.
  */
 export async function loadMarkdownPage(absolutePath) {
 	const raw = await readFile(absolutePath, 'utf-8');
-	const { frontmatter, body } = splitFrontmatter(raw);
+	const { frontmatter } = splitFrontmatter(raw);
 	const metadata = frontmatter ? (parse(frontmatter) ?? {}) : {};
 
-	return { ...metadata, content: marked(body) };
+	return { ...metadata, content: renderMarkdownBody(raw) };
 }

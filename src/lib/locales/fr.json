@@ -99,7 +99,8 @@
 			"tags": "Mots-clés",
 			"gallery": "Photos",
 			"videos": "Vidéos",
-			"documents": "Documents"
+			"documents": "Documents",
+			"no_thumbnail": "Pas de vignette"
 		},
 		"metadata": {
 			"technical_details": "Données techniques",

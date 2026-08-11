@@ -99,7 +99,8 @@
 			"tags": "Tags",
 			"gallery": "Gallery",
 			"videos": "Videos",
-			"documents": "Documents"
+			"documents": "Documents",
+			"no_thumbnail": "No thumbnail"
 		},
 		"metadata": {
 			"technical_details": "Technical Details",

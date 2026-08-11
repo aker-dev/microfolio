@@ -4,14 +4,9 @@
 	import { locale } from 'svelte-i18n';
 	import AkHeader from '$lib/components/AkHeader.svelte';
 	import AkFooter from '$lib/components/AkFooter.svelte';
+	import { getTextDirection } from '$lib/utils/locale.js';
 
 	let { children } = $props();
-
-	function getTextDirection(currentLocale) {
-		// RTL languages: Arabic, Hebrew, Persian, Urdu, etc.
-		const rtlLanguages = ['ar', 'he', 'fa', 'ur'];
-		return rtlLanguages.includes(currentLocale) ? 'rtl' : 'ltr';
-	}
 
 	// Text direction based on locale using $derived
 	const textDirection = $derived(getTextDirection($locale));

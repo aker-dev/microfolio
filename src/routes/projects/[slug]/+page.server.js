@@ -1,10 +1,9 @@
-import { readFile, readdir, access } from 'fs/promises';
-import { existsSync as existsSyncSync } from 'fs';
+import { readdir, access } from 'fs/promises';
+import { existsSync } from 'fs';
 import { join } from 'path';
-import { parse } from 'yaml';
-import { marked } from 'marked';
 import { error } from '@sveltejs/kit';
 import { extractImageMetadata, formatCreditLine } from '$lib/utils/imageMetadata.js';
+import { loadMarkdownPage } from '$lib/utils/markdown.js';
 import { getBasePath } from '$lib/utils/paths.js';
 
 const basePath = getBasePath();
@@ -15,12 +14,7 @@ export async function load({ params }) {
 	const indexPath = join(projectPath, 'index.md');
 
 	try {
-		const content = await readFile(indexPath, 'utf-8');
-		const [, frontmatter, ...markdownParts] = content.split('---');
-		const markdownContent = markdownParts.join('---').trim();
-
-		const metadata = parse(frontmatter);
-		const htmlContent = marked(markdownContent);
+		const page = await loadMarkdownPage(indexPath);
 
 		// Get project resources
 		const resources = await getProjectResources(projectPath, slug);
@@ -31,8 +25,7 @@ export async function load({ params }) {
 		return {
 			project: {
 				slug,
-				...metadata,
-				content: htmlContent,
+				...page,
 				resources,
 				thumbnailMetadata
 			}
@@ -60,7 +53,7 @@ async function getProjectResources(projectPath, slug) {
 				.map((file) => {
 					// Check if WebP version exists
 					const webpPath = join(imagesPath, file.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
-					const hasWebP = existsSyncSync(webpPath);
+					const hasWebP = existsSync(webpPath);
 
 					return {
 						name: file,

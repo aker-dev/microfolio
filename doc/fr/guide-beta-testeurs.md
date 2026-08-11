@@ -70,16 +70,19 @@ Envoyez vos retours à **hello@aker.pro** en précisant :
 **Homebrew** est un gestionnaire de paquets pour macOS qui simplifie grandement l'installation de logiciels de développement.
 
 1. **Installer Homebrew** (si vous ne l'avez pas déjà) :
+
    ```bash
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
 2. **Installer microfolio via Homebrew** :
+
    ```bash
    brew install aker-dev/tap/microfolio
    ```
 
 3. **Créer un nouveau portfolio** :
+
    ```bash
    microfolio new mon-portfolio
    cd mon-portfolio
@@ -93,6 +96,7 @@ Envoyez vos retours à **hello@aker.pro** en précisant :
 Votre site sera accessible à l'adresse : http://localhost:5173
 
 **Avantages de cette méthode :**
+
 - Installation automatique de toutes les dépendances (Node.js, pnpm, Git)
 - Commandes simplifiées : `microfolio new`, `microfolio dev`, `microfolio build`
 - Mise à jour facile avec `brew upgrade microfolio`

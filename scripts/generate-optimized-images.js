@@ -113,7 +113,7 @@ async function processProjectThumbnails() {
 		console.log(`📸 Processing thumbnail for: ${projectName}`);
 
 		// Generate WebP
-		await generateOptimizedWebP(thumbnailPath, webpPath)
+		await generateOptimizedWebP(thumbnailPath, webpPath);
 
 		processed++;
 	}
@@ -173,7 +173,7 @@ async function processGalleryThumbnails() {
 			console.log(`📷 Processing gallery image: ${projectName}/${imageName}`);
 
 			// Generate WebP
-			await generateOptimizedWebP(imagePath, webpPath)
+			await generateOptimizedWebP(imagePath, webpPath);
 
 			processed++;
 		}

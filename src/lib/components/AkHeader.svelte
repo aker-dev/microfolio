@@ -39,7 +39,6 @@
 			};
 		}
 	});
-
 </script>
 
 <header class="bg-background sticky top-0 z-5000 mb-8">

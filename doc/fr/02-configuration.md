@@ -190,12 +190,13 @@ Modifiez le champ `locale` dans `src/lib/config.js` :
 ```javascript
 export const siteConfig = {
 	// ...
-	locale: 'en', // Changez en 'fr' pour le français
+	locale: 'en' // Changez en 'fr' pour le français
 	// ...
 };
 ```
 
 **Les fichiers de traduction** se trouvent dans `src/lib/locales/` :
+
 - `en.json` — chaînes en anglais
 - `fr.json` — chaînes en français
 

@@ -26,12 +26,14 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 ## Structure de la documentation
 
 ### [1. Guide d'Installation](01-installation.md)
+
 - Prérequis (Node.js, Git, pnpm)
 - Installation du projet
 - Premier lancement
 - Dépannage
 
 ### [2. Guide de Configuration](02-configuration.md)
+
 - Personnalisation des pages
 - Configuration du domaine
 - Customisation des couleurs et styles
@@ -41,6 +43,7 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 - Fonctionnalités avancées
 
 ### [3. Guide d'Ajout de Projets](03-ajout-projets.md)
+
 - Structure d'un projet
 - Création de nouveaux projets
 - Gestion des médias (images, vidéos)
@@ -48,6 +51,7 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 - Bonnes pratiques
 
 ### [4. Guide de Publication](04-publication.md)
+
 - Préparation pour la publication
 - Build du site
 - Publication sur GitHub Pages
@@ -76,6 +80,7 @@ microfolio dev
 Votre site sera accessible à l'adresse : http://localhost:5173
 
 **Avantages de cette méthode :**
+
 - Installation automatique de toutes les dépendances (Node.js, pnpm, Git)
 - Commandes simplifiées : `microfolio new`, `microfolio dev`, `microfolio build`
 - Mise à jour facile avec `brew upgrade microfolio`
@@ -109,11 +114,13 @@ pnpm dev
 ### Comment ouvrir le terminal
 
 **Sur Mac :**
+
 - Appuyez sur `Cmd + Espace` pour ouvrir Spotlight
 - Tapez "Terminal" et appuyez sur Entrée
 - Ou allez dans Applications > Utilitaires > Terminal
 
 **Sur Windows :**
+
 - Appuyez sur `Windows + R`
 - Tapez "powershell" et appuyez sur Entrée
 - Ou cherchez "PowerShell" dans le menu Démarrer
@@ -148,6 +155,7 @@ Pour toute question ou problème :
 📧 **Email** : hello@aker.pro
 
 Dans votre message, précisez :
+
 - Votre système d'exploitation (Mac/Windows)
 - Le problème rencontré
 - Les étapes que vous avez suivies

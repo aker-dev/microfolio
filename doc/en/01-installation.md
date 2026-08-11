@@ -11,11 +11,13 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 ### How to open the terminal
 
 **On Mac:**
+
 - Press `Cmd + Space` to open Spotlight
 - Type "Terminal" and press Enter
 - Or go to Applications > Utilities > Terminal
 
 **On Windows:**
+
 - Press `Windows + R`
 - Type "powershell" and press Enter
 - Or search for "PowerShell" in the Start menu
@@ -29,16 +31,19 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 **Homebrew** is a package manager for macOS that greatly simplifies the installation of development software.
 
 1. **Install Homebrew** (if you don't have it already):
+
    ```bash
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
 2. **Install microfolio via Homebrew**:
+
    ```bash
    brew install aker-dev/tap/microfolio
    ```
 
 3. **Create a new portfolio**:
+
    ```bash
    microfolio new my-portfolio
    cd my-portfolio
@@ -52,6 +57,7 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 Your site will be accessible at: http://localhost:5173
 
 **Advantages of this method:**
+
 - Automatic installation of all dependencies (Node.js, pnpm, Git)
 - Simplified commands: `microfolio new`, `microfolio dev`, `microfolio build`
 - Easy updates with `brew upgrade microfolio`
@@ -188,6 +194,7 @@ pnpm install
 ```
 
 **Explanation:**
+
 - `git clone` downloads the project
 - `my-portfolio` is the name of the created folder (you can change it)
 - `cd my-portfolio` enters the folder
@@ -258,6 +265,7 @@ The server remains active as long as the terminal window stays open. To stop it,
 ## Next Steps
 
 Now that Microfolio is installed, check out:
+
 - [Configuration guide](02-configuration.md) to customize your site
 - [Project addition guide](03-adding-projects.md) to add your own creations
 - [Publication guide](04-publication.md) to put your site online
@@ -269,6 +277,7 @@ For any questions or problems:
 📧 **Email**: hello@aker.pro
 
 In your message, please specify:
+
 - Your operating system (Mac/Windows)
 - The problem encountered
 - The steps you followed

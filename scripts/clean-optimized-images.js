@@ -37,7 +37,7 @@ async function cleanOptimizedImagesInDirectory(dirPath) {
 				// Recursively clean subdirectories
 				removedCount += await cleanOptimizedImagesInDirectory(fullPath);
 			} else if (entry.isFile()) {
-				// Remove WebP files 
+				// Remove WebP files
 				if (entry.name.endsWith('.webp')) {
 					try {
 						await rm(fullPath);

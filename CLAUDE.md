@@ -26,6 +26,7 @@ Package manager: `pnpm` (locked to 9.12.0). Node.js 20+ required. No test framew
 ### Content System
 
 Projects live in `/content/projects/{slug}/` with:
+
 - `index.md` — YAML frontmatter (title, date, location, coordinates, type, tags, featured, authors) + Markdown body
 - `thumbnail.jpg` — Project thumbnail (optional `thumbnail.webp` for optimized version)
 - `images/`, `videos/`, `documents/` — Resource subdirectories
@@ -35,6 +36,7 @@ Homepage content: `/content/index.md`. About page: `/content/about.md`.
 ### Data Loading
 
 All routes use server-side loading (`+page.server.js`) that reads content from the filesystem at build time:
+
 - `src/routes/+page.server.js` — Loads homepage + featured projects (filtered by `featured: true`)
 - `src/routes/projects/+page.server.js` — Delegates to `$lib/utils/projects.js` shared loader
 - `src/routes/projects/[slug]/+page.server.js` — Loads single project with resources and EXIF metadata extraction
@@ -82,12 +84,12 @@ All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectC
 title: 'Project Title'
 date: '2023-01-01'
 location: 'City, Country'
-coordinates: [latitude, longitude]  # For map display
+coordinates: [latitude, longitude] # For map display
 description: 'Project description'
-type: 'architecture'                # Used for filtering
+type: 'architecture' # Used for filtering
 tags: ['tag1', 'tag2']
 authors:
   - name: 'Author Name'
     role: 'Role'
-featured: true                      # Shows on homepage
+featured: true # Shows on homepage
 ```

@@ -26,12 +26,14 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 ## Documentation Structure
 
 ### [1. Installation Guide](01-installation.md)
+
 - Prerequisites (Node.js, Git, pnpm)
 - Project installation
 - First launch
 - Troubleshooting
 
 ### [2. Configuration Guide](02-configuration.md)
+
 - Page customization
 - Domain configuration
 - Color and style customization
@@ -41,6 +43,7 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 - Advanced features
 
 ### [3. Project Addition Guide](03-adding-projects.md)
+
 - Project structure
 - Creating new projects
 - Media management (images, videos)
@@ -48,6 +51,7 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 - Best practices
 
 ### [4. Publication Guide](04-publication.md)
+
 - Publication preparation
 - Site build
 - GitHub Pages publication
@@ -76,6 +80,7 @@ microfolio dev
 Your site will be accessible at: http://localhost:5173
 
 **Advantages of this method:**
+
 - Automatic installation of all dependencies (Node.js, pnpm, Git)
 - Simplified commands: `microfolio new`, `microfolio dev`, `microfolio build`
 - Easy updates with `brew upgrade microfolio`
@@ -109,11 +114,13 @@ pnpm dev
 ### How to open the terminal
 
 **On Mac:**
+
 - Press `Cmd + Space` to open Spotlight
 - Type "Terminal" and press Enter
 - Or go to Applications > Utilities > Terminal
 
 **On Windows:**
+
 - Press `Windows + R`
 - Type "powershell" and press Enter
 - Or search for "PowerShell" in the Start menu
@@ -148,6 +155,7 @@ For any questions or problems:
 📧 **Email**: hello@aker.pro
 
 In your message, please specify:
+
 - Your operating system (Mac/Windows)
 - The problem encountered
 - The steps you followed

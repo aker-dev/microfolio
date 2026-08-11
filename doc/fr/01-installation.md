@@ -11,11 +11,13 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 ### Comment ouvrir le terminal
 
 **Sur Mac :**
+
 - Appuyez sur `Cmd + Espace` pour ouvrir Spotlight
 - Tapez "Terminal" et appuyez sur Entrée
 - Ou allez dans Applications > Utilitaires > Terminal
 
 **Sur Windows :**
+
 - Appuyez sur `Windows + R`
 - Tapez "powershell" et appuyez sur Entrée
 - Ou cherchez "PowerShell" dans le menu Démarrer
@@ -29,16 +31,19 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 **Homebrew** est un gestionnaire de paquets pour macOS qui simplifie grandement l'installation de logiciels de développement.
 
 1. **Installer Homebrew** (si vous ne l'avez pas déjà) :
+
    ```bash
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
 2. **Installer microfolio via Homebrew** :
+
    ```bash
    brew install aker-dev/tap/microfolio
    ```
 
 3. **Créer un nouveau portfolio** :
+
    ```bash
    microfolio new mon-portfolio
    cd mon-portfolio
@@ -52,6 +57,7 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 Votre site sera accessible à l'adresse : http://localhost:5173
 
 **Avantages de cette méthode :**
+
 - Installation automatique de toutes les dépendances (Node.js, pnpm, Git)
 - Commandes simplifiées : `microfolio new`, `microfolio dev`, `microfolio build`
 - Mise à jour facile avec `brew upgrade microfolio`
@@ -188,6 +194,7 @@ pnpm install
 ```
 
 **Explication :**
+
 - `git clone` télécharge le projet
 - `mon-portfolio` est le nom du dossier créé (vous pouvez le changer)
 - `cd mon-portfolio` entre dans le dossier
@@ -258,6 +265,7 @@ Le serveur reste actif tant que la fenêtre du terminal reste ouverte. Pour l'ar
 ## Prochaines étapes
 
 Maintenant que Microfolio est installé, consultez :
+
 - [Guide de configuration](02-configuration.md) pour personnaliser votre site
 - [Guide d'ajout de projets](03-ajout-projets.md) pour ajouter vos propres créations
 - [Guide de publication](04-publication.md) pour mettre votre site en ligne
@@ -269,6 +277,7 @@ Pour toute question ou problème :
 📧 **Email** : hello@aker.pro
 
 Dans votre message, précisez :
+
 - Votre système d'exploitation (Mac/Windows)
 - Le problème rencontré
 - Les étapes que vous avez suivies

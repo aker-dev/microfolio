@@ -536,9 +536,7 @@
 
 						<!-- Image counter -->
 						{#if project.resources?.images && project.resources.images.length > 1}
-							<div
-								class="bg-box text-primary border-primary rounded-full border px-3 py-1 text-sm"
-							>
+							<div class="bg-box text-primary border-primary rounded-full border px-3 py-1 text-sm">
 								{currentImageIndex + 1} / {project.resources.images.length}
 							</div>
 						{/if}

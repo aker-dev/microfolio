@@ -6,6 +6,12 @@
 	let rowCount = $derived(handler.rowCount);
 </script>
 
-<div class="text-sm text-primary {className}" {...props}>
-	{$_('ui.pagination.showing')} {rowCount.start} {$_('ui.pagination.to')} {rowCount.end} {$_('ui.pagination.of')} {rowCount.total} {$_('ui.pagination.entries')}
+<div class="text-primary text-sm {className}" {...props}>
+	{$_('ui.pagination.showing')}
+	{rowCount.start}
+	{$_('ui.pagination.to')}
+	{rowCount.end}
+	{$_('ui.pagination.of')}
+	{rowCount.total}
+	{$_('ui.pagination.entries')}
 </div>

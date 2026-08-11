@@ -8,19 +8,19 @@ import { readFile } from 'fs/promises';
  */
 function formatExifDate(exifDate) {
 	if (!exifDate || typeof exifDate !== 'string') return null;
-	
+
 	try {
 		// EXIF dates are in format "YYYY:MM:DD HH:MM:SS"
 		// Convert to ISO format "YYYY-MM-DD HH:MM:SS"
 		const isoDateString = exifDate.replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3');
 		const date = new Date(isoDateString);
-		
+
 		// Check if the date is valid
 		if (isNaN(date.getTime())) {
 			console.warn('Invalid EXIF date format:', exifDate);
 			return null;
 		}
-		
+
 		return date.toISOString();
 	} catch (error) {
 		console.warn('Error parsing EXIF date:', exifDate, error);
@@ -37,7 +37,10 @@ export async function extractImageMetadata(imagePath) {
 	try {
 		// Read image file directly from filesystem
 		const buffer = await readFile(imagePath);
-		const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+		const arrayBuffer = buffer.buffer.slice(
+			buffer.byteOffset,
+			buffer.byteOffset + buffer.byteLength
+		);
 
 		// Parse metadata with ExifReader
 		const metadata = ExifReader.load(arrayBuffer, {
@@ -47,7 +50,6 @@ export async function extractImageMetadata(imagePath) {
 		if (!metadata) {
 			return null;
 		}
-
 
 		// Helper function to safely get tag value
 		const getTagValue = (tagPath) => {
@@ -62,7 +64,7 @@ export async function extractImageMetadata(imagePath) {
 			}
 			// Handle arrays (like keywords)
 			if (Array.isArray(current)) {
-				return current.map(item => {
+				return current.map((item) => {
 					if (item && typeof item === 'object' && item.description !== undefined) {
 						return item.description;
 					}
@@ -76,7 +78,7 @@ export async function extractImageMetadata(imagePath) {
 		const getGpsCoordinates = () => {
 			// In ExifReader expanded mode, GPS data is in metadata.exif with GPS prefix
 			const exifData = metadata.exif || {};
-			
+
 			const gpsLat = exifData.GPSLatitude;
 			const gpsLatRef = exifData.GPSLatitudeRef;
 			const gpsLon = exifData.GPSLongitude;
@@ -87,15 +89,15 @@ export async function extractImageMetadata(imagePath) {
 					// ExifReader in expanded mode provides the decimal degrees directly
 					let latDD = gpsLat.description || gpsLat;
 					let lonDD = gpsLon.description || gpsLon;
-					
+
 					// Convert to numbers if they're strings
 					if (typeof latDD === 'string') latDD = parseFloat(latDD);
 					if (typeof lonDD === 'string') lonDD = parseFloat(lonDD);
-					
+
 					// Get reference direction
 					const latRef = gpsLatRef.description || gpsLatRef;
 					const lonRef = gpsLonRef.description || gpsLonRef;
-					
+
 					// Apply direction (negative for South/West)
 					if (latRef === 'S') latDD = -latDD;
 					if (lonRef === 'W') lonDD = -lonDD;
@@ -139,8 +141,8 @@ export async function extractImageMetadata(imagePath) {
 			// Date and location
 			dateTime: formatExifDate(
 				getTagValue('exif.DateTime') ||
-				getTagValue('exif.DateTimeOriginal') ||
-				getTagValue('exif.DateTimeDigitized')
+					getTagValue('exif.DateTimeOriginal') ||
+					getTagValue('exif.DateTimeDigitized')
 			),
 			gps: getGpsCoordinates(),
 
@@ -168,13 +170,13 @@ export async function extractImageMetadata(imagePath) {
  */
 function formatFocalLength(focalLength) {
 	if (!focalLength) return null;
-	
+
 	// Extract numeric value from ExifReader object or string
 	let value = focalLength;
 	if (typeof focalLength === 'object' && focalLength.description) {
 		value = focalLength.description;
 	}
-	
+
 	// If it's a string, extract the number
 	if (typeof value === 'string') {
 		const match = value.match(/(\d+(?:\.\d+)?)/);
@@ -184,12 +186,12 @@ function formatFocalLength(focalLength) {
 			return value; // Return as-is if we can't parse it
 		}
 	}
-	
+
 	// If it's a number, format it
 	if (typeof value === 'number' && !isNaN(value)) {
 		return `${value}mm`;
 	}
-	
+
 	return null;
 }
 
@@ -200,13 +202,13 @@ function formatFocalLength(focalLength) {
  */
 function formatAperture(fNumber) {
 	if (!fNumber) return null;
-	
+
 	// Extract numeric value from ExifReader object or string
 	let value = fNumber;
 	if (typeof fNumber === 'object' && fNumber.description) {
 		value = fNumber.description;
 	}
-	
+
 	// If it's a string, extract the number
 	if (typeof value === 'string') {
 		const match = value.match(/(\d+(?:\.\d+)?)/);
@@ -214,12 +216,12 @@ function formatAperture(fNumber) {
 			value = parseFloat(match[1]);
 		}
 	}
-	
+
 	// If it's a number, format it
 	if (typeof value === 'number' && !isNaN(value)) {
 		return `f/${value}`;
 	}
-	
+
 	return null;
 }
 
@@ -230,13 +232,13 @@ function formatAperture(fNumber) {
  */
 function formatShutterSpeed(exposureTime) {
 	if (!exposureTime) return null;
-	
+
 	// Extract value from ExifReader object if needed
 	let value = exposureTime;
 	if (typeof exposureTime === 'object' && exposureTime.description) {
 		value = exposureTime.description;
 	}
-	
+
 	// Handle string values
 	if (typeof value === 'string') {
 		// Check if it's already a proper fraction like "1/80"
@@ -244,21 +246,21 @@ function formatShutterSpeed(exposureTime) {
 		if (fractionMatch) {
 			return `${value}s`;
 		}
-		
+
 		// Check if it's a general fraction like "3/10"
 		const generalFractionMatch = value.match(/^(\d+)\/(\d+)$/);
 		if (generalFractionMatch) {
 			const numerator = parseInt(generalFractionMatch[1]);
 			const denominator = parseInt(generalFractionMatch[2]);
 			const decimalValue = numerator / denominator;
-			
+
 			if (decimalValue >= 1) {
 				return `${decimalValue}s`;
 			} else {
 				return `${value}s`;
 			}
 		}
-		
+
 		// Try to parse as decimal number
 		const numericValue = parseFloat(value);
 		if (!isNaN(numericValue)) {
@@ -267,7 +269,7 @@ function formatShutterSpeed(exposureTime) {
 			return null;
 		}
 	}
-	
+
 	// Handle numeric values
 	if (typeof value === 'number' && !isNaN(value)) {
 		if (value >= 1) {
@@ -277,7 +279,7 @@ function formatShutterSpeed(exposureTime) {
 			return `1/${fraction}s`;
 		}
 	}
-	
+
 	return null;
 }
 
@@ -292,7 +294,7 @@ function parseKeywords(keywords) {
 	// If it's already an array, process each item
 	if (Array.isArray(keywords)) {
 		return keywords
-			.map(item => {
+			.map((item) => {
 				if (typeof item === 'string') {
 					return item;
 				} else if (item && typeof item === 'object' && item.description) {
@@ -302,7 +304,7 @@ function parseKeywords(keywords) {
 				}
 				return item;
 			})
-			.filter(keyword => keyword && keyword.length > 0);
+			.filter((keyword) => keyword && keyword.length > 0);
 	}
 
 	// If it's a string, split by comma or semicolon

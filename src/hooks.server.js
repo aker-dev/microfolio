@@ -12,9 +12,7 @@ export async function handle({ event, resolve }) {
 
 	const response = await resolve(event, {
 		transformPageChunk: ({ html }) => {
-			return html
-				.replace('%sveltekit.lang%', locale)
-				.replace('%sveltekit.dir%', direction);
+			return html.replace('%sveltekit.lang%', locale).replace('%sveltekit.dir%', direction);
 		}
 	});
 

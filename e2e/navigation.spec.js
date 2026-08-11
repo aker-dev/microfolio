@@ -86,6 +86,28 @@ test.describe('browser history', () => {
 		await expect(page.getByLabel('Go to page 1')).toHaveAttribute('aria-current', 'page');
 	});
 
+	test('the back link returns to the filtered list it came from', async ({ page }) => {
+		await page.goto('/list/?tags=digital&page=2');
+		await expect(page).toHaveURL(/[?&]page=2/);
+
+		await openFirstProject(page);
+		await page.getByRole('link', { name: '← Back' }).click();
+
+		await expect(page).toHaveURL(/[?&]tags=digital/);
+		await expect(page).toHaveURL(/[?&]page=2/);
+		await expect(listHeading(page)).toBeVisible();
+		await expect(page.getByLabel('Go to page 2')).toHaveAttribute('aria-current', 'page');
+	});
+
+	test('the back link falls back to the index on a direct arrival', async ({ page }) => {
+		// No in-app history here, so following the href must not leave the site
+		await page.goto('/projects/example-project/');
+		await page.getByRole('link', { name: '← Back' }).click();
+
+		await expect(page).toHaveURL(/\/projects\/$/);
+		await expect(page.getByRole('heading', { level: 1, name: 'Projects' })).toBeVisible();
+	});
+
 	test('going back preserves the filters that were applied', async ({ page }) => {
 		await page.goto('/list/');
 		await expect(listHeading(page)).toBeVisible();

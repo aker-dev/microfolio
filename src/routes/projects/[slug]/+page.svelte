@@ -1,5 +1,6 @@
 <script>
 	import { base } from '$app/paths';
+	import { afterNavigate } from '$app/navigation';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
 	import AkBadge from '$lib/components/AkBadge.svelte';
@@ -13,6 +14,24 @@
 
 	let { data } = $props();
 	let project = $derived(data.project);
+
+	// `from` is null when the visitor landed here directly — a shared link, a
+	// refresh, a search result — in which case there is nothing to go back to
+	// and the link falls back to the projects index rather than leaving the site.
+	let previousUrl = $state(null);
+	afterNavigate(({ from }) => {
+		previousUrl = from?.url ? from.url.pathname + from.url.search : null;
+	});
+
+	function goBack(event) {
+		// Let the browser handle "open in a new tab" and friends
+		if (!previousUrl || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+		// history.back() rather than following the href: it restores the scroll
+		// position too, and does not grow the history stack
+		event.preventDefault();
+		history.back();
+	}
 
 	// Get server-loaded metadata
 	let thumbnailMetadata = $derived(data.project.thumbnailMetadata);
@@ -122,9 +141,11 @@
 		</div>
 		<h2 class="text-lg">{project.description}</h2>
 
-		<!-- Back to projects link -->
-		<a href="{base}/projects" class="my-4 block text-sm hover:underline"
-			>← {$_('ui.back_to_projects')}</a
+		<!-- Back link: the previous page when there is one, the index otherwise -->
+		<a
+			href={previousUrl ?? `${base}/projects`}
+			onclick={goBack}
+			class="my-4 block text-sm hover:underline">← {$_('ui.back')}</a
 		>
 
 		<!-- Main thumbnail -->

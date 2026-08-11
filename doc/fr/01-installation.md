@@ -76,7 +76,7 @@ Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Hom
    ```bash
    node --version
    ```
-   Vous devriez voir un numéro de version (ex: v20.11.0)
+   Vous devriez voir un numéro de version égal ou supérieur à 22.13 (ex : v22.14.0)
 
 #### 2. Installer Git
 

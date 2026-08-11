@@ -76,7 +76,7 @@ If you prefer manual installation or encounter problems with Homebrew:
    ```bash
    node --version
    ```
-   You should see a version number (e.g., v20.11.0)
+   You should see a version number of 22.13 or above (e.g., v22.14.0)
 
 #### 2. Install Git
 

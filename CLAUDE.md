@@ -22,7 +22,7 @@ pnpm test:watch       # Unit tests in watch mode
 pnpm test:e2e         # End-to-end tests (Playwright)
 ```
 
-Package manager: `pnpm` (pinned to 11.20.0 via `packageManager`). Node.js 20+ required.
+Package manager: `pnpm` (pinned to 11.20.0 via `packageManager`). **Node.js 22.13+ required** — pnpm 11 uses `node:sqlite` and crashes on Node 20. Declared in `engines`, which `.npmrc`'s `engine-strict=true` enforces at install time; CI pins the same major.
 
 pnpm 11 no longer reads the `pnpm` field in package.json — its settings live in `pnpm-workspace.yaml`, where `allowBuilds` lists which dependencies may run install scripts (build scripts are blocked by default) and `minimumReleaseAgeExclude` records packages accepted despite being published in the last 24h.
 

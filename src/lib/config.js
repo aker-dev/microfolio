@@ -6,6 +6,14 @@ export const siteConfig = {
 	// Internationalization config
 	locale: 'en', // 'en', 'fr'
 
+	// Image lightbox
+	lightbox: {
+		// Delay in milliseconds before the controls fade out while the visitor is
+		// idle. Any mouse move, key press or touch brings them back. 0 keeps them
+		// on screen permanently.
+		hideControlsDelay: 3000
+	},
+
 	// Social links
 	socialLinks: {
 		github: 'https://github.com/yourusername',

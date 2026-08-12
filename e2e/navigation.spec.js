@@ -198,6 +198,16 @@ async function waitForHydration(page) {
 	await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
 }
 
+/**
+ * Controls fade out after siteConfig.lightbox.hideControlsDelay and become
+ * pointer-events-none, so a test that pauses would click through them. Any
+ * pointer movement brings them back — assert that before interacting.
+ */
+async function revealControls(page) {
+	await page.mouse.move(300, 300);
+	await expect(page.getByRole('button', { name: 'Close' })).toHaveCSS('opacity', '1');
+}
+
 test.describe('lightbox', () => {
 	const openLightbox = async (page) => {
 		await page.goto('/projects/example-project/');
@@ -215,6 +225,7 @@ test.describe('lightbox', () => {
 
 	test('opens with the image alone, and the panel is opt-in', async ({ page }) => {
 		await openLightbox(page);
+		await revealControls(page);
 		const panel = page.getByRole('complementary', { name: 'Image details' });
 
 		// Closed by default: the point of "full-bleed" is an unobstructed image
@@ -227,11 +238,13 @@ test.describe('lightbox', () => {
 
 	test('the panel stays open while browsing to the next image', async ({ page }) => {
 		await openLightbox(page);
+		await revealControls(page);
 		await page.getByRole('button', { name: 'Image details' }).click();
 
 		const panel = page.getByRole('complementary', { name: 'Image details' });
 		const firstTitle = await panel.getByRole('heading', { level: 2 }).textContent();
 
+		await revealControls(page);
 		await page.getByRole('button', { name: 'Next image' }).last().click();
 
 		await expect(panel).toBeVisible();
@@ -251,5 +264,43 @@ test.describe('lightbox', () => {
 		await page.keyboard.press('ArrowLeft');
 		await page.keyboard.press('ArrowLeft');
 		await expect(counter).toHaveText(new RegExp(`^\\s*${total} / ${total}\\s*$`));
+	});
+});
+
+test.describe('lightbox idle controls', () => {
+	test('controls fade out while idle and return on the first move', async ({ page }) => {
+		await page.goto('/projects/example-project/');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+		await page.locator('section button.aspect-4\\/3').first().click();
+
+		const close = page.getByRole('button', { name: 'Close' });
+		const counter = page.getByText(/^\s*\d+ \/ \d+\s*$/);
+		await expect(close).toHaveCSS('opacity', '1');
+
+		// siteConfig.lightbox.hideControlsDelay is 3s; no pointer movement here
+		await expect(close).toHaveCSS('opacity', '0', { timeout: 8000 });
+		await expect(counter).toHaveCSS('opacity', '0');
+
+		await page.mouse.move(400, 300);
+		await expect(close).toHaveCSS('opacity', '1');
+		await expect(counter).toHaveCSS('opacity', '1');
+	});
+
+	test('clicking beside the image no longer closes the lightbox', async ({ page }) => {
+		await page.goto('/projects/example-project/');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+		await page.locator('section button.aspect-4\\/3').first().click();
+		const dialog = page.getByRole('dialog');
+		await expect(dialog).toBeVisible();
+
+		// Top centre: outside the image, clear of the navigation zones and controls
+		const box = await dialog.boundingBox();
+		await page.mouse.click(box.x + box.width / 2, box.y + 4);
+		await expect(dialog).toBeVisible();
+
+		// The counter is a control, not a way out either
+		await revealControls(page);
+		await page.getByText(/^\s*\d+ \/ \d+\s*$/).click();
+		await expect(dialog).toBeVisible();
 	});
 });

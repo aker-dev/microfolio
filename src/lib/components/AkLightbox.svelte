@@ -1,5 +1,6 @@
 <script>
 	import { _ } from 'svelte-i18n';
+	import { siteConfig } from '$lib/config.js';
 	import AkBadge from './AkBadge.svelte';
 	import AkBtnClose from './AkBtnClose.svelte';
 	import AkBtnMetadata from './AkBtnMetadata.svelte';
@@ -41,6 +42,7 @@
 
 	function handleKeydown(event) {
 		if (!open) return;
+		revealControls();
 
 		if (event.key === 'Escape') {
 			close();
@@ -53,31 +55,56 @@
 		}
 	}
 
-	// Clicks inside the panel or on a control must not reach the backdrop, whose
-	// job is to close the lightbox
-	function stop(event) {
-		event.stopPropagation();
+	// The controls step out of the way while the visitor is looking at an image,
+	// and any sign of activity brings them straight back.
+	const hideDelay = siteConfig.lightbox?.hideControlsDelay ?? 0;
+	let controlsVisible = $state(true);
+	let hideTimer;
+
+	function revealControls() {
+		controlsVisible = true;
+		clearTimeout(hideTimer);
+		if (hideDelay > 0) {
+			hideTimer = setTimeout(() => (controlsVisible = false), hideDelay);
+		}
 	}
+
+	$effect(() => {
+		if (!open) {
+			clearTimeout(hideTimer);
+			return;
+		}
+		revealControls();
+		return () => clearTimeout(hideTimer);
+	});
+
+	// Hidden controls must not swallow clicks meant for the image beneath them.
+	// The invisible navigation zones are left alone: they have nothing to hide,
+	// and keeping them live means a click still works the instant the pointer
+	// movement that preceded it has brought the rest back.
+	let controlsClass = $derived(
+		`transition-opacity duration-300 ${controlsVisible ? 'opacity-100' : 'pointer-events-none opacity-0'}`
+	);
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
 
 {#if open && image}
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<!-- Clicking beside the image deliberately does nothing: closing is the cross
+	     or Escape, so a stray click never loses the visitor's place. -->
 	<div
 		role="dialog"
 		aria-modal="true"
 		aria-label={$_('ui.image_lightbox')}
 		tabindex="-1"
 		class="bg-box fixed inset-0 z-10000 flex"
-		onclick={close}
+		onmousemove={revealControls}
+		ontouchstart={revealControls}
 	>
 		<!-- Info panel: takes its own column from lg, overlays the image below it -->
 		{#if showInfo}
-			<!-- svelte-ignore a11y_click_events_have_key_events -->
 			<aside
 				aria-label={$_('ui.image_details')}
-				onclick={stop}
 				class="bg-box border-primary text-primary absolute inset-y-0 left-0 z-40 w-80 max-w-[85vw] space-y-4 overflow-y-auto border-r p-6 text-sm lg:static lg:max-w-none lg:shrink-0"
 			>
 				<div>
@@ -91,8 +118,8 @@
 				</div>
 
 				{#if hasCameraInfo}
-					<div>
-						<h3 class="text-base font-bold">{$_('ui.metadata.technical_details')}</h3>
+					<div class="text-xs">
+						<h3 class="text-sm font-bold">{$_('ui.metadata.technical_details')}</h3>
 						{#if metadata.camera}
 							<div>
 								<span class="font-bold">{$_('ui.metadata.camera')} ›</span>
@@ -133,8 +160,8 @@
 				{/if}
 
 				{#if hasContextInfo}
-					<div>
-						<h3 class="text-base font-bold">{$_('ui.metadata.location_date')}</h3>
+					<div class="text-xs">
+						<h3 class="text-sm font-bold">{$_('ui.metadata.location_date')}</h3>
 						{#if metadata.dateTime}
 							<div>
 								<span class="font-bold">{$_('ui.metadata.date')} ›</span>
@@ -177,8 +204,8 @@
 				{/if}
 
 				{#if hasKeywords}
-					<div>
-						<h3 class="mb-1 text-base font-bold">{$_('ui.metadata.keywords')}</h3>
+					<div class="text-xs">
+						<h3 class="mb-1 text-sm font-bold">{$_('ui.metadata.keywords')}</h3>
 						<div class="flex flex-wrap gap-1">
 							{#each metadata.keywords as keyword, i (i)}
 								<AkBadge small>{keyword}</AkBadge>
@@ -195,19 +222,13 @@
 			{#if hasSeveral}
 				<button
 					type="button"
-					onclick={(e) => {
-						stop(e);
-						goTo(index - 1);
-					}}
+					onclick={() => goTo(index - 1)}
 					class="absolute inset-y-0 left-0 z-20 w-1/4 cursor-pointer"
 					aria-label={$_('ui.previous_image')}
 				></button>
 				<button
 					type="button"
-					onclick={(e) => {
-						stop(e);
-						goTo(index + 1);
-					}}
+					onclick={() => goTo(index + 1)}
 					class="absolute inset-y-0 right-0 z-20 w-1/4 cursor-pointer"
 					aria-label={$_('ui.next_image')}
 				></button>
@@ -221,30 +242,18 @@
 			/>
 
 			<AkBtnMetadata
-				class="absolute top-4 right-16 z-30"
+				class="absolute top-4 right-16 z-30 {controlsClass}"
 				ariaLabel={$_('ui.image_details')}
-				onclick={(e) => {
-					stop(e);
-					showInfo = !showInfo;
-				}}
+				onclick={() => (showInfo = !showInfo)}
 			/>
 
-			<AkBtnClose
-				class="absolute top-4 right-4 z-30"
-				onclick={(e) => {
-					stop(e);
-					close();
-				}}
-			/>
+			<AkBtnClose class="absolute top-4 right-4 z-30 {controlsClass}" onclick={close} />
 
 			{#if hasSeveral}
 				<button
 					type="button"
-					onclick={(e) => {
-						stop(e);
-						goTo(index - 1);
-					}}
-					class="border-primary group bg-box text-primary absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border p-3"
+					onclick={() => goTo(index - 1)}
+					class="border-primary group bg-box text-primary absolute top-1/2 left-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border p-3 {controlsClass}"
 					aria-label={$_('ui.previous_image')}
 				>
 					<IconChevronLeft class="pointer-events-none size-6 group-hover:scale-120" />
@@ -252,18 +261,15 @@
 
 				<button
 					type="button"
-					onclick={(e) => {
-						stop(e);
-						goTo(index + 1);
-					}}
-					class="border-primary group bg-box text-primary absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border p-3"
+					onclick={() => goTo(index + 1)}
+					class="border-primary group bg-box text-primary absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer rounded-full border p-3 {controlsClass}"
 					aria-label={$_('ui.next_image')}
 				>
 					<IconChevronRight class="pointer-events-none size-6 group-hover:scale-120" />
 				</button>
 
 				<div
-					class="bg-box text-primary border-primary absolute bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-full border px-3 py-1 text-sm"
+					class="bg-box text-primary border-primary absolute bottom-12 left-1/2 z-30 -translate-x-1/2 rounded-full border px-3 py-1 text-sm {controlsClass}"
 				>
 					{index + 1} / {images.length}
 				</div>

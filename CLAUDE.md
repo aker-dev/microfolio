@@ -63,7 +63,7 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - `$lib/utils/projectFrontmatter.js` — `parseProjectFrontmatter()`: returns `{ metadata }` or `{ problem }` with a plain-language reason
 - `$lib/utils/locale.js` — `getTextDirection()`, shared by `hooks.server.js` (prerender) and `+layout.svelte` (client)
 - `$lib/utils/imageMetadata.js` — EXIF/IPTC extraction via `exifreader` (credit, camera, GPS, etc.)
-- `$lib/config.js` — Site config (title, social links, navigation)
+- `$lib/config.js` — Site config (title, social links, navigation, `lightbox.hideControlsDelay`)
 - `$lib/i18n.js` — Internationalization setup with `svelte-i18n` (en/fr active, more commented out)
 
 ### Styling

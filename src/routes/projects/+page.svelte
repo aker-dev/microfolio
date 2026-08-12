@@ -8,9 +8,14 @@
 	let { data } = $props();
 	let projects = $derived(data.projects);
 
+	const ROWS_PER_PAGE = 20;
+
 	let selectedType = $state('all');
 	let searchTerm = $state('');
-	let filteredProjects = $state(data.projects);
+	// Seeded with the first page rather than every project, so the prerendered
+	// HTML matches what the visitor sees once AkFilters takes over — otherwise the
+	// grid rendered all 101 cards and then dropped to 20 on hydration.
+	let filteredProjects = $state(data.projects.slice(0, ROWS_PER_PAGE));
 	let handler = $state();
 </script>
 
@@ -31,7 +36,7 @@
 		bind:selectedType
 		bind:filteredProjects
 		bind:handler
-		rowsPerPage={20}
+		rowsPerPage={ROWS_PER_PAGE}
 		showRowsPerPage={true}
 		showSort={true}
 		showResultsCount={true}

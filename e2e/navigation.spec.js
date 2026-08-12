@@ -304,3 +304,32 @@ test.describe('lightbox idle controls', () => {
 		await expect(dialog).toBeVisible();
 	});
 });
+
+// The point of prerendering: this is the only honest way to check that the
+// content is in the HTML rather than conjured by hydration.
+test.describe('without JavaScript', () => {
+	test.use({ javaScriptEnabled: false });
+
+	test('/list renders its rows, not a placeholder', async ({ page }) => {
+		await page.goto('/list/');
+
+		await expect(page.getByRole('heading', { level: 1, name: 'Projects List' })).toBeVisible();
+		await expect(page.locator('table tbody tr')).toHaveCount(20);
+		await expect(page.getByText('Loading projects')).toHaveCount(0);
+	});
+
+	test('/projects renders a page of cards', async ({ page }) => {
+		await page.goto('/projects/');
+
+		// Card headings rather than "links inside a grid", which also caught the
+		// four navigation links in the footer
+		await expect(page.locator('h3.text-lg')).toHaveCount(20);
+	});
+
+	test('the filter controls say they are not ready yet', async ({ page }) => {
+		await page.goto('/list/');
+
+		await expect(page.getByTestId('type-filter').first()).toBeDisabled();
+		await expect(page.getByPlaceholder('Search projects...')).toBeDisabled();
+	});
+});

@@ -5,7 +5,7 @@
 	import IconChevronUp from '~icons/carbon/chevron-up';
 	import IconChevronDown from '~icons/carbon/chevron-down';
 	import { _ } from 'svelte-i18n';
-	import { untrack } from 'svelte';
+	import { onMount, untrack } from 'svelte';
 	import { goto } from '$app/navigation';
 
 	let {
@@ -23,13 +23,40 @@
 		sortOrder = $bindable('desc')
 	} = $props();
 
-	let search = $state();
-	let typeFilter = $state();
-	let featuredFilter = $state();
-	let tagFilter = $state();
+	// Built here rather than inside an $effect: an effect never runs on the server,
+	// so the table only came into existence at hydration and /list prerendered a
+	// "Loading projects" placeholder instead of its rows.
+	// Deliberately reads the initial values: the table is built once from the data
+	// the page was loaded with, as it was before when an `isInitialized` flag
+	// guarded the same construction.
+	// svelte-ignore state_referenced_locally
+	const table = new TableHandler(projects, { rowsPerPage });
+	const search = table.createSearch();
+	const typeFilter = table.createFilter('type');
+	const featuredFilter = table.createFilter('featured', (value) => value === true);
+	const tagFilter = table.createFilter(
+		(row) => row.tags,
+		(entry, value) => {
+			if (!entry || !Array.isArray(entry)) return false;
+			const selected = JSON.parse(value);
+			return selected.some((tag) => entry.includes(tag));
+		}
+	);
+
+	// Hand both to the parent straight away so its markup renders server-side too
+	handler = table;
+	filteredProjects = table.rows;
+
 	let sort = $state();
-	let isInitialized = $state(false);
 	let isUrlInitialized = $state(false);
+
+	// onMount does not run on the server, so this stays false through prerendering —
+	// exactly the window where the controls exist but have no listeners yet, and a
+	// click on them would be silently lost.
+	let hydrated = $state(false);
+	onMount(() => {
+		hydrated = true;
+	});
 
 	let projectTypesWithCounts = $derived.by(() => {
 		// Local accumulator, converted to an array before it leaves this block:
@@ -87,27 +114,11 @@
 		return [...new Set(subset.flatMap((p) => p.tags || []))];
 	}
 
-	// Initialize handler when projects are available (only once)
+	// Restoring state from the query string is the only part that has to wait for
+	// the browser, so it is all that remains in an effect.
 	$effect(() => {
-		if (projects && projects.length > 0 && !isInitialized) {
-			handler = new TableHandler(projects, { rowsPerPage });
-			search = handler.createSearch();
-			typeFilter = handler.createFilter('type');
-			featuredFilter = handler.createFilter('featured', (value) => value === true);
-			tagFilter = handler.createFilter(
-				(row) => row.tags,
-				(entry, value) => {
-					if (!entry || !Array.isArray(entry)) return false;
-					const selected = JSON.parse(value);
-					return selected.some((tag) => entry.includes(tag));
-				}
-			);
-
-			// Read URL params to restore filter state
-			const params =
-				typeof window !== 'undefined'
-					? new URLSearchParams(window.location.search)
-					: new URLSearchParams();
+		if (!isUrlInitialized) {
+			const params = new URLSearchParams(window.location.search);
 
 			// Type
 			const urlType = params.get('type');
@@ -161,7 +172,6 @@
 				if (pageNum > 1) handler.setPage(pageNum);
 			}
 
-			isInitialized = true;
 			isUrlInitialized = true;
 		}
 	});
@@ -308,12 +318,13 @@
 	});
 </script>
 
-<div class="space-y-4">
+<div class="ak-filters space-y-4">
 	<!-- Search and Type Filters -->
 	<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
 		<div class="relative">
 			<input
 				type="text"
+				disabled={!hydrated}
 				placeholder={$_('ui.search_projects_placeholder')}
 				bind:value={searchTerm}
 				oninput={handleSearchInput}
@@ -323,6 +334,7 @@
 			/>
 			{#if searchTerm}
 				<button
+					disabled={!hydrated}
 					onclick={() => {
 						searchTerm = '';
 						handleSearchInput();
@@ -346,6 +358,7 @@
 		<div class="flex flex-wrap gap-2">
 			{#each projectTypesWithCounts as { type, count } (type)}
 				<button
+					disabled={!hydrated}
 					data-testid="type-filter"
 					onclick={() => handleTypeChange(type)}
 					class="cursor-pointer rounded-full border px-3 py-1 text-sm capitalize {selectedType ===
@@ -370,6 +383,7 @@
 		<div class="flex flex-wrap items-center gap-2">
 			{#each visibleTagsWithCounts as { tag, count } (tag)}
 				<button
+					disabled={!hydrated}
 					data-testid="tag-filter"
 					onclick={() => handleTagToggle(tag)}
 					class="cursor-pointer rounded border px-2 py-1 text-xs {selectedTags.includes(tag)
@@ -381,6 +395,7 @@
 			{/each}
 			{#if hiddenTagCount > 0}
 				<button
+					disabled={!hydrated}
 					onclick={() => (tagsExpanded = !tagsExpanded)}
 					class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs"
 				>
@@ -393,6 +408,7 @@
 			{/if}
 			{#if selectedTags.length > 0}
 				<button
+					disabled={!hydrated}
 					onclick={clearTags}
 					class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs underline"
 				>
@@ -406,12 +422,13 @@
 	{#if handler && (showRowsPerPage || showSort || showResultsCount)}
 		<div class="flex flex-wrap items-center gap-4">
 			{#if showRowsPerPage}
-				<RowsPerPage {handler} />
+				<RowsPerPage {handler} disabled={!hydrated} />
 			{/if}
 			{#if showSort}
 				<div class="flex items-center gap-2">
 					<span class="text-sm">{$_('ui.sort.sort_by')}</span>
 					<select
+						disabled={!hydrated}
 						aria-label={$_('ui.sort.sort_by')}
 						bind:value={sortBy}
 						onchange={handleSortChange}

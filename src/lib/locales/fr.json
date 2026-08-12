@@ -116,6 +116,7 @@
 			"coordinates": "Coordonnées",
 			"keywords": "Mots-clés"
 		},
-		"back": "Retour"
+		"back": "Retour",
+		"image_details": "Détails de l'image"
 	}
 }

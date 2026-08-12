@@ -18,6 +18,15 @@
 			document.documentElement.setAttribute('lang', $locale);
 		}
 	});
+
+	// The whole page is prerendered, so its controls exist and are clickable
+	// before Svelte attaches their listeners — a click landing in that window is
+	// silently lost. This marks the point where the tree is interactive, which
+	// the end-to-end tests wait for; it is also a hook for hiding things until
+	// then if we ever need to.
+	$effect(() => {
+		document.documentElement.dataset.hydrated = 'true';
+	});
 </script>
 
 <AkHeader />

@@ -192,3 +192,64 @@ test.describe('navigating into a filtered view', () => {
 		);
 	});
 });
+
+/** See the note on waitForFiltersReady: the layout marks the tree interactive. */
+async function waitForHydration(page) {
+	await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+}
+
+test.describe('lightbox', () => {
+	const openLightbox = async (page) => {
+		await page.goto('/projects/example-project/');
+		await waitForHydration(page);
+		await page.locator('section button.aspect-4\\/3').first().click();
+		await expect(page.getByRole('dialog')).toBeVisible();
+	};
+
+	test('opens from the gallery and closes with Escape', async ({ page }) => {
+		await openLightbox(page);
+
+		await page.keyboard.press('Escape');
+		await expect(page.getByRole('dialog')).toBeHidden();
+	});
+
+	test('opens with the image alone, and the panel is opt-in', async ({ page }) => {
+		await openLightbox(page);
+		const panel = page.getByRole('complementary', { name: 'Image details' });
+
+		// Closed by default: the point of "full-bleed" is an unobstructed image
+		await expect(panel).toBeHidden();
+
+		await page.getByRole('button', { name: 'Image details' }).click();
+		await expect(panel).toBeVisible();
+		await expect(panel.getByRole('heading', { level: 2 })).toBeVisible();
+	});
+
+	test('the panel stays open while browsing to the next image', async ({ page }) => {
+		await openLightbox(page);
+		await page.getByRole('button', { name: 'Image details' }).click();
+
+		const panel = page.getByRole('complementary', { name: 'Image details' });
+		const firstTitle = await panel.getByRole('heading', { level: 2 }).textContent();
+
+		await page.getByRole('button', { name: 'Next image' }).last().click();
+
+		await expect(panel).toBeVisible();
+		await expect(panel.getByRole('heading', { level: 2 })).not.toHaveText(firstTitle ?? '');
+	});
+
+	test('arrow keys move through the gallery and wrap around', async ({ page }) => {
+		await openLightbox(page);
+		const counter = page.getByText(/^\s*\d+ \/ \d+\s*$/);
+		await expect(counter).toHaveText(/^\s*1 \/ (\d+)\s*$/);
+		const total = Number((await counter.textContent())?.split('/')[1].trim());
+
+		await page.keyboard.press('ArrowRight');
+		await expect(counter).toHaveText(new RegExp(`^\\s*2 / ${total}\\s*$`));
+
+		// Wrapping backwards from the first image is the behaviour to preserve
+		await page.keyboard.press('ArrowLeft');
+		await page.keyboard.press('ArrowLeft');
+		await expect(counter).toHaveText(new RegExp(`^\\s*${total} / ${total}\\s*$`));
+	});
+});

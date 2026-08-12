@@ -118,7 +118,11 @@
 						{#each handler.rows as project (project.slug)}
 							<tr class="border-primary hover:bg-box border-t">
 								<td class="px-4 py-3">
-									<div class="font-bold"><h3>{project.title}</h3></div>
+									<h3 class="font-bold">
+										<a href="{base}/projects/{project.slug}" class="hover:underline"
+											>{project.title}</a
+										>
+									</h3>
 								</td>
 								<td class="px-4 py-3">
 									<div class="flex items-center gap-2">

@@ -17,7 +17,7 @@
 		aria-label={$_('ui.pagination.rows_per_page')}
 		value={rowsPerPage}
 		onchange={handleChange}
-		class="border-primary bg-box rounded border px-2 py-1 text-sm focus:outline-none"
+		class="border-primary bg-box cursor-pointer rounded border px-2 py-1 text-sm focus:outline-none"
 	>
 		{#each options as option (option)}
 			<option value={option}>{option}</option>

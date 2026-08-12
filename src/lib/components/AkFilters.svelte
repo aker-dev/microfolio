@@ -346,6 +346,7 @@
 		<div class="flex flex-wrap gap-2">
 			{#each projectTypesWithCounts as { type, count } (type)}
 				<button
+					data-testid="type-filter"
 					onclick={() => handleTypeChange(type)}
 					class="cursor-pointer rounded-full border px-3 py-1 text-sm capitalize {selectedType ===
 					type
@@ -414,7 +415,7 @@
 						aria-label={$_('ui.sort.sort_by')}
 						bind:value={sortBy}
 						onchange={handleSortChange}
-						class="border-primary bg-box rounded border px-2 py-1 text-sm focus:outline-none"
+						class="border-primary bg-box cursor-pointer rounded border px-2 py-1 text-sm focus:outline-none"
 					>
 						<option value="date">{$_('ui.sort.date')}</option>
 						<option value="title">{$_('ui.sort.title')}</option>

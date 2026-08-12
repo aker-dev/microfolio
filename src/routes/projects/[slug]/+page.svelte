@@ -183,7 +183,9 @@
 	<!-- Sidebar -->
 	<aside class="bg-box mb-6 space-y-3 p-6 text-sm lg:sticky lg:top-40 lg:self-start">
 		<div class="flex items-center justify-between">
-			<AkBadge>{project.type}</AkBadge>
+			<AkBadge href="{base}/projects/?type={encodeURIComponent(project.type)}">
+				{project.type}
+			</AkBadge>
 
 			{#if project.featured}
 				<IconStarFilled class="inline-block size-6 pb-1" />
@@ -253,7 +255,9 @@
 
 				<div class="flex flex-wrap gap-2">
 					{#each project.tags as tag, i (i)}
-						<AkBadge small>{tag}</AkBadge>
+						<AkBadge small href="{base}/projects/?tags={encodeURIComponent(tag)}">
+							{tag}
+						</AkBadge>
 					{/each}
 				</div>
 			</div>

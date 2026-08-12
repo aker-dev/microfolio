@@ -149,3 +149,46 @@ test.describe('browser history', () => {
 		);
 	});
 });
+
+test.describe('navigating into a filtered view', () => {
+	test('a list row title links to its project', async ({ page }) => {
+		await page.goto('/list/');
+		await waitForFiltersReady(page);
+
+		const title = page.locator('table tbody tr h3 a').first();
+		const label = (await title.textContent())?.trim();
+		await title.click();
+
+		await expect(page).toHaveURL(/\/projects\/[^/]+\/$/);
+		await expect(page.getByRole('heading', { level: 1, name: label })).toBeVisible();
+	});
+
+	test('the type badge opens the projects view filtered on that type', async ({ page }) => {
+		await page.goto('/projects/example-project/');
+		const badge = page.locator('aside a[href*="?type="]').first();
+		const type = (await badge.textContent())?.trim();
+		await badge.click();
+
+		await expect(page).toHaveURL(new RegExp(`/projects/\\?type=${type}`));
+		// The filter is really applied, not just present in the URL
+		await waitForFiltersReady(page);
+		// Scoped to the type buttons: the demo content has a tag named like the
+		// type, so matching on the label alone resolves to two elements
+		await expect(page.getByTestId('type-filter').filter({ hasText: type })).toHaveClass(
+			/(?:^|\s)bg-primary(?:\s|$)/
+		);
+	});
+
+	test('a tag badge opens the projects view filtered on that tag', async ({ page }) => {
+		await page.goto('/projects/example-project/');
+		const badge = page.locator('aside a[href*="?tags="]').first();
+		const tag = (await badge.textContent())?.trim();
+		await badge.click();
+
+		await expect(page).toHaveURL(/\/projects\/\?tags=/);
+		await waitForFiltersReady(page);
+		await expect(page.getByTestId('tag-filter').filter({ hasText: tag })).toHaveClass(
+			/(?:^|\s)bg-primary(?:\s|$)/
+		);
+	});
+});

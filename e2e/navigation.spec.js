@@ -333,3 +333,56 @@ test.describe('without JavaScript', () => {
 		await expect(page.getByPlaceholder('Search projects...')).toBeDisabled();
 	});
 });
+
+test.describe('keyboard and assistive technology', () => {
+	test('tabbing leaves a visible focus ring', async ({ page }) => {
+		await page.goto('/list/');
+		await waitForFiltersReady(page);
+
+		await page.keyboard.press('Tab');
+
+		// :focus-visible only matches after a real key press, never after a
+		// programmatic .focus() — which is the whole point of using it
+		const focus = await page.evaluate(() => {
+			const el = document.activeElement;
+			const style = getComputedStyle(el);
+			return {
+				visible: el.matches(':focus-visible'),
+				width: parseFloat(style.outlineWidth),
+				style: style.outlineStyle
+			};
+		});
+
+		expect(focus.visible).toBe(true);
+		expect(focus.style).not.toBe('none');
+		expect(focus.width).toBeGreaterThan(0);
+	});
+
+	test('the collapsible tag list announces its state', async ({ page }) => {
+		await page.goto('/projects/');
+		await waitForFiltersReady(page);
+
+		const toggle = page.getByRole('button', { name: /more$/ });
+		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+		await expect(toggle).toHaveAttribute('aria-controls', 'tag-filters');
+
+		await toggle.click();
+		await expect(page.getByRole('button', { name: 'show less' })).toHaveAttribute(
+			'aria-expanded',
+			'true'
+		);
+	});
+
+	test('the mobile menu announces its state', async ({ page }) => {
+		await page.setViewportSize({ width: 390, height: 780 });
+		await page.goto('/list/');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+
+		const toggle = page.getByRole('button', { name: 'Toggle mobile menu' });
+		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+		await toggle.click();
+		await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+		await expect(page.locator('#mobile-menu')).toBeVisible();
+	});
+});

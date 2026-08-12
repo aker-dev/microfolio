@@ -328,7 +328,7 @@
 				placeholder={$_('ui.search_projects_placeholder')}
 				bind:value={searchTerm}
 				oninput={handleSearchInput}
-				class="border-primary focus:bg-box rounded-lg border px-4 py-2 pr-8 focus:outline-none {searchTerm
+				class="border-primary focus:bg-box rounded-lg border px-4 py-2 pr-8 {searchTerm
 					? 'bg-box'
 					: ''}"
 			/>
@@ -380,7 +380,7 @@
 	</div>
 	<!-- Tag Filters -->
 	{#if allTags.length > 0}
-		<div class="flex flex-wrap items-center gap-2">
+		<div id="tag-filters" class="flex flex-wrap items-center gap-2">
 			{#each visibleTagsWithCounts as { tag, count } (tag)}
 				<button
 					disabled={!hydrated}
@@ -397,6 +397,8 @@
 				<button
 					disabled={!hydrated}
 					onclick={() => (tagsExpanded = !tagsExpanded)}
+					aria-expanded={tagsExpanded}
+					aria-controls="tag-filters"
 					class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs"
 				>
 					{#if tagsExpanded}
@@ -432,7 +434,7 @@
 						aria-label={$_('ui.sort.sort_by')}
 						bind:value={sortBy}
 						onchange={handleSortChange}
-						class="border-primary bg-box cursor-pointer rounded border px-2 py-1 text-sm focus:outline-none"
+						class="border-primary bg-box cursor-pointer rounded border px-2 py-1 text-sm"
 					>
 						<option value="date">{$_('ui.sort.date')}</option>
 						<option value="title">{$_('ui.sort.title')}</option>

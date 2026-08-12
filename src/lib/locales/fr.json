@@ -116,6 +116,7 @@
 			"keywords": "Mots-clés"
 		},
 		"back": "Retour",
-		"image_details": "Détails de l'image"
+		"image_details": "Détails de l'image",
+		"filters": "Filtres"
 	}
 }

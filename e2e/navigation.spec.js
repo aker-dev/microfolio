@@ -386,3 +386,47 @@ test.describe('keyboard and assistive technology', () => {
 		await expect(page.locator('#mobile-menu')).toBeVisible();
 	});
 });
+
+test.describe('small screens', () => {
+	test.use({ viewport: { width: 375, height: 820 } });
+
+	test('the filter panel starts collapsed and reports what is active', async ({ page }) => {
+		await page.goto('/list/?tags=digital');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+
+		const panel = page.locator('#filter-panel');
+		const toggle = page.getByRole('button', { name: /Filters/ });
+		await expect(panel).toBeHidden();
+		// One tag from the URL, so the button has to say so
+		await expect(toggle).toContainText('(1)');
+		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+		await toggle.click();
+		await expect(panel).toBeVisible();
+		await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+	});
+
+	test('/list shows cards rather than a table that scrolls sideways', async ({ page }) => {
+		await page.goto('/list/');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+
+		await expect(page.locator('table')).toBeHidden();
+		await expect(page.locator('ul.space-y-3 > li')).toHaveCount(20);
+		// The first card carries what the table columns held
+		const first = page.locator('ul.space-y-3 > li').first();
+		await expect(first.getByRole('link')).toBeVisible();
+		await expect(first).toContainText(/\d{4}-\d{2}/);
+	});
+
+	test('content is reachable without scrolling past the filters', async ({ page }) => {
+		await page.goto('/list/');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+
+		const top = await page
+			.locator('ul.space-y-3 > li')
+			.first()
+			.evaluate((el) => el.getBoundingClientRect().top);
+		// It used to start at 736px on an 820px screen
+		expect(top).toBeLessThan(500);
+	});
+});

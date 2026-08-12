@@ -4,6 +4,7 @@
 	import RowCount from '$lib/components/RowCount.svelte';
 	import IconChevronUp from '~icons/carbon/chevron-up';
 	import IconChevronDown from '~icons/carbon/chevron-down';
+	import IconFilter from '~icons/carbon/filter';
 	import { _ } from 'svelte-i18n';
 	import { onMount, untrack } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -98,6 +99,12 @@
 			.map(([tag, count]) => ({ tag, count }));
 	});
 	let allTags = $derived(allTagsWithCounts.map((t) => t.tag));
+
+	// Only consulted below md, where the panel is collapsed by default
+	let filtersOpen = $state(false);
+	let activeFilterCount = $derived(
+		(searchTerm ? 1 : 0) + (selectedType !== 'all' ? 1 : 0) + selectedTags.length
+	);
 
 	let tagsExpanded = $state(false);
 	const TAG_DISPLAY_LIMIT = 10;
@@ -319,145 +326,165 @@
 </script>
 
 <div class="ak-filters space-y-4">
-	<!-- Search and Type Filters -->
-	<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-		<div class="relative">
-			<input
-				type="text"
-				disabled={!hydrated}
-				placeholder={$_('ui.search_projects_placeholder')}
-				bind:value={searchTerm}
-				oninput={handleSearchInput}
-				class="border-primary focus:bg-box rounded-lg border px-4 py-2 pr-8 {searchTerm
-					? 'bg-box'
-					: ''}"
-			/>
-			{#if searchTerm}
-				<button
-					disabled={!hydrated}
-					onclick={() => {
-						searchTerm = '';
-						handleSearchInput();
-					}}
-					class="text-primary hover:text-box hover:bg-primary absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full p-0.5 transition-colors"
-					aria-label={$_('ui.clear_search')}
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20"
-						fill="currentColor"
-						class="size-4"
-					>
-						<path
-							d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
-						/>
-					</svg>
-				</button>
-			{/if}
-		</div>
-		<div class="flex flex-wrap gap-2">
-			{#each projectTypesWithCounts as { type, count } (type)}
-				<button
-					disabled={!hydrated}
-					data-testid="type-filter"
-					onclick={() => handleTypeChange(type)}
-					class="cursor-pointer rounded-full border px-3 py-1 text-sm capitalize {selectedType ===
-					type
-						? 'border-primary bg-primary text-box'
-						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
-				>
-					{#if type === 'all'}
-						{$_('ui.all')}
-					{:else if type === 'featured'}
-						{$_('ui.featured')}
-					{:else}
-						{type}
-					{/if}
-					<span class="ml-1">({count})</span>
-				</button>
-			{/each}
-		</div>
-	</div>
-	<!-- Tag Filters -->
-	{#if allTags.length > 0}
-		<div id="tag-filters" class="flex flex-wrap items-center gap-2">
-			{#each visibleTagsWithCounts as { tag, count } (tag)}
-				<button
-					disabled={!hydrated}
-					data-testid="tag-filter"
-					onclick={() => handleTagToggle(tag)}
-					class="cursor-pointer rounded border px-2 py-1 text-xs {selectedTags.includes(tag)
-						? 'border-primary bg-primary text-box'
-						: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
-				>
-					{tag}<span class="ml-1">({count})</span>
-				</button>
-			{/each}
-			{#if hiddenTagCount > 0}
-				<button
-					disabled={!hydrated}
-					onclick={() => (tagsExpanded = !tagsExpanded)}
-					aria-expanded={tagsExpanded}
-					aria-controls="tag-filters"
-					class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs"
-				>
-					{#if tagsExpanded}
-						{$_('ui.show_less_tags')}
-					{:else}
-						+ {hiddenTagCount} {$_('ui.show_more_tags')}
-					{/if}
-				</button>
-			{/if}
-			{#if selectedTags.length > 0}
-				<button
-					disabled={!hydrated}
-					onclick={clearTags}
-					class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs underline"
-				>
-					✕ {$_('ui.clear_tags').toLowerCase()}
-				</button>
-			{/if}
-		</div>
-	{/if}
+	<!-- On a phone this block ran to 440px and pushed the projects off the first
+	     screen entirely, so below md it collapses behind a button that says how
+	     many filters are active. From md it is always open. -->
+	<button
+		type="button"
+		disabled={!hydrated}
+		onclick={() => (filtersOpen = !filtersOpen)}
+		aria-expanded={filtersOpen}
+		aria-controls="filter-panel"
+		class="border-primary bg-box text-primary hover:bg-primary hover:text-box flex cursor-pointer items-center gap-2 rounded border px-3 py-2 text-sm md:hidden"
+	>
+		<IconFilter class="pointer-events-none size-4" />
+		{$_('ui.filters')}
+		{#if activeFilterCount > 0}
+			<span class="font-bold">({activeFilterCount})</span>
+		{/if}
+	</button>
 
-	<!-- RowsPerPage, Sort, and Count -->
-	{#if handler && (showRowsPerPage || showSort || showResultsCount)}
-		<div class="flex flex-wrap items-center gap-4">
-			{#if showRowsPerPage}
-				<RowsPerPage {handler} disabled={!hydrated} />
-			{/if}
-			{#if showSort}
-				<div class="flex items-center gap-2">
-					<span class="text-sm">{$_('ui.sort.sort_by')}</span>
-					<select
-						disabled={!hydrated}
-						aria-label={$_('ui.sort.sort_by')}
-						bind:value={sortBy}
-						onchange={handleSortChange}
-						class="border-primary bg-box cursor-pointer rounded border px-2 py-1 text-sm"
-					>
-						<option value="date">{$_('ui.sort.date')}</option>
-						<option value="title">{$_('ui.sort.title')}</option>
-						<option value="type">{$_('ui.sort.type')}</option>
-						<option value="location">{$_('ui.sort.location')}</option>
-					</select>
+	<div id="filter-panel" class="space-y-4 {filtersOpen ? '' : 'hidden'} md:block">
+		<!-- Search and Type Filters -->
+		<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+			<div class="relative">
+				<input
+					type="text"
+					disabled={!hydrated}
+					placeholder={$_('ui.search_projects_placeholder')}
+					bind:value={searchTerm}
+					oninput={handleSearchInput}
+					class="border-primary focus:bg-box rounded-lg border px-4 py-2 pr-8 {searchTerm
+						? 'bg-box'
+						: ''}"
+				/>
+				{#if searchTerm}
 					<button
-						onclick={toggleSortOrder}
-						class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded-full border p-2 transition-colors"
-						aria-label={$_('ui.sort.toggle_order')}
-						title={sortOrder === 'asc' ? $_('ui.sort.ascending') : $_('ui.sort.descending')}
+						disabled={!hydrated}
+						onclick={() => {
+							searchTerm = '';
+							handleSearchInput();
+						}}
+						class="text-primary hover:text-box hover:bg-primary absolute top-1/2 right-2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full p-0.5 transition-colors"
+						aria-label={$_('ui.clear_search')}
 					>
-						{#if sortOrder === 'asc'}
-							<IconChevronUp class="pointer-events-none size-4" />
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+							class="size-4"
+						>
+							<path
+								d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
+							/>
+						</svg>
+					</button>
+				{/if}
+			</div>
+			<div class="flex flex-wrap gap-2">
+				{#each projectTypesWithCounts as { type, count } (type)}
+					<button
+						disabled={!hydrated}
+						data-testid="type-filter"
+						onclick={() => handleTypeChange(type)}
+						class="cursor-pointer rounded-full border px-3 py-1 text-sm capitalize {selectedType ===
+						type
+							? 'border-primary bg-primary text-box'
+							: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
+					>
+						{#if type === 'all'}
+							{$_('ui.all')}
+						{:else if type === 'featured'}
+							{$_('ui.featured')}
 						{:else}
-							<IconChevronDown class="pointer-events-none size-4" />
+							{type}
+						{/if}
+						<span class="ml-1">({count})</span>
+					</button>
+				{/each}
+			</div>
+		</div>
+		<!-- Tag Filters -->
+		{#if allTags.length > 0}
+			<div id="tag-filters" class="flex flex-wrap items-center gap-2">
+				{#each visibleTagsWithCounts as { tag, count } (tag)}
+					<button
+						disabled={!hydrated}
+						data-testid="tag-filter"
+						onclick={() => handleTagToggle(tag)}
+						class="cursor-pointer rounded border px-2 py-1 text-xs {selectedTags.includes(tag)
+							? 'border-primary bg-primary text-box'
+							: 'border-primary bg-box text-primary hover:bg-primary hover:text-box'}"
+					>
+						{tag}<span class="ml-1">({count})</span>
+					</button>
+				{/each}
+				{#if hiddenTagCount > 0}
+					<button
+						disabled={!hydrated}
+						onclick={() => (tagsExpanded = !tagsExpanded)}
+						aria-expanded={tagsExpanded}
+						aria-controls="tag-filters"
+						class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs"
+					>
+						{#if tagsExpanded}
+							{$_('ui.show_less_tags')}
+						{:else}
+							+ {hiddenTagCount} {$_('ui.show_more_tags')}
 						{/if}
 					</button>
-				</div>
-			{/if}
-			{#if showResultsCount}
-				<RowCount {handler} />
-			{/if}
-		</div>
-	{/if}
+				{/if}
+				{#if selectedTags.length > 0}
+					<button
+						disabled={!hydrated}
+						onclick={clearTags}
+						class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs underline"
+					>
+						✕ {$_('ui.clear_tags').toLowerCase()}
+					</button>
+				{/if}
+			</div>
+		{/if}
+
+		<!-- RowsPerPage, Sort, and Count -->
+		{#if handler && (showRowsPerPage || showSort || showResultsCount)}
+			<div class="flex flex-wrap items-center gap-4">
+				{#if showRowsPerPage}
+					<RowsPerPage {handler} disabled={!hydrated} />
+				{/if}
+				{#if showSort}
+					<div class="flex items-center gap-2">
+						<span class="text-sm">{$_('ui.sort.sort_by')}</span>
+						<select
+							disabled={!hydrated}
+							aria-label={$_('ui.sort.sort_by')}
+							bind:value={sortBy}
+							onchange={handleSortChange}
+							class="border-primary bg-box cursor-pointer rounded border px-2 py-1 text-sm"
+						>
+							<option value="date">{$_('ui.sort.date')}</option>
+							<option value="title">{$_('ui.sort.title')}</option>
+							<option value="type">{$_('ui.sort.type')}</option>
+							<option value="location">{$_('ui.sort.location')}</option>
+						</select>
+						<button
+							onclick={toggleSortOrder}
+							class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded-full border p-2 transition-colors"
+							aria-label={$_('ui.sort.toggle_order')}
+							title={sortOrder === 'asc' ? $_('ui.sort.ascending') : $_('ui.sort.descending')}
+						>
+							{#if sortOrder === 'asc'}
+								<IconChevronUp class="pointer-events-none size-4" />
+							{:else}
+								<IconChevronDown class="pointer-events-none size-4" />
+							{/if}
+						</button>
+					</div>
+				{/if}
+				{#if showResultsCount}
+					<RowCount {handler} />
+				{/if}
+			</div>
+		{/if}
+	</div>
 </div>

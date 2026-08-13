@@ -38,6 +38,9 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 ### Option 1 : Installation via Homebrew (macOS - Recommandée)
 
 ```bash
+# Les versions récentes de Homebrew exigent d'abord d'approuver les taps tiers
+brew trust aker-dev/tap
+
 # Installer microfolio via Homebrew
 brew install aker-dev/tap/microfolio
 
@@ -70,39 +73,6 @@ pnpm dev
 ```
 
 📖 **Guide d'installation détaillé** : [doc/fr/01-installation.md](doc/fr/01-installation.md)
-
-## 🖥️ Captures d'écran
-
-### Page d'accueil
-
-![microfolio Page d'accueil](doc/screenshots/microfolio_home_01.png)
-
-### Vues des projets
-
-![microfolio Galerie des projets](doc/screenshots/microfolio_projects.png)
-![microfolio Détail de projet 1](doc/screenshots/microfolio_project_01.png)
-![microfolio Détail de projet 2](doc/screenshots/microfolio_project_02.png)
-
-La lightbox affiche l'image en pleine hauteur, avec son titre, sa légende, son crédit et ses métadonnées EXIF dans un panneau qu'on ouvre à la demande :
-
-![microfolio Lightbox avec les métadonnées de l'image](doc/screenshots/microfolio_lightbox.png)
-
-### Vue liste
-
-![microfolio Vue liste](doc/screenshots/microfolio_list.png)
-
-### Vue carte
-
-![microfolio Carte interactive](doc/screenshots/microfolio_map.png)
-
-### Mode sombre
-
-Suit la préférence du système, avec un bouton dans le pied de page qui mémorise votre choix.
-
-![microfolio Page d'accueil en mode sombre](doc/screenshots/microfolio_home_dark.png)
-![microfolio Détail de projet en mode sombre](doc/screenshots/microfolio_project_dark.png)
-![microfolio Vue liste en mode sombre](doc/screenshots/microfolio_list_dark.png)
-![microfolio Lightbox en mode sombre](doc/screenshots/microfolio_lightbox_dark.png)
 
 ## 📚 Documentation
 
@@ -149,6 +119,39 @@ Les contributions sont les bienvenues ! N'hésitez pas à forker le projet, cré
 ## 📄 Licence
 
 Licence MIT - Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## 🖥️ Captures d'écran
+
+### Page d'accueil
+
+![microfolio Page d'accueil](doc/screenshots/microfolio_home_01.png)
+
+### Vues des projets
+
+![microfolio Galerie des projets](doc/screenshots/microfolio_projects.png)
+![microfolio Détail de projet 1](doc/screenshots/microfolio_project_01.png)
+![microfolio Détail de projet 2](doc/screenshots/microfolio_project_02.png)
+
+La lightbox affiche l'image en pleine hauteur, avec son titre, sa légende, son crédit et ses métadonnées EXIF dans un panneau qu'on ouvre à la demande :
+
+![microfolio Lightbox avec les métadonnées de l'image](doc/screenshots/microfolio_lightbox.png)
+
+### Vue liste
+
+![microfolio Vue liste](doc/screenshots/microfolio_list.png)
+
+### Vue carte
+
+![microfolio Carte interactive](doc/screenshots/microfolio_map.png)
+
+### Mode sombre
+
+Suit la préférence du système, avec un bouton dans le pied de page qui mémorise votre choix.
+
+![microfolio Page d'accueil en mode sombre](doc/screenshots/microfolio_home_dark.png)
+![microfolio Détail de projet en mode sombre](doc/screenshots/microfolio_project_dark.png)
+![microfolio Vue liste en mode sombre](doc/screenshots/microfolio_list_dark.png)
+![microfolio Lightbox en mode sombre](doc/screenshots/microfolio_lightbox_dark.png)
 
 ---
 

@@ -38,6 +38,9 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 ### Option 1: Homebrew Installation (macOS - Recommended)
 
 ```bash
+# Recent Homebrew versions require third-party taps to be trusted first
+brew trust aker-dev/tap
+
 # Install microfolio via Homebrew
 brew install aker-dev/tap/microfolio
 
@@ -70,39 +73,6 @@ pnpm dev
 ```
 
 📖 **Detailed installation guide**: [doc/en/01-installation.md](doc/en/01-installation.md)
-
-## 🖥️ Screenshots
-
-### Homepage
-
-![microfolio Homepage](doc/screenshots/microfolio_home_01.png)
-
-### Project Views
-
-![microfolio Projects Gallery](doc/screenshots/microfolio_projects.png)
-![microfolio Project Detail 1](doc/screenshots/microfolio_project_01.png)
-![microfolio Project Detail 2](doc/screenshots/microfolio_project_02.png)
-
-The lightbox shows the image full height, with its title, caption, credit and EXIF metadata in a panel you open when you want it:
-
-![microfolio Lightbox with image metadata](doc/screenshots/microfolio_lightbox.png)
-
-### List View
-
-![microfolio List View](doc/screenshots/microfolio_list.png)
-
-### Map View
-
-![microfolio Interactive Map](doc/screenshots/microfolio_map.png)
-
-### Dark Mode
-
-Follows the system preference, with a toggle in the footer that remembers your choice.
-
-![microfolio Homepage in dark mode](doc/screenshots/microfolio_home_dark.png)
-![microfolio Project detail in dark mode](doc/screenshots/microfolio_project_dark.png)
-![microfolio List view in dark mode](doc/screenshots/microfolio_list_dark.png)
-![microfolio Lightbox in dark mode](doc/screenshots/microfolio_lightbox_dark.png)
 
 ## 📚 Documentation
 
@@ -149,6 +119,39 @@ Contributions are welcome! Fork the project, create a feature branch, and submit
 ## 📄 License
 
 MIT License - See [LICENSE](LICENSE) file for details.
+
+## 🖥️ Screenshots
+
+### Homepage
+
+![microfolio Homepage](doc/screenshots/microfolio_home_01.png)
+
+### Project Views
+
+![microfolio Projects Gallery](doc/screenshots/microfolio_projects.png)
+![microfolio Project Detail 1](doc/screenshots/microfolio_project_01.png)
+![microfolio Project Detail 2](doc/screenshots/microfolio_project_02.png)
+
+The lightbox shows the image full height, with its title, caption, credit and EXIF metadata in a panel you open when you want it:
+
+![microfolio Lightbox with image metadata](doc/screenshots/microfolio_lightbox.png)
+
+### List View
+
+![microfolio List View](doc/screenshots/microfolio_list.png)
+
+### Map View
+
+![microfolio Interactive Map](doc/screenshots/microfolio_map.png)
+
+### Dark Mode
+
+Follows the system preference, with a toggle in the footer that remembers your choice.
+
+![microfolio Homepage in dark mode](doc/screenshots/microfolio_home_dark.png)
+![microfolio Project detail in dark mode](doc/screenshots/microfolio_project_dark.png)
+![microfolio List view in dark mode](doc/screenshots/microfolio_list_dark.png)
+![microfolio Lightbox in dark mode](doc/screenshots/microfolio_lightbox_dark.png)
 
 ---
 

@@ -27,6 +27,27 @@ const BASE = `http://localhost:${PORT}`;
 // Matches the dimensions of the previous set, so the README layout is unchanged
 const VIEWPORT = { width: 1280, height: 1028 };
 
+/**
+ * Opens the gallery on its first image — the one carrying a full set of EXIF —
+ * and deploys the information panel beside it.
+ */
+async function openLightbox(page) {
+	await page.locator('section button.aspect-4\\/3').first().click();
+	await page.locator('[role="dialog"]').waitFor();
+	await page.getByRole('button', { name: 'Image details' }).click();
+
+	// A capture taken before the full-size image has decoded shows an empty frame
+	await page.waitForFunction(() => {
+		const img = document.querySelector('[role="dialog"] img');
+		return img && img.complete && img.naturalWidth > 0;
+	});
+
+	// The controls fade after siteConfig.lightbox.hideControlsDelay, so this has
+	// to be the last thing that happens before the shutter
+	await page.mouse.move(900, 500);
+	await page.waitForTimeout(400);
+}
+
 const LIGHT = [
 	{ name: 'microfolio_home_01', path: '/' },
 	{ name: 'microfolio_home_02', path: '/', scrollTo: '.grid' },
@@ -35,6 +56,11 @@ const LIGHT = [
 	// `main section` rather than `section`: AkHeader opens with one of its own,
 	// already at the top, so scrolling to it moved nothing
 	{ name: 'microfolio_project_02', path: '/projects/example-project/', scrollTo: 'main section' },
+	{
+		name: 'microfolio_lightbox',
+		path: '/projects/example-project/',
+		actions: openLightbox
+	},
 	{ name: 'microfolio_list', path: '/list/' },
 	{ name: 'microfolio_map', path: '/map/', settle: 2500 }
 ];
@@ -42,6 +68,11 @@ const LIGHT = [
 const DARK = [
 	{ name: 'microfolio_home_dark', path: '/' },
 	{ name: 'microfolio_project_dark', path: '/projects/example-project/' },
+	{
+		name: 'microfolio_lightbox_dark',
+		path: '/projects/example-project/',
+		actions: openLightbox
+	},
 	{ name: 'microfolio_list_dark', path: '/list/' }
 ];
 
@@ -59,6 +90,12 @@ async function capture(context, shots) {
 			await page.locator(shot.scrollTo).first().scrollIntoViewIfNeeded();
 		}
 		await page.waitForTimeout(shot.settle ?? 600);
+
+		// Anything the shot needs to set up — opening the lightbox, say. Runs last
+		// so a control that fades on a timer is still on screen when we shoot.
+		if (shot.actions) {
+			await shot.actions(page);
+		}
 
 		const file = join(outDir, `${shot.name}.png`);
 		await page.screenshot({ path: file });

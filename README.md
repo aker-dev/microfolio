@@ -84,6 +84,10 @@ pnpm dev
 ![microfolio Project Detail 1](doc/screenshots/microfolio_project_01.png)
 ![microfolio Project Detail 2](doc/screenshots/microfolio_project_02.png)
 
+The lightbox shows the image full height, with its title, caption, credit and EXIF metadata in a panel you open when you want it:
+
+![microfolio Lightbox with image metadata](doc/screenshots/microfolio_lightbox.png)
+
 ### List View
 
 ![microfolio List View](doc/screenshots/microfolio_list.png)
@@ -99,6 +103,7 @@ Follows the system preference, with a toggle in the footer that remembers your c
 ![microfolio Homepage in dark mode](doc/screenshots/microfolio_home_dark.png)
 ![microfolio Project detail in dark mode](doc/screenshots/microfolio_project_dark.png)
 ![microfolio List view in dark mode](doc/screenshots/microfolio_list_dark.png)
+![microfolio Lightbox in dark mode](doc/screenshots/microfolio_lightbox_dark.png)
 
 ## 📚 Documentation
 

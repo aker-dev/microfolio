@@ -15,14 +15,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A visible keyboard focus ring across the site
 - `aria-expanded` on the mobile menu and the collapsible tag list, `aria-current` on the active pagination button
 - On phones the filter panel collapses behind a button that reports how many filters are active
+- `pnpm screenshots` regenerates the documentation screenshots, dark-mode set included, so a release no longer has to rediscover the scroll positions
+- `.mcp.json` declares the official Svelte MCP server, which brings live documentation and a `svelte-autofixer` to anyone working on the project with an AI assistant
+- `.claude/settings.json` lets the project's own scripts run without an approval prompt
 
 ### Changed
 
+- **Homebrew installation now needs `brew trust aker-dev/tap` first.** Recent Homebrew versions will not load a third-party tap until it is trusted; the four places the Homebrew route is documented have been updated
 - The lightbox image fills the height of the viewport instead of stopping at 60% of it, and its controls no longer sit on top of it
 - `/list` and `/projects` render their content on the server: it is in the static HTML rather than conjured at hydration
 - Below `md`, list rows become cards instead of a seven-column table scrolling sideways
 - Filter controls are inert until the page hydrates, and say so, rather than swallowing a click
 - Select inputs show a pointer cursor
+- The README screenshots were retaken — the previous set dated from August 2025 and showed 0.1.0-beta.3 — and moved to the end of the file, so what a reader needs comes first
 
 ### Fixed
 
@@ -34,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - The unused `loading_projects` string
+- `svelte-complete.txt`, 810 KB of Svelte documentation frozen since July 2025, together with the `.vscode/settings.json` whose only purpose was feeding it to Copilot. The Svelte MCP server replaces it with documentation that stays current
 
 ## [0.8.2] - 2026-08-11
 

@@ -92,6 +92,14 @@ pnpm dev
 
 ![microfolio Carte interactive](doc/screenshots/microfolio_map.png)
 
+### Mode sombre
+
+Suit la préférence du système, avec un bouton dans le pied de page qui mémorise votre choix.
+
+![microfolio Page d'accueil en mode sombre](doc/screenshots/microfolio_home_dark.png)
+![microfolio Détail de projet en mode sombre](doc/screenshots/microfolio_project_dark.png)
+![microfolio Vue liste en mode sombre](doc/screenshots/microfolio_list_dark.png)
+
 ## 📚 Documentation
 
 - **[Guide d'installation](doc/fr/01-installation.md)** - Installation et prérequis

@@ -18,7 +18,8 @@
 		"clean-images": "node scripts/clean-optimized-images.js",
 		"test": "vitest run",
 		"test:watch": "vitest",
-		"test:e2e": "playwright test"
+		"test:e2e": "playwright test",
+		"screenshots": "node scripts/screenshots.js"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.4.1",

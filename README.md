@@ -92,6 +92,14 @@ pnpm dev
 
 ![microfolio Interactive Map](doc/screenshots/microfolio_map.png)
 
+### Dark Mode
+
+Follows the system preference, with a toggle in the footer that remembers your choice.
+
+![microfolio Homepage in dark mode](doc/screenshots/microfolio_home_dark.png)
+![microfolio Project detail in dark mode](doc/screenshots/microfolio_project_dark.png)
+![microfolio List view in dark mode](doc/screenshots/microfolio_list_dark.png)
+
 ## 📚 Documentation
 
 - **[Installation Guide](doc/en/01-installation.md)** - Installation and prerequisites

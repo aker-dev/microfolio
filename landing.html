@@ -96,15 +96,55 @@
 						Optimal performance with static site generation. Deploy anywhere.
 					</p>
 				</div>
+				<div class="bg-box rounded-lg border border-neutral-200 p-6">
+					<div class="mb-3 text-2xl">🖼️</div>
+					<h3 class="mb-2 font-bold">Lightbox &amp; Metadata</h3>
+					<p class="text-sm text-neutral-600">
+						Images fill the screen, with title, caption, credit and EXIF read straight from the
+						file.
+					</p>
+				</div>
+				<div class="bg-box rounded-lg border border-neutral-200 p-6">
+					<div class="mb-3 text-2xl">🌙</div>
+					<h3 class="mb-2 font-bold">Dark Mode</h3>
+					<p class="text-sm text-neutral-600">
+						Follows the system preference, with a toggle that remembers what your visitor chose.
+					</p>
+				</div>
+				<div class="bg-box rounded-lg border border-neutral-200 p-6">
+					<div class="mb-3 text-2xl">📱</div>
+					<h3 class="mb-2 font-bold">Readable Everywhere</h3>
+					<p class="text-sm text-neutral-600">
+						Content is in the HTML, so it works without JavaScript and search engines see it. Built
+						for phones and for the keyboard.
+					</p>
+				</div>
 			</div>
 
 			<!-- Screenshots -->
 			<section class="mb-16">
 				<h3 class="mb-8 text-center text-2xl font-bold">See it in action</h3>
+
+				<!-- Featured: the lightbox is what sets microfolio apart from a plain generator -->
+				<div class="bg-box mb-8 overflow-hidden rounded-lg border border-neutral-200">
+					<img
+						src="https://raw.githubusercontent.com/aker-dev/microfolio/main/doc/screenshots/microfolio_lightbox.png"
+						alt="microfolio lightbox showing an image full height beside its metadata panel"
+						class="h-auto w-full"
+					/>
+					<div class="p-4">
+						<h4 class="mb-1 font-bold">Image lightbox</h4>
+						<p class="text-sm text-neutral-600">
+							The image fills the height of the screen. Title, caption, credit and the full EXIF set
+							— camera, lens, exposure, location — sit in a panel you open when you want it.
+						</p>
+					</div>
+				</div>
+
 				<div class="grid gap-8 md:grid-cols-2">
 					<div class="bg-box overflow-hidden rounded-lg border border-neutral-200">
 						<img
-							src="https://raw.githubusercontent.com/aker-dev/microfolio/main/doc/screenshots/microfolio_home_01.png"
+							src="https://raw.githubusercontent.com/aker-dev/microfolio/main/doc/screenshots/microfolio_home.png"
 							alt="microfolio Homepage"
 							class="h-auto w-full"
 						/>
@@ -124,7 +164,7 @@
 						<div class="p-4">
 							<h4 class="mb-1 font-bold">List View</h4>
 							<p class="text-sm text-neutral-600">
-								Table view with advanced filtering and sorting capabilities
+								Searchable, sortable table — folding down to cards on a phone
 							</p>
 						</div>
 					</div>
@@ -155,6 +195,25 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- Dark mode strip -->
+				<h4 class="mt-12 mb-6 text-center text-lg font-bold">Dark mode, out of the box</h4>
+				<div class="grid gap-8 md:grid-cols-2">
+					<div class="bg-box overflow-hidden rounded-lg border border-neutral-200">
+						<img
+							src="https://raw.githubusercontent.com/aker-dev/microfolio/main/doc/screenshots/microfolio_home_dark.png"
+							alt="microfolio homepage in dark mode"
+							class="h-auto w-full"
+						/>
+					</div>
+					<div class="bg-box overflow-hidden rounded-lg border border-neutral-200">
+						<img
+							src="https://raw.githubusercontent.com/aker-dev/microfolio/main/doc/screenshots/microfolio_lightbox_dark.png"
+							alt="microfolio lightbox in dark mode"
+							class="h-auto w-full"
+						/>
+					</div>
+				</div>
 			</section>
 
 			<!-- Quick Start -->
@@ -164,6 +223,8 @@
 					<div>
 						<h4 class="mb-3 font-bold">Option 1: Homebrew (macOS)</h4>
 						<div class="rounded bg-neutral-100 p-4 font-mono text-sm">
+							<div class="mb-2"># Recent Homebrew needs third-party taps trusted first</div>
+							<div class="mb-2">brew trust aker-dev/tap</div>
 							<div class="mb-2"># Install microfolio via Homebrew</div>
 							<div class="mb-2">brew install aker-dev/tap/microfolio</div>
 							<div class="mb-2"># Create a new portfolio</div>
@@ -175,6 +236,7 @@
 					</div>
 					<div>
 						<h4 class="mb-3 font-bold">Option 2: Manual Installation</h4>
+						<p class="mb-3 text-sm text-neutral-600">Requires Node.js 22.13 or later.</p>
 						<div class="rounded bg-neutral-100 p-4 font-mono text-sm">
 							<div class="mb-2"># Clone the template</div>
 							<div class="mb-2">git clone https://github.com/aker-dev/microfolio.git</div>

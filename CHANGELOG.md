@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2026-08-13
+
+### Added
+
+- The lightbox gained an information panel carrying the image title, caption, credit and EXIF metadata. It takes its own column and pushes the image across on wide screens, and overlays it where there is no room for two columns
+- Lightbox controls step out of the way once you have been still for a moment and return on any movement. The delay is `siteConfig.lightbox.hideControlsDelay`, in milliseconds, `0` keeping them on screen
+- Project titles in the list view, and the type and tag badges on a project page, are now links into the projects view with that filter already applied
+- A visible keyboard focus ring across the site
+- `aria-expanded` on the mobile menu and the collapsible tag list, `aria-current` on the active pagination button
+- On phones the filter panel collapses behind a button that reports how many filters are active
+
+### Changed
+
+- The lightbox image fills the height of the viewport instead of stopping at 60% of it, and its controls no longer sit on top of it
+- `/list` and `/projects` render their content on the server: it is in the static HTML rather than conjured at hydration
+- Below `md`, list rows become cards instead of a seven-column table scrolling sideways
+- Filter controls are inert until the page hydrates, and say so, rather than swallowing a click
+- Select inputs show a pointer cursor
+
+### Fixed
+
+- `/list` shipped nothing but a "Loading projects…" placeholder: invisible to search engines, blank without JavaScript, and a flash before hydration
+- `/projects` rendered all 101 cards and then dropped to 20 on hydration
+- A click on a filter before hydration was lost with no feedback at all
+- Four `focus:outline-none` with no replacement left keyboard users with no idea where they were
+
+### Removed
+
+- The unused `loading_projects` string
+
 ## [0.8.2] - 2026-08-11
 
 ### Fixed

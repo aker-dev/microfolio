@@ -49,7 +49,7 @@ async function openLightbox(page) {
 }
 
 const LIGHT = [
-	{ name: 'microfolio_home_01', path: '/' },
+	{ name: 'microfolio_home', path: '/' },
 	{ name: 'microfolio_projects', path: '/projects/' },
 	{ name: 'microfolio_project_01', path: '/projects/example-project/' },
 	// `main section` rather than `section`: AkHeader opens with one of its own,

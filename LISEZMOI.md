@@ -124,7 +124,7 @@ Licence MIT - Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ### Page d'accueil
 
-![microfolio Page d'accueil](doc/screenshots/microfolio_home_01.png)
+![microfolio Page d'accueil](doc/screenshots/microfolio_home.png)
 
 ### Vues des projets
 

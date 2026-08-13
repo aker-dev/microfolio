@@ -124,7 +124,7 @@ MIT License - See [LICENSE](LICENSE) file for details.
 
 ### Homepage
 
-![microfolio Homepage](doc/screenshots/microfolio_home_01.png)
+![microfolio Homepage](doc/screenshots/microfolio_home.png)
 
 ### Project Views
 

@@ -73,10 +73,9 @@ pnpm dev
 
 ## 🖥️ Screenshots
 
-### Homepage Views
+### Homepage
 
-![microfolio Homepage 1](doc/screenshots/microfolio_home_01.png)
-![microfolio Homepage 2](doc/screenshots/microfolio_home_02.png)
+![microfolio Homepage](doc/screenshots/microfolio_home_01.png)
 
 ### Project Views
 

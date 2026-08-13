@@ -73,10 +73,9 @@ pnpm dev
 
 ## 🖥️ Captures d'écran
 
-### Vues de la page d'accueil
+### Page d'accueil
 
-![microfolio Page d'accueil 1](doc/screenshots/microfolio_home_01.png)
-![microfolio Page d'accueil 2](doc/screenshots/microfolio_home_02.png)
+![microfolio Page d'accueil](doc/screenshots/microfolio_home_01.png)
 
 ### Vues des projets
 

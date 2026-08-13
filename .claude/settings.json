@@ -1,0 +1,16 @@
+{
+	"permissions": {
+		"allow": [
+			"Bash(pnpm lint)",
+			"Bash(pnpm format)",
+			"Bash(pnpm test)",
+			"Bash(pnpm test:e2e)",
+			"Bash(pnpm build)",
+			"Bash(pnpm preview)",
+			"Bash(pnpm screenshots)",
+			"Bash(pnpm dev)",
+			"Bash(pnpm dev --port *)",
+			"Bash(pnpm exec playwright test *)"
+		]
+	}
+}

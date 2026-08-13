@@ -36,20 +36,28 @@ microfolio is a modern static portfolio generator, designed specifically for cre
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
-2. **Install microfolio via Homebrew**:
+2. **Trust the AKER tap**:
+
+   Recent Homebrew versions will not load a third-party tap until you say you trust it.
+
+   ```bash
+   brew trust aker-dev/tap
+   ```
+
+3. **Install microfolio via Homebrew**:
 
    ```bash
    brew install aker-dev/tap/microfolio
    ```
 
-3. **Create a new portfolio**:
+4. **Create a new portfolio**:
 
    ```bash
    microfolio new my-portfolio
    cd my-portfolio
    ```
 
-4. **Start the development server**:
+5. **Start the development server**:
    ```bash
    microfolio dev
    ```

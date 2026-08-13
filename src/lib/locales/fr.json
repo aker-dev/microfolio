@@ -39,7 +39,6 @@
 		"clear_search": "Effacer la recherche",
 		"show_more_tags": "de plus",
 		"show_less_tags": "voir moins",
-		"loading_projects": "Chargement des projets...",
 		"generated_with": "généré avec",
 		"toggle_mobile_menu": "Menu",
 		"toggle_theme": "Changer le thème",
@@ -116,6 +115,8 @@
 			"coordinates": "Coordonnées",
 			"keywords": "Mots-clés"
 		},
-		"back": "Retour"
+		"back": "Retour",
+		"image_details": "Détails de l'image",
+		"filters": "Filtres"
 	}
 }

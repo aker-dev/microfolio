@@ -149,3 +149,284 @@ test.describe('browser history', () => {
 		);
 	});
 });
+
+test.describe('navigating into a filtered view', () => {
+	test('a list row title links to its project', async ({ page }) => {
+		await page.goto('/list/');
+		await waitForFiltersReady(page);
+
+		const title = page.locator('table tbody tr h3 a').first();
+		const label = (await title.textContent())?.trim();
+		await title.click();
+
+		await expect(page).toHaveURL(/\/projects\/[^/]+\/$/);
+		await expect(page.getByRole('heading', { level: 1, name: label })).toBeVisible();
+	});
+
+	test('the type badge opens the projects view filtered on that type', async ({ page }) => {
+		await page.goto('/projects/example-project/');
+		const badge = page.locator('aside a[href*="?type="]').first();
+		const type = (await badge.textContent())?.trim();
+		await badge.click();
+
+		await expect(page).toHaveURL(new RegExp(`/projects/\\?type=${type}`));
+		// The filter is really applied, not just present in the URL
+		await waitForFiltersReady(page);
+		// Scoped to the type buttons: the demo content has a tag named like the
+		// type, so matching on the label alone resolves to two elements
+		await expect(page.getByTestId('type-filter').filter({ hasText: type })).toHaveClass(
+			/(?:^|\s)bg-primary(?:\s|$)/
+		);
+	});
+
+	test('a tag badge opens the projects view filtered on that tag', async ({ page }) => {
+		await page.goto('/projects/example-project/');
+		const badge = page.locator('aside a[href*="?tags="]').first();
+		const tag = (await badge.textContent())?.trim();
+		await badge.click();
+
+		await expect(page).toHaveURL(/\/projects\/\?tags=/);
+		await waitForFiltersReady(page);
+		await expect(page.getByTestId('tag-filter').filter({ hasText: tag })).toHaveClass(
+			/(?:^|\s)bg-primary(?:\s|$)/
+		);
+	});
+});
+
+/** See the note on waitForFiltersReady: the layout marks the tree interactive. */
+async function waitForHydration(page) {
+	await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+}
+
+/**
+ * Controls fade out after siteConfig.lightbox.hideControlsDelay and become
+ * pointer-events-none, so a test that pauses would click through them. Any
+ * pointer movement brings them back — assert that before interacting.
+ */
+async function revealControls(page) {
+	await page.mouse.move(300, 300);
+	await expect(page.getByRole('button', { name: 'Close' })).toHaveCSS('opacity', '1');
+}
+
+test.describe('lightbox', () => {
+	const openLightbox = async (page) => {
+		await page.goto('/projects/example-project/');
+		await waitForHydration(page);
+		await page.locator('section button.aspect-4\\/3').first().click();
+		await expect(page.getByRole('dialog')).toBeVisible();
+	};
+
+	test('opens from the gallery and closes with Escape', async ({ page }) => {
+		await openLightbox(page);
+
+		await page.keyboard.press('Escape');
+		await expect(page.getByRole('dialog')).toBeHidden();
+	});
+
+	test('opens with the image alone, and the panel is opt-in', async ({ page }) => {
+		await openLightbox(page);
+		await revealControls(page);
+		const panel = page.getByRole('complementary', { name: 'Image details' });
+
+		// Closed by default: the point of "full-bleed" is an unobstructed image
+		await expect(panel).toBeHidden();
+
+		await page.getByRole('button', { name: 'Image details' }).click();
+		await expect(panel).toBeVisible();
+		await expect(panel.getByRole('heading', { level: 2 })).toBeVisible();
+	});
+
+	test('the panel stays open while browsing to the next image', async ({ page }) => {
+		await openLightbox(page);
+		await revealControls(page);
+		await page.getByRole('button', { name: 'Image details' }).click();
+
+		const panel = page.getByRole('complementary', { name: 'Image details' });
+		const firstTitle = await panel.getByRole('heading', { level: 2 }).textContent();
+
+		await revealControls(page);
+		await page.getByRole('button', { name: 'Next image' }).last().click();
+
+		await expect(panel).toBeVisible();
+		await expect(panel.getByRole('heading', { level: 2 })).not.toHaveText(firstTitle ?? '');
+	});
+
+	test('arrow keys move through the gallery and wrap around', async ({ page }) => {
+		await openLightbox(page);
+		const counter = page.getByText(/^\s*\d+ \/ \d+\s*$/);
+		await expect(counter).toHaveText(/^\s*1 \/ (\d+)\s*$/);
+		const total = Number((await counter.textContent())?.split('/')[1].trim());
+
+		await page.keyboard.press('ArrowRight');
+		await expect(counter).toHaveText(new RegExp(`^\\s*2 / ${total}\\s*$`));
+
+		// Wrapping backwards from the first image is the behaviour to preserve
+		await page.keyboard.press('ArrowLeft');
+		await page.keyboard.press('ArrowLeft');
+		await expect(counter).toHaveText(new RegExp(`^\\s*${total} / ${total}\\s*$`));
+	});
+});
+
+test.describe('lightbox idle controls', () => {
+	test('controls fade out while idle and return on the first move', async ({ page }) => {
+		await page.goto('/projects/example-project/');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+		await page.locator('section button.aspect-4\\/3').first().click();
+
+		const close = page.getByRole('button', { name: 'Close' });
+		const counter = page.getByText(/^\s*\d+ \/ \d+\s*$/);
+		await expect(close).toHaveCSS('opacity', '1');
+
+		// siteConfig.lightbox.hideControlsDelay is 3s; no pointer movement here
+		await expect(close).toHaveCSS('opacity', '0', { timeout: 8000 });
+		await expect(counter).toHaveCSS('opacity', '0');
+
+		await page.mouse.move(400, 300);
+		await expect(close).toHaveCSS('opacity', '1');
+		await expect(counter).toHaveCSS('opacity', '1');
+	});
+
+	test('clicking beside the image no longer closes the lightbox', async ({ page }) => {
+		await page.goto('/projects/example-project/');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+		await page.locator('section button.aspect-4\\/3').first().click();
+		const dialog = page.getByRole('dialog');
+		await expect(dialog).toBeVisible();
+
+		// Top centre: outside the image, clear of the navigation zones and controls
+		const box = await dialog.boundingBox();
+		await page.mouse.click(box.x + box.width / 2, box.y + 4);
+		await expect(dialog).toBeVisible();
+
+		// The counter is a control, not a way out either
+		await revealControls(page);
+		await page.getByText(/^\s*\d+ \/ \d+\s*$/).click();
+		await expect(dialog).toBeVisible();
+	});
+});
+
+// The point of prerendering: this is the only honest way to check that the
+// content is in the HTML rather than conjured by hydration.
+test.describe('without JavaScript', () => {
+	test.use({ javaScriptEnabled: false });
+
+	test('/list renders its rows, not a placeholder', async ({ page }) => {
+		await page.goto('/list/');
+
+		await expect(page.getByRole('heading', { level: 1, name: 'Projects List' })).toBeVisible();
+		await expect(page.locator('table tbody tr')).toHaveCount(20);
+		await expect(page.getByText('Loading projects')).toHaveCount(0);
+	});
+
+	test('/projects renders a page of cards', async ({ page }) => {
+		await page.goto('/projects/');
+
+		// Card headings rather than "links inside a grid", which also caught the
+		// four navigation links in the footer
+		await expect(page.locator('h3.text-lg')).toHaveCount(20);
+	});
+
+	test('the filter controls say they are not ready yet', async ({ page }) => {
+		await page.goto('/list/');
+
+		await expect(page.getByTestId('type-filter').first()).toBeDisabled();
+		await expect(page.getByPlaceholder('Search projects...')).toBeDisabled();
+	});
+});
+
+test.describe('keyboard and assistive technology', () => {
+	test('tabbing leaves a visible focus ring', async ({ page }) => {
+		await page.goto('/list/');
+		await waitForFiltersReady(page);
+
+		await page.keyboard.press('Tab');
+
+		// :focus-visible only matches after a real key press, never after a
+		// programmatic .focus() — which is the whole point of using it
+		const focus = await page.evaluate(() => {
+			const el = document.activeElement;
+			const style = getComputedStyle(el);
+			return {
+				visible: el.matches(':focus-visible'),
+				width: parseFloat(style.outlineWidth),
+				style: style.outlineStyle
+			};
+		});
+
+		expect(focus.visible).toBe(true);
+		expect(focus.style).not.toBe('none');
+		expect(focus.width).toBeGreaterThan(0);
+	});
+
+	test('the collapsible tag list announces its state', async ({ page }) => {
+		await page.goto('/projects/');
+		await waitForFiltersReady(page);
+
+		const toggle = page.getByRole('button', { name: /more$/ });
+		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+		await expect(toggle).toHaveAttribute('aria-controls', 'tag-filters');
+
+		await toggle.click();
+		await expect(page.getByRole('button', { name: 'show less' })).toHaveAttribute(
+			'aria-expanded',
+			'true'
+		);
+	});
+
+	test('the mobile menu announces its state', async ({ page }) => {
+		await page.setViewportSize({ width: 390, height: 780 });
+		await page.goto('/list/');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+
+		const toggle = page.getByRole('button', { name: 'Toggle mobile menu' });
+		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+		await toggle.click();
+		await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+		await expect(page.locator('#mobile-menu')).toBeVisible();
+	});
+});
+
+test.describe('small screens', () => {
+	test.use({ viewport: { width: 375, height: 820 } });
+
+	test('the filter panel starts collapsed and reports what is active', async ({ page }) => {
+		await page.goto('/list/?tags=digital');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+
+		const panel = page.locator('#filter-panel');
+		const toggle = page.getByRole('button', { name: /Filters/ });
+		await expect(panel).toBeHidden();
+		// One tag from the URL, so the button has to say so
+		await expect(toggle).toContainText('(1)');
+		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+		await toggle.click();
+		await expect(panel).toBeVisible();
+		await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+	});
+
+	test('/list shows cards rather than a table that scrolls sideways', async ({ page }) => {
+		await page.goto('/list/');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+
+		await expect(page.locator('table')).toBeHidden();
+		await expect(page.locator('ul.space-y-3 > li')).toHaveCount(20);
+		// The first card carries what the table columns held
+		const first = page.locator('ul.space-y-3 > li').first();
+		await expect(first.getByRole('link')).toBeVisible();
+		await expect(first).toContainText(/\d{4}-\d{2}/);
+	});
+
+	test('content is reachable without scrolling past the filters', async ({ page }) => {
+		await page.goto('/list/');
+		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
+
+		const top = await page
+			.locator('ul.space-y-3 > li')
+			.first()
+			.evaluate((el) => el.getBoundingClientRect().top);
+		// It used to start at 736px on an 820px screen
+		expect(top).toBeLessThan(500);
+	});
+});

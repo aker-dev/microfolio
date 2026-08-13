@@ -38,6 +38,9 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 ### Option 1 : Installation via Homebrew (macOS - Recommandée)
 
 ```bash
+# Les versions récentes de Homebrew exigent d'abord d'approuver les taps tiers
+brew trust aker-dev/tap
+
 # Installer microfolio via Homebrew
 brew install aker-dev/tap/microfolio
 
@@ -71,27 +74,6 @@ pnpm dev
 
 📖 **Guide d'installation détaillé** : [doc/fr/01-installation.md](doc/fr/01-installation.md)
 
-## 🖥️ Captures d'écran
-
-### Vues de la page d'accueil
-
-![microfolio Page d'accueil 1](doc/screenshots/microfolio_home_01.png)
-![microfolio Page d'accueil 2](doc/screenshots/microfolio_home_02.png)
-
-### Vues des projets
-
-![microfolio Galerie des projets](doc/screenshots/microfolio_projects.png)
-![microfolio Détail de projet 1](doc/screenshots/microfolio_project_01.png)
-![microfolio Détail de projet 2](doc/screenshots/microfolio_project_02.png)
-
-### Vue liste
-
-![microfolio Vue liste](doc/screenshots/microfolio_list.png)
-
-### Vue carte
-
-![microfolio Carte interactive](doc/screenshots/microfolio_map.png)
-
 ## 📚 Documentation
 
 - **[Guide d'installation](doc/fr/01-installation.md)** - Installation et prérequis
@@ -118,15 +100,15 @@ microfolio build  # ou pnpm build
 
 Les contributions sont les bienvenues ! N'hésitez pas à forker le projet, créer une branche de fonctionnalité et soumettre une Pull Request.
 
-### Fonctionnalités récentes (v0.8.0)
+### Fonctionnalités récentes (v0.9.0)
 
-- Un projet au contenu invalide est nommé en fin de build au lieu d'échouer silencieusement
-- Une vignette manquante affiche un placeholder plutôt qu'une image cassée
-- « Retour » sur une page projet ramène d'où l'on vient, filtres et pagination intacts
-- Le retour navigateur et les URLs de liste partagées restaurent bien la vue visée
-- Tests unitaires (Vitest) et de bout en bout (Playwright), exécutés en CI avant déploiement
+- Lightbox refondue : l'image occupe toute la hauteur de l'écran, titre, légende et métadonnées EXIF dans un panneau qui s'ouvre à la demande
+- Les titres de projet et les badges de type et de tags sont des liens vers la vue projets, déjà filtrée
+- Les vues liste et projets rendent leur contenu côté serveur — visible des moteurs de recherche et sans JavaScript
+- Utilisable sur téléphone : les filtres se replient derrière un bouton et les lignes de la liste deviennent des cartes
+- Focus clavier visible, et contrôles repliables qui annoncent leur état
 
-> Node.js 22.13 ou supérieur est désormais requis (dépendance de pnpm 11).
+> Node.js 22.13 ou supérieur est requis (dépendance de pnpm 11).
 
 ## 📞 Support
 
@@ -137,6 +119,39 @@ Les contributions sont les bienvenues ! N'hésitez pas à forker le projet, cré
 ## 📄 Licence
 
 Licence MIT - Consultez le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## 🖥️ Captures d'écran
+
+### Page d'accueil
+
+![microfolio Page d'accueil](doc/screenshots/microfolio_home.png)
+
+### Vues des projets
+
+![microfolio Galerie des projets](doc/screenshots/microfolio_projects.png)
+![microfolio Détail de projet 1](doc/screenshots/microfolio_project_01.png)
+![microfolio Détail de projet 2](doc/screenshots/microfolio_project_02.png)
+
+La lightbox affiche l'image en pleine hauteur, avec son titre, sa légende, son crédit et ses métadonnées EXIF dans un panneau qu'on ouvre à la demande :
+
+![microfolio Lightbox avec les métadonnées de l'image](doc/screenshots/microfolio_lightbox.png)
+
+### Vue liste
+
+![microfolio Vue liste](doc/screenshots/microfolio_list.png)
+
+### Vue carte
+
+![microfolio Carte interactive](doc/screenshots/microfolio_map.png)
+
+### Mode sombre
+
+Suit la préférence du système, avec un bouton dans le pied de page qui mémorise votre choix.
+
+![microfolio Page d'accueil en mode sombre](doc/screenshots/microfolio_home_dark.png)
+![microfolio Détail de projet en mode sombre](doc/screenshots/microfolio_project_dark.png)
+![microfolio Vue liste en mode sombre](doc/screenshots/microfolio_list_dark.png)
+![microfolio Lightbox en mode sombre](doc/screenshots/microfolio_lightbox_dark.png)
 
 ---
 

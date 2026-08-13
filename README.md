@@ -38,6 +38,9 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 ### Option 1: Homebrew Installation (macOS - Recommended)
 
 ```bash
+# Recent Homebrew versions require third-party taps to be trusted first
+brew trust aker-dev/tap
+
 # Install microfolio via Homebrew
 brew install aker-dev/tap/microfolio
 
@@ -71,27 +74,6 @@ pnpm dev
 
 📖 **Detailed installation guide**: [doc/en/01-installation.md](doc/en/01-installation.md)
 
-## 🖥️ Screenshots
-
-### Homepage Views
-
-![microfolio Homepage 1](doc/screenshots/microfolio_home_01.png)
-![microfolio Homepage 2](doc/screenshots/microfolio_home_02.png)
-
-### Project Views
-
-![microfolio Projects Gallery](doc/screenshots/microfolio_projects.png)
-![microfolio Project Detail 1](doc/screenshots/microfolio_project_01.png)
-![microfolio Project Detail 2](doc/screenshots/microfolio_project_02.png)
-
-### List View
-
-![microfolio List View](doc/screenshots/microfolio_list.png)
-
-### Map View
-
-![microfolio Interactive Map](doc/screenshots/microfolio_map.png)
-
 ## 📚 Documentation
 
 - **[Installation Guide](doc/en/01-installation.md)** - Installation and prerequisites
@@ -118,15 +100,15 @@ microfolio build  # or pnpm build
 
 Contributions are welcome! Fork the project, create a feature branch, and submit a Pull Request.
 
-### Recent Features (v0.8.0)
+### Recent Features (v0.9.0)
 
-- Broken project content is reported by name at the end of the build instead of failing silently
-- Missing thumbnails fall back to a placeholder rather than a broken image
-- "Back" on a project page returns to where you came from, filters and page number intact
-- Browser back and shared list URLs now restore the view they point at
-- Unit tests (Vitest) and end-to-end tests (Playwright), both run in CI before deployment
+- A rebuilt lightbox: the image fills the height of the screen, with title, caption and EXIF metadata in a panel that opens on demand
+- Project titles and the type and tag badges are links into the projects view, already filtered
+- The list and projects views render their content on the server — visible to search engines and without JavaScript
+- Usable on a phone: filters collapse behind a button, and list rows become cards instead of a table scrolling sideways
+- Visible keyboard focus, and collapsible controls that announce their state
 
-> Node.js 22.13 or later is now required (a pnpm 11 dependency).
+> Node.js 22.13 or later is required (a pnpm 11 dependency).
 
 ## 📞 Support
 
@@ -137,6 +119,39 @@ Contributions are welcome! Fork the project, create a feature branch, and submit
 ## 📄 License
 
 MIT License - See [LICENSE](LICENSE) file for details.
+
+## 🖥️ Screenshots
+
+### Homepage
+
+![microfolio Homepage](doc/screenshots/microfolio_home.png)
+
+### Project Views
+
+![microfolio Projects Gallery](doc/screenshots/microfolio_projects.png)
+![microfolio Project Detail 1](doc/screenshots/microfolio_project_01.png)
+![microfolio Project Detail 2](doc/screenshots/microfolio_project_02.png)
+
+The lightbox shows the image full height, with its title, caption, credit and EXIF metadata in a panel you open when you want it:
+
+![microfolio Lightbox with image metadata](doc/screenshots/microfolio_lightbox.png)
+
+### List View
+
+![microfolio List View](doc/screenshots/microfolio_list.png)
+
+### Map View
+
+![microfolio Interactive Map](doc/screenshots/microfolio_map.png)
+
+### Dark Mode
+
+Follows the system preference, with a toggle in the footer that remembers your choice.
+
+![microfolio Homepage in dark mode](doc/screenshots/microfolio_home_dark.png)
+![microfolio Project detail in dark mode](doc/screenshots/microfolio_project_dark.png)
+![microfolio List view in dark mode](doc/screenshots/microfolio_list_dark.png)
+![microfolio Lightbox in dark mode](doc/screenshots/microfolio_lightbox_dark.png)
 
 ---
 

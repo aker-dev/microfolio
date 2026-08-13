@@ -74,6 +74,8 @@
 			class="bg-box text-primary border-primary z-100 mb-3 cursor-pointer rounded-full border p-2 md:hidden"
 			onclick={toggleMobileMenu}
 			aria-label={$_('ui.toggle_mobile_menu')}
+			aria-expanded={mobileMenuOpen}
+			aria-controls="mobile-menu"
 		>
 			{#if mobileMenuOpen}
 				<IconCloseLarge class="pointer-events-none size-6 hover:scale-110" />
@@ -85,7 +87,7 @@
 
 	<!-- Mobile Menu -->
 	{#if mobileMenuOpen}
-		<div class="border-primary bg-box border-t border-solid md:hidden">
+		<div id="mobile-menu" class="border-primary bg-box border-t border-solid md:hidden">
 			<nav class="mx-auto max-w-7xl px-4 py-4">
 				<ul class="flex flex-col gap-4">
 					{#each siteConfig.navigation as item (item.href)}

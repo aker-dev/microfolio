@@ -27,6 +27,73 @@ const BASE = `http://localhost:${PORT}`;
 // Matches the dimensions of the previous set, so the README layout is unchanged
 const VIEWPORT = { width: 1280, height: 1028 };
 
+// Shown in the address bar of the frame. The live demo really is served here,
+// so nothing on the screenshots is invented.
+const PUBLIC_ORIGIN = 'aker-dev.github.io/microfolio';
+
+/**
+ * A raw capture reads as a truncated page rather than a product, so each one is
+ * composed into a browser window before being written out. Playwright only
+ * renders page content, hence the second pass: the capture goes back in as a
+ * data: URI and the frame around it is captured in turn.
+ *
+ * The chrome is deliberately microfolio's own — black and white, IBM Plex, a
+ * thin border — rather than an imitation of any operating system.
+ */
+function frameTemplate(dataUri, address, theme) {
+	const dark = theme === 'dark';
+	const ink = dark ? '#fff' : '#000';
+	const surface = dark ? 'oklch(26.9% 0 0)' : '#fff';
+	const page = dark ? 'oklch(20.5% 0 0)' : 'oklch(97% 0 0)';
+	const muted = dark ? 'rgba(255,255,255,.6)' : 'rgba(0,0,0,.55)';
+	const field = dark ? 'oklch(20.5% 0 0)' : 'oklch(97% 0 0)';
+
+	return `<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=ibm-plex-sans:400,600&display=swap">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: ${page}; font-family: 'IBM Plex Sans', sans-serif; }
+  /* The padding is what keeps the drop shadow inside the captured element */
+  #shot { padding: 40px; display: inline-block; }
+  .window {
+    border: 1px solid ${ink};
+    border-radius: 10px;
+    overflow: hidden;
+    background: ${surface};
+    box-shadow: 0 18px 40px rgba(0,0,0,${dark ? '.5' : '.14'});
+  }
+  .bar {
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 14px;
+    border-bottom: 1px solid ${ink};
+    background: ${surface};
+  }
+  .dots { display: flex; gap: 6px; flex: 0 0 auto; }
+  .dots i { width: 10px; height: 10px; border-radius: 50%; border: 1px solid ${ink}; display: block; }
+  .address {
+    flex: 1; text-align: center;
+    font-size: 12px; color: ${muted};
+    background: ${field};
+    border: 1px solid ${muted};
+    border-radius: 999px;
+    padding: 4px 12px;
+    max-width: 420px; margin: 0 auto;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .spacer { flex: 0 0 46px; }
+  img { display: block; width: ${VIEWPORT.width}px; height: auto; }
+</style></head>
+<body><div id="shot"><div class="window">
+  <div class="bar">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <span class="address">${address}</span>
+    <span class="spacer"></span>
+  </div>
+  <img src="${dataUri}" alt="">
+</div></div></body></html>`;
+}
+
 /**
  * Opens the gallery on its first image — the one carrying a full set of EXIF —
  * and deploys the information panel beside it.
@@ -75,8 +142,13 @@ const DARK = [
 	{ name: 'microfolio_list_dark', path: '/list/' }
 ];
 
-async function capture(context, shots) {
+async function capture(browser, context, shots, theme) {
 	const page = await context.newPage();
+	// Reused across shots; its own viewport only has to be big enough to hold
+	// the frame, which is captured by element rather than by viewport
+	const framer = await browser.newPage({
+		viewport: { width: VIEWPORT.width + 120, height: 600 }
+	});
 
 	for (const shot of shots) {
 		await page.goto(BASE + shot.path, { waitUntil: 'networkidle' });
@@ -96,11 +168,21 @@ async function capture(context, shots) {
 			await shot.actions(page);
 		}
 
+		const raw = await page.screenshot();
+		const address = PUBLIC_ORIGIN + shot.path;
+		await framer.setContent(
+			frameTemplate(`data:image/png;base64,${raw.toString('base64')}`, address, theme),
+			{ waitUntil: 'load' }
+		);
+		// The webfont has to be in before the address bar is captured
+		await framer.evaluate(() => document.fonts.ready);
+
 		const file = join(outDir, `${shot.name}.png`);
-		await page.screenshot({ path: file });
-		console.log(`  ✓ ${shot.name}.png`);
+		await framer.locator('#shot').screenshot({ path: file });
+		console.log(`  ✓ ${shot.name}.png  —  ${address}`);
 	}
 
+	await framer.close();
 	await page.close();
 }
 
@@ -112,11 +194,11 @@ async function main() {
 		console.log(`Capturing ${BASE} at ${VIEWPORT.width}x${VIEWPORT.height}`);
 
 		const light = await browser.newContext({ viewport: VIEWPORT, colorScheme: 'light' });
-		await capture(light, LIGHT);
+		await capture(browser, light, LIGHT, 'light');
 		await light.close();
 
 		const dark = await browser.newContext({ viewport: VIEWPORT, colorScheme: 'dark' });
-		await capture(dark, DARK);
+		await capture(browser, dark, DARK, 'dark');
 		await dark.close();
 	} finally {
 		await browser.close();

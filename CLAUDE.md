@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+`.mcp.json` declares the official Svelte MCP server (`@sveltejs/mcp`): live documentation and a `svelte-autofixer` that validates Svelte source. Prefer it over recalling Svelte 5 semantics from memory. It replaced `svelte-complete.txt`, an 810 KB documentation dump that had been frozen since July 2025.
+
+`.claude/settings.json` allowlists this project's own scripts so `pnpm lint`, `pnpm build` and friends run without a prompt.
+
 ## Project Overview
 
 microfolio is a static portfolio generator built with SvelteKit 2, Svelte 5, and Tailwind CSS 4. It uses a file-based CMS (Markdown + YAML frontmatter) for content. Developed by AKER.
@@ -35,6 +39,14 @@ pnpm 11 no longer reads the `pnpm` field in package.json — its settings live i
 - **End-to-end** — Playwright, specs in `e2e/`. It starts its own dev server, or reuses one already running on the port. Set `PLAYWRIGHT_PORT` to exercise the CI path locally without colliding with a dev server on 5173.
 - CI (`.github/workflows/deploy.yml`) runs lint, unit tests and e2e before building.
 - Some specs run with `javaScriptEnabled: false` to assert that `/list` and `/projects` really do ship their content in the HTML, and others under a phone viewport. Everything else waits on `data-hydrated`, an attribute `+layout.svelte` sets on `<html>` once the tree is interactive: the whole page is prerendered, so a click can otherwise land on markup with no listener attached and be lost. That failure only ever showed on the slower CI runner.
+
+### Two things a green suite will not tell you
+
+**Look at anything visual.** The rebuilt lightbox shipped with its panel translucent, the page showing through the metadata, and every test passed — they asserted presence, not legibility. Take a screenshot and read it.
+
+**Compare checksums on anything generated.** Two of the documentation screenshots were byte-identical for a while because a scroll silently did nothing; the images looked plausible individually. `md5 -q doc/screenshots/*.png | sort | uniq -d` catches it in a second.
+
+**Do not trust a long-running dev server.** One left running on 5173 served stale code twice in a single session, once nearly leading to the conclusion that a working feature was broken. Verify against a fresh server: `CI=true PLAYWRIGHT_PORT=5199 pnpm test:e2e`.
 
 ## Architecture
 
@@ -82,7 +94,9 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 
 All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectCard`, `AkFilters`, `AkLightbox`, `AkOptimizedImage`). Datatable components (`Datatable`, `Search`, `ThSort`, `ThFilter`, `Pagination`, `RowCount`, `RowsPerPage`) power the `/list` view using `@vincjo/datatables`.
 
-`AkFilters` builds its `TableHandler` in the component body rather than in an `$effect`, because effects never run on the server — that is what puts the rows of `/list` and the cards of `/projects` in the prerendered HTML. Only restoring state from the query string still waits for the browser. Its controls carry `disabled` until `onMount`, so a click landing before hydration cannot be silently lost.
+`AkFilters` builds its `TableHandler` in the component body rather than in an `$effect`, because effects never run on the server — that is what puts the rows of `/list` and the cards of `/projects` in the prerendered HTML. Only restoring state from the query string still waits for the browser. Its controls carry `disabled` until `onMount`, so a click landing before hydration cannot be silently lost. Below `md` its whole panel collapses behind a button that counts the active filters.
+
+**`/list` renders its rows twice.** A card list below `md`, the seven-column table from `md` up — the table needed 840px inside 311px on a phone. Both live in `src/routes/list/+page.svelte` and iterate the same `handler.rows`. Add a column to one and you have to add it to the other; nothing in the markup says so.
 
 ### Build & Deployment
 

@@ -118,15 +118,15 @@ microfolio build  # or pnpm build
 
 Contributions are welcome! Fork the project, create a feature branch, and submit a Pull Request.
 
-### Recent Features (v0.8.0)
+### Recent Features (v0.9.0)
 
-- Broken project content is reported by name at the end of the build instead of failing silently
-- Missing thumbnails fall back to a placeholder rather than a broken image
-- "Back" on a project page returns to where you came from, filters and page number intact
-- Browser back and shared list URLs now restore the view they point at
-- Unit tests (Vitest) and end-to-end tests (Playwright), both run in CI before deployment
+- A rebuilt lightbox: the image fills the height of the screen, with title, caption and EXIF metadata in a panel that opens on demand
+- Project titles and the type and tag badges are links into the projects view, already filtered
+- The list and projects views render their content on the server — visible to search engines and without JavaScript
+- Usable on a phone: filters collapse behind a button, and list rows become cards instead of a table scrolling sideways
+- Visible keyboard focus, and collapsible controls that announce their state
 
-> Node.js 22.13 or later is now required (a pnpm 11 dependency).
+> Node.js 22.13 or later is required (a pnpm 11 dependency).
 
 ## 📞 Support
 

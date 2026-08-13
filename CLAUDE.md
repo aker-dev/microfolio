@@ -31,6 +31,7 @@ pnpm 11 no longer reads the `pnpm` field in package.json — its settings live i
 - **Unit** — Vitest, co-located `src/**/*.test.js`. `vitest.config.js` deliberately omits the SvelteKit plugin, so these cover plain modules only (currently the content parsing) and run in ~150ms.
 - **End-to-end** — Playwright, specs in `e2e/`. It starts its own dev server, or reuses one already running on the port. Set `PLAYWRIGHT_PORT` to exercise the CI path locally without colliding with a dev server on 5173.
 - CI (`.github/workflows/deploy.yml`) runs lint, unit tests and e2e before building.
+- Some specs run with `javaScriptEnabled: false` to assert that `/list` and `/projects` really do ship their content in the HTML, and others under a phone viewport. Everything else waits on `data-hydrated`, an attribute `+layout.svelte` sets on `<html>` once the tree is interactive: the whole page is prerendered, so a click can otherwise land on markup with no listener attached and be lost. That failure only ever showed on the slower CI runner.
 
 ## Architecture
 
@@ -72,10 +73,13 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - Custom theme in `src/lib/theme.css`
 - Dark mode has two layers: a `prefers-color-scheme` media query for the default, and a `.dark` / `.light` class on `:root` for the explicit toggle in `AkFooter` (persisted in `localStorage`). An inline script in `app.html` applies the stored choice before first paint to avoid a flash
 - Font: IBM Plex Sans (loaded from bunny.net CDN)
+- `src/app.css` also holds two cross-cutting rules: a global `:focus-visible` outline so keyboard focus is never invisible, and `.ak-filters :disabled` for the pre-hydration state described under Components
 
 ### Components
 
-All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectCard`, `AkFilters`, `AkOptimizedImage`). Datatable components (`Datatable`, `Search`, `ThSort`, `ThFilter`, `Pagination`, `RowCount`, `RowsPerPage`) power the `/list` view using `@vincjo/datatables`.
+All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectCard`, `AkFilters`, `AkLightbox`, `AkOptimizedImage`). Datatable components (`Datatable`, `Search`, `ThSort`, `ThFilter`, `Pagination`, `RowCount`, `RowsPerPage`) power the `/list` view using `@vincjo/datatables`.
+
+`AkFilters` builds its `TableHandler` in the component body rather than in an `$effect`, because effects never run on the server — that is what puts the rows of `/list` and the cards of `/projects` in the prerendered HTML. Only restoring state from the query string still waits for the browser. Its controls carry `disabled` until `onMount`, so a click landing before hydration cannot be silently lost.
 
 ### Build & Deployment
 

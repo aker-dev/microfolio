@@ -118,15 +118,15 @@ microfolio build  # ou pnpm build
 
 Les contributions sont les bienvenues ! N'hésitez pas à forker le projet, créer une branche de fonctionnalité et soumettre une Pull Request.
 
-### Fonctionnalités récentes (v0.8.0)
+### Fonctionnalités récentes (v0.9.0)
 
-- Un projet au contenu invalide est nommé en fin de build au lieu d'échouer silencieusement
-- Une vignette manquante affiche un placeholder plutôt qu'une image cassée
-- « Retour » sur une page projet ramène d'où l'on vient, filtres et pagination intacts
-- Le retour navigateur et les URLs de liste partagées restaurent bien la vue visée
-- Tests unitaires (Vitest) et de bout en bout (Playwright), exécutés en CI avant déploiement
+- Lightbox refondue : l'image occupe toute la hauteur de l'écran, titre, légende et métadonnées EXIF dans un panneau qui s'ouvre à la demande
+- Les titres de projet et les badges de type et de tags sont des liens vers la vue projets, déjà filtrée
+- Les vues liste et projets rendent leur contenu côté serveur — visible des moteurs de recherche et sans JavaScript
+- Utilisable sur téléphone : les filtres se replient derrière un bouton et les lignes de la liste deviennent des cartes
+- Focus clavier visible, et contrôles repliables qui annoncent leur état
 
-> Node.js 22.13 ou supérieur est désormais requis (dépendance de pnpm 11).
+> Node.js 22.13 ou supérieur est requis (dépendance de pnpm 11).
 
 ## 📞 Support
 

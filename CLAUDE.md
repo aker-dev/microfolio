@@ -13,10 +13,10 @@ microfolio is a static portfolio generator built with SvelteKit 2, Svelte 5, and
 ## Development Commands
 
 ```bash
-pnpm dev              # Development server
+pnpm dev              # Development server (port 5555)
 pnpm build            # Production build (via build.js → vite build)
 pnpm deploy           # Build with NODE_ENV=production (sets /microfolio base path)
-pnpm preview          # Preview production build
+pnpm preview          # Preview production build (port 2001)
 pnpm lint             # Prettier check + ESLint
 pnpm format           # Prettier auto-fix
 pnpm optimize-images  # Generate WebP thumbnails via sharp
@@ -27,6 +27,8 @@ pnpm test:e2e         # End-to-end tests (Playwright)
 pnpm screenshots      # Regenerate doc/screenshots (needs a dev server; PORT=…)
 ```
 
+Those two ports are a Daft Punk nod — Interstella 5555, and Discovery, the album it sets to pictures. `strictPort` is deliberately unset, so a busy port sends Vite to the next one and it prints where it actually landed. `playwright.config.js` and `scripts/screenshots.js` both default to 5555 because each means "wherever the dev server is": Playwright reuses a running one rather than starting its own, and the screenshot script requires one.
+
 `pnpm screenshots` drives `scripts/screenshots.js`. The footer renders the version from `package.json`, so bump before regenerating for a release. Dark-mode shots go through `prefers-color-scheme`, not the footer toggle.
 
 Package manager: `pnpm` (pinned to 11.20.0 via `packageManager`). **Node.js 22.13+ required** — pnpm 11 uses `node:sqlite` and crashes on Node 20. Declared in `engines`, which `.npmrc`'s `engine-strict=true` enforces at install time; CI pins the same major.
@@ -36,7 +38,7 @@ pnpm 11 no longer reads the `pnpm` field in package.json — its settings live i
 ## Testing
 
 - **Unit** — Vitest, co-located `src/**/*.test.js`. `vitest.config.js` deliberately omits the SvelteKit plugin, so these cover plain modules only (currently the content parsing) and run in ~150ms.
-- **End-to-end** — Playwright, specs in `e2e/`. It starts its own dev server, or reuses one already running on the port. Set `PLAYWRIGHT_PORT` to exercise the CI path locally without colliding with a dev server on 5173.
+- **End-to-end** — Playwright, specs in `e2e/`. It starts its own dev server, or reuses one already running on the port. Set `PLAYWRIGHT_PORT` to exercise the CI path locally without colliding with a dev server on 5555.
 - CI (`.github/workflows/deploy.yml`) runs lint, unit tests and e2e before building.
 - Some specs run with `javaScriptEnabled: false` to assert that `/list` and `/projects` really do ship their content in the HTML, and others under a phone viewport. Everything else waits on `data-hydrated`, an attribute `+layout.svelte` sets on `<html>` once the tree is interactive: the whole page is prerendered, so a click can otherwise land on markup with no listener attached and be lost. That failure only ever showed on the slower CI runner.
 
@@ -46,7 +48,7 @@ pnpm 11 no longer reads the `pnpm` field in package.json — its settings live i
 
 **Compare checksums on anything generated.** Two of the documentation screenshots were byte-identical for a while because a scroll silently did nothing; the images looked plausible individually. `md5 -q doc/screenshots/*.png | sort | uniq -d` catches it in a second.
 
-**Do not trust a long-running dev server.** One left running on 5173 served stale code twice in a single session, once nearly leading to the conclusion that a working feature was broken. Verify against a fresh server: `CI=true PLAYWRIGHT_PORT=5199 pnpm test:e2e`.
+**Do not trust a long-running dev server.** One left running on 5555 served stale code twice in a single session, once nearly leading to the conclusion that a working feature was broken. Verify against a fresh server: `CI=true PLAYWRIGHT_PORT=5199 pnpm test:e2e`.
 
 **A green dev server says nothing about the build.** MapLibre builds its worker URL at runtime from a name it assembles, which Rollup cannot see through: the production build referenced a worker chunk it had never emitted, so the map came up blank with no tile request at all — while `pnpm dev` was perfect. `pnpm build` then serving `build/` is the only way that surfaces. It is fixed, but the shape of the trap outlives the fix.
 

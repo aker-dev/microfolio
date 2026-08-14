@@ -93,7 +93,7 @@ Envoyez vos retours à **hello@aker.pro** en précisant :
    microfolio dev
    ```
 
-Votre site sera accessible à l'adresse : http://localhost:5173
+Votre site sera accessible à l'adresse : http://localhost:5555
 
 **Avantages de cette méthode :**
 
@@ -285,7 +285,7 @@ pnpm install
    ```bash
    microfolio dev
    ```
-4. **Ouvrez votre navigateur** et allez sur http://localhost:5173
+4. **Ouvrez votre navigateur** et allez sur http://localhost:5555
 
 #### Si vous avez fait l'installation manuelle
 
@@ -300,7 +300,7 @@ pnpm install
    ```bash
    pnpm dev
    ```
-4. **Ouvrez votre navigateur** et allez sur http://localhost:5173
+4. **Ouvrez votre navigateur** et allez sur http://localhost:5555
 
 Le serveur reste actif tant que la fenêtre du terminal reste ouverte. Pour l'arrêter, appuyez sur `Ctrl+C` dans le terminal.
 

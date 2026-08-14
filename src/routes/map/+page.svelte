@@ -247,11 +247,15 @@
 				class="bg-box/60 absolute inset-0 z-1000 flex items-center justify-center backdrop-blur-sm"
 			>
 				<!-- A text-first summary rather than AkProjectCard: its 4:3 thumbnail
-				     took over the callout, and most of the screen on a phone. The close
-				     button sits inside the bounds now — offset outside them, it went off
-				     the edge once the callout got smaller. -->
+				     took over the callout, and most of the screen on a phone. -->
 				<div class="relative w-full max-w-sm px-4">
-					<AkBtnClose class="absolute top-2 right-6 z-10" onclick={closeProjectCard} />
+					<!-- Centred on the callout's top-right corner, which px-4 puts 1rem in
+					     from this wrapper. Inside the card it sat on top of the title. -->
+					<AkBtnClose
+						class="absolute top-0 right-4 z-10 translate-x-1/2 -translate-y-1/2"
+						background="bg-background hover:bg-box"
+						onclick={closeProjectCard}
+					/>
 					<AkProjectSummary project={selectedProject} class="border-primary border" />
 				</div>
 			</div>

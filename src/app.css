@@ -66,8 +66,11 @@
    white in dark mode and vanish against the tiles it sits on. Same reasoning for
    MapLibre's own chrome. */
 .ak-marker {
-	width: 0.875rem;
-	height: 0.875rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.25rem;
+	height: 1.25rem;
 	padding: 0;
 	border: 1px solid #171717;
 	border-radius: 9999px;
@@ -81,9 +84,15 @@
 	transform: scale(1.4);
 }
 
-/* Featured projects, the same distinction the cards draw with a filled star */
-.ak-marker--featured {
-	background: #171717;
+/* Featured projects carry the star, exactly as the cards and the list do, rather
+   than changing colour: every marker stays white. Sized here because the raw SVG
+   arrives with dimensions of its own, and coloured through `color` because its
+   path is drawn in currentColor. */
+.ak-marker--featured svg {
+	width: 0.75rem;
+	height: 0.75rem;
+	color: #171717;
+	pointer-events: none;
 }
 
 /* MapLibre ships rounded corners and shadows, which belong to no other surface

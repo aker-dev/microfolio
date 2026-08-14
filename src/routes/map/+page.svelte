@@ -12,6 +12,11 @@
 	// up blank with no tile request at all. `?worker&url` makes Vite bundle the
 	// worker together with the shared module it imports and hand back its address.
 	import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
+	// The markup star, as a string. Markers are built with createElement, out of
+	// reach of a Svelte component, and `?raw` reads the very same @iconify record
+	// that every <IconStarFilled> on the site renders — one original, no traced
+	// copy to drift when the icon set moves.
+	import starFilled from '~icons/carbon/star-filled?raw';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -140,6 +145,9 @@
 		element.type = 'button';
 		element.className = `ak-marker${project.featured ? ' ak-marker--featured' : ''}`;
 		element.setAttribute('aria-label', project.title);
+
+		// A build-time constant, never project data, so innerHTML is safe here
+		if (project.featured) element.innerHTML = starFilled;
 
 		element.addEventListener('click', (event) => {
 			event.stopPropagation();

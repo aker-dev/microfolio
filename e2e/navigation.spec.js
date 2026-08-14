@@ -411,9 +411,9 @@ test.describe('small screens', () => {
 		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
 
 		await expect(page.locator('table')).toBeHidden();
-		await expect(page.locator('ul.space-y-3 > li')).toHaveCount(20);
+		await expect(page.locator('ul[data-testid="project-cards"] > li')).toHaveCount(20);
 		// The first card carries what the table columns held
-		const first = page.locator('ul.space-y-3 > li').first();
+		const first = page.locator('ul[data-testid="project-cards"] > li').first();
 		await expect(first.getByRole('link')).toBeVisible();
 		await expect(first).toContainText(/\d{4}-\d{2}/);
 	});
@@ -423,7 +423,7 @@ test.describe('small screens', () => {
 		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
 
 		const top = await page
-			.locator('ul.space-y-3 > li')
+			.locator('ul[data-testid="project-cards"] > li')
 			.first()
 			.evaluate((el) => el.getBoundingClientRect().top);
 		// It used to start at 736px on an 820px screen

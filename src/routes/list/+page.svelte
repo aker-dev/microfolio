@@ -58,8 +58,10 @@
 
 	<!-- Below md the table needed 840px in 311px, hiding five of its seven columns
 	     behind a horizontal scroll with nothing to say so. Each row becomes a card
-	     instead; the table itself takes over from md. -->
-	<ul class="space-y-3 md:hidden">
+	     instead; the table itself takes over from md. The cards sit flush and are
+	     parted by a hairline, echoing the rule between the table's rows: with a gap
+	     between them the rule lands on a card edge and reads as an underline. -->
+	<ul class="divide-primary divide-y md:hidden" data-testid="project-cards">
 		{#each handler.rows as project (project.slug)}
 			<li><AkProjectSummary {project} /></li>
 		{/each}

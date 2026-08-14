@@ -1,5 +1,6 @@
 <script>
 	import { base } from '$app/paths';
+	import { formatProjectDate } from '$lib/utils/date.js';
 	import { _ } from 'svelte-i18n';
 	import AkBadge from './AkBadge.svelte';
 	import AkOptimizedImage from './AkOptimizedImage.svelte';
@@ -50,7 +51,7 @@
 
 		<div class="flex items-center justify-between text-xs">
 			<span>{project.location}</span>
-			<span>{new Date(project.date).toISOString().slice(0, 7)}</span>
+			<span>{formatProjectDate(project.date)}</span>
 		</div>
 
 		<!-- Tags -->

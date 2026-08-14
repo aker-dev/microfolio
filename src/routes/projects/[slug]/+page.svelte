@@ -1,5 +1,6 @@
 <script>
 	import { base } from '$app/paths';
+	import { formatProjectDate } from '$lib/utils/date.js';
 	import { afterNavigate } from '$app/navigation';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
@@ -126,7 +127,7 @@
 			<h3 class="text-base font-bold">{$_('ui.project.infos')}</h3>
 			<span class="font-bold">{$_('ui.project.location_date')} ›</span>
 			<span>{project.location} / </span>
-			<span>{new Date(project.date).toISOString().slice(0, 7)}</span>
+			<span>{formatProjectDate(project.date)}</span>
 
 			<!-- Status -->
 			{#if project.status}

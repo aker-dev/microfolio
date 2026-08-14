@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
-	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
+	import AkProjectSummary from '$lib/components/AkProjectSummary.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
 	import { siteConfig } from '$lib/config.js';
@@ -246,9 +246,13 @@
 			<div
 				class="bg-box/60 absolute inset-0 z-1000 flex items-center justify-center backdrop-blur-sm"
 			>
-				<div class="relative max-w-sm">
-					<AkBtnClose class="absolute -top-2 -right-2" onclick={closeProjectCard} />
-					<AkProjectCard project={selectedProject} />
+				<!-- A text-first summary rather than AkProjectCard: its 4:3 thumbnail
+				     took over the callout, and most of the screen on a phone. The close
+				     button sits inside the bounds now — offset outside them, it went off
+				     the edge once the callout got smaller. -->
+				<div class="relative w-full max-w-sm px-4">
+					<AkBtnClose class="absolute top-2 right-6 z-10" onclick={closeProjectCard} />
+					<AkProjectSummary project={selectedProject} class="border-primary border" />
 				</div>
 			</div>
 		{/if}

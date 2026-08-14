@@ -32,7 +32,7 @@
      tags are plain text here, an anchor cannot contain other links. -->
 <a
 	href="{base}/projects/{project.slug}"
-	class="bg-box hover:bg-background block p-4 transition-colors {className}"
+	class="bg-background hover:bg-box block p-4 transition-colors {className}"
 >
 	<h3 class="font-bold">{project.title}</h3>
 

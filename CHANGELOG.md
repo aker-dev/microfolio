@@ -27,7 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Below `md`, list rows become cards instead of a seven-column table scrolling sideways
 - Filter controls are inert until the page hydrates, and say so, rather than swallowing a click
 - Select inputs show a pointer cursor
-- The README screenshots were retaken — the previous set dated from August 2025 and showed 0.1.0-beta.3 — and moved to the end of the file, so what a reader needs comes first
+- The README screenshots were retaken — the previous set dated from August 2025 and showed 0.1.0-beta.3 — and moved to the end of the file, so what a reader needs comes first, and each is now framed in a browser window
+- Selecting a project on the map shows a text-first summary rather than the thumbnail-led card used by the grids, whose 4:3 image took over the callout and most of the screen on a phone. The list view uses the same summary below `md`, and the whole block is the link rather than the title alone
+- The veil behind that summary lost its blur and most of its opacity: the map stays legible behind it, and it was the last blurred, translucent surface in a site that is otherwise flat
+- Below `md`, the list cards are parted by a rule, the same one that runs between the table's rows above `md`
+- Image keywords in the lightbox read as plain text instead of borrowing the look of project tags, which are links and these are not
+- Gallery images keep their own colours. They were desaturated until hovered, which hid whatever the photograph was actually about
 
 ### Fixed
 
@@ -35,6 +40,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/projects` rendered all 101 cards and then dropped to 20 on hydration
 - A click on a filter before hydration was lost with no feedback at all
 - Four `focus:outline-none` with no replacement left keyboard users with no idea where they were
+- The map was frozen for as long as a project was selected: the veil covered it entirely and captured every event, so it could not be panned or zoomed, and no other marker could be reached without closing first
+- The map had no keyboard exit — the close button was the only way out. Escape now closes the selected project
+- On the map, the close button sat on top of the project title
 
 ### Removed
 

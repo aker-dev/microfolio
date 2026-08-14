@@ -86,6 +86,14 @@ Present the results obtained, project reception, its impact.
 
 - `location`: Project location
 - `coordinates`: GPS coordinates [latitude, longitude]
+
+> **The basemap is French.** The map draws Plan IGN, published by France's
+> national mapping agency. It covers the whole world down to zoom 6 and France
+> alone beyond that, so the map is capped at zoom 6: a project anywhere on the
+> planet appears in its right place, but the map never reaches street scale. To
+> zoom further on projects outside France, point `siteConfig.map.style` at
+> another MapLibre style and raise `maxZoom` — both live in `src/lib/config.js`.
+
 - `tags`: Keywords for filtering
 - `authors`: Creators and collaborators
 - `featured`: Featured project (true/false)

@@ -36,33 +36,26 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
-2. **Approuver le tap AKER** :
-
-   Les versions récentes de Homebrew refusent de charger un tap tiers tant que vous ne l'avez pas approuvé.
+2. **Installer microfolio via Homebrew** :
 
    ```bash
    brew trust aker-dev/tap
-   ```
-
-3. **Installer microfolio via Homebrew** :
-
-   ```bash
    brew install aker-dev/tap/microfolio
    ```
 
-4. **Créer un nouveau portfolio** :
+3. **Créer un nouveau portfolio** :
 
    ```bash
    microfolio new mon-portfolio
    cd mon-portfolio
    ```
 
-5. **Démarrer le serveur de développement** :
+4. **Démarrer le serveur de développement** :
    ```bash
    microfolio dev
    ```
 
-Votre site sera accessible à l'adresse : http://localhost:5173
+Votre site sera accessible à l'adresse : http://localhost:5555
 
 **Avantages de cette méthode :**
 
@@ -225,7 +218,7 @@ pnpm install
    ```bash
    microfolio dev
    ```
-4. **Ouvrez votre navigateur** et allez sur http://localhost:5173
+4. **Ouvrez votre navigateur** et allez sur http://localhost:5555
 
 #### Si vous avez fait l'installation manuelle
 
@@ -240,7 +233,7 @@ pnpm install
    ```bash
    pnpm dev
    ```
-4. **Ouvrez votre navigateur** et allez sur http://localhost:5173
+4. **Ouvrez votre navigateur** et allez sur http://localhost:5555
 
 Le serveur reste actif tant que la fenêtre du terminal reste ouverte. Pour l'arrêter, appuyez sur `Ctrl+C` dans le terminal.
 

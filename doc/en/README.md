@@ -77,7 +77,7 @@ cd my-portfolio
 microfolio dev
 ```
 
-Your site will be accessible at: http://localhost:5173
+Your site will be accessible at: http://localhost:5555
 
 **Advantages of this method:**
 

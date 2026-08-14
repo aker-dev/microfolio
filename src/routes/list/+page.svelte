@@ -9,6 +9,8 @@
 	import IconStarFilled from '~icons/carbon/star-filled';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
+	import { formatProjectDate } from '$lib/utils/date.js';
+	import AkProjectSummary from '$lib/components/AkProjectSummary.svelte';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -19,12 +21,6 @@
 	let handler = $state();
 	let sortBy = $state('date');
 	let sortOrder = $state('desc');
-
-	// Format date function
-	function formatDate(dateString) {
-		if (!dateString) return '';
-		return new Date(dateString).toISOString().slice(0, 7);
-	}
 
 	// Truncate text function
 	function truncateText(text, maxLength = 60) {
@@ -62,37 +58,12 @@
 
 	<!-- Below md the table needed 840px in 311px, hiding five of its seven columns
 	     behind a horizontal scroll with nothing to say so. Each row becomes a card
-	     instead; the table itself takes over from md. -->
-	<ul class="space-y-3 md:hidden">
+	     instead; the table itself takes over from md. The cards sit flush and are
+	     parted by a hairline, echoing the rule between the table's rows: with a gap
+	     between them the rule lands on a card edge and reads as an underline. -->
+	<ul class="divide-primary divide-y md:hidden" data-testid="project-cards">
 		{#each handler.rows as project (project.slug)}
-			<li class="bg-box p-4">
-				<h3 class="font-bold">
-					<a href="{base}/projects/{project.slug}" class="hover:underline">{project.title}</a>
-				</h3>
-				<div class="mt-2 flex flex-wrap items-center gap-2">
-					<AkBadge>{project.type}</AkBadge>
-					{#if project.featured}
-						<IconStarFilled class="size-4" />
-					{/if}
-					<span class="text-primary text-sm">{formatDate(project.date)}</span>
-					{#if project.location}
-						<span class="text-primary text-sm">· {project.location}</span>
-					{/if}
-				</div>
-				{#if project.description}
-					<p class="text-primary mt-2 text-sm">{truncateText(project.description, 100)}</p>
-				{/if}
-				{#if project.tags && project.tags.length > 0}
-					<div class="mt-2 flex flex-wrap gap-1">
-						{#each project.tags.slice(0, 3) as tag, i (i)}
-							<AkBadge small>{tag}</AkBadge>
-						{/each}
-						{#if project.tags.length > 3}
-							<AkBadge small>+{project.tags.length - 3}</AkBadge>
-						{/if}
-					</div>
-				{/if}
-			</li>
+			<li><AkProjectSummary {project} /></li>
 		{/each}
 	</ul>
 
@@ -172,7 +143,7 @@
 								{project.location || $_('ui.not_available')}
 							</td>
 							<td class="text-primary px-4 py-3 text-sm">
-								{formatDate(project.date)}
+								{formatProjectDate(project.date)}
 							</td>
 							<td class="text-primary px-4 py-3 text-sm">
 								{truncateText(project.description)}

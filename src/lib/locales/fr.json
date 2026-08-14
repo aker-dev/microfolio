@@ -13,7 +13,8 @@
 		},
 		"map": {
 			"title": "Vue Carte",
-			"description": "Explorez les projets sur la carte"
+			"description": "Explorez les projets sur la carte",
+			"unavailable": "Cette carte a besoin de WebGL, que votre navigateur ne semble pas fournir. La vue liste présente les mêmes projets."
 		},
 		"projects": {
 			"title": "Projets",

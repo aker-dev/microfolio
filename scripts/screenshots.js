@@ -22,7 +22,7 @@ import { fileURLToPath } from 'url';
 const projectRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = join(projectRoot, 'doc/screenshots');
 
-const PORT = process.env.PORT ?? 5173;
+const PORT = process.env.PORT ?? 5555;
 const BASE = `http://localhost:${PORT}`;
 // Matches the dimensions of the previous set, so the README layout is unchanged
 const VIEWPORT = { width: 1280, height: 1028 };

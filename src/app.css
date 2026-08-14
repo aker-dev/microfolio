@@ -42,13 +42,11 @@
 
 /* Custom utility classes */
 .image-hover-effect {
-	filter: grayscale(100%);
 	transition: all 0.3s ease-in-out;
 	transform: scale(1);
 }
 
 .image-hover-effect:hover {
-	filter: grayscale(0%);
 	transform: scale(1.05);
 }
 
@@ -58,6 +56,79 @@
 .ak-filters :disabled {
 	cursor: not-allowed;
 	opacity: 0.6;
+}
+
+/* The map.
+
+   Everything below is written in fixed ink rather than theme tokens, and that is
+   deliberate: Plan IGN is served in its grey style in both themes, so the map
+   stays light even on a dark page. A marker built on --color-primary would turn
+   white in dark mode and vanish against the tiles it sits on. Same reasoning for
+   MapLibre's own chrome. */
+.ak-marker {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.5rem;
+	height: 1.5rem;
+	padding: 0;
+	border: 1px solid #171717;
+	border-radius: 9999px;
+	background: #ffffff;
+	cursor: pointer;
+	transition: transform 0.2s ease-in-out;
+}
+
+.ak-marker:hover,
+.ak-marker:focus-visible {
+	transform: scale(1.4);
+}
+
+/* Featured projects carry the star inside the disc, exactly as the cards and the
+   list mark them, rather than changing colour: every marker stays white. Sized
+   here because the raw SVG arrives carrying dimensions of its own, and coloured
+   through `color` because its path is drawn in currentColor. */
+.ak-marker--featured svg {
+	width: 0.875rem;
+	height: 0.875rem;
+	color: #171717;
+	pointer-events: none;
+}
+
+/* MapLibre ships rounded corners and shadows, which belong to no other surface
+   here. Its stylesheet is imported by the map route and therefore lands after
+   this file, so these are written with two classes rather than one: matching its
+   specificity would leave the winner down to injection order. */
+.maplibregl-ctrl.maplibregl-ctrl-group {
+	border: 1px solid #171717;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.maplibregl-ctrl.maplibregl-ctrl-group button {
+	border-radius: 0;
+}
+
+.maplibregl-ctrl.maplibregl-ctrl-group button + button {
+	border-top: 1px solid #171717;
+}
+
+.maplibregl-popup .maplibregl-popup-content {
+	padding: 0.25rem 0.5rem;
+	border: 1px solid #171717;
+	border-radius: 0;
+	box-shadow: none;
+	color: #171717;
+	font-size: 0.875rem;
+}
+
+.maplibregl-popup .maplibregl-popup-tip {
+	display: none;
+}
+
+.maplibregl-ctrl.maplibregl-ctrl-attrib {
+	border-radius: 0;
+	font-size: 0.6875rem;
 }
 
 /* Keyboard focus has to stay visible. :focus-visible rather than :focus so a

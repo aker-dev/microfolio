@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.9.0] - 2026-08-13
+## [0.9.0] - 2026-08-14
 
 ### Added
 
@@ -21,13 +21,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Homebrew installation now needs `brew trust aker-dev/tap` first.** Recent Homebrew versions will not load a third-party tap until it is trusted; the four places the Homebrew route is documented have been updated
+- **Homebrew installation now needs `brew trust aker-dev/tap` first.** Recent Homebrew versions will not load a third-party tap until it is trusted, so the command precedes the install everywhere the Homebrew route is documented
 - The lightbox image fills the height of the viewport instead of stopping at 60% of it, and its controls no longer sit on top of it
 - `/list` and `/projects` render their content on the server: it is in the static HTML rather than conjured at hydration
 - Below `md`, list rows become cards instead of a seven-column table scrolling sideways
 - Filter controls are inert until the page hydrates, and say so, rather than swallowing a click
 - Select inputs show a pointer cursor
-- The README screenshots were retaken — the previous set dated from August 2025 and showed 0.1.0-beta.3 — and moved to the end of the file, so what a reader needs comes first
+- The README screenshots were retaken — the previous set dated from August 2025 and showed 0.1.0-beta.3 — and moved to the end of the file, so what a reader needs comes first, and each is now framed in a browser window
+- Selecting a project on the map shows a text-first summary rather than the thumbnail-led card used by the grids, whose 4:3 image took over the callout and most of the screen on a phone. The list view uses the same summary below `md`, and the whole block is the link rather than the title alone
+- The veil behind that summary lost its blur and most of its opacity: the map stays legible behind it, and it was the last blurred, translucent surface in a site that is otherwise flat
+- Below `md`, the list cards are parted by a rule, the same one that runs between the table's rows above `md`
+- Image keywords in the lightbox read as plain text instead of borrowing the look of project tags, which are links and these are not
+- Gallery images keep their own colours. They were desaturated until hovered, which hid whatever the photograph was actually about
+- **The map runs on MapLibre GL and draws Plan IGN**, published by the Géoplateforme: French public data, no API key, and grey by design rather than by filter. Leaflet and the five marker images are gone. **Zoom is capped at 6, which is the last level Plan IGN covers worldwide** — a project anywhere on the planet still appears in its right place, but the map no longer reaches street scale. `siteConfig.map` holds the style, the cap and the attribution for anyone who wants another basemap
+- Map markers are buttons, so the keyboard reaches them and they announce the project they stand for
+- A featured project is marked on the map by the star, the same one the cards and the list use, rather than by a marker that changed colour. Every marker is white, and they are larger so the star reads among a hundred of them
+- `pnpm dev` serves on port 5555 and `pnpm preview` on 2001, in place of Vite's defaults — Interstella 5555, and Discovery, the album it sets to pictures. Both are nominal: a busy port still sends Vite to the next one
 
 ### Fixed
 
@@ -35,6 +44,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/projects` rendered all 101 cards and then dropped to 20 on hydration
 - A click on a filter before hydration was lost with no feedback at all
 - Four `focus:outline-none` with no replacement left keyboard users with no idea where they were
+- The map was frozen for as long as a project was selected: the veil covered it entirely and captured every event, so it could not be panned or zoomed, and no other marker could be reached without closing first
+- The map had no keyboard exit — the close button was the only way out. Escape now closes the selected project
+- On the map, the close button sat on top of the project title
 
 ### Removed
 

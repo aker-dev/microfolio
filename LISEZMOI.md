@@ -14,7 +14,7 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 - **🎨 Vues multiples** — Grille de projets, Liste et Carte
 - **📱 Design responsive** — Conçu avec une approche mobile-first
 - **🏷️ Étiquetage intelligent** — Compteurs de filtres et liste de tags repliable
-- **🗺️ Carte interactive** — Intégration Leaflet avec projets géolocalisés
+- **🗺️ Carte interactive** — MapLibre GL et projets géolocalisés sur un fond Plan IGN
 - **🚀 Génération statique** — Performances optimales avec SvelteKit adapter-static
 - **🖼️ Lightbox d'images** — Galerie améliorée avec flèches de navigation et affichage des métadonnées
 - **📊 Métadonnées EXIF/IPTC** — Extraction et affichage automatique des informations techniques d'images
@@ -38,10 +38,8 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 ### Option 1 : Installation via Homebrew (macOS - Recommandée)
 
 ```bash
-# Les versions récentes de Homebrew exigent d'abord d'approuver les taps tiers
-brew trust aker-dev/tap
-
 # Installer microfolio via Homebrew
+brew trust aker-dev/tap
 brew install aker-dev/tap/microfolio
 
 # Créer un nouveau portfolio

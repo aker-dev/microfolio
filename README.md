@@ -14,7 +14,7 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 - **🎨 Multiple Views** — Projects grid, List, and Map modes
 - **📱 Responsive Design** — Mobile-first approach
 - **🏷️ Smart Tagging** — Filter counters and collapsible tag list
-- **🗺️ Interactive Map** — Leaflet integration with geolocated projects
+- **🗺️ Interactive Map** — MapLibre GL with geolocated projects on a Plan IGN basemap
 - **🚀 Static Generation** — Optimal performance with SvelteKit adapter-static
 - **🖼️ Image Lightbox** — Enhanced gallery with navigation arrows and metadata display
 - **📊 EXIF/IPTC Metadata** — Automatic extraction and display of image technical information
@@ -38,10 +38,8 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 ### Option 1: Homebrew Installation (macOS - Recommended)
 
 ```bash
-# Recent Homebrew versions require third-party taps to be trusted first
-brew trust aker-dev/tap
-
 # Install microfolio via Homebrew
+brew trust aker-dev/tap
 brew install aker-dev/tap/microfolio
 
 # Create a new portfolio

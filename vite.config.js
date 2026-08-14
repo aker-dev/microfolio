@@ -36,9 +36,18 @@ export default defineConfig(({ mode }) => ({
 				]
 			: [])
 	],
+	// Interstella 5555 for the dev server, Discovery for the preview: the film is
+	// that album set to pictures, the same work in two forms, which is roughly
+	// what these two servers are. Left without `strictPort`, so a busy port sends
+	// Vite to the next one and it prints where it actually landed — the numbers
+	// the documentation quotes are the intent, not a guarantee.
 	server: {
+		port: 5555,
 		fs: {
 			allow: ['..']
 		}
+	},
+	preview: {
+		port: 2001
 	}
 }));

@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.9.0] - 2026-08-13
+## [0.9.0] - 2026-08-14
 
 ### Added
 
@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Gallery images keep their own colours. They were desaturated until hovered, which hid whatever the photograph was actually about
 - **The map runs on MapLibre GL and draws Plan IGN**, published by the Géoplateforme: French public data, no API key, and grey by design rather than by filter. Leaflet and the five marker images are gone. **Zoom is capped at 6, which is the last level Plan IGN covers worldwide** — a project anywhere on the planet still appears in its right place, but the map no longer reaches street scale. `siteConfig.map` holds the style, the cap and the attribution for anyone who wants another basemap
 - Map markers are buttons, so the keyboard reaches them and they announce the project they stand for
+- A featured project is marked on the map by the star, the same one the cards and the list use, rather than by a marker that changed colour. Every marker is white, and they are larger so the star reads among a hundred of them
 - `pnpm dev` serves on port 5555 and `pnpm preview` on 2001, in place of Vite's defaults — Interstella 5555, and Discovery, the album it sets to pictures. Both are nominal: a busy port still sends Vite to the next one
 
 ### Fixed

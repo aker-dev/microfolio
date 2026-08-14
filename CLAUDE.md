@@ -86,7 +86,7 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - `$lib/utils/locale.js` — `getTextDirection()`, shared by `hooks.server.js` (prerender) and `+layout.svelte` (client)
 - `$lib/utils/imageMetadata.js` — EXIF/IPTC extraction via `exifreader` (credit, camera, GPS, etc.)
 - `$lib/utils/date.js` — `formatProjectDate()`: the `YYYY-MM` shown everywhere a project is dated. It was written out four times before
-- `$lib/config.js` — Site config (title, social links, navigation, `lightbox.hideControlsDelay`)
+- `$lib/config.js` — Site config (title, social links, navigation, `lightbox.hideControlsDelay`, and the `map` block: basemap style, zoom cap, attribution)
 - `$lib/i18n.js` — Internationalization setup with `svelte-i18n` (en/fr active, more commented out)
 
 ### Styling
@@ -95,7 +95,7 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - Custom theme in `src/lib/theme.css`
 - Dark mode has two layers: a `prefers-color-scheme` media query for the default, and a `.dark` / `.light` class on `:root` for the explicit toggle in `AkFooter` (persisted in `localStorage`). An inline script in `app.html` applies the stored choice before first paint to avoid a flash
 - Font: IBM Plex Sans (loaded from bunny.net CDN)
-- `src/app.css` also holds two cross-cutting rules: a global `:focus-visible` outline so keyboard focus is never invisible, and `.ak-filters :disabled` for the pre-hydration state described under Components
+- `src/app.css` also holds the rules no component owns: a global `:focus-visible` outline so keyboard focus is never invisible, `.ak-filters :disabled` for the pre-hydration state described under Components, and the map block — `.ak-marker` plus the overrides that flatten MapLibre's own chrome. Those last ones are written with two classes rather than one, because MapLibre's stylesheet is imported by the map route and therefore lands after this file: matching its specificity would leave the winner down to injection order
 
 ### Components
 
@@ -110,6 +110,8 @@ All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectC
 - **Coordinates swap.** Frontmatter is `[latitude, longitude]`, MapLibre wants `[longitude, latitude]`. `toLngLat()` in `map/+page.svelte` is the only place they meet — keep it that way
 - **`maxZoom: 6` is not a preference.** Plan IGN covers the world to zoom 6 and France alone past it; Rome returns 42 bytes at zoom 7. Raising the cap empties the map for any project outside France, and no demo content would ever show it
 - **Marker and control colours are fixed ink, never theme tokens.** The map stays light in dark mode, where `--color-primary` is white — a marker built on it would disappear into the tiles
+
+Markers are built with `createElement`, out of reach of a Svelte component, so the star a featured project carries comes from `import starFilled from '~icons/carbon/star-filled?raw'`. The `?raw` suffix hands back the SVG as a string from the same `@iconify` record every `<IconStarFilled>` renders — one original, rather than a traced copy free to drift.
 
 MapLibre 6 has **no default export**; `(await import('maplibre-gl')).default` is undefined, and every example online still shows otherwise.
 

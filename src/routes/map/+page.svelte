@@ -216,7 +216,13 @@
 	function closeProjectCard() {
 		selectedProject = null;
 	}
+
+	function handleKeydown(event) {
+		if (selectedProject && event.key === 'Escape') closeProjectCard();
+	}
 </script>
+
+<svelte:window onkeydown={handleKeydown} />
 
 <svelte:head>
 	<title>{siteConfig.title} • {$_('pages.map.title')}</title>
@@ -243,8 +249,14 @@
 
 		<!-- Project Card Overlay -->
 		{#if selectedProject}
+			<!-- The veil only fades the map, it does not capture: while it did, the
+			     map was frozen for as long as a card was open — no panning, no
+			     zooming, and no reaching another marker without closing first. Only
+			     the card and its button take pointer events, so the gutters either
+			     side of the card stay part of the map. A click outside therefore
+			     pans rather than closes, as on the lightbox. -->
 			<div
-				class="bg-box/60 absolute inset-0 z-1000 flex items-center justify-center backdrop-blur-sm"
+				class="bg-box/50 pointer-events-none absolute inset-0 z-1000 flex items-center justify-center"
 			>
 				<!-- A text-first summary rather than AkProjectCard: its 4:3 thumbnail
 				     took over the callout, and most of the screen on a phone. -->
@@ -252,11 +264,14 @@
 					<!-- Centred on the callout's top-right corner, which px-4 puts 1rem in
 					     from this wrapper. Inside the card it sat on top of the title. -->
 					<AkBtnClose
-						class="absolute top-0 right-4 z-10 translate-x-1/2 -translate-y-1/2"
+						class="pointer-events-auto absolute top-0 right-4 z-10 translate-x-1/2 -translate-y-1/2"
 						background="bg-background hover:bg-box"
 						onclick={closeProjectCard}
 					/>
-					<AkProjectSummary project={selectedProject} class="border-primary border" />
+					<AkProjectSummary
+						project={selectedProject}
+						class="border-primary pointer-events-auto border"
+					/>
 				</div>
 			</div>
 		{/if}

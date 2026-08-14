@@ -86,6 +86,14 @@ Présentez les résultats obtenus, l'accueil du projet, son impact.
 
 - `location` : Localisation du projet
 - `coordinates` : Coordonnées GPS [latitude, longitude]
+
+> **Le fond de carte est français.** La carte affiche le Plan IGN. Il couvre le
+> monde entier jusqu'au zoom 6 et la seule France au-delà, d'où un zoom plafonné
+> à 6 : un projet situé n'importe où sur la planète apparaît au bon endroit, mais
+> la carte ne descend jamais à l'échelle de la rue. Pour zoomer davantage sur des
+> projets hors de France, faites pointer `siteConfig.map.style` vers un autre
+> style MapLibre et relevez `maxZoom` — les deux sont dans `src/lib/config.js`.
+
 - `tags` : Mots-clés pour le filtrage
 - `authors` : Créateurs et collaborateurs
 - `featured` : Projet mis en avant (true/false)

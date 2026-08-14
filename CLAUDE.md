@@ -48,6 +48,8 @@ pnpm 11 no longer reads the `pnpm` field in package.json — its settings live i
 
 **Do not trust a long-running dev server.** One left running on 5173 served stale code twice in a single session, once nearly leading to the conclusion that a working feature was broken. Verify against a fresh server: `CI=true PLAYWRIGHT_PORT=5199 pnpm test:e2e`.
 
+**A green dev server says nothing about the build.** MapLibre builds its worker URL at runtime from a name it assembles, which Rollup cannot see through: the production build referenced a worker chunk it had never emitted, so the map came up blank with no tile request at all — while `pnpm dev` was perfect. `pnpm build` then serving `build/` is the only way that surfaces. It is fixed, but the shape of the trap outlives the fix.
+
 **An overlay that covers something interactive also captures its events.** The map's veil spanned the whole map, so selecting a project froze it — no panning, no zooming, no reaching another marker. It went unnoticed for as long as it did because looking at a screenshot cannot reveal it either: the fix is `pointer-events-none` on the layer and `pointer-events-auto` on what should still be clickable, and the check is `document.elementFromPoint()` on a spot that ought to reach through.
 
 ## Architecture
@@ -100,6 +102,14 @@ All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectC
 `AkFilters` builds its `TableHandler` in the component body rather than in an `$effect`, because effects never run on the server — that is what puts the rows of `/list` and the cards of `/projects` in the prerendered HTML. Only restoring state from the query string still waits for the browser. Its controls carry `disabled` until `onMount`, so a click landing before hydration cannot be silently lost. Below `md` its whole panel collapses behind a button that counts the active filters.
 
 **Two components render a project, and the room decides which.** `AkProjectCard` leads with a 4:3 thumbnail and belongs in the grids of the homepage and `/projects`. `AkProjectSummary` is text-first and belongs where an image would crowd the text out: the map callout, and `/list` below `md`. The whole summary is one link, which is why its tags are plain text — an anchor cannot contain other links.
+
+**The map is MapLibre GL on Plan IGN**, in the grey style the Géoplateforme publishes — French public data, no API key, and already fully neutral, which is why nothing desaturates it any more. `$lib/config.js` holds the style URL, the zoom cap and the attribution, and each carries the reason it exists. Three things about it are not guessable:
+
+- **Coordinates swap.** Frontmatter is `[latitude, longitude]`, MapLibre wants `[longitude, latitude]`. `toLngLat()` in `map/+page.svelte` is the only place they meet — keep it that way
+- **`maxZoom: 6` is not a preference.** Plan IGN covers the world to zoom 6 and France alone past it; Rome returns 42 bytes at zoom 7. Raising the cap empties the map for any project outside France, and no demo content would ever show it
+- **Marker and control colours are fixed ink, never theme tokens.** The map stays light in dark mode, where `--color-primary` is white — a marker built on it would disappear into the tiles
+
+MapLibre 6 has **no default export**; `(await import('maplibre-gl')).default` is undefined, and every example online still shows otherwise.
 
 **`/list` renders its rows twice.** A list of `AkProjectSummary` below `md`, the seven-column table from `md` up — the table needed 840px inside 311px on a phone. Both live in `src/routes/list/+page.svelte` and iterate the same `handler.rows`. Add a column to one and you have to add it to the other; nothing in the markup says so. The cards sit flush and are parted by `divide-y`, echoing the rule between table rows: leave a gap and the rule lands on a card edge, reading as an underline rather than a separation.
 

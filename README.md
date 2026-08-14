@@ -14,7 +14,7 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 - **🎨 Multiple Views** — Projects grid, List, and Map modes
 - **📱 Responsive Design** — Mobile-first approach
 - **🏷️ Smart Tagging** — Filter counters and collapsible tag list
-- **🗺️ Interactive Map** — Leaflet integration with geolocated projects
+- **🗺️ Interactive Map** — MapLibre GL with geolocated projects on a Plan IGN basemap
 - **🚀 Static Generation** — Optimal performance with SvelteKit adapter-static
 - **🖼️ Image Lightbox** — Enhanced gallery with navigation arrows and metadata display
 - **📊 EXIF/IPTC Metadata** — Automatic extraction and display of image technical information

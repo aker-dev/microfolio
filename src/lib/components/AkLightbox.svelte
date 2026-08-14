@@ -1,7 +1,6 @@
 <script>
 	import { _ } from 'svelte-i18n';
 	import { siteConfig } from '$lib/config.js';
-	import AkBadge from './AkBadge.svelte';
 	import AkBtnClose from './AkBtnClose.svelte';
 	import AkBtnMetadata from './AkBtnMetadata.svelte';
 	import IconChevronLeft from '~icons/carbon/chevron-left';
@@ -206,11 +205,9 @@
 				{#if hasKeywords}
 					<div class="text-xs">
 						<h3 class="mb-1 text-sm font-bold">{$_('ui.metadata.keywords')}</h3>
-						<div class="flex flex-wrap gap-1">
-							{#each metadata.keywords as keyword, i (i)}
-								<AkBadge small>{keyword}</AkBadge>
-							{/each}
-						</div>
+						<!-- Plain text, not badges: these describe the image, unlike the
+						     project tags they used to look identical to, which filter -->
+						<p>{metadata.keywords.join(', ')}</p>
 					</div>
 				{/if}
 			</aside>

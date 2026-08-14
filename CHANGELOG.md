@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Homebrew installation now needs `brew trust aker-dev/tap` first.** Recent Homebrew versions will not load a third-party tap until it is trusted; the four places the Homebrew route is documented have been updated
+- **Homebrew installation now needs `brew trust aker-dev/tap` first.** Recent Homebrew versions will not load a third-party tap until it is trusted, so the command precedes the install everywhere the Homebrew route is documented
 - The lightbox image fills the height of the viewport instead of stopping at 60% of it, and its controls no longer sit on top of it
 - `/list` and `/projects` render their content on the server: it is in the static HTML rather than conjured at hydration
 - Below `md`, list rows become cards instead of a seven-column table scrolling sideways

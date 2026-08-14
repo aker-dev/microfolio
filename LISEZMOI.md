@@ -38,10 +38,8 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 ### Option 1 : Installation via Homebrew (macOS - Recommandée)
 
 ```bash
-# Les versions récentes de Homebrew exigent d'abord d'approuver les taps tiers
-brew trust aker-dev/tap
-
 # Installer microfolio via Homebrew
+brew trust aker-dev/tap
 brew install aker-dev/tap/microfolio
 
 # Créer un nouveau portfolio

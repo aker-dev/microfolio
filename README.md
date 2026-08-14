@@ -38,10 +38,8 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 ### Option 1: Homebrew Installation (macOS - Recommended)
 
 ```bash
-# Recent Homebrew versions require third-party taps to be trusted first
-brew trust aker-dev/tap
-
 # Install microfolio via Homebrew
+brew trust aker-dev/tap
 brew install aker-dev/tap/microfolio
 
 # Create a new portfolio

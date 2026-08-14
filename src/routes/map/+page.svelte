@@ -1,11 +1,17 @@
 <script>
 	import { onMount } from 'svelte';
-	import { base } from '$app/paths';
 	import AkProjectSummary from '$lib/components/AkProjectSummary.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
+	import 'maplibre-gl/dist/maplibre-gl.css';
+	// MapLibre parses tiles in a worker whose URL it builds at runtime, from a
+	// name it assembles rather than a literal. Rollup cannot see through that, so
+	// the production build referenced a chunk it had never emitted and the map came
+	// up blank with no tile request at all. `?worker&url` makes Vite bundle the
+	// worker together with the shared module it imports and hand back its address.
+	import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -15,202 +21,140 @@
 	let filteredProjects = $state([]);
 	let handler = $state();
 
-	// Map variables
-	let L;
+	// Centre of France, in MapLibre's [longitude, latitude] order
+	const DEFAULT_CENTER = [1.888334, 46.603354];
+	const DEFAULT_ZOOM = 5;
+
+	let maplibre;
 	let mapContainer;
 	let map;
-	let selectedProject = $state(null);
+	let mapReady = false;
 	let markers = [];
-	let windowHeight = $state(0);
-	let mapHeight = $state('600px'); // Default height
+	let tooltip;
+	let selectedProject = $state(null);
+	let mapUnavailable = $state(false);
 
-	// Update map height and invalidate size when window height changes
-	$effect(() => {
-		if (windowHeight > 0) {
-			const height = Math.max(600, Math.min(600, windowHeight * 0.5));
-			const newMapHeight = `${height}px`;
+	onMount(() => {
+		let disposed = false;
 
-			// Only update if height actually changed
-			if (newMapHeight !== mapHeight) {
-				mapHeight = newMapHeight;
+		// Not an async onMount: Svelte only treats a returned function as the
+		// cleanup, and an async callback hands it a promise instead.
+		(async () => {
+			// Dynamic, because MapLibre reaches for window and this page is prerendered.
+			// The whole namespace, not `.default`: v6 dropped the default export that
+			// every example still shows, and `.default` is simply undefined.
+			maplibre = await import('maplibre-gl');
+			if (disposed) return;
 
-				// Invalidate map size after height change
-				if (map) {
-					// Store current bounds before height change
-					const currentBounds = map.getBounds();
-					// Use requestAnimationFrame to ensure DOM has updated
-					requestAnimationFrame(() => {
-						requestAnimationFrame(() => {
-							map.invalidateSize(true);
-							// Restore bounds after height change
-							if (currentBounds) {
-								map.fitBounds(currentBounds);
-							}
-						});
-					});
-				}
+			maplibre.config.WORKER_URL = maplibreWorkerUrl;
+
+			try {
+				map = new maplibre.Map({
+					container: mapContainer,
+					style: siteConfig.map.style,
+					center: DEFAULT_CENTER,
+					zoom: DEFAULT_ZOOM,
+					maxZoom: siteConfig.map.maxZoom,
+					scrollZoom: false,
+					attributionControl: {
+						compact: true,
+						customAttribution: siteConfig.map.attribution
+					}
+				});
+			} catch (error) {
+				// MapLibre draws with WebGL and throws outright where there is none.
+				// Leaflet only ever assembled images and had no such floor.
+				console.error('The map could not start:', error);
+				mapUnavailable = true;
+				return;
 			}
-		}
-	});
 
-	// Initialize map
-	onMount(async () => {
-		// Set initial window height
-		windowHeight = window.innerHeight;
+			map.addControl(new maplibre.NavigationControl({ showCompass: false }), 'top-left');
+			tooltip = new maplibre.Popup({ closeButton: false, closeOnClick: false, offset: 14 });
 
-		// Listen for window resize with debouncing
-		let resizeTimeout;
-		const handleResize = () => {
-			clearTimeout(resizeTimeout);
-			resizeTimeout = setTimeout(() => {
-				const newHeight = window.innerHeight;
-				if (newHeight !== windowHeight) {
-					windowHeight = newHeight;
-				}
-			}, 100);
-		};
-		window.addEventListener('resize', handleResize);
-
-		// Dynamic import to avoid SSR issues
-		L = await import('leaflet');
-
-		// Fix default marker icons
-		delete L.Icon.Default.prototype._getIconUrl;
-		L.Icon.Default.mergeOptions({
-			iconRetinaUrl: `${base}/marker-icon@2x.png`,
-			iconUrl: `${base}/marker-icon.png`,
-			shadowUrl: `${base}/marker-shadow.png`
-		});
-
-		// Create map with greyscale theme
-		map = L.map(mapContainer, {
-			center: [46.603354, 1.888334], // Center of France
-			zoom: 6,
-			zoomControl: true,
-			scrollWheelZoom: false, // Disable scroll wheel zoom
-			doubleClickZoom: true,
-			touchZoom: true,
-			dragging: true
-		});
-
-		// Add greyscale tile layer
-		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			attribution: '© OpenStreetMap contributors',
-			className: 'map-tiles'
-		}).addTo(map);
-
-		// Add custom CSS for greyscale
-		const style = document.createElement('style');
-		style.textContent = `
-			.map-tiles {
-				filter: grayscale(100%);
-			}
-		`;
-		document.head.appendChild(style);
-
-		// Test marker
-		// const testMarker = L.marker([48.8566, 2.3522]).addTo(map);
-		// testMarker.bindPopup('Test marker in Paris');
-
-		// Initial marker update
-		setTimeout(() => {
-			updateMarkers();
-		}, 100);
+			map.on('load', () => {
+				mapReady = true;
+				updateMarkers();
+			});
+		})();
 
 		return () => {
-			// Cleanup
-			window.removeEventListener('resize', handleResize);
-			if (map) {
-				map.remove();
-			}
+			disposed = true;
+			markers.forEach((marker) => marker.remove());
+			map?.remove();
 		};
 	});
 
-	// Update markers when filtered projects change
+	// Redraw the markers whenever the filters change the set
 	$effect(() => {
-		// Access filteredProjects to create dependency
-		const projects = filteredProjects;
-		if (map && projects) {
-			updateMarkers();
-		}
+		const shown = filteredProjects;
+		if (map && mapReady && shown) updateMarkers();
 	});
 
-	async function updateMarkers() {
-		if (!map || !L) return;
+	/**
+	 * Project frontmatter records `coordinates: [latitude, longitude]`; MapLibre
+	 * wants [longitude, latitude]. This is the one place the two orders meet, and
+	 * the only place the swap happens.
+	 */
+	function toLngLat(coordinates) {
+		if (!Array.isArray(coordinates) || coordinates.length !== 2) return null;
 
-		// Clear existing markers
-		markers.forEach((marker) => map.removeLayer(marker));
+		const [lat, lng] = coordinates;
+		if (typeof lat !== 'number' || typeof lng !== 'number') return null;
+		if (lat < -90 || lat > 90 || lng < -180 || lng > 180) return null;
+
+		return [lng, lat];
+	}
+
+	function updateMarkers() {
+		markers.forEach((marker) => marker.remove());
 		markers = [];
+		tooltip?.remove();
 
-		// Add new markers for filtered projects
-		filteredProjects.forEach((project) => {
-			if (
-				project.coordinates &&
-				Array.isArray(project.coordinates) &&
-				project.coordinates.length === 2
-			) {
-				const [lat, lng] = project.coordinates;
+		const bounds = new maplibre.LngLatBounds();
 
-				// Validate coordinate ranges
-				if (
-					typeof lat !== 'number' ||
-					typeof lng !== 'number' ||
-					lat < -90 ||
-					lat > 90 ||
-					lng < -180 ||
-					lng > 180
-				)
-					return;
+		for (const project of filteredProjects) {
+			const position = toLngLat(project.coordinates);
+			if (!position) continue;
 
-				try {
-					// Create custom icon based on featured status
-					const iconOptions = project.featured
-						? {
-								iconUrl: `${base}/marker-featured.png`,
-								iconRetinaUrl: `${base}/marker-featured@2x.png`,
-								shadowUrl: `${base}/marker-shadow.png`,
-								iconSize: [25, 41],
-								iconAnchor: [12, 41],
-								popupAnchor: [1, -34],
-								shadowSize: [41, 41]
-							}
-						: undefined; // Use default icons
+			const marker = new maplibre.Marker({ element: markerFor(project, position) });
+			markers.push(marker.setLngLat(position).addTo(map));
+			bounds.extend(position);
+		}
 
-					// Create custom marker
-					const marker = iconOptions
-						? L.marker([lat, lng], {
-								title: project.title,
-								icon: L.icon(iconOptions)
-							}).addTo(map)
-						: L.marker([lat, lng], {
-								title: project.title
-							}).addTo(map);
+		if (markers.length > 0) {
+			// The map's own maxZoom caps how far this can go
+			map.fitBounds(bounds, { padding: 60, duration: 0 });
+		} else {
+			map.jumpTo({ center: DEFAULT_CENTER, zoom: DEFAULT_ZOOM });
+		}
+	}
 
-					// Add click handler to show project card
-					marker.on('click', () => {
-						selectedProject = project;
-					});
+	/**
+	 * A real button rather than an image: the Leaflet markers could not be reached
+	 * from the keyboard at all. Its looks live in `app.css`, in fixed ink rather
+	 * than theme tokens — see the note there.
+	 */
+	function markerFor(project, position) {
+		const element = document.createElement('button');
+		element.type = 'button';
+		element.className = `ak-marker${project.featured ? ' ak-marker--featured' : ''}`;
+		element.setAttribute('aria-label', project.title);
 
-					// Add tooltip with project title
-					marker.bindTooltip(project.title, {
-						permanent: false,
-						direction: 'top'
-					});
-
-					markers.push(marker);
-				} catch (error) {
-					console.error('Error creating marker:', error);
-				}
-			}
+		element.addEventListener('click', (event) => {
+			event.stopPropagation();
+			selectedProject = project;
 		});
 
-		// Fit map to show all markers or default view
-		if (markers.length > 0) {
-			const group = L.featureGroup(markers);
-			map.fitBounds(group.getBounds().pad(0.1));
-		} else {
-			map.setView([46.603354, 1.888334], 6);
-		}
+		// On focus too, or the title never surfaces for a keyboard visitor
+		const showTitle = () => tooltip.setLngLat(position).setText(project.title).addTo(map);
+		const hideTitle = () => tooltip.remove();
+		element.addEventListener('mouseenter', showTitle);
+		element.addEventListener('mouseleave', hideTitle);
+		element.addEventListener('focus', showTitle);
+		element.addEventListener('blur', hideTitle);
+
+		return element;
 	}
 
 	function closeProjectCard() {
@@ -227,7 +171,6 @@
 <svelte:head>
 	<title>{siteConfig.title} • {$_('pages.map.title')}</title>
 	<meta name="description" content={$_('pages.map.description')} />
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </svelte:head>
 
 <div class="space-y-8">
@@ -241,11 +184,13 @@
 
 	<!-- Map Container -->
 	<div class="border-primary relative overflow-hidden border">
-		<div
-			bind:this={mapContainer}
-			class="w-full"
-			style="height: {mapHeight}; max-height: 80vh;"
-		></div>
+		<div bind:this={mapContainer} class="h-150 max-h-[80vh] w-full"></div>
+
+		{#if mapUnavailable}
+			<div class="bg-box absolute inset-0 z-1000 flex items-center justify-center p-8 text-center">
+				<p>{$_('pages.map.unavailable')}</p>
+			</div>
+		{/if}
 
 		<!-- Project Card Overlay -->
 		{#if selectedProject}

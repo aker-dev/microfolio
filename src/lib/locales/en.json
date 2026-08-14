@@ -13,7 +13,8 @@
 		},
 		"map": {
 			"title": "Projects Map",
-			"description": "Interactive map of projects"
+			"description": "Interactive map of projects",
+			"unavailable": "This map needs WebGL, which your browser does not seem to provide. The list view shows the same projects."
 		},
 		"projects": {
 			"title": "Projects",

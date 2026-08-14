@@ -54,7 +54,7 @@
 		"@iconify/svelte": "^5.2.2",
 		"cursor-effects": "^1.0.18",
 		"exifreader": "^4.42.0",
-		"leaflet": "^1.9.4",
+		"maplibre-gl": "^6.3.0",
 		"marked": "^16.4.2",
 		"svelte-i18n": "^4.0.1",
 		"yaml": "^2.9.0"

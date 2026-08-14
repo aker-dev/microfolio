@@ -69,8 +69,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 1.25rem;
-	height: 1.25rem;
+	width: 1.5rem;
+	height: 1.5rem;
 	padding: 0;
 	border: 1px solid #171717;
 	border-radius: 9999px;
@@ -84,13 +84,13 @@
 	transform: scale(1.4);
 }
 
-/* Featured projects carry the star, exactly as the cards and the list do, rather
-   than changing colour: every marker stays white. Sized here because the raw SVG
-   arrives with dimensions of its own, and coloured through `color` because its
-   path is drawn in currentColor. */
+/* Featured projects carry the star inside the disc, exactly as the cards and the
+   list mark them, rather than changing colour: every marker stays white. Sized
+   here because the raw SVG arrives carrying dimensions of its own, and coloured
+   through `color` because its path is drawn in currentColor. */
 .ak-marker--featured svg {
-	width: 0.75rem;
-	height: 0.75rem;
+	width: 0.875rem;
+	height: 0.875rem;
 	color: #171717;
 	pointer-events: none;
 }

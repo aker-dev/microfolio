@@ -46,7 +46,7 @@
 
 		// Not an async onMount: Svelte only treats a returned function as the
 		// cleanup, and an async callback hands it a promise instead.
-		(async () => {
+		const boot = async () => {
 			// Dynamic, because MapLibre reaches for window and this page is prerendered.
 			// The whole namespace, not `.default`: v6 dropped the default export that
 			// every example still shows, and `.default` is simply undefined.
@@ -88,10 +88,22 @@
 			stopWatchingTheme = onThemeChange((theme) => {
 				map.setStyle(siteConfig.map.styles[theme]);
 			});
-		})();
+		};
+
+		// MapLibre is 977 kB of JavaScript to parse, and running that during
+		// hydration held the header, the filters and the first paint behind it.
+		// Booting on an idle callback lets the page arrive first; the timeout means
+		// a page that never goes idle still gets its map. requestIdleCallback only
+		// reached Safari in 16.4, hence the fallback.
+		const idle =
+			typeof requestIdleCallback === 'function'
+				? requestIdleCallback(boot, { timeout: 2000 })
+				: setTimeout(boot, 200);
 
 		return () => {
 			disposed = true;
+			if (typeof cancelIdleCallback === 'function') cancelIdleCallback(idle);
+			else clearTimeout(idle);
 			stopWatchingTheme();
 			markers.forEach((marker) => marker.remove());
 			map?.remove();
@@ -191,6 +203,9 @@
 <svelte:head>
 	<title>{siteConfig.title} • {$_('pages.map.title')}</title>
 	<meta name="description" content={$_('pages.map.description')} />
+	<!-- The basemap lives on another origin, and its DNS lookup and TLS handshake
+	     would otherwise only start once MapLibre asks for the style. -->
+	<link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin="anonymous" />
 </svelte:head>
 
 <div class="space-y-8">

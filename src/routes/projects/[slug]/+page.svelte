@@ -242,7 +242,12 @@
 			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 				{#each project.resources.videos as video (video.path)}
 					<div class="overflow-hidden">
-						<video controls class="w-full" preload="metadata">
+						<!-- `none`, not `metadata`: with metadata the browser pulled the
+						     whole file down on page load — measured at 3 MB for the example
+						     project's single video, more than everything else on the page
+						     put together. Nothing is fetched now until the visitor presses
+						     play. -->
+						<video controls class="w-full" preload="none">
 							<source src={video.path} type="video/mp4" />
 							<track kind="captions" />
 							{$_('ui.video_not_supported')}

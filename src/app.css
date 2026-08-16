@@ -60,11 +60,11 @@
 
 /* The map.
 
-   Everything below is written in fixed ink rather than theme tokens, and that is
-   deliberate: Plan IGN is served in its grey style in both themes, so the map
-   stays light even on a dark page. A marker built on --color-primary would turn
-   white in dark mode and vanish against the tiles it sits on. Same reasoning for
-   MapLibre's own chrome. */
+   These are theme tokens again. Under Plan IGN they had to be fixed ink, because
+   that basemap was served grey in both themes and a marker built on
+   --color-primary would have turned white in dark mode and vanished into the
+   tiles. OpenFreeMap ships a light style and a dark one, so the map now turns
+   with the page and everything drawn over it has to turn too. */
 .ak-marker {
 	display: flex;
 	align-items: center;
@@ -72,9 +72,9 @@
 	width: 1.5rem;
 	height: 1.5rem;
 	padding: 0;
-	border: 1px solid #171717;
+	border: 1px solid var(--color-primary);
 	border-radius: 9999px;
-	background: #ffffff;
+	background: var(--color-box);
 	cursor: pointer;
 	transition: transform 0.2s ease-in-out;
 }
@@ -85,13 +85,13 @@
 }
 
 /* Featured projects carry the star inside the disc, exactly as the cards and the
-   list mark them, rather than changing colour: every marker stays white. Sized
-   here because the raw SVG arrives carrying dimensions of its own, and coloured
-   through `color` because its path is drawn in currentColor. */
+   list mark them, rather than by a marker that changes colour. Sized here because
+   the raw SVG arrives carrying dimensions of its own, and coloured through
+   `color` because its path is drawn in currentColor. */
 .ak-marker--featured svg {
 	width: 0.875rem;
 	height: 0.875rem;
-	color: #171717;
+	color: var(--color-primary);
 	pointer-events: none;
 }
 
@@ -100,9 +100,10 @@
    this file, so these are written with two classes rather than one: matching its
    specificity would leave the winner down to injection order. */
 .maplibregl-ctrl.maplibregl-ctrl-group {
-	border: 1px solid #171717;
+	border: 1px solid var(--color-primary);
 	border-radius: 0;
 	box-shadow: none;
+	background: var(--color-box);
 }
 
 .maplibregl-ctrl.maplibregl-ctrl-group button {
@@ -110,15 +111,16 @@
 }
 
 .maplibregl-ctrl.maplibregl-ctrl-group button + button {
-	border-top: 1px solid #171717;
+	border-top: 1px solid var(--color-primary);
 }
 
 .maplibregl-popup .maplibregl-popup-content {
 	padding: 0.25rem 0.5rem;
-	border: 1px solid #171717;
+	border: 1px solid var(--color-primary);
 	border-radius: 0;
 	box-shadow: none;
-	color: #171717;
+	background: var(--color-box);
+	color: var(--color-primary);
 	font-size: 0.875rem;
 }
 
@@ -126,9 +128,37 @@
 	display: none;
 }
 
-.maplibregl-ctrl.maplibregl-ctrl-attrib {
+/* Three classes, not two: the attribution is rendered compact, and MapLibre
+   paints that state white through `.maplibregl-ctrl-attrib.maplibregl-compact`,
+   which ties on specificity and wins on order. Two classes left the bar white
+   with white links on it — legible only where the text was not a link. */
+.maplibregl-ctrl.maplibregl-ctrl-attrib,
+.maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact {
 	border-radius: 0;
+	background-color: var(--color-box);
+	color: var(--color-primary);
 	font-size: 0.6875rem;
+}
+
+.maplibregl-ctrl.maplibregl-ctrl-attrib a {
+	color: var(--color-primary);
+}
+
+/* MapLibre bakes its icons into dark SVG data URIs, and the only variants it
+   ships are for Windows' forced-colors mode — so on a dark control they go
+   invisible. Inverted rather than replaced, and tested through both mechanisms
+   the palette itself uses: the media query when no choice is stored, the class
+   when the footer toggle has spoken. */
+@media (prefers-color-scheme: dark) {
+	:root:not(.light) .maplibregl-ctrl button .maplibregl-ctrl-icon,
+	:root:not(.light) .maplibregl-ctrl-attrib-button {
+		filter: invert(1);
+	}
+}
+
+:root.dark .maplibregl-ctrl button .maplibregl-ctrl-icon,
+:root.dark .maplibregl-ctrl-attrib-button {
+	filter: invert(1);
 }
 
 /* Keyboard focus has to stay visible. :focus-visible rather than :focus so a

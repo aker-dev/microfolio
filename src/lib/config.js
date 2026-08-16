@@ -16,21 +16,24 @@ export const siteConfig = {
 
 	// Map basemap
 	map: {
-		// Plan IGN in its grey style, served by the Géoplateforme: French public
-		// data, no API key, and already entirely neutral — which is why the map no
-		// longer needs a desaturating filter to sit inside this site.
-		style: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/gris.json',
+		// OpenFreeMap: OpenStreetMap the world over, no API key, and its TileJSON
+		// carries the attribution so MapLibre credits it without being told.
+		//
+		// Positron and Dark are the two neutral styles it publishes — measured, one
+		// off-grey colour out of seventeen and none out of eleven. Bright and
+		// Liberty are handsome but mostly coloured, and the map would then be the
+		// only coloured surface in the site.
+		styles: {
+			light: 'https://tiles.openfreemap.org/styles/positron',
+			dark: 'https://tiles.openfreemap.org/styles/dark'
+		},
 
-		// Plan IGN only covers the whole world down to zoom 6. Past it there is
-		// detail across France and empty tiles everywhere else — Rome returns 42
-		// bytes at zoom 7. Capping here keeps the map populated wherever a project
-		// happens to be, at the cost of never reaching street scale.
-		maxZoom: 6,
+		// The tiles stop at zoom 14 and MapLibre overzooms past that
+		maxZoom: 18,
 
-		// Written out because the IGN carries none: neither the style, nor its
-		// TileJSON, nor metadata.json holds an `attribution` field, so MapLibre has
-		// nothing to display and the credit would simply go missing.
-		attribution: '© IGN — Géoplateforme'
+		// How far fitting the markers may zoom in. Without it, filtering down to a
+		// single project frames its roof.
+		fitMaxZoom: 12
 	},
 
 	// Social links

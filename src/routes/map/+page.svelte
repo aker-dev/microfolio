@@ -5,6 +5,7 @@
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
+	import { getTheme, onThemeChange } from '$lib/utils/theme.js';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	// MapLibre parses tiles in a worker whose URL it builds at runtime, from a
 	// name it assembles rather than a literal. Rollup cannot see through that, so
@@ -41,6 +42,7 @@
 
 	onMount(() => {
 		let disposed = false;
+		let stopWatchingTheme = () => {};
 
 		// Not an async onMount: Svelte only treats a returned function as the
 		// cleanup, and an async callback hands it a promise instead.
@@ -56,15 +58,13 @@
 			try {
 				map = new maplibre.Map({
 					container: mapContainer,
-					style: siteConfig.map.style,
+					style: siteConfig.map.styles[getTheme()],
 					center: DEFAULT_CENTER,
 					zoom: DEFAULT_ZOOM,
 					maxZoom: siteConfig.map.maxZoom,
 					scrollZoom: false,
-					attributionControl: {
-						compact: true,
-						customAttribution: siteConfig.map.attribution
-					}
+					// No customAttribution: OpenFreeMap's TileJSON carries the credit
+					attributionControl: { compact: true }
 				});
 			} catch (error) {
 				// MapLibre draws with WebGL and throws outright where there is none.
@@ -81,10 +81,18 @@
 				mapReady = true;
 				updateMarkers();
 			});
+
+			// Light and dark are two published styles rather than one repainted, so
+			// following the theme means swapping the whole style. Markers are DOM
+			// nodes the map owns, not part of the style, so they stay put.
+			stopWatchingTheme = onThemeChange((theme) => {
+				map.setStyle(siteConfig.map.styles[theme]);
+			});
 		})();
 
 		return () => {
 			disposed = true;
+			stopWatchingTheme();
 			markers.forEach((marker) => marker.remove());
 			map?.remove();
 		};
@@ -128,8 +136,12 @@
 		}
 
 		if (markers.length > 0) {
-			// The map's own maxZoom caps how far this can go
-			map.fitBounds(bounds, { padding: 60, duration: 0 });
+			// Capped, or filtering down to one project frames its roof
+			map.fitBounds(bounds, {
+				padding: 60,
+				maxZoom: siteConfig.map.fitMaxZoom,
+				duration: 0
+			});
 		} else {
 			map.jumpTo({ center: DEFAULT_CENTER, zoom: DEFAULT_ZOOM });
 		}

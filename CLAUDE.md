@@ -39,7 +39,7 @@ pnpm 11 no longer reads the `pnpm` field in package.json — its settings live i
 
 - **Unit** — Vitest, co-located `src/**/*.test.js`. `vitest.config.js` deliberately omits the SvelteKit plugin, so these cover plain modules only (currently the content parsing) and run in ~150ms.
 - **End-to-end** — Playwright, specs in `e2e/`. It starts its own dev server, or reuses one already running on the port. Set `PLAYWRIGHT_PORT` to exercise the CI path locally without colliding with a dev server on 5555.
-- CI (`.github/workflows/deploy.yml`) runs lint, unit tests and e2e before building.
+- CI (`.github/workflows/deploy.yml`) runs lint, unit tests and e2e before building, and generates the WebP thumbnails first — `example_projects.zip` ships only JPEGs, so without that step the deployed demo served every thumbnail at full size while a local build served WebP.
 - Some specs run with `javaScriptEnabled: false` to assert that `/list` and `/projects` really do ship their content in the HTML, and others under a phone viewport. Everything else waits on `data-hydrated`, an attribute `+layout.svelte` sets on `<html>` once the tree is interactive: the whole page is prerendered, so a click can otherwise land on markup with no listener attached and be lost. That failure only ever showed on the slower CI runner.
 
 ### What a green suite will not tell you

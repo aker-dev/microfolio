@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **The map draws OpenStreetMap the world over, through OpenFreeMap**, and no longer only France. 0.9.0 capped the zoom at 6 because Plan IGN stops covering the planet past that level; the cap is gone, and a project anywhere now zooms down to its street. Still no API key, and the attribution comes from the tiles themselves
 - **The map has a dark mode.** Positron in light, Dark in dark, switching with the rest of the site — the two neutral styles OpenFreeMap publishes, so the map stays in the same black and white as every other page. Markers, controls and the attribution follow the theme with it
 - `siteConfig.map` now holds two styles and two zoom limits, in place of a single style, a hard cap and an attribution that had to be written by hand
+- **The deployed site now gets its optimized images.** `example_projects.zip` carries only JPEGs, so every demo thumbnail was published at full size while a local build served WebP; the workflow generates them before it lints, tests and builds
+
+### Fixed
+
+- Project videos downloaded in full on page load despite `preload="metadata"`. The example project's video is 3 MB, more than the rest of that page put together, and it arrived whether or not anyone pressed play — the project page goes from 6448 kB to 321 kB
+- The webfont was pulled in by an `@import` inside the stylesheet, which put it behind three round trips instead of one. First contentful paint improves by 100 to 288 ms across the home, map and project pages
+- The map booted while the page was still hydrating, holding the first paint behind 977 kB of JavaScript. It now waits until the page has painted
+- The image that decides the largest contentful paint was lazily loaded like every other
 
 ## [0.9.0] - 2026-08-14
 

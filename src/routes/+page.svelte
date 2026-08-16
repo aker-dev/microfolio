@@ -36,8 +36,8 @@
 
 		<!-- Mosaic Grid -->
 		<div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
-			{#each featuredProjects as project (project.slug)}
-				<AkProjectCard {project} />
+			{#each featuredProjects as project, i (project.slug)}
+				<AkProjectCard {project} priority={i === 0} />
 			{/each}
 		</div>
 	</div>

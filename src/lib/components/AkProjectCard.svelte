@@ -7,7 +7,9 @@
 	import IconStarFilled from '~icons/carbon/star-filled';
 	import IconImage from '~icons/carbon/image';
 
-	let { project, class: className } = $props();
+	// Set on the first card of a grid: its thumbnail is what the browser measures
+	// as the largest contentful paint, so it should not be queued behind the rest.
+	let { project, class: className, priority = false } = $props();
 </script>
 
 <a href="{base}/projects/{project.slug}" class="group bg-box block overflow-hidden {className}">
@@ -27,6 +29,7 @@
 				alt={project.title}
 				class="image-hover-effect h-full w-full bg-neutral-500 object-cover"
 				hasWebP={project.hasWebP || false}
+				{priority}
 			/>
 		{/if}
 	</div>

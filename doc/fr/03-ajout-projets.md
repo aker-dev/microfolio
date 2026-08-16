@@ -87,12 +87,9 @@ Présentez les résultats obtenus, l'accueil du projet, son impact.
 - `location` : Localisation du projet
 - `coordinates` : Coordonnées GPS [latitude, longitude]
 
-> **Le fond de carte est français.** La carte affiche le Plan IGN. Il couvre le
-> monde entier jusqu'au zoom 6 et la seule France au-delà, d'où un zoom plafonné
-> à 6 : un projet situé n'importe où sur la planète apparaît au bon endroit, mais
-> la carte ne descend jamais à l'échelle de la rue. Pour zoomer davantage sur des
-> projets hors de France, faites pointer `siteConfig.map.style` vers un autre
-> style MapLibre et relevez `maxZoom` — les deux sont dans `src/lib/config.js`.
+> La carte affiche OpenStreetMap dans le monde entier, via OpenFreeMap, et suit
+> votre thème clair ou sombre. `siteConfig.map`, dans `src/lib/config.js`, porte
+> les deux styles et les limites de zoom si vous préférez un autre fond de carte.
 
 - `tags` : Mots-clés pour le filtrage
 - `authors` : Créateurs et collaborateurs

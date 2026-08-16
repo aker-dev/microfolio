@@ -105,11 +105,12 @@ All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectC
 
 **Two components render a project, and the room decides which.** `AkProjectCard` leads with a 4:3 thumbnail and belongs in the grids of the homepage and `/projects`. `AkProjectSummary` is text-first and belongs where an image would crowd the text out: the map callout, and `/list` below `md`. The whole summary is one link, which is why its tags are plain text — an anchor cannot contain other links.
 
-**The map is MapLibre GL on Plan IGN**, in the grey style the Géoplateforme publishes — French public data, no API key, and already fully neutral, which is why nothing desaturates it any more. `$lib/config.js` holds the style URL, the zoom cap and the attribution, and each carries the reason it exists. Three things about it are not guessable:
+**The map is MapLibre GL on OpenFreeMap**, worldwide OpenStreetMap vector tiles with no API key, in Positron for light and Dark for dark — the two neutral styles it publishes, which is why nothing desaturates the map any more. `$lib/config.js` holds both styles and the zoom limits. Things about it that are not guessable:
 
 - **Coordinates swap.** Frontmatter is `[latitude, longitude]`, MapLibre wants `[longitude, latitude]`. `toLngLat()` in `map/+page.svelte` is the only place they meet — keep it that way
-- **`maxZoom: 6` is not a preference.** Plan IGN covers the world to zoom 6 and France alone past it; Rome returns 42 bytes at zoom 7. Raising the cap empties the map for any project outside France, and no demo content would ever show it
-- **Marker and control colours are fixed ink, never theme tokens.** The map stays light in dark mode, where `--color-primary` is white — a marker built on it would disappear into the tiles
+- **Switching theme swaps the whole style**, since light and dark are two published styles rather than one repainted. Markers survive it: they are DOM nodes the map owns, not part of the style. Verified, not assumed — 101 before and after
+- **`fitMaxZoom` exists because fitting one project would otherwise frame its roof.** The map's own `maxZoom` used to do that job back when it was capped at 6
+- **MapLibre's chrome fights back twice.** Its icons are baked dark SVG data URIs with variants only for Windows' forced-colors mode, so they are inverted in dark; and its compact attribution paints itself white through a two-class rule that ties with ours and wins on order, so ours carries a third class. Without it the bar was white with white links on it
 
 Markers are built with `createElement`, out of reach of a Svelte component, so the star a featured project carries comes from `import starFilled from '~icons/carbon/star-filled?raw'`. The `?raw` suffix hands back the SVG as a string from the same `@iconify` record every `<IconStarFilled>` renders — one original, rather than a traced copy free to drift.
 

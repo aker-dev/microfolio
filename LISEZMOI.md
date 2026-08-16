@@ -14,7 +14,7 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 - **🎨 Vues multiples** — Grille de projets, Liste et Carte
 - **📱 Design responsive** — Conçu avec une approche mobile-first
 - **🏷️ Étiquetage intelligent** — Compteurs de filtres et liste de tags repliable
-- **🗺️ Carte interactive** — MapLibre GL et projets géolocalisés sur un fond Plan IGN
+- **🗺️ Carte interactive** — MapLibre GL et projets géolocalisés, en clair et en sombre, sur un fond OpenStreetMap
 - **🚀 Génération statique** — Performances optimales avec SvelteKit adapter-static
 - **🖼️ Lightbox d'images** — Galerie améliorée avec flèches de navigation et affichage des métadonnées
 - **📊 Métadonnées EXIF/IPTC** — Extraction et affichage automatique des informations techniques d'images
@@ -149,6 +149,7 @@ Suit la préférence du système, avec un bouton dans le pied de page qui mémor
 ![microfolio Page d'accueil en mode sombre](doc/screenshots/microfolio_home_dark.png)
 ![microfolio Détail de projet en mode sombre](doc/screenshots/microfolio_project_dark.png)
 ![microfolio Vue liste en mode sombre](doc/screenshots/microfolio_list_dark.png)
+![microfolio Carte en mode sombre](doc/screenshots/microfolio_map_dark.png)
 ![microfolio Lightbox en mode sombre](doc/screenshots/microfolio_lightbox_dark.png)
 
 ---

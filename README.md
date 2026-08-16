@@ -14,7 +14,7 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 - **🎨 Multiple Views** — Projects grid, List, and Map modes
 - **📱 Responsive Design** — Mobile-first approach
 - **🏷️ Smart Tagging** — Filter counters and collapsible tag list
-- **🗺️ Interactive Map** — MapLibre GL with geolocated projects on a Plan IGN basemap
+- **🗺️ Interactive Map** — MapLibre GL with geolocated projects, light and dark, on an OpenStreetMap basemap
 - **🚀 Static Generation** — Optimal performance with SvelteKit adapter-static
 - **🖼️ Image Lightbox** — Enhanced gallery with navigation arrows and metadata display
 - **📊 EXIF/IPTC Metadata** — Automatic extraction and display of image technical information
@@ -149,6 +149,7 @@ Follows the system preference, with a toggle in the footer that remembers your c
 ![microfolio Homepage in dark mode](doc/screenshots/microfolio_home_dark.png)
 ![microfolio Project detail in dark mode](doc/screenshots/microfolio_project_dark.png)
 ![microfolio List view in dark mode](doc/screenshots/microfolio_list_dark.png)
+![microfolio Map in dark mode](doc/screenshots/microfolio_map_dark.png)
 ![microfolio Lightbox in dark mode](doc/screenshots/microfolio_lightbox_dark.png)
 
 ---

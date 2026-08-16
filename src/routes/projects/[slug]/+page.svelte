@@ -79,10 +79,17 @@
 
 		<!-- Main thumbnail -->
 		{#if project.hasThumbnail}
+			<!-- Its real pixel size, so the browser holds the right height open and
+			     the text below stops being shoved down when the image lands. Read
+			     from the file itself rather than assumed, because project images have
+			     no common shape and a fixed ratio would crop them. `h-auto` lets the
+			     width rule win while the attributes still give the aspect ratio. -->
 			<img
 				src="{base}/content/projects/{project.slug}/thumbnail.jpg"
 				alt={thumbnailMetadata?.description || project.title}
-				class="w-full"
+				width={thumbnailMetadata?.width ?? undefined}
+				height={thumbnailMetadata?.height ?? undefined}
+				class="h-auto w-full"
 			/>
 
 			<!-- Thumbnail metadata -->

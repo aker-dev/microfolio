@@ -5,6 +5,13 @@
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
 		<link rel="preconnect" href="https://fonts.bunny.net" />
 		<link rel="dns-prefetch" href="https://fonts.bunny.net" />
+		<!-- Here rather than through an @import in app.css: declared in the HTML it
+		     is found while the markup is still being parsed and fetched alongside
+		     the app's own stylesheet, instead of waiting for it to arrive first. -->
+		<link
+			rel="stylesheet"
+			href="https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap"
+		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 		<script>

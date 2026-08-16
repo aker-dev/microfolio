@@ -1,4 +1,6 @@
-@import url(https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap);
+/* The webfont is linked from app.html, not imported here: an @import inside a
+   stylesheet cannot be discovered until this file has been fetched and parsed,
+   which put the font behind three round trips instead of one. */
 
 @import 'tailwindcss';
 

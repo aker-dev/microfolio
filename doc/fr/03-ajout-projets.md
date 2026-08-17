@@ -88,8 +88,8 @@ Présentez les résultats obtenus, l'accueil du projet, son impact.
 - `coordinates` : Coordonnées GPS [latitude, longitude]
 
 > La carte affiche OpenStreetMap dans le monde entier, via OpenFreeMap, et suit
-> votre thème clair ou sombre. `siteConfig.map`, dans `src/lib/config.js`, porte
-> les deux styles et les limites de zoom si vous préférez un autre fond de carte.
+> votre thème clair ou sombre. Le fond de carte et ses limites de zoom se règlent
+> en tête de `src/routes/map/+page.svelte` si vous en préférez un autre.
 
 - `tags` : Mots-clés pour le filtrage
 - `authors` : Créateurs et collaborateurs

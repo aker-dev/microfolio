@@ -86,7 +86,8 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - `$lib/utils/locale.js` — `getTextDirection()`, shared by `hooks.server.js` (prerender) and `+layout.svelte` (client)
 - `$lib/utils/imageMetadata.js` — EXIF/IPTC extraction via `exifreader` (credit, camera, GPS, etc.)
 - `$lib/utils/date.js` — `formatProjectDate()`: the `YYYY-MM` shown everywhere a project is dated. It was written out four times before
-- `$lib/config.js` — Site config (title, social links, navigation, `lightbox.hideControlsDelay`, and the `map` block: basemap style, zoom cap, attribution)
+- `$lib/config.js` — Site config, and deliberately only what someone setting up **their** site needs: title, `url`, social links, navigation, `ogImage`, `images.optimizeOnBuild`, `lightbox.hideControlsDelay`. Tile provider URLs and zoom limits live in the map route instead
+- `$lib/utils/seo.js` — `absoluteUrl()`: takes a route path **without** the base, because `siteConfig.url` already carries it
 - `$lib/i18n.js` — Internationalization setup with `svelte-i18n` (en/fr active, more commented out)
 
 ### Styling
@@ -105,7 +106,7 @@ All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectC
 
 **Two components render a project, and the room decides which.** `AkProjectCard` leads with a 4:3 thumbnail and belongs in the grids of the homepage and `/projects`. `AkProjectSummary` is text-first and belongs where an image would crowd the text out: the map callout, and `/list` below `md`. The whole summary is one link, which is why its tags are plain text — an anchor cannot contain other links.
 
-**The map is MapLibre GL on OpenFreeMap**, worldwide OpenStreetMap vector tiles with no API key, in Positron for light and Dark for dark — the two neutral styles it publishes, which is why nothing desaturates the map any more. `$lib/config.js` holds both styles and the zoom limits. Things about it that are not guessable:
+**The map is MapLibre GL on OpenFreeMap**, worldwide OpenStreetMap vector tiles with no API key, in Positron for light and Dark for dark — the two neutral styles it publishes, which is why nothing desaturates the map any more. The styles and zoom limits sit at the top of `map/+page.svelte`, not in `config.js`. Things about it that are not guessable:
 
 - **Coordinates swap.** Frontmatter is `[latitude, longitude]`, MapLibre wants `[longitude, latitude]`. `toLngLat()` in `map/+page.svelte` is the only place they meet — keep it that way
 - **Switching theme swaps the whole style**, since light and dark are two published styles rather than one repainted. Markers survive it: they are DOM nodes the map owns, not part of the style. Verified, not assumed — 101 before and after
@@ -124,7 +125,9 @@ MapLibre 6 has **no default export**; `(await import('maplibre-gl')).default` is
 - `svelte.config.js` dynamically generates prerender entries by scanning `/content/projects/`
 - `vite.config.js` copies the `content/` directory to build output via `vite-plugin-static-copy` (build only, not dev)
 - Icons via `unplugin-icons` with Iconify JSON
-- Base path: `/microfolio` in production, empty in dev. Set `CUSTOM_DOMAIN=true` env var to remove base path for custom domains
+- **The site's address is written once**, as `siteConfig.url`. The base path is its pathname (empty in dev, so `pnpm dev` keeps serving from `/`), and every absolute URL — `og:image`, `og:url`, canonical, sitemap — is built from it by `absoluteUrl()`. `getBasePath()` is the single definition and `svelte.config.js` imports it
+- **There is no CNAME file.** Published through an Actions workflow, GitHub Pages ignores any CNAME in the build — the custom domain is set in the repository settings. The one that used to sit in `static/` did nothing
+- `sitemap.xml` and `robots.txt` are prerendered endpoints, listed explicitly in `svelte.config.js` entries because nothing links to them and the crawler would never find them
 - Layout (`+layout.js`): `prerender = true`, `trailingSlash = 'always'`
 - Deployment to GitHub Pages is triggered by a push to **`preview`**, not to `main` or `dev` — `.github/workflows/deploy.yml`. Work happens on `dev`; publishing means merging `dev` into `preview`
 - That workflow unzips `content/projects/example_projects.zip` before installing, so the demo content CI builds and tests against comes from the zip, not from the working copy (only `example-project/` and the zip itself are tracked). It then runs lint, unit tests and e2e before the build
@@ -134,6 +137,13 @@ MapLibre 6 has **no default export**; `(await import('maplibre-gl')).default` is
 - Locale strings in `src/lib/locales/{lang}.json`
 - Default locale set in `$lib/config.js` (`siteConfig.locale`)
 - RTL support via `getTextDirection()`: `hooks.server.js` fills the `lang` and `dir` placeholders in `app.html` at prerender, and `+layout.svelte` updates them when the locale changes client-side
+
+## Deferred
+
+**JSON-LD structured data**, deliberately left out of the sharing work: a
+`CreativeWork` per project and a site identity on the home page. The frontmatter
+already carries everything it needs — title, date, location, authors, type,
+tags — so it is a matter of emitting it, not of gathering it.
 
 ## Project Metadata Schema
 

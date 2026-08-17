@@ -27,18 +27,22 @@ Before publishing your portfolio, make sure that:
 
 If you have your own domain:
 
-1. **Configure the CNAME file**
+1. **Set the address in your config**
 
-   ```bash
-   echo "your-domain.com" > static/CNAME
+   ```js
+   // src/lib/config.js
+   url: 'https://your-domain.com';
    ```
 
-2. **Set the environment variable**
+   This is the only place the address is written. The base path and every
+   absolute URL — sharing tags, canonical links, the sitemap — come from it.
 
-   ```bash
-   # In the .env file
-   CUSTOM_DOMAIN=true
-   ```
+2. **Tell GitHub Pages**
+   - In the repository, go to Settings › Pages › Custom domain
+   - Enter your domain and save
+
+   There is no `CNAME` file to write. Published through an Actions workflow, as
+   microfolio is, GitHub ignores any `CNAME` in the build.
 
 3. **Configure your DNS**
    - At your registrar, create a CNAME record
@@ -48,14 +52,7 @@ If you have your own domain:
 
 If you're using GitHub Pages without a custom domain:
 
-1. **Configure the .env file**
-
-   ```bash
-   # In the .env file
-   CUSTOM_DOMAIN=false
-   ```
-
-2. **The site will be accessible at:**
+1. **The site will be accessible at:**
    ```
    https://your-username.github.io/microfolio
    ```
@@ -67,10 +64,6 @@ If you're using GitHub Pages without a custom domain:
 Always test locally before publishing:
 
 ```bash
-# With custom domain
-CUSTOM_DOMAIN=true pnpm build
-
-# Or simply (if defined in .env)
 pnpm build
 ```
 
@@ -80,7 +73,6 @@ After the build, verify:
 
 - `build/` folder created
 - `build/index.html` file present
-- `build/CNAME` file (if custom domain)
 - `build/content/` folder with your projects
 
 ### 3. Site Preview
@@ -157,7 +149,7 @@ gh-pages -d build
 2. **Configure the build:**
    - Build command: `pnpm build`
    - Publish directory: `build`
-   - Environment variables: `CUSTOM_DOMAIN=true`
+   - Set `url` in `src/lib/config.js` to your Netlify address
 
 3. **Custom domain:**
    - Add your domain in Netlify
@@ -167,8 +159,7 @@ gh-pages -d build
 
 1. **Import your project from GitHub**
 2. **Automatic configuration for SvelteKit**
-3. **Environment variables:**
-   - `CUSTOM_DOMAIN=true`
+3. **Set `url`** in `src/lib/config.js` to your Vercel address
 
 ### 3. Traditional Hosting
 
@@ -177,7 +168,7 @@ For classic hosting:
 1. **Build the site:**
 
    ```bash
-   CUSTOM_DOMAIN=true pnpm build
+   pnpm build
    ```
 
 2. **Upload content:**
@@ -315,7 +306,8 @@ pnpm build
 
 ### Problem: Custom domain not working
 
-- Check the `static/CNAME` file
+- Check `url` in `src/lib/config.js`
+- Check the domain in Settings › Pages
 - Configure DNS correctly
 - Wait for DNS propagation (24-48h)
 - Check GitHub Pages settings

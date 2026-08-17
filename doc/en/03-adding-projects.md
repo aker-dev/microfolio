@@ -88,8 +88,8 @@ Present the results obtained, project reception, its impact.
 - `coordinates`: GPS coordinates [latitude, longitude]
 
 > The map draws OpenStreetMap the world over, through OpenFreeMap, and follows
-> your light or dark theme. `siteConfig.map` in `src/lib/config.js` holds the two
-> styles and the zoom limits if you want another basemap.
+> your light or dark theme. The basemap and its zoom limits are set at the top of
+> `src/routes/map/+page.svelte` if you want another one.
 
 - `tags`: Keywords for filtering
 - `authors`: Creators and collaborators

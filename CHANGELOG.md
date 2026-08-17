@@ -7,15 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.10.0] - 2026-08-16
 
+### Added
+
+- **Pages carry what they need to be shared and found**: Open Graph and Twitter tags on every page rather than on project pages alone, `og:url`, `og:image:alt`, `og:locale`, and a canonical link. A project page announces itself as an `article` and shares its own image
+- **`sitemap.xml` and `robots.txt`**, both generated at build from the same project loader the site's own views use — nothing to keep in step by hand
+- A 1200×630 sharing image per project, the shape Facebook, LinkedIn and X crop to. Generated alongside the WebP thumbnails
+- `siteConfig.images.optimizeOnBuild` — image optimization now runs as part of `pnpm build`. It used to be a tip printed _after_ the build, which nothing applied
+
 ### Changed
 
+- **Breaking: the site's address is set once, as `siteConfig.url`.** It used to live in three places that had to agree — `static/CNAME`, `CUSTOM_DOMAIN` in `.env`, and `/microfolio` hard-coded in `svelte.config.js`. The base path and every absolute URL now come from it, and `CUSTOM_DOMAIN` is gone
+- **`static/CNAME` is removed and not replaced.** Published through an Actions workflow, as this project is, GitHub Pages ignores any CNAME in the build: a custom domain is set in the repository settings. The file did nothing, and the documentation telling you to write it was wrong
+- Map styles and zoom limits live at the top of the map route rather than in `config.js`. That file is what someone opens to set up their own site; a tile provider's URLs are not their business
 - **The map draws OpenStreetMap the world over, through OpenFreeMap**, and no longer only France. 0.9.0 capped the zoom at 6 because Plan IGN stops covering the planet past that level; the cap is gone, and a project anywhere now zooms down to its street. Still no API key, and the attribution comes from the tiles themselves
 - **The map has a dark mode.** Positron in light, Dark in dark, switching with the rest of the site — the two neutral styles OpenFreeMap publishes, so the map stays in the same black and white as every other page. Markers, controls and the attribution follow the theme with it
-- `siteConfig.map` now holds two styles and two zoom limits, in place of a single style, a hard cap and an attribution that had to be written by hand
 - **The deployed site now gets its optimized images.** `example_projects.zip` carries only JPEGs, so every demo thumbnail was published at full size while a local build served WebP; the workflow generates them before it lints, tests and builds
 
 ### Fixed
 
+- **Shared links showed no image.** `og:image` was written as a relative URL, which Open Graph ignores outright — the tag was there and did nothing, on every project page
 - Project videos downloaded in full on page load despite `preload="metadata"`. The example project's video is 3 MB, more than the rest of that page put together, and it arrived whether or not anyone pressed play — the project page goes from 6448 kB to 321 kB
 - The webfont was pulled in by an `@import` inside the stylesheet, which put it behind three round trips instead of one. First contentful paint improves by 100 to 288 ms across the home, map and project pages
 - The map booted while the page was still hydrating, holding the first paint behind 977 kB of JavaScript. It now waits until the page has painted

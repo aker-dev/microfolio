@@ -39,14 +39,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # example_projects.zip holds only JPEGs, so without this the demo served
-      # every thumbnail at full size while a local build served WebP. Placed
-      # before the tests rather than just before the build, so lint, unit tests,
-      # e2e and the build all see the content the visitor will get. Around 6s
-      # for 400 images, and it skips whatever is already up to date.
-      - name: Optimize images
-        run: pnpm run optimize-images
-
       - name: Lint
         run: pnpm run lint
 

@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Pages carry what they need to be shared and found**: Open Graph and Twitter tags on every page rather than on project pages alone, `og:url`, `og:image:alt`, `og:locale`, and a canonical link. A project page announces itself as an `article` and shares its own image
 - **`sitemap.xml` and `robots.txt`**, both generated at build from the same project loader the site's own views use — nothing to keep in step by hand
 - A 1200×630 sharing image per project, the shape Facebook, LinkedIn and X crop to. Generated alongside the WebP thumbnails
-- `siteConfig.images.optimizeOnBuild` — image optimization now runs as part of `pnpm build`. It used to be a tip printed _after_ the build, which nothing applied
+- `siteConfig.images.optimizeOnBuild` — image optimization runs as part of `pnpm build`. It used to be a tip printed _after_ the build, which nothing applied, so the published demo served every thumbnail at full size while a local build served WebP
 
 ### Changed
 
@@ -21,7 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Map styles and zoom limits live at the top of the map route rather than in `config.js`. That file is what someone opens to set up their own site; a tile provider's URLs are not their business
 - **The map draws OpenStreetMap the world over, through OpenFreeMap**, and no longer only France. 0.9.0 capped the zoom at 6 because Plan IGN stops covering the planet past that level; the cap is gone, and a project anywhere now zooms down to its street. Still no API key, and the attribution comes from the tiles themselves
 - **The map has a dark mode.** Positron in light, Dark in dark, switching with the rest of the site — the two neutral styles OpenFreeMap publishes, so the map stays in the same black and white as every other page. Markers, controls and the attribution follow the theme with it
-- **The deployed site now gets its optimized images.** `example_projects.zip` carries only JPEGs, so every demo thumbnail was published at full size while a local build served WebP; the workflow generates them before it lints, tests and builds
 
 ### Fixed
 

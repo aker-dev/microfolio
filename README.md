@@ -19,10 +19,10 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 - **🖼️ Image Lightbox** — Enhanced gallery with navigation arrows and metadata display
 - **📊 EXIF/IPTC Metadata** — Automatic extraction and display of image technical information
 - **🌙 Dark Mode** — Toggle in footer with persistent preference (system / manual / localStorage)
-- **⚡ Image Optimization** — WebP thumbnail generation with `pnpm optimize-images`
+- **⚡ Image Optimization** — WebP thumbnails and sharing images, generated as part of the build
 - **🔗 Shareable URLs** — Filter, search, sort, and pagination state synced to URL query params
 - **🌐 Internationalization** — English/French via svelte-i18n, RTL-ready
-- **🏷️ OG Metadata** — Social sharing previews for projects and pages
+- **🏷️ Built to be shared and found** — Open Graph and Twitter tags with absolute URLs, canonical links, and a `sitemap.xml` and `robots.txt` generated from your projects
 - **📄 Pagination & Sorting** — Customizable rows-per-page, sort by date, title, type, or location
 
 ## 🧪 Beta Testing Program
@@ -98,13 +98,13 @@ microfolio build  # or pnpm build
 
 Contributions are welcome! Fork the project, create a feature branch, and submit a Pull Request.
 
-### Recent Features (v0.9.0)
+### Recent Features (v0.10.0)
 
-- A rebuilt lightbox: the image fills the height of the screen, with title, caption and EXIF metadata in a panel that opens on demand
-- Project titles and the type and tag badges are links into the projects view, already filtered
-- The list and projects views render their content on the server — visible to search engines and without JavaScript
-- Usable on a phone: filters collapse behind a button, and list rows become cards instead of a table scrolling sideways
-- Visible keyboard focus, and collapsible controls that announce their state
+- **The map draws OpenStreetMap the world over** and follows your light or dark theme — a project anywhere on the planet, down to its street
+- **Shared links carry an image, a title and a description**: Open Graph and Twitter tags on every page, with a 1200×630 image generated for each project. Until now `og:image` was written relative, which the networks ignore, so no shared link ever showed anything
+- `sitemap.xml` and `robots.txt`, generated at build from your own projects
+- **Your site's address is set once**, as `url` in `src/lib/config.js`. It used to live in three places that had to agree
+- Faster on a phone: first paint improves by 100 to 288 ms across the home, map and project pages, and a project page went from 6.4 MB to 321 kB
 
 > Node.js 22.13 or later is required (a pnpm 11 dependency).
 

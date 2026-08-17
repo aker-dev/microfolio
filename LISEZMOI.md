@@ -19,10 +19,10 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 - **🖼️ Lightbox d'images** — Galerie améliorée avec flèches de navigation et affichage des métadonnées
 - **📊 Métadonnées EXIF/IPTC** — Extraction et affichage automatique des informations techniques d'images
 - **🌙 Mode sombre** — Toggle dans le footer avec préférence persistante (système / manuel / localStorage)
-- **⚡ Optimisation des images** — Génération de thumbnails WebP avec `pnpm optimize-images`
+- **⚡ Optimisation des images** — Vignettes WebP et images de partage, générées pendant le build
 - **🔗 URLs partageables** — Filtres, recherche, tri et pagination synchronisés dans les paramètres d'URL
 - **🌐 Internationalisation** — Anglais/Français via svelte-i18n, support RTL
-- **🏷️ Métadonnées OG** — Aperçus de partage social pour les projets et pages
+- **🏷️ Partageable et indexable** — Balises Open Graph et Twitter en URL absolues, liens canoniques, et un `sitemap.xml` et `robots.txt` générés depuis vos projets
 - **📄 Pagination et tri** — Lignes par page personnalisable, tri par date, titre, type ou localisation
 
 ## 🧪 Programme de beta tests
@@ -98,13 +98,13 @@ microfolio build  # ou pnpm build
 
 Les contributions sont les bienvenues ! N'hésitez pas à forker le projet, créer une branche de fonctionnalité et soumettre une Pull Request.
 
-### Fonctionnalités récentes (v0.9.0)
+### Fonctionnalités récentes (v0.10.0)
 
-- Lightbox refondue : l'image occupe toute la hauteur de l'écran, titre, légende et métadonnées EXIF dans un panneau qui s'ouvre à la demande
-- Les titres de projet et les badges de type et de tags sont des liens vers la vue projets, déjà filtrée
-- Les vues liste et projets rendent leur contenu côté serveur — visible des moteurs de recherche et sans JavaScript
-- Utilisable sur téléphone : les filtres se replient derrière un bouton et les lignes de la liste deviennent des cartes
-- Focus clavier visible, et contrôles repliables qui annoncent leur état
+- **La carte affiche OpenStreetMap dans le monde entier** et suit votre thème clair ou sombre — un projet où qu'il soit, jusqu'à l'échelle de la rue
+- **Les liens partagés portent une image, un titre et une description** : balises Open Graph et Twitter sur chaque page, avec une image 1200×630 générée pour chaque projet. Jusqu'ici `og:image` était écrite en relatif, ce que les réseaux ignorent : aucun partage n'affichait quoi que ce soit
+- `sitemap.xml` et `robots.txt`, générés au build à partir de vos propres projets
+- **L'adresse de votre site s'écrit une seule fois**, dans `url` de `src/lib/config.js`. Elle vivait auparavant à trois endroits qui devaient s'accorder
+- Plus rapide sur téléphone : le premier rendu gagne de 100 à 288 ms sur l'accueil, la carte et les pages projet, et une page projet passe de 6,4 Mo à 321 ko
 
 > Node.js 22.13 ou supérieur est requis (dépendance de pnpm 11).
 

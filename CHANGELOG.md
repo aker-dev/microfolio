@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Breaking: the site's address is set once, as `siteConfig.url`.** It used to live in three places that had to agree — `static/CNAME`, `CUSTOM_DOMAIN` in `.env`, and `/microfolio` hard-coded in `svelte.config.js`. The base path and every absolute URL now come from it, and `CUSTOM_DOMAIN` is gone
 - **`static/CNAME` is removed and not replaced.** Published through an Actions workflow, as this project is, GitHub Pages ignores any CNAME in the build: a custom domain is set in the repository settings. The file did nothing, and the documentation telling you to write it was wrong
+- A menu item no longer shoves its neighbours sideways when it goes bold on hover: each one reserves its bold width from the start, so only the weight changes
+- The tag controls — `+ n more`, `show less`, `✕ clear` — are set in bold, so they read as controls rather than as two more tags
+- The error page is less tall, its centred block having reserved 70% of the viewport
 - The map's attribution starts folded, down to its ⓘ button, and reads as a pill instead of a rectangle ending in a circle. Square corners there were ours: MapLibre rounds that container itself
 - The video player on a project page is given a surface and a 16/9 box. Since nothing is preloaded it has no still to show, and left alone it was a hole in the page in dark mode — and a 4:1 strip, the browser's 300x150 default stretched to full width
 - Map styles and zoom limits live at the top of the map route rather than in `config.js`. That file is what someone opens to set up their own site; a tile provider's URLs are not their business

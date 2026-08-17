@@ -3,8 +3,33 @@ export const siteConfig = {
 	description: 'static portfolio generator',
 	author: 'AKER',
 
+	// Where this site is published, in full and without a trailing slash. It is
+	// the single place the address is written: the base path is taken from it, and
+	// so is every absolute URL — the ones shared links and search engines need,
+	// which cannot be relative.
+	//
+	//   https://example.com            → base '', pages at the root
+	//   https://you.github.io/folio    → base '/folio'
+	//
+	// A custom domain on GitHub Pages is set in the repository settings and at
+	// your registrar, not here and not in a CNAME file: published through a
+	// Actions workflow, as this project is, GitHub ignores any CNAME in the build.
+	url: 'https://aker-dev.github.io/microfolio',
+
 	// Internationalization config
 	locale: 'en', // 'en', 'fr'
+
+	// Sharing image for pages that are not a project — the home page above all,
+	// which has no image of its own. A file in static/, 1200x630, or empty for
+	// none. Projects use their own thumbnail and need nothing here.
+	ogImage: '',
+
+	images: {
+		// Generates the WebP thumbnails, and the sharing images, as part of the
+		// build. Turn it off only if you produce them another way: without it a
+		// build publishes whatever happens to be lying around.
+		optimizeOnBuild: true
+	},
 
 	// Image lightbox
 	lightbox: {
@@ -12,28 +37,6 @@ export const siteConfig = {
 		// idle. Any mouse move, key press or touch brings them back. 0 keeps them
 		// on screen permanently.
 		hideControlsDelay: 3000
-	},
-
-	// Map basemap
-	map: {
-		// OpenFreeMap: OpenStreetMap the world over, no API key, and its TileJSON
-		// carries the attribution so MapLibre credits it without being told.
-		//
-		// Positron and Dark are the two neutral styles it publishes — measured, one
-		// off-grey colour out of seventeen and none out of eleven. Bright and
-		// Liberty are handsome but mostly coloured, and the map would then be the
-		// only coloured surface in the site.
-		styles: {
-			light: 'https://tiles.openfreemap.org/styles/positron',
-			dark: 'https://tiles.openfreemap.org/styles/dark'
-		},
-
-		// The tiles stop at zoom 14 and MapLibre overzooms past that
-		maxZoom: 18,
-
-		// How far fitting the markers may zoom in. Without it, filtering down to a
-		// single project frames its roof.
-		fitMaxZoom: 12
 	},
 
 	// Social links

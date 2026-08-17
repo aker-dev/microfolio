@@ -1,9 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
+	import AkSeo from '$lib/components/AkSeo.svelte';
 	import AkProjectSummary from '$lib/components/AkProjectSummary.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBtnClose from '$lib/components/AkBtnClose.svelte';
-	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
 	import { getTheme, onThemeChange } from '$lib/utils/theme.js';
 	import 'maplibre-gl/dist/maplibre-gl.css';
@@ -30,6 +30,29 @@
 	// Centre of France, in MapLibre's [longitude, latitude] order
 	const DEFAULT_CENTER = [1.888334, 46.603354];
 	const DEFAULT_ZOOM = 5;
+
+	// OpenFreeMap: OpenStreetMap the world over, no API key, and its TileJSON
+	// carries the attribution so MapLibre credits it without being told.
+	//
+	// Positron and Dark are the two neutral styles it publishes — measured, one
+	// off-grey colour out of seventeen and none out of eleven. Bright and Liberty
+	// are handsome but mostly coloured, and the map would then be the only
+	// coloured surface in the site.
+	//
+	// These live here rather than in config.js, which is what someone opens to set
+	// up their own site: a tile provider's style URLs and the zoom limits that go
+	// with it are this component's business.
+	const STYLES = {
+		light: 'https://tiles.openfreemap.org/styles/positron',
+		dark: 'https://tiles.openfreemap.org/styles/dark'
+	};
+
+	// The tiles stop at zoom 14 and MapLibre overzooms past that
+	const MAX_ZOOM = 18;
+
+	// How far fitting the markers may zoom in. Without it, filtering down to a
+	// single project frames its roof.
+	const FIT_MAX_ZOOM = 12;
 
 	let maplibre;
 	let mapContainer;
@@ -58,10 +81,10 @@
 			try {
 				map = new maplibre.Map({
 					container: mapContainer,
-					style: siteConfig.map.styles[getTheme()],
+					style: STYLES[getTheme()],
 					center: DEFAULT_CENTER,
 					zoom: DEFAULT_ZOOM,
-					maxZoom: siteConfig.map.maxZoom,
+					maxZoom: MAX_ZOOM,
 					scrollZoom: false,
 					// No customAttribution: OpenFreeMap's TileJSON carries the credit
 					attributionControl: { compact: true }
@@ -87,7 +110,7 @@
 			// following the theme means swapping the whole style. Markers are DOM
 			// nodes the map owns, not part of the style, so they stay put.
 			stopWatchingTheme = onThemeChange((theme) => {
-				map.setStyle(siteConfig.map.styles[theme]);
+				map.setStyle(STYLES[theme]);
 			});
 		};
 
@@ -118,11 +141,6 @@
 	});
 
 	/**
-	 * Project frontmatter records `coordinates: [latitude, longitude]`; MapLibre
-	 * wants [longitude, latitude]. This is the one place the two orders meet, and
-	 * the only place the swap happens.
-	 */
-	/**
 	 * Leaves the attribution as the ⓘ button alone. MapLibre opens it on first
 	 * render even in compact mode — it adds `maplibregl-compact-show` itself — so
 	 * folding it means taking that class back off. The credit stays one click
@@ -138,6 +156,11 @@
 			?.classList.remove('maplibregl-compact-show');
 	}
 
+	/**
+	 * Project frontmatter records `coordinates: [latitude, longitude]`; MapLibre
+	 * wants [longitude, latitude]. This is the one place the two orders meet, and
+	 * the only place the swap happens.
+	 */
 	function toLngLat(coordinates) {
 		if (!Array.isArray(coordinates) || coordinates.length !== 2) return null;
 
@@ -168,7 +191,7 @@
 			// Capped, or filtering down to one project frames its roof
 			map.fitBounds(bounds, {
 				padding: 60,
-				maxZoom: siteConfig.map.fitMaxZoom,
+				maxZoom: FIT_MAX_ZOOM,
 				duration: 0
 			});
 		} else {
@@ -178,8 +201,8 @@
 
 	/**
 	 * A real button rather than an image: the Leaflet markers could not be reached
-	 * from the keyboard at all. Its looks live in `app.css`, in fixed ink rather
-	 * than theme tokens — see the note there.
+	 * from the keyboard at all. Its looks live in `app.css`, on the theme tokens,
+	 * so a marker turns with the page as the basemap does.
 	 */
 	function markerFor(project, position) {
 		const element = document.createElement('button');
@@ -217,9 +240,9 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
+<AkSeo title={$_('pages.map.title')} description={$_('pages.map.description')} path="/map/" />
+
 <svelte:head>
-	<title>{siteConfig.title} • {$_('pages.map.title')}</title>
-	<meta name="description" content={$_('pages.map.description')} />
 	<!-- The basemap lives on another origin, and its DNS lookup and TLS handshake
 	     would otherwise only start once MapLibre asks for the style. -->
 	<link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin="anonymous" />

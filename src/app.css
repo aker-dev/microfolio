@@ -134,16 +134,40 @@
    paints that state white through `.maplibregl-ctrl-attrib.maplibregl-compact`,
    which ties on specificity and wins on order. Two classes left the bar white
    with white links on it — legible only where the text was not a link. */
+/* The one rounded surface in a square site, and deliberately so: this bar ends
+   in MapLibre's round ⓘ button, and square corners left a rectangle with a disc
+   stuck on its end. A pill runs into the button instead. */
 .maplibregl-ctrl.maplibregl-ctrl-attrib,
 .maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact {
-	border-radius: 0;
+	border-radius: 9999px;
 	background-color: var(--color-box);
 	color: var(--color-primary);
 	font-size: 0.6875rem;
 }
 
+/* Folded, the container is nothing but the button itself, so it carries no
+   surface of its own — otherwise two discs sit one on the other. */
+.maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact:not(.maplibregl-compact-show) {
+	background-color: transparent;
+}
+
 .maplibregl-ctrl.maplibregl-ctrl-attrib a {
 	color: var(--color-primary);
+}
+
+/* MapLibre rings its buttons in #0096ff and, on the attribution one, sets
+   `outline: none`, which is what kept the site's own focus ring from ever
+   showing. Both undone so :focus-visible in this file applies here like
+   anywhere else. */
+.maplibregl-ctrl .maplibregl-ctrl-attrib-button:focus,
+.maplibregl-ctrl.maplibregl-ctrl-group button:focus {
+	box-shadow: none;
+}
+
+.maplibregl-ctrl .maplibregl-ctrl-attrib-button:focus-visible,
+.maplibregl-ctrl.maplibregl-ctrl-group button:focus-visible {
+	outline: 2px solid var(--color-primary);
+	outline-offset: 2px;
 }
 
 /* MapLibre bakes its icons into dark SVG data URIs, and the only variants it

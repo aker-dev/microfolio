@@ -254,7 +254,14 @@
 						     project's single video, more than everything else on the page
 						     put together. Nothing is fetched now until the visitor presses
 						     play. -->
-						<video controls class="w-full" preload="none">
+						<!-- Given a surface rather than a frame: with nothing preloaded the
+						     player has no still to show, and left unstyled it is a hole in the
+						     page in dark mode. bg-box, the same surface as the document links
+						     below, and a 16/9 box because an element with no metadata falls
+						     back to 300x150, which full width stretches into a 4:1 strip.
+						     Videos of another shape are letterboxed, never cropped: a video
+						     element contains rather than covers. -->
+						<video controls class="bg-box aspect-video w-full" preload="none">
 							<source src={video.path} type="video/mp4" />
 							<track kind="captions" />
 							{$_('ui.video_not_supported')}

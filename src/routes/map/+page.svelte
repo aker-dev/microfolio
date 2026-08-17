@@ -80,6 +80,7 @@
 			map.on('load', () => {
 				mapReady = true;
 				updateMarkers();
+				foldAttribution();
 			});
 
 			// Light and dark are two published styles rather than one repainted, so
@@ -121,6 +122,22 @@
 	 * wants [longitude, latitude]. This is the one place the two orders meet, and
 	 * the only place the swap happens.
 	 */
+	/**
+	 * Leaves the attribution as the ⓘ button alone. MapLibre opens it on first
+	 * render even in compact mode — it adds `maplibregl-compact-show` itself — so
+	 * folding it means taking that class back off. The credit stays one click
+	 * away, which is what compact mode is for.
+	 *
+	 * Through the class rather than the control's `_toggleAttribution`, which is
+	 * private. The class names are no more stable, but `app.css` already leans on
+	 * exactly these.
+	 */
+	function foldAttribution() {
+		mapContainer
+			?.querySelector('.maplibregl-ctrl-attrib.maplibregl-compact-show')
+			?.classList.remove('maplibregl-compact-show');
+	}
+
 	function toLngLat(coordinates) {
 		if (!Array.isArray(coordinates) || coordinates.length !== 2) return null;
 

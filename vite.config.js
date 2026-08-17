@@ -15,22 +15,17 @@ export default defineConfig(({ mode }) => ({
 		// This prevents file locking issues on Windows
 		...(mode !== 'development'
 			? [
+					// No CNAME here any more: published through an Actions workflow, as
+					// this project is, GitHub Pages ignores any CNAME file in the build.
+					// A custom domain is set in the repository settings and at the
+					// registrar, and named once in siteConfig.url for the site's own use.
 					viteStaticCopy({
 						targets: [
 							{
 								src: 'content',
 								dest: '.',
 								ignore: ['**/.DS_Store']
-							},
-							...(process.env.CUSTOM_DOMAIN
-								? [
-										{
-											src: 'static/CNAME',
-											dest: '.',
-											ignore: ['**/.DS_Store']
-										}
-									]
-								: [])
+							}
 						]
 					})
 				]

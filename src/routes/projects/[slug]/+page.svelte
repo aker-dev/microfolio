@@ -1,8 +1,8 @@
 <script>
 	import { base } from '$app/paths';
+	import AkSeo from '$lib/components/AkSeo.svelte';
 	import { formatProjectDate } from '$lib/utils/date.js';
 	import { afterNavigate } from '$app/navigation';
-	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import AkLightbox from '$lib/components/AkLightbox.svelte';
@@ -47,19 +47,14 @@
 	// No client-side metadata loading needed - data comes from server
 </script>
 
-<svelte:head>
-	<title>{siteConfig.title} • {project.title}</title>
-	<meta name="description" content={project.description} />
-
-	<!-- OG metadata -->
-	<meta property="og:title" content={project.title} />
-	<meta property="og:description" content={project.description} />
-	{#if project.hasThumbnail}
-		<meta property="og:image" content="{base}/content/projects/{project.slug}/thumbnail.jpg" />
-	{/if}
-	<meta property="og:type" content="website" />
-	<meta property="og:site_name" content={siteConfig.title} />
-</svelte:head>
+<AkSeo
+	title={project.title}
+	description={project.description}
+	path="/projects/{project.slug}/"
+	image={project.hasThumbnail ? `/content/projects/${project.slug}/og.jpg` : ''}
+	imageAlt={thumbnailMetadata?.description || project.title}
+	type="article"
+/>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
 	<!-- Main content -->

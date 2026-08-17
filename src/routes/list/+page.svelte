@@ -1,5 +1,6 @@
 <script>
 	import { base } from '$app/paths';
+	import AkSeo from '$lib/components/AkSeo.svelte';
 	import Datatable from '$lib/components/Datatable.svelte';
 	import ThSort from '$lib/components/ThSort.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
@@ -7,7 +8,6 @@
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import IconArrowRight from '~icons/carbon/arrow-right';
 	import IconStarFilled from '~icons/carbon/star-filled';
-	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
 	import { formatProjectDate } from '$lib/utils/date.js';
 	import AkProjectSummary from '$lib/components/AkProjectSummary.svelte';
@@ -29,10 +29,7 @@
 	}
 </script>
 
-<svelte:head>
-	<title>{siteConfig.title} • {$_('pages.list.title')}</title>
-	<meta name="description" content={$_('pages.list.description')} />
-</svelte:head>
+<AkSeo title={$_('pages.list.title')} description={$_('pages.list.description')} path="/list/" />
 
 <div class="space-y-8">
 	<!-- Header -->

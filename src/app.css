@@ -52,6 +52,33 @@
 	transform: scale(1.05);
 }
 
+/* A menu item goes bold on hover, and bold text is wider, so hovering one used
+   to shove its neighbours sideways by a pixel or two. Each item now always
+   occupies the width it will have in bold: a hidden copy of the label sits in
+   the same grid cell as the link and sets the width, so only the weight of what
+   you see changes.
+
+   `attr(data-label)` rather than a measured width, because the label is
+   translated and a hard number would be wrong in the other locale. And the theme
+   token rather than 700, because bold here is 600 — a heavier reserve would
+   leave a permanent gap. */
+.ak-nav-item {
+	display: inline-grid;
+}
+
+.ak-nav-item > a,
+.ak-nav-item::after {
+	grid-area: 1 / 1;
+}
+
+.ak-nav-item::after {
+	content: attr(data-label);
+	font-weight: var(--font-weight-bold);
+	height: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
 /* Filter controls are prerendered but inert until Svelte hydrates them, so they
    carry `disabled` during that window. Say so rather than letting a click
    silently disappear. */

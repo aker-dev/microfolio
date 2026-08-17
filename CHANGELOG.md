@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.10.0] - 2026-08-16
+## [0.10.0] - 2026-08-17
 
 ### Added
 
@@ -18,12 +18,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Breaking: the site's address is set once, as `siteConfig.url`.** It used to live in three places that had to agree — `static/CNAME`, `CUSTOM_DOMAIN` in `.env`, and `/microfolio` hard-coded in `svelte.config.js`. The base path and every absolute URL now come from it, and `CUSTOM_DOMAIN` is gone
 - **`static/CNAME` is removed and not replaced.** Published through an Actions workflow, as this project is, GitHub Pages ignores any CNAME in the build: a custom domain is set in the repository settings. The file did nothing, and the documentation telling you to write it was wrong
+- The map's attribution starts folded, down to its ⓘ button, and reads as a pill instead of a rectangle ending in a circle. Square corners there were ours: MapLibre rounds that container itself
+- The video player on a project page is given a surface and a 16/9 box. Since nothing is preloaded it has no still to show, and left alone it was a hole in the page in dark mode — and a 4:1 strip, the browser's 300x150 default stretched to full width
 - Map styles and zoom limits live at the top of the map route rather than in `config.js`. That file is what someone opens to set up their own site; a tile provider's URLs are not their business
 - **The map draws OpenStreetMap the world over, through OpenFreeMap**, and no longer only France. 0.9.0 capped the zoom at 6 because Plan IGN stops covering the planet past that level; the cap is gone, and a project anywhere now zooms down to its street. Still no API key, and the attribution comes from the tiles themselves
 - **The map has a dark mode.** Positron in light, Dark in dark, switching with the rest of the site — the two neutral styles OpenFreeMap publishes, so the map stays in the same black and white as every other page. Markers, controls and the attribution follow the theme with it
 
 ### Fixed
 
+- **pnpm 11.20.0 could not be switched to.** Pinning it made every machine with a different global pnpm fail before startup, its own version-switch code being at fault rather than the lockfile. Pinned to 11.22.0, where it is fixed
+- The image at the top of a project page held no height open, so the article and the credit block were shoved down as it arrived. Intermittent — 0.100 on two runs out of six, which is how three earlier runs missed it — and fixed by emitting the image's real pixel size rather than imposing a ratio that would crop it
+- The map's attribution button carried MapLibre's blue focus glow, and `outline: none` on top, which is what had stopped the site's own focus ring from ever reaching it
 - **Shared links showed no image.** `og:image` was written as a relative URL, which Open Graph ignores outright — the tag was there and did nothing, on every project page
 - Project videos downloaded in full on page load despite `preload="metadata"`. The example project's video is 3 MB, more than the rest of that page put together, and it arrived whether or not anyone pressed play — the project page goes from 6448 kB to 321 kB
 - The webfont was pulled in by an `@import` inside the stylesheet, which put it behind three round trips instead of one. First contentful paint improves by 100 to 288 ms across the home, map and project pages

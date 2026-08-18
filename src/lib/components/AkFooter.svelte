@@ -5,6 +5,7 @@
 	import IconGithub from '~icons/akar-icons/github-fill';
 	import IconSun from '~icons/carbon/sun';
 	import IconMoon from '~icons/carbon/asleep';
+	import { base } from '$app/paths';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
 	import { version } from '$lib/version.js';
@@ -42,15 +43,26 @@
 			</button>
 		</div>
 
-		<p class="text-center text-sm">
-			© {siteConfig.author}
-			{new Date().getFullYear()} — {$_('ui.generated_with')}
-			<a
-				href="https://github.com/aker-dev/microfolio"
-				target="_blank"
-				class="font-bold hover:underline">microfolio {version}</a
-			>
-		</p>
+		<!-- One grid cell for both lines: the footer is grid-cols-3 on desktop, so a
+		     second paragraph of its own became a fourth cell and broke the row.
+		     The links sit on their own line rather than trailing the copyright,
+		     where a narrow screen stranded the separator at the start of a line. -->
+		<div>
+			<p class="text-center text-sm">
+				© {siteConfig.author}
+				{new Date().getFullYear()} — {$_('ui.generated_with')}
+				<a
+					href="https://github.com/aker-dev/microfolio"
+					target="_blank"
+					class="font-bold hover:underline">microfolio {version}</a
+				>
+			</p>
+			<p class="mt-2 text-center text-xs">
+				<a href="{base}/legal/" class="hover:underline">{$_('ui.legal')}</a>
+				·
+				<a href="{base}/privacy/" class="hover:underline">{$_('ui.privacy')}</a>
+			</p>
+		</div>
 
 		<nav>
 			<ul class="flex justify-center gap-4 md:justify-end">

@@ -10,7 +10,17 @@ dotenv.config();
 async function createConfig() {
 	// Explicit, so the two endpoints have to be named: SvelteKit finds pages by
 	// crawling links, and nothing on the site links to a sitemap or to robots.txt.
-	const entries = ['/', '/projects', '/list', '/map', '/about', '/sitemap.xml', '/robots.txt'];
+	const entries = [
+		'/',
+		'/projects',
+		'/list',
+		'/map',
+		'/about',
+		'/legal',
+		'/privacy',
+		'/sitemap.xml',
+		'/robots.txt'
+	];
 
 	try {
 		const projectsPath = join(process.cwd(), 'content/projects');

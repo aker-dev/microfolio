@@ -23,7 +23,55 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 - **🔗 Shareable URLs** — Filter, search, sort, and pagination state synced to URL query params
 - **🌐 Internationalization** — English/French via svelte-i18n, RTL-ready
 - **🏷️ Built to be shared and found** — Open Graph and Twitter tags with absolute URLs, canonical links, and a `sitemap.xml` and `robots.txt` generated from your projects
+- **🔒 No cookies, no consent banner** — nothing is tracked, so there is nothing to ask permission for. Legal notice and privacy pages come as templates to fill in
 - **📄 Pagination & Sorting** — Customizable rows-per-page, sort by date, title, type, or location
+
+## 🔒 Privacy by construction
+
+A portfolio should not spy on its readers, and this one cannot.
+
+- **No cookies.** `document.cookie` appears nowhere in the codebase
+- **No analytics**, no tracking scripts, no social embeds, no forms
+- **No consent banner, because none is required.** The only thing kept on a
+  visitor's device is the light/dark choice they made themselves, in
+  `localStorage` under `theme`. French rules exempt an interface preference of
+  that kind from consent — it does only what the visitor asked for
+- **No Google Fonts.** The typeface comes from Bunny.net, a third-party CDN,
+  which therefore receives visitors' IP addresses like any file server would.
+  This is declared in the privacy template rather than glossed over
+- **A map with no API key and no account** — OpenFreeMap, on OpenStreetMap data.
+  Its tiles are fetched only on the map page
+
+The generated site ships `content/legal.md` and `content/privacy.md` as
+templates. **Fill them in**: publishing someone else's legal notice is worse
+than publishing none.
+
+## ⚡ Fast, and findable
+
+Every page is prerendered: the content is in the HTML, so it is readable without
+JavaScript and search engines see it without executing anything.
+
+Measured on the published demo, on a phone-sized viewport throttled to slow 4G
+with a 4× slower CPU — the conditions PageSpeed uses, median of three runs:
+
+| Page     | First paint | Largest paint | Blocking |
+| -------- | ----------- | ------------- | -------- |
+| Home     | 780 ms      | 780 ms        | 0 ms     |
+| Projects | 808 ms      | 808 ms        | 26 ms    |
+| List     | 808 ms      | 808 ms        | 45 ms    |
+| Map      | 884 ms      | 884 ms        | 589 ms   |
+
+**The map is the exception, and honestly so**: a mapping engine is around
+380 kB compressed, and no amount of tuning makes that free. Every other page
+carries almost nothing.
+
+What gets it there: thumbnails and 1200×630 sharing images generated at build,
+the webfont fetched in parallel rather than behind the stylesheet, video that
+downloads only when played, and images that reserve their space so nothing jumps.
+
+For search engines and shared links: a title, description, canonical link and
+Open Graph and Twitter tags on every page, plus a `sitemap.xml` and `robots.txt`
+generated from your own projects.
 
 ## 🧪 Beta Testing Program
 
@@ -98,13 +146,11 @@ microfolio build  # or pnpm build
 
 Contributions are welcome! Fork the project, create a feature branch, and submit a Pull Request.
 
-### Recent Features (v0.10.0)
+### Recent Features (v0.11.0)
 
-- **The map draws OpenStreetMap the world over** and follows your light or dark theme — a project anywhere on the planet, down to its street
-- **Shared links carry an image, a title and a description**: Open Graph and Twitter tags on every page, with a 1200×630 image generated for each project. Until now `og:image` was written relative, which the networks ignore, so no shared link ever showed anything
-- `sitemap.xml` and `robots.txt`, generated at build from your own projects
-- **Your site's address is set once**, as `url` in `src/lib/config.js`. It used to live in three places that had to agree
-- Faster on a phone: first paint improves by 100 to 288 ms across the home, map and project pages, and a project page went from 6.4 MB to 321 kB
+- **Legal notice and privacy pages**, as templates to fill in — a site published in France needs them, and most templates found online still cite an article of the LCEN that was repealed in May 2024
+- **No consent banner, and the reasoning for it**: nothing here requires consent, so asking for it would be theatre
+- The landing page no longer loads Google Fonts, which sat oddly on a page describing a tool that avoids them
 
 > Node.js 22.13 or later is required (a pnpm 11 dependency).
 

@@ -1,5 +1,18 @@
 # Custom Configuration Guide
 
+## Legal pages
+
+`content/legal.md` and `content/privacy.md` ship as templates, and **you must
+fill them in**. A site published in France has to carry a legal notice naming
+its publisher and its host; publishing someone else's is worse than publishing
+none.
+
+The privacy template already describes what microfolio does — no cookies, no
+analytics, one interface preference kept locally — so it stays true unless you
+add analytics, embeds or forms. If you do, say so there.
+
+Both are linked from the footer of every page.
+
 ## Basic Configuration
 
 ### 1. Modifying the config.js file

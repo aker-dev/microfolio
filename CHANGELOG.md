@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2026-08-18
+
+### Added
+
+- **A legal notice and a privacy policy**, as `content/legal.md` and `content/privacy.md` — templates to fill in, linked from the footer of every page. A site published in France is required to carry them, and most templates found online still cite article 6 III of the LCEN, which the loi SREN repealed in May 2024
+- The landing page becomes a folder of its own, `landing/`, with a bilingual `legals.html` beside it — French and English on one page, since the loi Toubon asks for French to be present rather than exclusive, and one file cannot drift out of step with itself the way two would
+
+### Changed
+
+- **The landing page no longer loads Google Fonts.** It sat badly on a page describing a tool that avoids them; it now uses the same provider as the sites microfolio generates
+- Both READMEs and the landing page state what the tool does about privacy, and only what can be checked in the code: no cookies, no analytics, **no consent banner because none is required**, no Google Fonts, a map with no API key. The typeface still comes from a third-party CDN, and that is named as a fact rather than dressed up
+- They also carry what the pages actually measure — first paint under a second across the site on a throttled phone, and the map named as the exception it is, since a mapping engine costs what it costs
+
 ## [0.10.0] - 2026-08-17
 
 ### Added

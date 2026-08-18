@@ -1,5 +1,19 @@
 # Guide de Configuration Personnalisée
 
+## Pages légales
+
+`content/legal.md` et `content/privacy.md` sont fournis en gabarits, et **vous
+devez les remplir**. Un site publié en France doit porter des mentions légales
+nommant son éditeur et son hébergeur ; publier celles d'autrui est pire que de
+n'en publier aucune.
+
+Le gabarit de confidentialité décrit déjà ce que fait microfolio — aucun cookie,
+aucune mesure d'audience, une préférence d'interface conservée localement — et
+reste donc exact tant que vous n'ajoutez ni mesure d'audience, ni embed, ni
+formulaire. Si vous le faites, dites-le à cet endroit.
+
+Les deux sont liées depuis le pied de chaque page.
+
 ## Configuration de base
 
 ### 1. Modification du fichier config.js

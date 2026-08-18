@@ -23,7 +23,60 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 - **🔗 URLs partageables** — Filtres, recherche, tri et pagination synchronisés dans les paramètres d'URL
 - **🌐 Internationalisation** — Anglais/Français via svelte-i18n, support RTL
 - **🏷️ Partageable et indexable** — Balises Open Graph et Twitter en URL absolues, liens canoniques, et un `sitemap.xml` et `robots.txt` générés depuis vos projets
+- **🔒 Aucun cookie, aucun bandeau** — rien n'est pisté, donc il n'y a rien à faire accepter. Mentions légales et politique de confidentialité fournies en gabarits à remplir
 - **📄 Pagination et tri** — Lignes par page personnalisable, tri par date, titre, type ou localisation
+
+## 🔒 La vie privée par construction
+
+Un portfolio n'a pas à surveiller ses lecteurs, et celui-ci en est incapable.
+
+- **Aucun cookie.** `document.cookie` n'apparaît nulle part dans le code
+- **Aucune mesure d'audience**, aucun script de suivi, aucun embed social, aucun
+  formulaire
+- **Aucun bandeau de consentement, parce qu'aucun n'est requis.** La seule chose
+  conservée sur l'appareil du visiteur est le choix clair/sombre qu'il a fait
+  lui-même, dans `localStorage` sous la clé `theme`. Une préférence d'interface
+  de cette nature est exemptée de consentement : elle ne fait que ce qu'on lui a
+  demandé
+- **Pas de Google Fonts.** La police vient de Bunny.net, un CDN tiers, qui reçoit
+  donc les adresses IP des visiteurs comme tout serveur de fichiers. C'est
+  déclaré dans le gabarit de confidentialité plutôt que passé sous silence
+- **Une carte sans clé d'API ni compte** — OpenFreeMap, sur données
+  OpenStreetMap. Ses tuiles ne sont demandées que sur la page carte
+
+Le site généré fournit `content/legal.md` et `content/privacy.md` en gabarits.
+**Remplissez-les** : publier les mentions légales d'autrui est pire que de n'en
+publier aucune.
+
+## ⚡ Rapide, et trouvable
+
+Chaque page est prérendue : le contenu est dans le HTML, donc lisible sans
+JavaScript et visible des moteurs de recherche sans qu'ils exécutent quoi que ce
+soit.
+
+Mesuré sur la démo publiée, sur un écran de téléphone bridé en 4G lente avec un
+processeur quatre fois plus lent — les conditions de PageSpeed, médiane de trois
+passages :
+
+| Page    | Premier rendu | Plus grand rendu | Blocage |
+| ------- | ------------- | ---------------- | ------- |
+| Accueil | 780 ms        | 780 ms           | 0 ms    |
+| Projets | 808 ms        | 808 ms           | 26 ms   |
+| Liste   | 808 ms        | 808 ms           | 45 ms   |
+| Carte   | 884 ms        | 884 ms           | 589 ms  |
+
+**La carte fait exception, et il faut le dire** : un moteur cartographique pèse
+environ 380 ko compressés, et aucun réglage ne rend cela gratuit. Toutes les
+autres pages ne transportent presque rien.
+
+Ce qui y contribue : vignettes et images de partage 1200×630 générées au build,
+police chargée en parallèle plutôt qu'à la suite de la feuille de style, vidéo
+téléchargée seulement à la lecture, et images qui réservent leur place pour que
+rien ne saute.
+
+Pour les moteurs et les liens partagés : titre, description, lien canonique et
+balises Open Graph et Twitter sur chaque page, ainsi qu'un `sitemap.xml` et un
+`robots.txt` engendrés depuis vos propres projets.
 
 ## 🧪 Programme de beta tests
 
@@ -98,13 +151,11 @@ microfolio build  # ou pnpm build
 
 Les contributions sont les bienvenues ! N'hésitez pas à forker le projet, créer une branche de fonctionnalité et soumettre une Pull Request.
 
-### Fonctionnalités récentes (v0.10.0)
+### Fonctionnalités récentes (v0.11.0)
 
-- **La carte affiche OpenStreetMap dans le monde entier** et suit votre thème clair ou sombre — un projet où qu'il soit, jusqu'à l'échelle de la rue
-- **Les liens partagés portent une image, un titre et une description** : balises Open Graph et Twitter sur chaque page, avec une image 1200×630 générée pour chaque projet. Jusqu'ici `og:image` était écrite en relatif, ce que les réseaux ignorent : aucun partage n'affichait quoi que ce soit
-- `sitemap.xml` et `robots.txt`, générés au build à partir de vos propres projets
-- **L'adresse de votre site s'écrit une seule fois**, dans `url` de `src/lib/config.js`. Elle vivait auparavant à trois endroits qui devaient s'accorder
-- Plus rapide sur téléphone : le premier rendu gagne de 100 à 288 ms sur l'accueil, la carte et les pages projet, et une page projet passe de 6,4 Mo à 321 ko
+- **Mentions légales et politique de confidentialité**, fournies en gabarits à remplir — un site publié en France en a l'obligation, et la plupart des modèles en ligne citent encore un article de la LCEN abrogé en mai 2024
+- **Aucun bandeau de consentement, et l'explication de ce choix** : rien ici n'exige de consentement, le demander relèverait du théâtre
+- La landing page ne charge plus Google Fonts, ce qui cadrait mal avec une page vantant un outil qui s'en passe
 
 > Node.js 22.13 ou supérieur est requis (dépendance de pnpm 11).
 

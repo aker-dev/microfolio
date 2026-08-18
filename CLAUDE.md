@@ -31,7 +31,7 @@ Those two ports are a Daft Punk nod — Interstella 5555, and Discovery, the alb
 
 `pnpm screenshots` drives `scripts/screenshots.js`. The footer renders the version from `package.json`, so bump before regenerating for a release. Dark-mode shots go through `prefers-color-scheme`, not the footer toggle.
 
-Package manager: `pnpm` (pinned to 11.20.0 via `packageManager`). **Node.js 22.13+ required** — pnpm 11 uses `node:sqlite` and crashes on Node 20. Declared in `engines`, which `.npmrc`'s `engine-strict=true` enforces at install time; CI pins the same major.
+Package manager: `pnpm` (pinned to 11.22.0 via `packageManager` — do not pin 11.20.0, its package-manager version switch is broken and fails with a misleading "missing from pnpm-lock.yaml" identity error). **Node.js 22.13+ required** — pnpm 11 uses `node:sqlite` and crashes on Node 20. Declared in `engines`, which `.npmrc`'s `engine-strict=true` enforces at install time; CI pins the same major.
 
 pnpm 11 no longer reads the `pnpm` field in package.json — its settings live in `pnpm-workspace.yaml`, where `allowBuilds` lists which dependencies may run install scripts (build scripts are blocked by default) and `minimumReleaseAgeExclude` records packages accepted despite being published in the last 24h.
 
@@ -39,7 +39,7 @@ pnpm 11 no longer reads the `pnpm` field in package.json — its settings live i
 
 - **Unit** — Vitest, co-located `src/**/*.test.js`. `vitest.config.js` deliberately omits the SvelteKit plugin, so these cover plain modules only (currently the content parsing) and run in ~150ms.
 - **End-to-end** — Playwright, specs in `e2e/`. It starts its own dev server, or reuses one already running on the port. Set `PLAYWRIGHT_PORT` to exercise the CI path locally without colliding with a dev server on 5555.
-- CI (`.github/workflows/deploy.yml`) runs lint, unit tests and e2e before building.
+- CI (`.github/workflows/deploy.yml`) runs lint, unit tests and e2e before building. It has no image step of its own: `pnpm build` optimizes first, under `siteConfig.images.optimizeOnBuild`, so a deployed site and a local one carry the same images. `example_projects.zip` ships only JPEGs, and the demo was published at full size until that was true.
 - Some specs run with `javaScriptEnabled: false` to assert that `/list` and `/projects` really do ship their content in the HTML, and others under a phone viewport. Everything else waits on `data-hydrated`, an attribute `+layout.svelte` sets on `<html>` once the tree is interactive: the whole page is prerendered, so a click can otherwise land on markup with no listener attached and be lost. That failure only ever showed on the slower CI runner.
 
 ### What a green suite will not tell you
@@ -86,7 +86,8 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - `$lib/utils/locale.js` — `getTextDirection()`, shared by `hooks.server.js` (prerender) and `+layout.svelte` (client)
 - `$lib/utils/imageMetadata.js` — EXIF/IPTC extraction via `exifreader` (credit, camera, GPS, etc.)
 - `$lib/utils/date.js` — `formatProjectDate()`: the `YYYY-MM` shown everywhere a project is dated. It was written out four times before
-- `$lib/config.js` — Site config (title, social links, navigation, `lightbox.hideControlsDelay`, and the `map` block: basemap style, zoom cap, attribution)
+- `$lib/config.js` — Site config, and deliberately only what someone setting up **their** site needs: title, `url`, social links, navigation, `ogImage`, `images.optimizeOnBuild`, `lightbox.hideControlsDelay`. Tile provider URLs and zoom limits live in the map route instead
+- `$lib/utils/seo.js` — `absoluteUrl()`: takes a route path **without** the base, because `siteConfig.url` already carries it
 - `$lib/i18n.js` — Internationalization setup with `svelte-i18n` (en/fr active, more commented out)
 
 ### Styling
@@ -105,11 +106,12 @@ All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectC
 
 **Two components render a project, and the room decides which.** `AkProjectCard` leads with a 4:3 thumbnail and belongs in the grids of the homepage and `/projects`. `AkProjectSummary` is text-first and belongs where an image would crowd the text out: the map callout, and `/list` below `md`. The whole summary is one link, which is why its tags are plain text — an anchor cannot contain other links.
 
-**The map is MapLibre GL on Plan IGN**, in the grey style the Géoplateforme publishes — French public data, no API key, and already fully neutral, which is why nothing desaturates it any more. `$lib/config.js` holds the style URL, the zoom cap and the attribution, and each carries the reason it exists. Three things about it are not guessable:
+**The map is MapLibre GL on OpenFreeMap**, worldwide OpenStreetMap vector tiles with no API key, in Positron for light and Dark for dark — the two neutral styles it publishes, which is why nothing desaturates the map any more. The styles and zoom limits sit at the top of `map/+page.svelte`, not in `config.js`. Things about it that are not guessable:
 
 - **Coordinates swap.** Frontmatter is `[latitude, longitude]`, MapLibre wants `[longitude, latitude]`. `toLngLat()` in `map/+page.svelte` is the only place they meet — keep it that way
-- **`maxZoom: 6` is not a preference.** Plan IGN covers the world to zoom 6 and France alone past it; Rome returns 42 bytes at zoom 7. Raising the cap empties the map for any project outside France, and no demo content would ever show it
-- **Marker and control colours are fixed ink, never theme tokens.** The map stays light in dark mode, where `--color-primary` is white — a marker built on it would disappear into the tiles
+- **Switching theme swaps the whole style**, since light and dark are two published styles rather than one repainted. Markers survive it: they are DOM nodes the map owns, not part of the style. Verified, not assumed — 101 before and after
+- **`fitMaxZoom` exists because fitting one project would otherwise frame its roof.** The map's own `maxZoom` used to do that job back when it was capped at 6
+- **MapLibre's chrome fights back twice.** Its icons are baked dark SVG data URIs with variants only for Windows' forced-colors mode, so they are inverted in dark; and its compact attribution paints itself white through a two-class rule that ties with ours and wins on order, so ours carries a third class. Without it the bar was white with white links on it
 
 Markers are built with `createElement`, out of reach of a Svelte component, so the star a featured project carries comes from `import starFilled from '~icons/carbon/star-filled?raw'`. The `?raw` suffix hands back the SVG as a string from the same `@iconify` record every `<IconStarFilled>` renders — one original, rather than a traced copy free to drift.
 
@@ -123,7 +125,9 @@ MapLibre 6 has **no default export**; `(await import('maplibre-gl')).default` is
 - `svelte.config.js` dynamically generates prerender entries by scanning `/content/projects/`
 - `vite.config.js` copies the `content/` directory to build output via `vite-plugin-static-copy` (build only, not dev)
 - Icons via `unplugin-icons` with Iconify JSON
-- Base path: `/microfolio` in production, empty in dev. Set `CUSTOM_DOMAIN=true` env var to remove base path for custom domains
+- **The site's address is written once**, as `siteConfig.url`. The base path is its pathname (empty in dev, so `pnpm dev` keeps serving from `/`), and every absolute URL — `og:image`, `og:url`, canonical, sitemap — is built from it by `absoluteUrl()`. `getBasePath()` is the single definition and `svelte.config.js` imports it
+- **There is no CNAME file.** Published through an Actions workflow, GitHub Pages ignores any CNAME in the build — the custom domain is set in the repository settings. The one that used to sit in `static/` did nothing
+- `sitemap.xml` and `robots.txt` are prerendered endpoints, listed explicitly in `svelte.config.js` entries because nothing links to them and the crawler would never find them
 - Layout (`+layout.js`): `prerender = true`, `trailingSlash = 'always'`
 - Deployment to GitHub Pages is triggered by a push to **`preview`**, not to `main` or `dev` — `.github/workflows/deploy.yml`. Work happens on `dev`; publishing means merging `dev` into `preview`
 - That workflow unzips `content/projects/example_projects.zip` before installing, so the demo content CI builds and tests against comes from the zip, not from the working copy (only `example-project/` and the zip itself are tracked). It then runs lint, unit tests and e2e before the build
@@ -133,6 +137,13 @@ MapLibre 6 has **no default export**; `(await import('maplibre-gl')).default` is
 - Locale strings in `src/lib/locales/{lang}.json`
 - Default locale set in `$lib/config.js` (`siteConfig.locale`)
 - RTL support via `getTextDirection()`: `hooks.server.js` fills the `lang` and `dir` placeholders in `app.html` at prerender, and `+layout.svelte` updates them when the locale changes client-side
+
+## Deferred
+
+**JSON-LD structured data**, deliberately left out of the sharing work: a
+`CreativeWork` per project and a site identity on the home page. The frontmatter
+already carries everything it needs — title, date, location, authors, type,
+tags — so it is a matter of emitting it, not of gathering it.
 
 ## Project Metadata Schema
 

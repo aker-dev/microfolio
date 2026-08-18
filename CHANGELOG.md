@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.0] - 2026-08-17
+
+### Added
+
+- **Pages carry what they need to be shared and found**: Open Graph and Twitter tags on every page rather than on project pages alone, `og:url`, `og:image:alt`, `og:locale`, and a canonical link. A project page announces itself as an `article` and shares its own image
+- **`sitemap.xml` and `robots.txt`**, both generated at build from the same project loader the site's own views use — nothing to keep in step by hand
+- A 1200×630 sharing image per project, the shape Facebook, LinkedIn and X crop to. Generated alongside the WebP thumbnails
+- `siteConfig.images.optimizeOnBuild` — image optimization runs as part of `pnpm build`. It used to be a tip printed _after_ the build, which nothing applied, so the published demo served every thumbnail at full size while a local build served WebP
+
+### Changed
+
+- **Breaking: the site's address is set once, as `siteConfig.url`.** It used to live in three places that had to agree — `static/CNAME`, `CUSTOM_DOMAIN` in `.env`, and `/microfolio` hard-coded in `svelte.config.js`. The base path and every absolute URL now come from it, and `CUSTOM_DOMAIN` is gone
+- **`static/CNAME` is removed and not replaced.** Published through an Actions workflow, as this project is, GitHub Pages ignores any CNAME in the build: a custom domain is set in the repository settings. The file did nothing, and the documentation telling you to write it was wrong
+- A menu item no longer shoves its neighbours sideways when it goes bold on hover: each one reserves its bold width from the start, so only the weight changes
+- The tag controls — `+ n more`, `show less`, `✕ clear` — are set in bold, so they read as controls rather than as two more tags
+- The error page is less tall, its centred block having reserved 70% of the viewport
+- The map's attribution starts folded, down to its ⓘ button, and reads as a pill instead of a rectangle ending in a circle. Square corners there were ours: MapLibre rounds that container itself
+- The video player on a project page is given a surface and a 16/9 box. Since nothing is preloaded it has no still to show, and left alone it was a hole in the page in dark mode — and a 4:1 strip, the browser's 300x150 default stretched to full width
+- Map styles and zoom limits live at the top of the map route rather than in `config.js`. That file is what someone opens to set up their own site; a tile provider's URLs are not their business
+- **The map draws OpenStreetMap the world over, through OpenFreeMap**, and no longer only France. 0.9.0 capped the zoom at 6 because Plan IGN stops covering the planet past that level; the cap is gone, and a project anywhere now zooms down to its street. Still no API key, and the attribution comes from the tiles themselves
+- **The map has a dark mode.** Positron in light, Dark in dark, switching with the rest of the site — the two neutral styles OpenFreeMap publishes, so the map stays in the same black and white as every other page. Markers, controls and the attribution follow the theme with it
+
+### Fixed
+
+- **pnpm 11.20.0 could not be switched to.** Pinning it made every machine with a different global pnpm fail before startup, its own version-switch code being at fault rather than the lockfile. Pinned to 11.22.0, where it is fixed
+- The image at the top of a project page held no height open, so the article and the credit block were shoved down as it arrived. Intermittent — 0.100 on two runs out of six, which is how three earlier runs missed it — and fixed by emitting the image's real pixel size rather than imposing a ratio that would crop it
+- The map's attribution button carried MapLibre's blue focus glow, and `outline: none` on top, which is what had stopped the site's own focus ring from ever reaching it
+- **Shared links showed no image.** `og:image` was written as a relative URL, which Open Graph ignores outright — the tag was there and did nothing, on every project page
+- Project videos downloaded in full on page load despite `preload="metadata"`. The example project's video is 3 MB, more than the rest of that page put together, and it arrived whether or not anyone pressed play — the project page goes from 6448 kB to 321 kB
+- The webfont was pulled in by an `@import` inside the stylesheet, which put it behind three round trips instead of one. First contentful paint improves by 100 to 288 ms across the home, map and project pages
+- The map booted while the page was still hydrating, holding the first paint behind 977 kB of JavaScript. It now waits until the page has painted
+- The image that decides the largest contentful paint was lazily loaded like every other
+
 ## [0.9.0] - 2026-08-14
 
 ### Added

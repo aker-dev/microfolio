@@ -1,8 +1,8 @@
 <script>
 	import { base } from '$app/paths';
+	import AkSeo from '$lib/components/AkSeo.svelte';
 	import { formatProjectDate } from '$lib/utils/date.js';
 	import { afterNavigate } from '$app/navigation';
-	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import AkLightbox from '$lib/components/AkLightbox.svelte';
@@ -47,19 +47,14 @@
 	// No client-side metadata loading needed - data comes from server
 </script>
 
-<svelte:head>
-	<title>{siteConfig.title} • {project.title}</title>
-	<meta name="description" content={project.description} />
-
-	<!-- OG metadata -->
-	<meta property="og:title" content={project.title} />
-	<meta property="og:description" content={project.description} />
-	{#if project.hasThumbnail}
-		<meta property="og:image" content="{base}/content/projects/{project.slug}/thumbnail.jpg" />
-	{/if}
-	<meta property="og:type" content="website" />
-	<meta property="og:site_name" content={siteConfig.title} />
-</svelte:head>
+<AkSeo
+	title={project.title}
+	description={project.description}
+	path="/projects/{project.slug}/"
+	image={project.hasThumbnail ? `/content/projects/${project.slug}/og.jpg` : ''}
+	imageAlt={thumbnailMetadata?.description || project.title}
+	type="article"
+/>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
 	<!-- Main content -->
@@ -79,10 +74,17 @@
 
 		<!-- Main thumbnail -->
 		{#if project.hasThumbnail}
+			<!-- Its real pixel size, so the browser holds the right height open and
+			     the text below stops being shoved down when the image lands. Read
+			     from the file itself rather than assumed, because project images have
+			     no common shape and a fixed ratio would crop them. `h-auto` lets the
+			     width rule win while the attributes still give the aspect ratio. -->
 			<img
 				src="{base}/content/projects/{project.slug}/thumbnail.jpg"
 				alt={thumbnailMetadata?.description || project.title}
-				class="w-full"
+				width={thumbnailMetadata?.width ?? undefined}
+				height={thumbnailMetadata?.height ?? undefined}
+				class="h-auto w-full"
 			/>
 
 			<!-- Thumbnail metadata -->
@@ -242,7 +244,19 @@
 			<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 				{#each project.resources.videos as video (video.path)}
 					<div class="overflow-hidden">
-						<video controls class="w-full" preload="metadata">
+						<!-- `none`, not `metadata`: with metadata the browser pulled the
+						     whole file down on page load — measured at 3 MB for the example
+						     project's single video, more than everything else on the page
+						     put together. Nothing is fetched now until the visitor presses
+						     play. -->
+						<!-- Given a surface rather than a frame: with nothing preloaded the
+						     player has no still to show, and left unstyled it is a hole in the
+						     page in dark mode. bg-box, the same surface as the document links
+						     below, and a 16/9 box because an element with no metadata falls
+						     back to 300x150, which full width stretches into a 4:1 strip.
+						     Videos of another shape are letterboxed, never cropped: a video
+						     element contains rather than covers. -->
+						<video controls class="bg-box aspect-video w-full" preload="none">
 							<source src={video.path} type="video/mp4" />
 							<track kind="captions" />
 							{$_('ui.video_not_supported')}

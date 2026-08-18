@@ -57,7 +57,9 @@
 			<ul class="flex h-8 gap-4">
 				{#each siteConfig.navigation as item (item.href)}
 					<li
-						class="hover:border-primary px-2 hover:font-bold {currentPage === base + item.href ||
+						data-label={$_(item.name)}
+						class="ak-nav-item hover:border-primary px-2 hover:font-bold {currentPage ===
+							base + item.href ||
 						currentPage === base + item.href + '/+page' ||
 						currentPage.startsWith(base + item.href + '/')
 							? 'border-primary border-b-2 font-bold'

@@ -3,8 +3,33 @@ export const siteConfig = {
 	description: 'static portfolio generator',
 	author: 'AKER',
 
+	// Where this site is published, in full and without a trailing slash. It is
+	// the single place the address is written: the base path is taken from it, and
+	// so is every absolute URL — the ones shared links and search engines need,
+	// which cannot be relative.
+	//
+	//   https://example.com            → base '', pages at the root
+	//   https://you.github.io/folio    → base '/folio'
+	//
+	// A custom domain on GitHub Pages is set in the repository settings and at
+	// your registrar, not here and not in a CNAME file: published through a
+	// Actions workflow, as this project is, GitHub ignores any CNAME in the build.
+	url: 'https://aker-dev.github.io/microfolio',
+
 	// Internationalization config
 	locale: 'en', // 'en', 'fr'
+
+	// Sharing image for pages that are not a project — the home page above all,
+	// which has no image of its own. A file in static/, 1200x630, or empty for
+	// none. Projects use their own thumbnail and need nothing here.
+	ogImage: '',
+
+	images: {
+		// Generates the WebP thumbnails, and the sharing images, as part of the
+		// build. Turn it off only if you produce them another way: without it a
+		// build publishes whatever happens to be lying around.
+		optimizeOnBuild: true
+	},
 
 	// Image lightbox
 	lightbox: {
@@ -12,25 +37,6 @@ export const siteConfig = {
 		// idle. Any mouse move, key press or touch brings them back. 0 keeps them
 		// on screen permanently.
 		hideControlsDelay: 3000
-	},
-
-	// Map basemap
-	map: {
-		// Plan IGN in its grey style, served by the Géoplateforme: French public
-		// data, no API key, and already entirely neutral — which is why the map no
-		// longer needs a desaturating filter to sit inside this site.
-		style: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/gris.json',
-
-		// Plan IGN only covers the whole world down to zoom 6. Past it there is
-		// detail across France and empty tiles everywhere else — Rome returns 42
-		// bytes at zoom 7. Capping here keeps the map populated wherever a project
-		// happens to be, at the cost of never reaching street scale.
-		maxZoom: 6,
-
-		// Written out because the IGN carries none: neither the style, nor its
-		// TileJSON, nor metadata.json holds an `attribution` field, so MapLibre has
-		// nothing to display and the credit would simply go missing.
-		attribution: '© IGN — Géoplateforme'
 	},
 
 	// Social links

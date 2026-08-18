@@ -13,6 +13,10 @@ const contentDir = join(projectRoot, 'content/projects');
 // Unified size configuration - one size fits all
 const OPTIMIZED_SIZE = { width: 600, maxHeight: 800 };
 
+// What Facebook, LinkedIn and X crop to. A 4:3 thumbnail handed over as-is gets
+// cut by each of them differently; cropping it here means deciding once.
+const OG_SIZE = { width: 1200, height: 630 };
+
 /**
  * Check if a file exists
  */
@@ -61,6 +65,57 @@ async function generateOptimizedWebP(inputPath, outputPath, quality = 80) {
 		console.error(`❌ Error generating ${outputPath}:`, error.message);
 		return false;
 	}
+}
+
+/**
+ * Generate the sharing image a link preview will show
+ */
+async function generateOgImage(inputPath, outputPath) {
+	try {
+		await sharp(inputPath)
+			.resize(OG_SIZE.width, OG_SIZE.height, { fit: 'cover', position: 'centre' })
+			.jpeg({ quality: 82 })
+			.toFile(outputPath);
+
+		console.log(`✅ Generated: ${outputPath}`);
+		return true;
+	} catch (error) {
+		console.error(`❌ Error generating ${outputPath}:`, error.message);
+		return false;
+	}
+}
+
+/**
+ * Sharing images, one per project that has a thumbnail to make one from
+ */
+async function processOgImages() {
+	console.log('🔗 Processing sharing images...');
+
+	const projects = await readdir(contentDir);
+	let processed = 0;
+	let skipped = 0;
+
+	for (const projectName of projects) {
+		// Skip non-directories and hidden files
+		if (projectName.startsWith('.') || projectName.endsWith('.zip')) {
+			continue;
+		}
+
+		const projectPath = join(contentDir, projectName);
+		const thumbnailPath = join(projectPath, 'thumbnail.jpg');
+		if (!(await fileExists(thumbnailPath))) continue;
+
+		const ogPath = join(projectPath, 'og.jpg');
+		if (!(await needsRegeneration(thumbnailPath, ogPath))) {
+			skipped++;
+			continue;
+		}
+
+		if (await generateOgImage(thumbnailPath, ogPath)) processed++;
+	}
+
+	console.log(`✨ Processed ${processed} sharing images, skipped ${skipped}`);
+	return processed;
 }
 
 /**
@@ -214,6 +269,9 @@ async function main() {
 
 		// Process gallery thumbnails
 		await processGalleryThumbnails();
+
+		// Sharing images, for link previews
+		await processOgImages();
 
 		// Display statistics
 		await showStats();

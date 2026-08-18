@@ -114,6 +114,14 @@ export async function extractImageMetadata(imagePath) {
 
 		// Extract relevant IPTC/EXIF fields for credits and licensing
 		const result = {
+			// Intrinsic pixel size, so a full-width image can reserve its place
+			// before it arrives. Read straight off `file` rather than through
+			// getTagValue, which hands back the printable string: these come from
+			// the JPEG's own SOF marker, so they are there even for an image
+			// carrying no EXIF at all, and they are numbers.
+			width: metadata.file?.['Image Width']?.value ?? null,
+			height: metadata.file?.['Image Height']?.value ?? null,
+
 			// Credit information
 			credit: getTagValue('iptc.Credit') || getTagValue('exif.Artist') || null,
 			source: getTagValue('iptc.Source') || null,

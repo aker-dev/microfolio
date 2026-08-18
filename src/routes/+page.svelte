@@ -1,16 +1,13 @@
 <script>
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
-	import { siteConfig } from '$lib/config.js';
+	import AkSeo from '$lib/components/AkSeo.svelte';
 	import { _ } from 'svelte-i18n';
 	let { data } = $props();
 	let page = $derived(data.page);
 	let featuredProjects = $derived(data.featuredProjects);
 </script>
 
-<svelte:head>
-	<title>{siteConfig.title} • {page.title}</title>
-	<meta name="description" content={page.description} />
-</svelte:head>
+<AkSeo title={page.title} description={page.description} path="/" />
 
 <header class="mb-8">
 	<h1 class="text-primary mb-2 text-3xl font-bold">
@@ -36,8 +33,8 @@
 
 		<!-- Mosaic Grid -->
 		<div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
-			{#each featuredProjects as project (project.slug)}
-				<AkProjectCard {project} />
+			{#each featuredProjects as project, i (project.slug)}
+				<AkProjectCard {project} priority={i === 0} />
 			{/each}
 		</div>
 	</div>

@@ -1,8 +1,8 @@
 <script>
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
+	import AkSeo from '$lib/components/AkSeo.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
-	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
 
 	let { data } = $props();
@@ -19,10 +19,11 @@
 	let handler = $state();
 </script>
 
-<svelte:head>
-	<title>{siteConfig.title} • {$_('pages.projects.title')}</title>
-	<meta name="description" content={$_('pages.projects.description')} />
-</svelte:head>
+<AkSeo
+	title={$_('pages.projects.title')}
+	description={$_('pages.projects.description')}
+	path="/projects/"
+/>
 
 <div class="space-y-8">
 	<!-- Header -->
@@ -44,8 +45,8 @@
 
 	<!-- Mosaic Grid -->
 	<div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
-		{#each filteredProjects as project (project.slug)}
-			<AkProjectCard {project} />
+		{#each filteredProjects as project, i (project.slug)}
+			<AkProjectCard {project} priority={i === 0} />
 		{/each}
 	</div>
 

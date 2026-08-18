@@ -1,13 +1,10 @@
 <script>
-	import { siteConfig } from '$lib/config.js';
+	import AkSeo from '$lib/components/AkSeo.svelte';
 	let { data } = $props();
 	let page = $derived(data.page);
 </script>
 
-<svelte:head>
-	<title>{siteConfig.title} • {page.title}</title>
-	<meta name="description" content={page.description} />
-</svelte:head>
+<AkSeo title={page.title} description={page.description} path="/about/" />
 
 <header class="mb-8">
 	<h1 class="text-primary mb-2 text-3xl font-bold">

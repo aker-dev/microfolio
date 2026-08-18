@@ -103,7 +103,7 @@ pnpm dev
 
 1. **Edit your profile** in `content/index.md` and `content/about.md`
 2. **Add your projects** in `content/projects/`
-3. **Configure your domain** in `static/CNAME`
+3. **Set your address** in `src/lib/config.js` (`url`)
 4. **Test locally** with `pnpm run dev`
 5. **Publish** with `pnpm run build`
 

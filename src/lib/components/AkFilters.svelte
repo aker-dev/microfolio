@@ -425,7 +425,7 @@
 						onclick={() => (tagsExpanded = !tagsExpanded)}
 						aria-expanded={tagsExpanded}
 						aria-controls="tag-filters"
-						class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs"
+						class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs font-bold"
 					>
 						{#if tagsExpanded}
 							{$_('ui.show_less_tags')}
@@ -438,7 +438,7 @@
 					<button
 						disabled={!hydrated}
 						onclick={clearTags}
-						class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs underline"
+						class="border-primary bg-box text-primary hover:bg-primary hover:text-box cursor-pointer rounded border px-2 py-1 text-xs font-bold underline"
 					>
 						✕ {$_('ui.clear_tags').toLowerCase()}
 					</button>

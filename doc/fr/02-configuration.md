@@ -99,16 +99,22 @@ Expliquez votre approche du design/art, vos valeurs, ce qui vous motive.
 
 Si vous avez un nom de domaine personnalisé :
 
-1. Modifiez le fichier `static/CNAME` et remplacez le contenu par votre domaine :
+1. Renseignez l'adresse dans `src/lib/config.js` :
 
-   ```
-   monportfolio.com
+   ```js
+   url: 'https://monportfolio.com';
    ```
 
-2. Dans le fichier `.env`, définissez :
-   ```
-   CUSTOM_DOMAIN=true
-   ```
+   C'est le seul endroit où l'adresse est écrite : le chemin de base et toutes
+   les URL absolues — balises de partage, liens canoniques, sitemap — en
+   découlent.
+
+2. Déclarez le domaine à GitHub Pages, dans Settings › Pages › Custom domain,
+   puis faites pointer un enregistrement CNAME vers `votre-compte.github.io`
+   chez votre registrar.
+
+   Il n'y a pas de fichier `CNAME` à écrire : publié par un workflow Actions,
+   comme l'est microfolio, GitHub ignore tout `CNAME` présent dans le build.
 
 ### 5. Personnalisation des couleurs et du style
 
@@ -256,10 +262,8 @@ Vous pouvez personnaliser ces modes dans les fichiers correspondants :
 
 Le fichier `.env` contient les variables importantes :
 
-```env
-# Configuration du domaine
-CUSTOM_DOMAIN=true
-```
+microfolio n'en lit aucune qui lui soit propre. L'adresse du site vit dans
+`src/lib/config.js`, sous `url`.
 
 ## Prochaines étapes
 

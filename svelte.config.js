@@ -2,12 +2,15 @@ import adapter from '@sveltejs/adapter-static';
 import { readdir } from 'fs/promises';
 import { join } from 'path';
 import dotenv from 'dotenv';
+import { getBasePath } from './src/lib/utils/paths.js';
 
 // Load environment variables
 dotenv.config();
 
 async function createConfig() {
-	const entries = ['/', '/projects', '/list', '/map', '/about'];
+	// Explicit, so the two endpoints have to be named: SvelteKit finds pages by
+	// crawling links, and nothing on the site links to a sitemap or to robots.txt.
+	const entries = ['/', '/projects', '/list', '/map', '/about', '/sitemap.xml', '/robots.txt'];
 
 	try {
 		const projectsPath = join(process.cwd(), 'content/projects');
@@ -33,14 +36,8 @@ async function createConfig() {
 				precompress: false,
 				strict: true
 			}),
-			paths: {
-				base:
-					process.env.CUSTOM_DOMAIN === 'true'
-						? ''
-						: process.env.NODE_ENV === 'production'
-							? '/microfolio'
-							: ''
-			},
+			// Derived from siteConfig.url, the one place the address is written
+			paths: { base: getBasePath() },
 			prerender: {
 				handleHttpError: 'warn',
 				entries

@@ -78,6 +78,12 @@ test.describe('browser history', () => {
 		// so a deep link that silently drops its page cannot make this pass
 		await expect(page).toHaveURL(/[?&]tags=digital/);
 		await expect(page).toHaveURL(/[?&]page=2/);
+		// The page is prerendered unfiltered and on page one — a static file cannot
+		// know the query string, and AkFilters only reads it once the browser runs.
+		// Waiting for the pagination to mark page two is waiting for that to land:
+		// capturing sooner compares page one against page two and fails for a
+		// reason that has nothing to do with browser history.
+		await expect(page.getByLabel('Go to page 2')).toHaveAttribute('aria-current', 'page');
 		const firstRowOnPageTwo = await page.locator('table tbody tr h3').first().textContent();
 
 		await openFirstProject(page);
@@ -105,6 +111,9 @@ test.describe('browser history', () => {
 	test('the back link returns to the filtered list it came from', async ({ page }) => {
 		await page.goto('/list/?tags=digital&page=2');
 		await expect(page).toHaveURL(/[?&]page=2/);
+		// Same reason as above: leaving before the query string is applied means
+		// leaving from page one, and the test would be proving less than its name
+		await expect(page.getByLabel('Go to page 2')).toHaveAttribute('aria-current', 'page');
 
 		await openFirstProject(page);
 		await page.getByRole('link', { name: '← Back' }).click();

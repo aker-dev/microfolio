@@ -128,7 +128,9 @@ const LIGHT = [
 		actions: openLightbox
 	},
 	{ name: 'microfolio_list', path: '/list/' },
-	{ name: 'microfolio_map', path: '/map/', settle: 2500 }
+	// Generous: the basemap has a planet's worth of vector tiles, glyphs and a
+	// sprite to fetch, and a half-drawn map photographs as a plausible one
+	{ name: 'microfolio_map', path: '/map/', settle: 8000 }
 ];
 
 const DARK = [
@@ -139,7 +141,8 @@ const DARK = [
 		path: '/projects/example-project/',
 		actions: openLightbox
 	},
-	{ name: 'microfolio_list_dark', path: '/list/' }
+	{ name: 'microfolio_list_dark', path: '/list/' },
+	{ name: 'microfolio_map_dark', path: '/map/', settle: 8000 }
 ];
 
 async function capture(browser, context, shots, theme) {

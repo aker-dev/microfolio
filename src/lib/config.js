@@ -41,9 +41,9 @@ export const siteConfig = {
 
 	// Social links
 	socialLinks: {
-		github: 'https://github.com/yourusername',
-		linkedin: 'https://linkedin.com/in/yourusername',
-		instagram: 'https://instagram.com/yourusername'
+		github: 'https://github.com/aker-dev/microfolio',
+		linkedin: 'https://www.linkedin.com/company/aker-network/',
+		instagram: 'https://www.instagram.com/aker.pro/'
 	},
 
 	// Navigation

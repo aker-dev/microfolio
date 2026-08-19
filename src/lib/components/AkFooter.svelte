@@ -27,7 +27,7 @@
 
 <footer>
 	<div
-		class="border-primary mx-auto grid max-w-7xl grid-cols-1 items-center gap-4 border-t-2 border-solid px-4 py-4 md:grid-cols-3 md:py-3"
+		class="border-primary mx-auto grid max-w-7xl grid-cols-1 items-center gap-4 border-t-2 border-solid px-4 py-4 md:grid-cols-[1fr_auto_1fr] md:py-3"
 	>
 		<div class="flex justify-center md:justify-start">
 			<button
@@ -43,18 +43,23 @@
 			</button>
 		</div>
 
-		<!-- One grid cell for both lines: the footer is grid-cols-3 on desktop, so a
-		     second paragraph of its own became a fourth cell and broke the row.
+		<!-- One grid cell for both lines: the footer is three columns on desktop, so
+		     a second paragraph of its own became a fourth cell and broke the row.
 		     The links sit on their own line rather than trailing the copyright,
-		     where a narrow screen stranded the separator at the start of a line. -->
+		     where a narrow screen stranded the separator at the start of a line.
+		     The columns are 1fr auto 1fr rather than equal thirds: a third of the
+		     width is less than the copyright needs anywhere below ~1000px, and it
+		     wrapped the version onto a line of its own. The side tracks keep a
+		     plain 1fr so their floor stays the toggle's and the icons' own width,
+		     and they still split the remainder evenly, which centres the text. -->
 		<div>
 			<p class="text-center text-sm">
 				© {siteConfig.author}
 				{new Date().getFullYear()} — {$_('ui.generated_with')}
 				<a
-					href="https://github.com/aker-dev/microfolio"
+					href="https://microfolio.net"
 					target="_blank"
-					class="font-bold hover:underline">microfolio {version}</a
+					class="font-bold whitespace-nowrap hover:underline">microfolio {version}</a
 				>
 			</p>
 			<p class="mt-2 text-center text-xs">

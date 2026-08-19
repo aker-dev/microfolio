@@ -23,13 +23,14 @@ pnpm optimize-images  # Generate WebP thumbnails via sharp
 pnpm clean-images     # Remove generated optimized images
 pnpm test             # Unit tests (Vitest, single run)
 pnpm test:watch       # Unit tests in watch mode
-pnpm test:e2e         # End-to-end tests (Playwright)
+pnpm test:e2e         # End-to-end tests (Playwright, against pnpm dev)
+pnpm test:smoke       # Smoke tests (Playwright, against build/ — run pnpm deploy first)
 pnpm screenshots      # Regenerate doc/screenshots (needs a dev server; PORT=…)
 ```
 
 Those two ports are a Daft Punk nod — Interstella 5555, and Discovery, the album it sets to pictures. `strictPort` is deliberately unset, so a busy port sends Vite to the next one and it prints where it actually landed. `playwright.config.js` and `scripts/screenshots.js` both default to 5555 because each means "wherever the dev server is": Playwright reuses a running one rather than starting its own, and the screenshot script requires one.
 
-`pnpm screenshots` drives `scripts/screenshots.js`. The footer renders the version from `package.json`, so bump before regenerating for a release. Dark-mode shots go through `prefers-color-scheme`, not the footer toggle.
+`pnpm screenshots` drives `scripts/screenshots.js`. Each shot is one 1280x1028 viewport captured by element, not a full page, and every route is longer than that — so **no shot in the current set reaches the footer**. A version bump alone therefore does not require regenerating them, and the footer fix of 2026-08-19 left all twelve untouched. Bump `package.json` first anyway if you regenerate for a release, in case a future shot does frame it. Dark-mode shots go through `prefers-color-scheme`, not the footer toggle.
 
 Package manager: `pnpm` (pinned to 11.22.0 via `packageManager` — do not pin 11.20.0, its package-manager version switch is broken and fails with a misleading "missing from pnpm-lock.yaml" identity error). **Node.js 22.13+ required** — pnpm 11 uses `node:sqlite` and crashes on Node 20. Declared in `engines`, which `.npmrc`'s `engine-strict=true` enforces at install time; CI pins the same major.
 

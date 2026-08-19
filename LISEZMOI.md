@@ -153,9 +153,9 @@ Les contributions sont les bienvenues ! N'hésitez pas à forker le projet, cré
 
 ### Fonctionnalités récentes (v0.11.0)
 
+- **`pnpm test:smoke` parcourt le site construit**, et non le serveur de développement — les suites précédentes se terminent avant même que le build commence, si bien que rien ne chargeait l'artefact réellement publié. Une carte blanche a atteint la production par ce chemin
 - **Mentions légales et politique de confidentialité**, fournies en gabarits à remplir — un site publié en France en a l'obligation, et la plupart des modèles en ligne citent encore un article de la LCEN abrogé en mai 2024
 - **Aucun bandeau de consentement, et l'explication de ce choix** : rien ici n'exige de consentement, le demander relèverait du théâtre
-- La landing page ne charge plus Google Fonts, ce qui cadrait mal avec une page vantant un outil qui s'en passe
 
 > Node.js 22.13 ou supérieur est requis (dépendance de pnpm 11).
 

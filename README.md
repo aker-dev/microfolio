@@ -148,9 +148,9 @@ Contributions are welcome! Fork the project, create a feature branch, and submit
 
 ### Recent Features (v0.11.0)
 
+- **`pnpm test:smoke` walks the built site**, not the dev server — the suites above it finish before the build starts, so nothing used to load the artefact that actually ships. A blank map once reached production that way
 - **Legal notice and privacy pages**, as templates to fill in — a site published in France needs them, and most templates found online still cite an article of the LCEN that was repealed in May 2024
 - **No consent banner, and the reasoning for it**: nothing here requires consent, so asking for it would be theatre
-- The landing page no longer loads Google Fonts, which sat oddly on a page describing a tool that avoids them
 
 > Node.js 22.13 or later is required (a pnpm 11 dependency).
 

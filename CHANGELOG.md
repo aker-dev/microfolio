@@ -5,18 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.11.0] - 2026-08-18
+## [0.11.0] - 2026-08-19
 
 ### Added
 
 - **A legal notice and a privacy policy**, as `content/legal.md` and `content/privacy.md` — templates to fill in, linked from the footer of every page. A site published in France is required to carry them, and most templates found online still cite article 6 III of the LCEN, which the loi SREN repealed in May 2024
 - The landing page becomes a folder of its own, `landing/`, with a bilingual `legals.html` beside it — French and English on one page, since the loi Toubon asks for French to be present rather than exclusive, and one file cannot drift out of step with itself the way two would
+- **A smoke pass over the site that actually ships**, `pnpm test:smoke`. Everything the suite tested until now, it tested against `pnpm dev`, and it finished before the build even started — so nothing ever loaded the built artefact. This one serves `build/` and walks its pages, asserting each returns 200, hydrates, throws nothing and asks for no same-origin file it does not have. Cross-origin requests are ignored on purpose: the font CDN and the tile server are somebody else's uptime and have no business failing a deploy. It runs in about seven seconds, and CI runs it after the build and before the artefact is uploaded
+- That suite is there because of a bug 0.10.0 shipped: MapLibre builds its worker URL at runtime, Rollup could not see through it, and the production build referenced a chunk it had never emitted — the map came up blank while `pnpm dev` was perfect and every test passed. Reverting that fix now fails the smoke pass with a 404 on the missing chunk, while all 29 end-to-end tests still pass on the same broken build
 
 ### Changed
 
 - **The landing page no longer loads Google Fonts.** It sat badly on a page describing a tool that avoids them; it now uses the same provider as the sites microfolio generates
 - Both READMEs and the landing page state what the tool does about privacy, and only what can be checked in the code: no cookies, no analytics, **no consent banner because none is required**, no Google Fonts, a map with no API key. The typeface still comes from a third-party CDN, and that is named as a fact rather than dressed up
 - They also carry what the pages actually measure — first paint under a second across the site on a throttled phone, and the map named as the exception it is, since a mapping engine costs what it costs
+- The footer's **microfolio** link points at microfolio.net rather than at the repository
+- `siteConfig.socialLinks` carry AKER's own accounts instead of the `yourusername` placeholders, since the published demo is AKER's site
+
+### Fixed
+
+- **The footer's copyright line wrapped, stranding the version number on a line of its own**, at every width between the `md` breakpoint and about 1000px. The row was three equal thirds, but the side cells hold a 36px button and three icons while the middle holds a sentence: the middle track was 235px at 768px and 278px at 900px, for a line that needs 312px. It is `1fr auto 1fr` now — the middle sizes to its content, the sides split the remainder evenly so the text stays centred. The version and the product name are also kept together, since a break between them was the worst place to break
+- **The legal notice ran the publisher's identity into a single line** — share capital, street and town — because a single newline inside a Markdown paragraph is a space, not a break. Every line that has to stand on its own now ends with a backslash, and the template says so, since the file is meant to be rewritten with someone else's details
+- **A deploy took 25 minutes instead of two.** `playwright install --with-deps` runs `apt-get`, and the runner image already carries every library Chromium links against — the log reports each as "already the newest version". The only packages it genuinely added were nine font sets for CJK, Thai and Cyrillic, 21.1 MB, which the Ubuntu mirror was serving at 14.8 kB/s. Chromium itself downloads in three seconds. The flag is gone; the step takes ten seconds
 
 ## [0.10.0] - 2026-08-17
 

@@ -53,6 +53,20 @@ jobs:
       - name: End-to-end tests
         run: pnpm test:e2e
 
+      - name: Build
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      # Everything above this line tested the dev server, and finished before the
+      # build even started. This is the only step that loads what actually ships:
+      # it serves build/ and walks its pages. The map once came up blank in
+      # production while `pnpm dev` was perfect and every test above passed.
+      - name: Smoke test the built site
+        run: pnpm test:smoke
+
+      # After both suites, so a failure in either is reported. They write to the
+      # same playwright-report/, and only one of them can have failed.
       - name: Upload Playwright report on failure
         if: failure()
         uses: actions/upload-artifact@v7
@@ -60,11 +74,6 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
-
-      - name: Build
-        run: pnpm run build
-        env:
-          NODE_ENV: production
 
       - name: Setup Pages
         uses: actions/configure-pages@v6

@@ -19,6 +19,7 @@
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"test:e2e": "playwright test",
+		"test:smoke": "NODE_ENV=production playwright test --config playwright.smoke.config.js",
 		"screenshots": "node scripts/screenshots.js"
 	},
 	"devDependencies": {

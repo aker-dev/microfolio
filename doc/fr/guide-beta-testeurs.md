@@ -441,6 +441,7 @@ Pour plus de détails, consultez le [dossier technique](documents/specifications
 ### Conseils Markdown
 
 - **Sauts de ligne** : Laissez une ligne vide entre les paragraphes
+- **Retour forcé** : Pour aller à la ligne à l'intérieur d'un même paragraphe — une adresse, des horaires, un générique — terminez la ligne par `\`. Sans cela, Markdown recolle les lignes
 - **Images** : Placez-les dans le dossier `images/` et référencez-les avec `images/nom-image.jpg`
 - **Liens** : Utilisez `[texte](url)` pour les liens externes
 - **Titres** : Utilisez `##` pour les sections (le `#` principal est réservé au titre du projet)

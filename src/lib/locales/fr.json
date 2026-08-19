@@ -118,6 +118,8 @@
 		},
 		"back": "Retour",
 		"image_details": "Détails de l'image",
-		"filters": "Filtres"
+		"filters": "Filtres",
+		"legal": "Mentions légales",
+		"privacy": "Confidentialité"
 	}
 }

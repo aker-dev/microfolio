@@ -441,6 +441,7 @@ For more details, consult the [technical file](documents/specifications.pdf).
 ### Markdown Tips
 
 - **Line breaks**: Leave a blank line between paragraphs
+- **Forced break**: To start a new line inside a single paragraph — an address, opening hours, a credit list — end the line with `\`. Without it, Markdown runs the lines together
 - **Images**: Place them in the `images/` folder and reference them with `images/image-name.jpg`
 - **Links**: Use `[text](url)` for external links
 - **Titles**: Use `##` for sections (the main `#` is reserved for the project title)

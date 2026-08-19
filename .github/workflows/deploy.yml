@@ -47,12 +47,34 @@ jobs:
 
       # The e2e suite drives the demo content unzipped above: it relies on there
       # being enough projects for a second page of results.
+      #
+      # No --with-deps. The runner image already carries every library Chromium
+      # links against — the log of a run that used it reports each one "already
+      # the newest version" — so all it added was 21.1 MB of CJK, Thai and
+      # Cyrillic font packages from apt. On 2026-08-19 that mirror served them at
+      # 14.8 kB/s and the step took 25 minutes instead of its usual 21 seconds.
+      # This site is Latin-script; if a locale ever needs those glyphs, the fix is
+      # `playwright install-deps chromium`, not paying for them on every run.
       - name: Install Playwright browser
-        run: pnpm exec playwright install --with-deps chromium
+        run: pnpm exec playwright install chromium
 
       - name: End-to-end tests
         run: pnpm test:e2e
 
+      - name: Build
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      # Everything above this line tested the dev server, and finished before the
+      # build even started. This is the only step that loads what actually ships:
+      # it serves build/ and walks its pages. The map once came up blank in
+      # production while `pnpm dev` was perfect and every test above passed.
+      - name: Smoke test the built site
+        run: pnpm test:smoke
+
+      # After both suites, so a failure in either is reported. They write to the
+      # same playwright-report/, and only one of them can have failed.
       - name: Upload Playwright report on failure
         if: failure()
         uses: actions/upload-artifact@v7
@@ -60,11 +82,6 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
-
-      - name: Build
-        run: pnpm run build
-        env:
-          NODE_ENV: production
 
       - name: Setup Pages
         uses: actions/configure-pages@v6

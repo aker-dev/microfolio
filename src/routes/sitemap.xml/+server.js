@@ -6,7 +6,7 @@ export const prerender = true;
 // The four views, then a page per project. Built from loadProjects() — the same
 // loader the views themselves use — so adding a project adds a sitemap entry
 // with nothing to remember.
-const VIEWS = ['/', '/projects/', '/list/', '/map/', '/about/'];
+const VIEWS = ['/', '/projects/', '/list/', '/map/', '/about/', '/legal/', '/privacy/'];
 
 function urlEntry(path, lastmod) {
 	const modified = lastmod ? `\n\t\t<lastmod>${lastmod}</lastmod>` : '';

@@ -23,13 +23,14 @@ pnpm optimize-images  # Generate WebP thumbnails via sharp
 pnpm clean-images     # Remove generated optimized images
 pnpm test             # Unit tests (Vitest, single run)
 pnpm test:watch       # Unit tests in watch mode
-pnpm test:e2e         # End-to-end tests (Playwright)
+pnpm test:e2e         # End-to-end tests (Playwright, against pnpm dev)
+pnpm test:smoke       # Smoke tests (Playwright, against build/ — run pnpm deploy first)
 pnpm screenshots      # Regenerate doc/screenshots (needs a dev server; PORT=…)
 ```
 
 Those two ports are a Daft Punk nod — Interstella 5555, and Discovery, the album it sets to pictures. `strictPort` is deliberately unset, so a busy port sends Vite to the next one and it prints where it actually landed. `playwright.config.js` and `scripts/screenshots.js` both default to 5555 because each means "wherever the dev server is": Playwright reuses a running one rather than starting its own, and the screenshot script requires one.
 
-`pnpm screenshots` drives `scripts/screenshots.js`. The footer renders the version from `package.json`, so bump before regenerating for a release. Dark-mode shots go through `prefers-color-scheme`, not the footer toggle.
+`pnpm screenshots` drives `scripts/screenshots.js`. Each shot is one 1280x1028 viewport captured by element, not a full page, and every route is longer than that — so **no shot in the current set reaches the footer**. A version bump alone therefore does not require regenerating them, and the footer fix of 2026-08-19 left all twelve untouched. Bump `package.json` first anyway if you regenerate for a release, in case a future shot does frame it. Dark-mode shots go through `prefers-color-scheme`, not the footer toggle.
 
 Package manager: `pnpm` (pinned to 11.22.0 via `packageManager` — do not pin 11.20.0, its package-manager version switch is broken and fails with a misleading "missing from pnpm-lock.yaml" identity error). **Node.js 22.13+ required** — pnpm 11 uses `node:sqlite` and crashes on Node 20. Declared in `engines`, which `.npmrc`'s `engine-strict=true` enforces at install time; CI pins the same major.
 
@@ -39,7 +40,9 @@ pnpm 11 no longer reads the `pnpm` field in package.json — its settings live i
 
 - **Unit** — Vitest, co-located `src/**/*.test.js`. `vitest.config.js` deliberately omits the SvelteKit plugin, so these cover plain modules only (currently the content parsing) and run in ~150ms.
 - **End-to-end** — Playwright, specs in `e2e/`. It starts its own dev server, or reuses one already running on the port. Set `PLAYWRIGHT_PORT` to exercise the CI path locally without colliding with a dev server on 5555.
-- CI (`.github/workflows/deploy.yml`) runs lint, unit tests and e2e before building. It has no image step of its own: `pnpm build` optimizes first, under `siteConfig.images.optimizeOnBuild`, so a deployed site and a local one carry the same images. `example_projects.zip` ships only JPEGs, and the demo was published at full size until that was true.
+- **Smoke** — `pnpm test:smoke`, `e2e/smoke/` under `playwright.smoke.config.js`. The only suite that loads `build/` rather than a dev server: it serves the artefact with `vite preview` and walks its pages, asserting each returns 200, hydrates, throws nothing, and asks for no same-origin file it does not have. Cross-origin requests are filtered out — the font CDN and the tile server are somebody else's uptime and have no business failing a deploy. Deliberately shallow: behaviour is the e2e suite's job, this one is about the artefact. It runs in ~5s and it earns its place — reverting the `?worker&url` fix in the map route makes it fail with `404 …/maplibre-gl-shared.mjs` while all 29 e2e tests still pass.
+- **The smoke suite always runs against a production build**, because `vite preview` sets `NODE_ENV=production` itself whatever the build was made with. So it serves under `/microfolio` even after a plain `pnpm build`, and the origin root 404s. `test:smoke` sets `NODE_ENV=production` too so `getBasePath()` agrees with the server by construction; locally, pair it with `pnpm deploy`, not `pnpm build`. Its routes are relative and its `baseURL` ends in a slash — Playwright joins them with `new URL()`, where a leading slash would drop the base path.
+- CI (`.github/workflows/deploy.yml`) runs lint, unit tests and e2e, then builds, then smoke-tests the build before uploading it. It has no image step of its own: `pnpm build` optimizes first, under `siteConfig.images.optimizeOnBuild`, so a deployed site and a local one carry the same images. `example_projects.zip` ships only JPEGs, and the demo was published at full size until that was true.
 - Some specs run with `javaScriptEnabled: false` to assert that `/list` and `/projects` really do ship their content in the HTML, and others under a phone viewport. Everything else waits on `data-hydrated`, an attribute `+layout.svelte` sets on `<html>` once the tree is interactive: the whole page is prerendered, so a click can otherwise land on markup with no listener attached and be lost. That failure only ever showed on the slower CI runner.
 
 ### What a green suite will not tell you
@@ -50,7 +53,7 @@ pnpm 11 no longer reads the `pnpm` field in package.json — its settings live i
 
 **Do not trust a long-running dev server.** One left running on 5555 served stale code twice in a single session, once nearly leading to the conclusion that a working feature was broken. Verify against a fresh server: `CI=true PLAYWRIGHT_PORT=5199 pnpm test:e2e`.
 
-**A green dev server says nothing about the build.** MapLibre builds its worker URL at runtime from a name it assembles, which Rollup cannot see through: the production build referenced a worker chunk it had never emitted, so the map came up blank with no tile request at all — while `pnpm dev` was perfect. `pnpm build` then serving `build/` is the only way that surfaces. It is fixed, but the shape of the trap outlives the fix.
+**A green dev server says nothing about the build.** MapLibre builds its worker URL at runtime from a name it assembles, which Rollup cannot see through: the production build referenced a worker chunk it had never emitted, so the map came up blank with no tile request at all — while `pnpm dev` was perfect. `pnpm build` then serving `build/` is the only way that surfaces. `pnpm test:smoke` now does exactly that on every deploy, but it only visits the routes it is told about: a new page is not covered until it is added to `PAGES` in `e2e/smoke/built-site.spec.js`.
 
 **An overlay that covers something interactive also captures its events.** The map's veil spanned the whole map, so selecting a project froze it — no panning, no zooming, no reaching another marker. It went unnoticed for as long as it did because looking at a screenshot cannot reveal it either: the fix is `pointer-events-none` on the layer and `pointer-events-auto` on what should still be clickable, and the check is `document.elementFromPoint()` on a spot that ought to reach through.
 

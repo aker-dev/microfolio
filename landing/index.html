@@ -5,10 +5,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>microfolio - Static Portfolio Generator</title>
 		<script src="https://cdn.tailwindcss.com"></script>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!-- Same provider as the sites microfolio generates, and not Google: this
+		     page claims the tool sends nothing to Google Fonts, so it had better
+		     not do so itself. -->
+		<link rel="preconnect" href="https://fonts.bunny.net" />
 		<link
-			href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+			href="https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap"
 			rel="stylesheet"
 		/>
 		<script>
@@ -143,6 +145,31 @@
 					<p class="text-sm text-neutral-600">
 						Content is in the HTML, so it works without JavaScript and search engines see it. Built
 						for phones and for the keyboard.
+					</p>
+				</div>
+				<div class="bg-box rounded-lg border border-neutral-200 p-6">
+					<div class="mb-3 text-2xl">🔒</div>
+					<h3 class="mb-2 font-bold">No Cookies, No Banner</h3>
+					<p class="text-sm text-neutral-600">
+						Nothing is tracked, so there is nothing to ask permission for. No analytics, no Google
+						Fonts, a map with no API key. Legal and privacy pages come as templates to fill in.
+					</p>
+				</div>
+				<div class="bg-box rounded-lg border border-neutral-200 p-6">
+					<div class="mb-3 text-2xl">🔗</div>
+					<h3 class="mb-2 font-bold">Shareable Views</h3>
+					<p class="text-sm text-neutral-600">
+						Filters, search, sorting and paging live in the URL, so a filtered view can be sent to
+						someone — and the back button brings it back exactly as it was.
+					</p>
+				</div>
+				<div class="bg-box rounded-lg border border-neutral-200 p-6">
+					<div class="mb-3 text-2xl">⚡</div>
+					<h3 class="mb-2 font-bold">Fast, and Findable</h3>
+					<p class="text-sm text-neutral-600">
+						Pages paint in well under a second on a throttled phone. Thumbnails and sharing images
+						are generated at build, and every page carries its own tags, canonical link and an entry
+						in a generated sitemap.
 					</p>
 				</div>
 			</div>
@@ -344,6 +371,8 @@
 								class="hover:text-primary font-bold transition-colors"
 								>AKER</a
 							>
+							·
+							<a href="legals.html" class="hover:text-primary transition-colors">Legal notice</a>
 						</p>
 					</div>
 					<div class="flex items-center space-x-6">

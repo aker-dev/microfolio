@@ -6,6 +6,9 @@ const PORT = Number(process.env.PLAYWRIGHT_PORT ?? 5555);
 
 export default defineConfig({
 	testDir: 'e2e',
+	// e2e/smoke belongs to playwright.smoke.config.js, which serves the build
+	// rather than the dev server this config starts
+	testIgnore: 'smoke/**',
 	// These tests are about browser history, which is inherently sequential
 	fullyParallel: false,
 	forbidOnly: Boolean(process.env.CI),

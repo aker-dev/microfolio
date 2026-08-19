@@ -17,23 +17,27 @@ description: 'Who publishes this site, and who hosts it.'
   given to their host and the host's details appear here.
 
   Either way, the host must be named with its address and telephone number.
+
+  A blank line separates two paragraphs. Inside one — an address, a set of
+  registration numbers — end a line with a backslash to force the break, as the
+  lines below do. Without it Markdown runs the lines together into one.
 -->
 
 ## Publisher
 
-**AKER** — SARL with a share capital of €5,800
+**AKER** — SARL with a share capital of €5,800\
 8 rue Étienne Antoine, 34000 Montpellier, France
 
-RCS Montpellier 754025104 — SIRET 75402510400029 — APE 9002Z
+RCS Montpellier 754025104 — SIRET 75402510400029 — APE 9002Z\
 VAT FR16754025104
 
-Director of publication: Adrien Revel, manager
+Director of publication: Adrien Revel, manager\
 Contact: [hello@aker.pro](mailto:hello@aker.pro)
 
 ## Host
 
-**GitHub, Inc.**
-88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States
+**GitHub, Inc.**\
+88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States\
 [github.com](https://github.com)
 
 This site is published with GitHub Pages.

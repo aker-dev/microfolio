@@ -51,4 +51,12 @@ describe('renderMarkdownBody', () => {
 		expect(html).toContain('<hr>');
 		expect(html).toContain('After.');
 	});
+
+	it('breaks a line that ends with a backslash, and only such a line', () => {
+		// content/legal.md sets an address one line per fact and needs every one of them
+		const html = renderMarkdownBody('One line\\\nNext line\n\nWrapped prose\ncarried on.\n');
+
+		expect(html).toContain('One line<br>Next line');
+		expect(html).toContain('Wrapped prose\ncarried on.');
+	});
 });

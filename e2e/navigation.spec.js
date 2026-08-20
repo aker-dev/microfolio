@@ -200,6 +200,23 @@ test.describe('navigating into a filtered view', () => {
 			/(?:^|\s)bg-primary(?:\s|$)/
 		);
 	});
+
+	test('navigating from a scrolled page lands at the top', async ({ page }) => {
+		// SvelteKit resets the scroll two ticks after a navigation lands, and
+		// AkFilters' URL-sync effect used to abort that pending reset with a
+		// same-URL goto() on its first run — so the filter pages opened scrolled
+		// wherever the previous page was. Home and About never showed it: they
+		// have no filters.
+		await page.goto('/about/');
+		await waitForHydration(page);
+		await page.evaluate(() => window.scrollTo(0, 1200));
+
+		await page.getByRole('navigation').getByRole('link', { name: 'Projects', exact: true }).click();
+		await expect(page).toHaveURL(/\/projects\/$/);
+		await waitForFiltersReady(page);
+
+		await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+	});
 });
 
 /** See the note on waitForFiltersReady: the layout marks the tree interactive. */

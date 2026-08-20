@@ -202,6 +202,14 @@
 		const query = params.toString();
 		const newUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
 
+		// Nothing to write? Then don't call goto(). SvelteKit resets the scroll
+		// position two ticks *after* a navigation lands, and a goto() issued in
+		// between — even one that changes nothing — aborts that pending reset.
+		// This effect's first run after arriving from the menu is exactly that
+		// case, and it is why /projects, /list and /map used to open scrolled
+		// wherever the previous page was.
+		if (newUrl === window.location.pathname + window.location.search) return;
+
 		// Not window.history.replaceState: passing null as its state argument wipes
 		// the navigation index SvelteKit keeps in history.state, and its popstate
 		// handler then ignores the event entirely — the browser's back button would

@@ -78,39 +78,39 @@ The same portal assembles into four configurations — single, double, corner an
 The prototype spent a winter outside the depot. The revised roof pitch sheds snow onto the track side, the bench gained six degrees of backrest, and every horizontal surface above eye level is now sixty degrees from level. Design review by weather is slower than a crit, but harder to argue with.`
 	},
 	{
-		slug: 'white-city-rooftop-studios',
-		title: 'White City Rooftop Studios',
+		slug: 'shophouse-rooftop-studios',
+		title: 'Shophouse Rooftop Studios',
 		date: '2023-06-21',
-		location: 'Tel Aviv, Israel',
-		coordinates: [32.074, 34.7749],
+		location: 'Bangkok, Thailand',
+		coordinates: [13.7563, 100.5018],
 		description:
-			'Eleven artist studios landed on the flat roofs of three protected modernist blocks, visible from the street only as a rhythm of north-facing sawteeth',
+			'Eleven artist studios landed on the flat roofs of a row of Charoen Krung shophouses, visible from the street only as a rhythm of deep-eaved sawteeth',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'adaptive-reuse', 'heritage'],
+		tags: ['bauhaus', 'architecture', 'adaptive-reuse', 'rooftop'],
 		authors: [
-			{ name: 'Ayala Ron', role: 'Architect' },
+			{ name: 'Kenji Morita', role: 'Architect' },
 			{ name: 'Marta Duran', role: 'Consulting Architect, Studio Vierkant' }
 		],
 		featured: true,
 		extras: {
-			owner: 'Gropius House Cooperative',
+			owner: 'Charoen Krung Arts Cooperative',
 			status: 'delivered',
 			surface_area: '640 m²',
-			cost: '2 100 000 €'
+			cost: '18 000 000 ฿'
 		},
-		body: `## Building on the White City
+		body: `## Building over the shophouses
 
-Four thousand modernist buildings make Tel Aviv's White City the largest ensemble of its kind anywhere, and its flat roofs the city's largest reserve of buildable land. The conservation plan allows light rooftop additions; it does not say they must be timid.
+Bangkok's old commercial streets are rows of shophouses — narrow, deep, and crowned by flat roofs the city has never had a plan for. Along Charoen Krung, the oldest paved road in town, a cooperative of eleven artists bought the air rights over one row and asked for studios.
 
-The studios are steel-framed sawteeth, glazed to the north, closed to the south, set back from the parapet by the width of a laundry line. From the street you see a serration of white against the sky — a second horizon rather than a second building.
+The studios are steel-framed sawteeth with eaves pulled deep over their glazing, set back from the parapet by the width of a laundry line. In this climate the section works twice: the high side exhausts hot air through operable louvres, the low side drinks indirect light without the heat. From the street you see a serration against the sky — a second horizon rather than a second building.
 
 ## Eleven rooms, one contract
 
-The cooperative that owns the three blocks leases the studios at cost to working artists for five-year terms. In return, the ground-floor lobbies host two open-studio weekends a year. The buildings got new cores, new waterproofing and seismic bracing out of the deal; the artists got the best light in the city.
+The cooperative leases the studios at cost to working artists for five-year terms. In return, the ground-floor shopfronts host two open-studio weekends a year. The shophouses got new cores, new waterproofing and a shaded roofscape out of the deal; the artists got rooms that stay workable through the hot season without a compressor in sight.
 
 ---
 
-Conservation authorities asked for reversibility. Every studio can be unbolted and craned off in a day, leaving four pad footings and a better roof than we found.`
+The district authority asked for reversibility. Every studio can be unbolted and craned off in a day, leaving four pad footings and a better roof than we found.`
 	},
 	{
 		slug: 'toerten-community-hall',

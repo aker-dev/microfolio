@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Images in Markdown pages.** The homepage, about, legal and privacy pages can embed images with `![…](images/photo.jpg)`, resolved against `content/`; the same syntax in a project body — documented since the start but broken until now — resolves against the project's own folder. Root-relative addresses get the base path, so everything works both in dev and under `/microfolio` on GitHub Pages
 - **External links in Markdown content open in a new tab** (`target="_blank"` with `rel="noopener noreferrer"`); internal links, anchors and `mailto:` keep the default behaviour
 - **The demo homepage and about page have real content**: what microfolio is, the 1.0 "Bauhaus" story, AKER, the manifesto, how to contribute, and a colophon — replacing the "Add content here." stubs
+- **Editorial layout for the full-width Markdown pages** (home, about, legal, privacy) on desktop: the text keeps its reading measure while images spread across the full width and blockquotes widen into pull quotes, instead of leaving the right half of the screen empty
 
 ### Changed
 

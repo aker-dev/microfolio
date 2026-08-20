@@ -73,10 +73,10 @@ test.describe('browser history', () => {
 	});
 
 	test('going back preserves the page number, not just the filters', async ({ page }) => {
-		await page.goto('/list/?tags=digital&page=2');
+		await page.goto('/list/?tags=bauhaus&page=2');
 		// Asserted against literals, not against whatever URL the page settled on,
 		// so a deep link that silently drops its page cannot make this pass
-		await expect(page).toHaveURL(/[?&]tags=digital/);
+		await expect(page).toHaveURL(/[?&]tags=bauhaus/);
 		await expect(page).toHaveURL(/[?&]page=2/);
 		// The page is prerendered unfiltered and on page one — a static file cannot
 		// know the query string, and AkFilters only reads it once the browser runs.
@@ -89,7 +89,7 @@ test.describe('browser history', () => {
 		await openFirstProject(page);
 		await page.goBack();
 
-		await expect(page).toHaveURL(/[?&]tags=digital/);
+		await expect(page).toHaveURL(/[?&]tags=bauhaus/);
 		await expect(page).toHaveURL(/[?&]page=2/);
 		await expect(listHeading(page)).toBeVisible();
 		await expect(page.getByLabel('Go to page 2')).toHaveAttribute('aria-current', 'page');
@@ -109,7 +109,7 @@ test.describe('browser history', () => {
 	});
 
 	test('the back link returns to the filtered list it came from', async ({ page }) => {
-		await page.goto('/list/?tags=digital&page=2');
+		await page.goto('/list/?tags=bauhaus&page=2');
 		await expect(page).toHaveURL(/[?&]page=2/);
 		// Same reason as above: leaving before the query string is applied means
 		// leaving from page one, and the test would be proving less than its name
@@ -118,7 +118,7 @@ test.describe('browser history', () => {
 		await openFirstProject(page);
 		await page.getByRole('link', { name: '← Back' }).click();
 
-		await expect(page).toHaveURL(/[?&]tags=digital/);
+		await expect(page).toHaveURL(/[?&]tags=bauhaus/);
 		await expect(page).toHaveURL(/[?&]page=2/);
 		await expect(listHeading(page)).toBeVisible();
 		await expect(page.getByLabel('Go to page 2')).toHaveAttribute('aria-current', 'page');
@@ -400,7 +400,7 @@ test.describe('small screens', () => {
 	test.use({ viewport: { width: 375, height: 820 } });
 
 	test('the filter panel starts collapsed and reports what is active', async ({ page }) => {
-		await page.goto('/list/?tags=digital');
+		await page.goto('/list/?tags=bauhaus');
 		await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');
 
 		const panel = page.locator('#filter-panel');

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The demo set is thirty handwritten "Bauhaus" projects** instead of a hundred stamped placeholders. Every project has its own prose, tags, authors and seeded geometric cover art; the PDFs are small but real documents rather than 264-byte stubs, and the fake video files are gone. The set is produced by `pnpm generate-demo` (`scripts/generate-demo-projects.js`, deterministic, no network), which replaces `example_projects_generator.sh`
+
 ## [0.11.0] - 2026-08-19
 
 ### Added

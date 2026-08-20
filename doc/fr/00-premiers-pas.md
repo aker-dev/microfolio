@@ -302,7 +302,7 @@ location: 'Paris, France'
 coordinates: [48.8566, 2.3522] # Optionnel, pour la carte
 description: 'Une courte description de mon projet'
 type: 'architecture' # ou 'design', 'art', 'photography', etc.
-tags: ['architecture', 'moderne', 'durable']
+tags: ['moderne', 'durable'] # mots-clés — ne répétez pas le type
 authors:
   - name: 'Votre Nom'
     role: 'Architecte'

@@ -5,8 +5,11 @@
 // projects so the author filter and credit lines read like a real scene.
 //
 // Rules the generator relies on:
-// - every project carries the `bauhaus` tag: the e2e pagination specs filter on
-//   one tag and need 21+ matches (see e2e/navigation.spec.js)
+// - tags never repeat the project's `type` (the type has its own filter), and
+//   there is no umbrella tag on purpose
+// - at least six projects share the `public-space` tag: the e2e pagination
+//   specs filter on it with rows=5 and need a second page
+//   (see e2e/navigation.spec.js)
 // - eleven entries are featured — with example-project that makes twelve, which
 //   fills the homepage grid at both md (3-col) and lg (4-col) breakpoints
 // - `extras` holds the optional metadata block (owner/status/surface_area/cost)
@@ -22,7 +25,7 @@ export const projects = [
 		description:
 			'A timber pavilion in the Ilm park that lends books and shade in equal measure, a short walk from where the school that started everything held its first classes',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'timber', 'public-space'],
+		tags: ['timber', 'public-space'],
 		authors: [
 			{ name: 'Emil Kessler', role: 'Partner, Studio Vierkant' },
 			{ name: 'Marta Duran', role: 'Project Architect' }
@@ -53,7 +56,7 @@ The city asked us what happens when books get wet. They dry, mostly.`
 		description:
 			'One steel module, four configurations, nineteen tram stops — a shelter family for the city that taught the world to build in series',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'infrastructure', 'prefabrication'],
+		tags: ['infrastructure', 'prefabrication', 'public-space'],
 		authors: [
 			{ name: 'Emil Kessler', role: 'Partner, Studio Vierkant' },
 			{ name: 'Ruth Anders', role: 'Structural Engineer' }
@@ -86,7 +89,7 @@ The prototype spent a winter outside the depot. The revised roof pitch sheds sno
 		description:
 			'Eleven artist studios landed on the flat roofs of a row of Charoen Krung shophouses, visible from the street only as a rhythm of deep-eaved sawteeth',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'adaptive-reuse', 'rooftop'],
+		tags: ['adaptive-reuse', 'rooftop'],
 		authors: [
 			{ name: 'Kenji Morita', role: 'Architect' },
 			{ name: 'Marta Duran', role: 'Consulting Architect, Studio Vierkant' }
@@ -121,7 +124,7 @@ The district authority asked for reversibility. Every studio can be unbolted and
 		description:
 			'A brick hall for the 1928 Törten estate that borrows its neighbours: their module, their window rhythm, and their conviction that ordinary life deserves composed space',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'brick', 'community'],
+		tags: ['brick', 'community'],
 		authors: [
 			{ name: 'Emil Kessler', role: 'Partner, Studio Vierkant' },
 			{ name: 'Ruth Anders', role: 'Structural Engineer' }
@@ -146,7 +149,7 @@ The association runs the calendar, and the calendar runs the building: gymnastic
 		description:
 			'A public bathhouse on the Lake Michigan shore: two black steel pavilions, one cold plunge, and a colonnade that frames the lake like a found painting',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'public-space', 'steel'],
+		tags: ['public-space', 'steel'],
 		authors: [
 			{ name: 'Marta Duran', role: 'Project Architect' },
 			{ name: 'Ruth Anders', role: 'Structural Engineer' }
@@ -171,7 +174,7 @@ The commission assumed a summer building. Attendance data argues otherwise: the 
 		description:
 			'A small public library terraced into the Kuhberg slope below the old design school, its reading rooms stepping downhill one shelf-height at a time',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'concrete', 'landscape'],
+		tags: ['concrete', 'landscape', 'public-space'],
 		authors: [{ name: 'Emil Kessler', role: 'Partner, Studio Vierkant' }],
 		featured: false,
 		body: `## Downhill by shelf-heights
@@ -193,7 +196,7 @@ The Hochschule für Gestaltung up the hill closed in 1968, but its habit of redu
 		description:
 			'A kindergarten on the roof of a 1950s cooperative block: a shaded playground at parapet level, four classrooms under sawtooth vaults, and the harbour as a teaching aid',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'education', 'rooftop'],
+		tags: ['education', 'rooftop'],
 		authors: [
 			{ name: 'Marta Duran', role: 'Project Architect' },
 			{ name: 'Salim Bouzid', role: 'Site Architect' }
@@ -224,7 +227,7 @@ Building on an occupied roof is a logistics project wearing an architecture proj
 		description:
 			'An orangery at the foot of a functionalist villa garden, built as a conversation with the house above: the same travertine floor, the opposite attitude to glass',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'glass', 'heritage'],
+		tags: ['glass', 'heritage'],
 		authors: [{ name: 'Ayala Ron', role: 'Architect' }],
 		featured: false,
 		body: `## Answering a masterpiece quietly
@@ -244,7 +247,7 @@ Lectures happen among the lemon trees, forty chairs maximum. The gardeners hold 
 		description:
 			'A concrete canopy over a mid-block courtyard, thick enough to carry a garden, thin enough at its edge to read as a drawn line against the towers',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'concrete', 'public-space'],
+		tags: ['concrete', 'public-space'],
 		authors: [
 			{ name: 'Salim Bouzid', role: 'Site Architect' },
 			{ name: 'Ruth Anders', role: 'Structural Engineer' }
@@ -275,7 +278,7 @@ Programming under the canopy is deliberately loose. Wednesday is the book market
 		description:
 			'A house for a family of five on a seven-metre lot, its rooms drawn and redrawn weekly by paper honeycomb partitions light enough for a child to move',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'housing', 'flexibility'],
+		tags: ['housing', 'flexibility'],
 		authors: [{ name: 'Kenji Morita', role: 'Architect' }],
 		featured: false,
 		body: `## A plan that refuses to be final
@@ -297,7 +300,7 @@ Everything that needs a pipe or a wire — kitchen, baths, stairs, storage — i
 		description:
 			'A painting studio at 2,600 metres for an artist who works large: one north rooflight the size of the floor, and a winch door that turns the gable into an easel',
 		type: 'architecture',
-		tags: ['bauhaus', 'architecture', 'studio', 'timber'],
+		tags: ['studio', 'timber'],
 		authors: [
 			{ name: 'Marta Duran', role: 'Project Architect' },
 			{ name: 'Kenji Morita', role: 'Consulting Architect' }
@@ -322,7 +325,7 @@ Five-metre canvases do not use doors politely. The east gable unlatches and winc
 		description:
 			'A four-year revival of a 1920s single-case experimental alphabet, extended from 26 surviving letterforms to a working family of 14 styles with full European language support',
 		type: 'design',
-		tags: ['bauhaus', 'design', 'typography', 'revival'],
+		tags: ['typography', 'revival'],
 		authors: [
 			{ name: 'Clara Voss', role: 'Type Designer' },
 			{ name: 'Lotte Brandt', role: 'Research' }
@@ -353,7 +356,7 @@ The specimen site sets the whole of a 1929 lecture on typography in the single c
 		description:
 			'Signage for a ten-day design festival spread across a small city: 240 painted plywood signs, three shapes, three colours, and no arrows anywhere',
 		type: 'design',
-		tags: ['bauhaus', 'design', 'wayfinding', 'festival'],
+		tags: ['wayfinding', 'festival'],
 		authors: [
 			{ name: 'Clara Voss', role: 'Design Lead' },
 			{ name: 'Taller Meridiano', role: 'Environmental Graphics' }
@@ -378,7 +381,7 @@ All 240 signs were cut from standard plywood sheets in one workshop week and pai
 		description:
 			'A chess set in which every piece is the diagram of its own move — turned beech, three colours, and a hundred-year-old argument continued in the same workshop town',
 		type: 'design',
-		tags: ['bauhaus', 'design', 'product', 'wood'],
+		tags: ['product', 'wood'],
 		authors: [{ name: 'Atelier Primær', role: 'Product Design' }],
 		featured: true,
 		body: `## Form follows move
@@ -404,7 +407,7 @@ Median across our test group of forty: under three minutes. The set ships flat i
 		description:
 			'A table lamp balanced by a sliding steel counterweight instead of springs or knobs: set the height with one finger, and the mechanism is the entire ornament',
 		type: 'design',
-		tags: ['bauhaus', 'design', 'product', 'lighting'],
+		tags: ['product', 'lighting'],
 		authors: [
 			{ name: 'Atelier Primær', role: 'Product Design' },
 			{ name: 'Lotte Brandt', role: 'Metalwork' }
@@ -429,7 +432,7 @@ The lamp dismantles with one hex key into eleven parts, every one of them flat-s
 		description:
 			'A weaving collection whose patterns are the punch cards that produce them — the loom instructions woven as the motif, on a restored 1912 Jacquard head',
 		type: 'design',
-		tags: ['bauhaus', 'design', 'textile', 'weaving'],
+		tags: ['textile', 'weaving'],
 		authors: [
 			{ name: 'Ines Vogel', role: 'Textile Designer' },
 			{ name: 'Mira Halas', role: 'Loom Programmer' }
@@ -454,7 +457,7 @@ The collection runs six pieces, from a cotton double-weave in cream and black to
 		description:
 			'A commissioned study redrawing a twelve-line metro network as one continuous line that never crosses itself — useless for engineers, unreasonably good at teaching the city its own shape',
 		type: 'design',
-		tags: ['bauhaus', 'design', 'cartography', 'identity'],
+		tags: ['cartography', 'identity'],
 		authors: [{ name: 'Taller Meridiano', role: 'Design Studio' }],
 		featured: true,
 		body: `## An impossible brief, kept
@@ -476,7 +479,7 @@ Riders do not navigate with it; that is what the real map is for. What the singl
 		description:
 			'Fifty-two weekly posters for a concert hall, each built from the same three shapes and three colours — a year-long test of how much variety a closed system really holds',
 		type: 'design',
-		tags: ['bauhaus', 'design', 'poster', 'print'],
+		tags: ['poster', 'print', 'typography'],
 		authors: [{ name: 'Clara Voss', role: 'Graphic Designer' }],
 		featured: false,
 		body: `## A closed system, opened weekly
@@ -498,7 +501,7 @@ Any single poster is modest. The wall of fifty-two is the actual piece — proof
 		description:
 			'A shelving system with no uprights: anodised aluminium shelves that clamp directly to any two walls, turning the room itself into the structure',
 		type: 'design',
-		tags: ['bauhaus', 'design', 'furniture', 'aluminium'],
+		tags: ['furniture', 'aluminium'],
 		authors: [{ name: 'Atelier Primær', role: 'Product Design' }],
 		featured: false,
 		body: `## Furniture minus half of itself
@@ -520,7 +523,7 @@ Span's real discovery was architectural. Corridors, stair landings, the dead zon
 		description:
 			'A hand-raised tea service in brass and ebony — hemisphere, cylinder, disc — made in homage to the metal workshop that put geometry on the tea table a century ago',
 		type: 'design',
-		tags: ['bauhaus', 'design', 'metalwork', 'craft'],
+		tags: ['metalwork', 'craft', 'product'],
 		authors: [{ name: 'Lotte Brandt', role: 'Silversmith' }],
 		featured: false,
 		body: `## After the metal workshop
@@ -542,7 +545,7 @@ A service this deliberate risks retirement into a display cabinet. The antidote 
 		description:
 			"A cultural foundation's annual report set on a strict twelve-column grid that carries text, tables and finances alike — typography doing the work of illustration",
 		type: 'design',
-		tags: ['bauhaus', 'design', 'editorial', 'typography'],
+		tags: ['editorial', 'typography'],
 		authors: [
 			{ name: 'Clara Voss', role: 'Graphic Designer' },
 			{ name: 'Ines Vogel', role: 'Production' }
@@ -574,7 +577,7 @@ The auditors asked why the accounts looked better than the essays. Correct quest
 		description:
 			'A public clock for a tram terminus that abandons hands: the hour glows as a two-metre neon numeral, the minutes as a climbing edge of light around the frame',
 		type: 'design',
-		tags: ['bauhaus', 'design', 'public-space', 'lighting'],
+		tags: ['public-space', 'lighting'],
 		authors: [
 			{ name: 'Atelier Primær', role: 'Product Design' },
 			{ name: 'Vera Lindqvist', role: 'Light Consultant' }
@@ -599,7 +602,7 @@ LED could imitate the look at half the power, and the first study specified it. 
 		description:
 			'Nine hanging constructions of steel rod, painted discs and counterweights, holding their equilibrium in a former turbine hall and redrawing it with every draught',
 		type: 'art',
-		tags: ['bauhaus', 'art', 'kinetic', 'sculpture'],
+		tags: ['kinetic', 'sculpture'],
 		authors: [{ name: 'Vera Lindqvist', role: 'Artist' }],
 		featured: true,
 		body: `## Equilibrium as a subject
@@ -621,7 +624,7 @@ Studio time was spent less like a sculptor's and more like a piano tuner's: shor
 		description:
 			'A 120-metre pedestrian underpass repainted as a walkable colour theory lesson: red compressing, yellow accelerating, blue arriving — maintenance schedule included',
 		type: 'art',
-		tags: ['bauhaus', 'art', 'public-space', 'colour'],
+		tags: ['public-space', 'colour'],
 		authors: [
 			{ name: 'Mira Halas', role: 'Artist' },
 			{ name: 'Taller Meridiano', role: 'Environmental Graphics' }
@@ -652,7 +655,7 @@ Public colour fails by fading, not by vandalism. The palette is specified in min
 		description:
 			'An outdoor installation of two hundred cyanotype panels exposed in place through a summer in France’s oldest botanical garden, recording the shadows of the garden that surrounds them',
 		type: 'art',
-		tags: ['bauhaus', 'art', 'photography', 'landscape'],
+		tags: ['photography', 'landscape'],
 		authors: [
 			{ name: 'Theo Marchand', role: 'Artist' },
 			{ name: 'Ines Vogel', role: 'Fabrication' }
@@ -677,7 +680,7 @@ Re-hung in a grid for the winter exhibition, the panels become a map of the gard
 		description:
 			'Six costumes from the 1922 Triadic Ballet rebuilt with a dance company for performing bodies, in materials that can survive a touring season',
 		type: 'art',
-		tags: ['bauhaus', 'art', 'performance', 'costume'],
+		tags: ['performance', 'costume'],
 		authors: [
 			{ name: 'Vera Lindqvist', role: 'Artist' },
 			{ name: 'Ines Vogel', role: 'Costume Fabrication' }
@@ -702,7 +705,7 @@ Rehearsals confirmed the old suspicion that the costumes are the choreographer. 
 		description:
 			"A lobby-scale curtain of 3,000 cast glass prisms that takes one office atrium's worth of daylight and spends it as moving spectra on the floor",
 		type: 'art',
-		tags: ['bauhaus', 'art', 'glass', 'light'],
+		tags: ['glass', 'light'],
 		authors: [{ name: 'Theo Marchand', role: 'Artist' }],
 		featured: false,
 		body: `## Spending daylight
@@ -724,7 +727,7 @@ A single prism is a physics demonstration. The multiplication is what makes weat
 		description:
 			'An audiovisual room where drawing is scoring: visitors draw circles, triangles and squares on a shared surface and hear the wall orchestra play their composition',
 		type: 'art',
-		tags: ['bauhaus', 'art', 'interactive', 'sound'],
+		tags: ['interactive', 'sound'],
 		authors: [
 			{ name: 'Theo Marchand', role: 'Artist' },
 			{ name: 'Mira Halas', role: 'Sound Design' }
@@ -749,7 +752,7 @@ Twenty minutes is the median stay, absurd for a one-room piece. Strangers collab
 		description:
 			"A print archive's blank street wall rebuilt as a ceramic alphabet — 5,000 azulejo tiles carrying a single letterform study, legible as text from nowhere and as typography from everywhere",
 		type: 'art',
-		tags: ['bauhaus', 'art', 'typography', 'ceramics'],
+		tags: ['typography', 'ceramics', 'public-space'],
 		authors: [
 			{ name: 'Jonas Ferro', role: 'Artist' },
 			{ name: 'Clara Voss', role: 'Letterform Consultant' }
@@ -769,12 +772,12 @@ From across the avenue the wall is texture, a woven blue-grey. At the bus stop i
 		slug: 'fourteen-metronomes',
 		title: 'Fourteen Metronomes',
 		date: '2026-03-13',
-		location: 'Rodez, France',
-		coordinates: [44.3506, 2.575],
+		location: 'Prague, Czech Republic',
+		coordinates: [50.0755, 14.4378],
 		description:
 			'A gallery piece of fourteen mechanical metronomes on a resonant oak table, wound daily, drifting in and out of phase — order and entropy performing in shifts',
 		type: 'art',
-		tags: ['bauhaus', 'art', 'kinetic', 'sound'],
+		tags: ['kinetic', 'sound'],
 		authors: [{ name: 'Vera Lindqvist', role: 'Artist' }],
 		featured: false,
 		body: `## Wound at ten, chaos by noon

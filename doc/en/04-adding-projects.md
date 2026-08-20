@@ -47,7 +47,7 @@ location: 'City, Country'
 coordinates: [latitude, longitude]
 description: 'Short and compelling description of your project'
 type: 'architecture'
-tags: ['architecture', 'design', 'modern', 'sustainable']
+tags: ['modern', 'sustainable', 'public-space']
 authors:
   - name: 'Your Name'
     role: 'Lead Designer'
@@ -94,7 +94,7 @@ Present the results obtained, project reception, its impact.
 > your light or dark theme. The basemap and its zoom limits are set at the top of
 > `src/routes/map/+page.svelte` if you want another one.
 
-- `tags`: Keywords for filtering
+- `tags`: Keywords for filtering — don't repeat the type, it has its own filter
 - `authors`: Creators and collaborators
 - `featured`: Featured project (true/false)
 
@@ -153,7 +153,7 @@ location: 'Nice, France'
 coordinates: [43.7102, 7.2620]
 description: 'Contemporary individual house with sea view, integrating sustainable development principles'
 type: 'architecture'
-tags: ['architecture', 'residential', 'contemporary', 'sustainable', 'sea view']
+tags: ['residential', 'contemporary', 'sustainable', 'sea view']
 authors:
   - name: 'Marie Dubois'
     role: 'Architect'
@@ -231,7 +231,7 @@ _South facade with its large openings and sun shades_
 
 ### 3. Metadata
 
-- **Relevant tags**: Facilitate search
+- **Relevant tags**: Facilitate search — and never repeat the type, which has its own filter
 - **Precise location**: Enables map display
 - **Exact date**: Helps chronological sorting
 - **Complete authors**: Professional credits

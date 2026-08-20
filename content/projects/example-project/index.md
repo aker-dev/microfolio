@@ -1,17 +1,17 @@
 ---
 title: 'Lichtspiel Pavilion'
 date: '2025-12-08'
-location: 'Lyon, France'
-coordinates: [45.7578, 4.8351]
-description: 'A walk-in homage to the Light-Space Modulator: three rotating aluminium screens, four projectors and one December week of Lyon fog, staged for the Fête des Lumières'
+location: 'Rodez, France'
+coordinates: [44.3506, 2.575]
+description: 'A walk-in homage to the Light-Space Modulator: three rotating aluminium screens, four projectors and one December week of Aveyron fog, staged for the winter light festival of Rodez'
 type: 'art'
-tags: ['bauhaus', 'art', 'light', 'installation', 'performance']
+tags: ['light', 'installation', 'performance']
 authors:
   - name: 'Theo Marchand'
     role: 'Artist'
   - name: 'Vera Lindqvist'
     role: 'Kinetic Consultant'
-owner: 'Fête des Lumières — Ville de Lyon'
+owner: 'Ville de Rodez'
 status: 'delivered'
 surface_area: '240 m²'
 cost: '310 000 €'
@@ -30,7 +30,7 @@ The Lichtspiel Pavilion scales that idea to a public square. Three perforated
 aluminium screens, each four metres tall, rotate at different speeds inside a
 scaffold cube. Four projectors cross-fire through them. The artwork is not the
 cube — it is the 240 square metres of moving light around it, and the fog of a
-Lyon December turns the beams themselves into visible volumes.
+Rodez December — the plateau earns it — turns the beams themselves into visible volumes.
 
 > Light is the material. The machine is only the brush.
 >
@@ -51,11 +51,11 @@ The screens run a 22-minute cycle, composed rather than programmed:
 
 ### What the fog changed
 
-The piece was composed in a rendering engine with clean air. Lyon in December
+The piece was composed in a rendering engine with clean air. Rodez in December
 has other ideas, and they were better:
 
 - beams read as _solids_, so the choreography plays in three dimensions
-- attendance peaked on the foggiest night — 11,400 people by the city's count
+- attendance peaked on the foggiest night — 8,400 people by the city's count
 - the blue "fog solo" section was written on site, two nights before opening
 
 ---

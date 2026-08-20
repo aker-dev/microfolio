@@ -47,7 +47,7 @@ location: 'Ville, Pays'
 coordinates: [latitude, longitude]
 description: 'Description courte et percutante de votre projet'
 type: 'architecture'
-tags: ['architecture', 'design', 'moderne', 'durable']
+tags: ['moderne', 'durable', 'espace-public']
 authors:
   - name: 'Votre Nom'
     role: 'Designer Principal'
@@ -94,7 +94,7 @@ Présentez les résultats obtenus, l'accueil du projet, son impact.
 > votre thème clair ou sombre. Le fond de carte et ses limites de zoom se règlent
 > en tête de `src/routes/map/+page.svelte` si vous en préférez un autre.
 
-- `tags` : Mots-clés pour le filtrage
+- `tags` : Mots-clés pour le filtrage — ne répétez pas le type, il a son propre filtre
 - `authors` : Créateurs et collaborateurs
 - `featured` : Projet mis en avant (true/false)
 
@@ -153,7 +153,7 @@ location: 'Nice, France'
 coordinates: [43.7102, 7.2620]
 description: 'Maison individuelle contemporaine avec vue sur mer, intégrant des principes de développement durable'
 type: 'architecture'
-tags: ['architecture', 'résidentiel', 'contemporain', 'durable', 'vue mer']
+tags: ['résidentiel', 'contemporain', 'durable', 'vue mer']
 authors:
   - name: 'Marie Dubois'
     role: 'Architecte'
@@ -231,7 +231,7 @@ _Façade sud avec ses grandes ouvertures et brise-soleil_
 
 ### 3. Métadonnées
 
-- **Tags pertinents** : Facilitent la recherche
+- **Tags pertinents** : Facilitent la recherche — et ne répétez jamais le type, qui a son propre filtre
 - **Localisation précise** : Permet l'affichage sur carte
 - **Date exacte** : Aide au classement chronologique
 - **Auteurs complets** : Crédits professionnels

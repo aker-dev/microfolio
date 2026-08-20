@@ -8,7 +8,13 @@
 //   pnpm generate-demo --install  also refresh the unzipped copies in
 //                                 content/projects/ (removes the previous
 //                                 generated set; example-project is never
-//                                 touched — it is tracked, not generated)
+//                                 part of the zip)
+//   pnpm generate-demo --example  regenerate the tracked example-project in
+//                                 place: same model as the zipped set, plus a
+//                                 full EXIF/IPTC pass (needs exiftool) and a
+//                                 short video of its plates (needs ffmpeg).
+//                                 Run pnpm optimize-images afterwards for the
+//                                 committed thumbnail.webp/og.jpg
 //
 // Everything is deterministic — compositions are seeded by slug, file mtimes
 // are pinned, and the zip entries are sorted — so regenerating without editing
@@ -21,6 +27,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { projects } from './demo-projects/projects.js';
+import { exampleProject } from './demo-projects/example-project.js';
 import { renderComposition, identityFor } from './demo-projects/compose.js';
 import { buildProjectPdf } from './demo-projects/pdf.js';
 
@@ -160,6 +167,85 @@ async function installLocally() {
 	}
 	execFileSync('unzip', ['-oq', zipPath], { cwd: projectsDir });
 	console.log(`✓ installed the set into ${projectsDir}`);
+}
+
+// --- The tracked example project ----------------------------------------------
+// Same model as the zipped set, written straight into content/projects/. Its
+// images then get the full metadata treatment: the lightbox panel is demoed on
+// this project, and sharp can only write EXIF — headline, credit, city and GPS
+// are IPTC/composite fields, hence exiftool.
+
+function haveTool(tool) {
+	try {
+		execFileSync('which', [tool], { stdio: 'ignore' });
+		return true;
+	} catch {
+		return false;
+	}
+}
+
+function exiftoolArgs(fields) {
+	return Object.entries(fields).flatMap(([key, value]) =>
+		Array.isArray(value) ? value.map((v) => `-${key}=${v}`) : [`-${key}=${value}`]
+	);
+}
+
+async function generateExampleProject() {
+	const dir = join(projectsDir, exampleProject.slug);
+	await generateProject(projectsDir, exampleProject);
+
+	const images = [
+		join(dir, 'thumbnail.jpg'),
+		join(dir, 'images', 'plate-01.jpg'),
+		join(dir, 'images', 'plate-02.jpg'),
+		join(dir, 'images', 'plate-03.jpg')
+	];
+
+	if (haveTool('exiftool')) {
+		images.forEach((image, i) => {
+			execFileSync('exiftool', [
+				'-overwrite_original',
+				'-q',
+				...exiftoolArgs(exampleProject.exifCommon),
+				...exiftoolArgs(exampleProject.plateExif[i]),
+				image
+			]);
+		});
+	} else {
+		console.warn('⚠ exiftool not found — the plates carry only the basic EXIF sharp writes');
+	}
+
+	if (haveTool('ffmpeg')) {
+		await mkdir(join(dir, 'videos'), { recursive: true });
+		// A slow crossfade through the three plates: a real, playable file for
+		// the Videos section of the project page.
+		execFileSync('ffmpeg', [
+			'-y',
+			'-loglevel',
+			'error',
+			...images.slice(1).flatMap((img) => ['-loop', '1', '-t', '4', '-i', img]),
+			'-filter_complex',
+			'[0][1]xfade=transition=fade:duration=1:offset=3[a];' +
+				'[a][2]xfade=transition=fade:duration=1:offset=6[b];' +
+				'[b]scale=1280:960,format=yuv420p[v]',
+			'-map',
+			'[v]',
+			'-an',
+			'-movflags',
+			'+faststart',
+			join(dir, 'videos', 'light-cycle.mp4')
+		]);
+	} else {
+		console.warn('⚠ ffmpeg not found — skipped the example video');
+	}
+
+	console.log(`✓ regenerated ${dir}`);
+	console.log('  now run: pnpm optimize-images  (refreshes thumbnail.webp and og.jpg)');
+}
+
+if (process.argv.includes('--example')) {
+	await generateExampleProject();
+	process.exit(0);
 }
 
 assertDataset();

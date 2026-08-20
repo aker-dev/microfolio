@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **The example project is now the Lichtspiel Pavilion**, a light installation in the Bauhaus spirit of the new demo set, replacing the Aligot & Saucisse Cathedral. Generated on the same model as the zipped projects (`pnpm generate-demo --example`), it keeps the jobs the old one did — the only project exercising the full optional metadata, a typography stress test of a body, and plates carrying the complete EXIF/IPTC set the lightbox panel can show (written via exiftool) — at 245 KB where the old assets weighed 19 MB. Its video is a real playable file built from its own plates
 - **The demo set is thirty handwritten "Bauhaus" projects** instead of a hundred stamped placeholders. Every project has its own prose, tags, authors and seeded geometric cover art; the PDFs are small but real documents rather than 264-byte stubs, and the fake video files are gone. The set is produced by `pnpm generate-demo` (`scripts/generate-demo-projects.js`, deterministic, no network), which replaces `example_projects_generator.sh`
 
 ## [0.11.0] - 2026-08-19

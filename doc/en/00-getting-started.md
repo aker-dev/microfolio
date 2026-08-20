@@ -1,8 +1,10 @@
-# Microfolio Installation Guide
+# Getting Started with microfolio — Beginner's Guide
 
-## About
+## Welcome!
 
 microfolio is a modern static portfolio generator, designed specifically for creatives: designers, architects, photographers, artists, graphic designers, collectives... It allows you to create a professional website to showcase your projects elegantly, without needing deep technical knowledge.
+
+This guide takes you from a blank computer to a portfolio running locally, step by step. If you have never opened a terminal in your life, you are exactly the reader it was written for.
 
 ## Important note about the terminal / command line
 
@@ -36,7 +38,7 @@ microfolio is a modern static portfolio generator, designed specifically for cre
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
-2. **Install microfolio via Homebrew**:
+2. **Trust the AKER tap, then install microfolio**:
 
    ```bash
    brew trust aker-dev/tap
@@ -63,7 +65,7 @@ Your site will be accessible at: http://localhost:5555
 - Simplified commands: `microfolio new`, `microfolio dev`, `microfolio build`
 - Easy updates with `brew upgrade microfolio`
 
-#### Option 2: Manual installation
+#### Option 2: Manual Installation
 
 If you prefer manual installation or encounter problems with Homebrew:
 
@@ -86,7 +88,7 @@ If you prefer manual installation or encounter problems with Homebrew:
    ```bash
    xcode-select --install
    ```
-3. An installation software will open automatically
+3. Installation software will open automatically
 4. Follow the on-screen instructions to install Xcode development tools
 5. **Close and restart Terminal** for the installation to take effect
 6. Verify the installation once completed:
@@ -144,6 +146,36 @@ If you prefer manual installation or encounter problems with Homebrew:
    pnpm --version
    ```
 
+## Essential Basic Commands
+
+### The `cd` (Change Directory) command
+
+Allows you to navigate between folders:
+
+```bash
+cd Documents          # Go to Documents folder
+cd ..                 # Go up one level
+cd /                  # Go to root (Mac/Linux)
+cd C:\                # Go to root (Windows)
+```
+
+### Git commands
+
+```bash
+git clone [url]       # Download a project
+git status            # See file status
+git add .             # Add all changes
+git commit -m "msg"   # Save changes
+```
+
+### pnpm commands
+
+```bash
+pnpm install          # Install dependencies
+pnpm dev              # Start development server
+pnpm build            # Build site for production
+```
+
 ## Choosing Your Working Directory
 
 ### On Mac
@@ -181,7 +213,6 @@ Use the `microfolio` command directly:
 ```bash
 microfolio new my-portfolio
 cd my-portfolio
-microfolio dev
 ```
 
 ### If you did the manual installation
@@ -237,6 +268,165 @@ Every time you want to work on your site:
 
 The server remains active as long as the terminal window stays open. To stop it, press `Ctrl+C` in the terminal.
 
+### Working Efficiently
+
+- **Real-time changes**: As soon as you modify a file, the browser refreshes automatically
+- **Keep terminal open**: Don't close the terminal window while working
+- **One server at a time**: You can only have one server running per project
+
+## Adding a New Project
+
+### Step 1: Create the folder
+
+1. Go to the `content/projects/` folder
+2. Create a new folder for your project (example: `my-first-project`)
+3. The folder name must be lowercase, without spaces or special characters
+
+### Step 2: Copy the basic structure
+
+The easiest way is to copy the `example-project` folder:
+
+```bash
+cp -r content/projects/example-project content/projects/my-first-project
+```
+
+### Step 3: Modify the index.md file
+
+Open the `content/projects/my-first-project/index.md` file and modify:
+
+```markdown
+---
+title: 'My project title'
+date: '2024-01-15'
+location: 'Paris, France'
+coordinates: [48.8566, 2.3522] # Optional, for map
+description: 'A short description of my project'
+type: 'architecture' # or 'design', 'art', 'photography', etc.
+tags: ['architecture', 'modern', 'sustainable']
+authors:
+  - name: 'Your Name'
+    role: 'Architect'
+featured: true # true to highlight
+---
+
+## Description
+
+Here, describe your project in detail...
+```
+
+### Step 4: Add your files
+
+- **Thumbnail**: Replace `thumbnail.jpg` with your cover image
+- **Images**: Add your images to the `images/` folder
+- **Videos**: Add your videos to the `videos/` folder
+- **Documents**: Add your PDFs/documents to the `documents/` folder
+
+## File Naming and Preparation Tips
+
+### File Naming
+
+- **No spaces**: `my-image.jpg` ✅ instead of `my image.jpg` ❌
+- **Simple characters**: avoid accents, cedillas, special characters
+- **Lowercase**: prefer lowercase names
+- **Descriptive**: `main-facade.jpg` rather than `IMG_001.jpg`
+
+### Image Preparation
+
+- **Thumbnail**: 1200×900 pixels recommended, 4:3 format
+- **Gallery images**: 1920px wide maximum
+- **Supported formats**: JPG, PNG, WebP, SVG
+- **Compression**: Use tools like TinyPNG to reduce size
+- **Metadata**: the lightbox displays the caption, credit and camera details embedded in your files — see [Image Metadata](03-preparing-images.md#image-metadata-exifiptc) for what to fill in and what to strip (GPS!) before publishing
+
+### Video Preparation
+
+- **Format**: MP4 H.264 for maximum compatibility
+- **Size**: Less than 50 MB per video
+- **Alternative**: For heavier videos, use YouTube or Vimeo and put the link in the text
+
+### Documents
+
+- **Formats**: PDF, DOC, DOCX, PPT, PPTX
+- **Names**: Avoid spaces and special characters
+- **Size**: Reasonable for web download
+
+## Introduction to Markdown
+
+Markdown is a simple formatting language you use in your `index.md` files.
+
+### Basic syntax
+
+```markdown
+# Main title
+
+## Secondary title
+
+### Tertiary title
+
+**Bold text**
+_Italic text_
+
+- Bullet list
+- Item 2
+- Item 3
+
+1. Numbered list
+2. Item 2
+3. Item 3
+
+[Link to a site](https://example.com)
+![Image](images/my-image.jpg)
+```
+
+### Practical examples
+
+```markdown
+## Project concept
+
+This project explores the **relationship between space and light** in contemporary architecture.
+
+### Materials used
+
+- Raw concrete
+- Thermoformed glass
+- Corten steel
+
+### Project stages
+
+1. Site research and analysis
+2. Sketching and design
+3. Technical development
+4. Implementation
+
+![Project overview](images/overview.jpg)
+
+For more details, consult the [technical file](documents/specifications.pdf).
+```
+
+### Markdown Tips
+
+- **Line breaks**: Leave a blank line between paragraphs
+- **Forced break**: To start a new line inside a single paragraph — an address, opening hours, a credit list — end the line with `\`. Without it, Markdown runs the lines together
+- **Images**: Place them in the `images/` folder and reference them with `images/image-name.jpg`
+- **Links**: Use `[text](url)` for external links — they open in a new tab automatically
+- **Titles**: Use `##` for sections (the main `#` is reserved for the project title)
+
+## Useful Resources
+
+### Recommended Tools
+
+- **Text editor**: VS Code, Sublime Text, or even Notepad++
+- **Image compression**: TinyPNG.com, ImageOptim (Mac)
+- **Markdown**: Typora, Mark Text for preview
+- **Git**: GitHub Desktop for graphical interface
+
+### Useful Links
+
+- **Markdown documentation**: https://www.markdownguide.org/
+- **Color palette**: https://coolors.co/
+- **Free images**: https://unsplash.com/, https://pixabay.com/
+- **Icons**: https://heroicons.com/
+
 ## Common Problems and Solutions
 
 ### "Command not found" or "is not recognized"
@@ -263,19 +453,23 @@ The server remains active as long as the terminal window stays open. To stop it,
 - Verify the server is still running
 - Refresh the page (F5 or Ctrl+R)
 
-## Next Steps
+## Going Further
 
-Now that Microfolio is installed, check out:
+Once your portfolio runs locally, the next guides take over:
 
-- [Configuration guide](02-configuration.md) to customize your site
-- [Project addition guide](04-adding-projects.md) to add your own creations
-- [Publication guide](05-publication.md) to put your site online
+- **[Installation](01-installation.md)** — a more detailed look at the setup
+- **[Configuration](02-configuration.md)** — make the site yours: title, colors, legal pages
+- **[Preparing Your Images](03-preparing-images.md)** — sizes, formats, and the metadata the lightbox displays
+- **[Adding Projects](04-adding-projects.md)** — everything a project folder can hold
+- **[Publication](05-publication.md)** — put your portfolio online
 
 ## Contact and Support
 
 For any questions or problems:
 
-📧 **Email**: hello@aker.pro
+- 🐛 **Bugs**: [open an issue](https://github.com/aker-dev/microfolio/issues)
+- 💬 **Questions and ideas**: [GitHub Discussions](https://github.com/aker-dev/microfolio/discussions)
+- 📧 **Email**: hello@aker.pro
 
 In your message, please specify:
 

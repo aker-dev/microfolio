@@ -10,14 +10,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Images in Markdown pages.** The homepage, about, legal and privacy pages can embed images with `![…](images/photo.jpg)`, resolved against `content/`; the same syntax in a project body — documented since the start but broken until now — resolves against the project's own folder. Root-relative addresses get the base path, so everything works both in dev and under `/microfolio` on GitHub Pages
+- **A site-wide sharing image.** `static/og.jpg` — the microfolio wordmark over the Bauhaus palette — is now the `og:image` of every page that has no image of its own (`siteConfig.ogImage`); until now those pages shipped none and shared as bare text
 - **External links in Markdown content open in a new tab** (`target="_blank"` with `rel="noopener noreferrer"`); internal links, anchors and `mailto:` keep the default behaviour
 - **The demo homepage and about page have real content**: what microfolio is, the 1.0 "Bauhaus" story, AKER, the manifesto, how to contribute, and a colophon — replacing the "Add content here." stubs
 - **Editorial layout for the full-width Markdown pages** (home, about, legal, privacy) on desktop: the text keeps its reading measure while images spread across the full width and blockquotes widen into pull quotes, instead of leaving the right half of the screen empty
 
 ### Changed
 
+- **The documentation grew a beginner's guide and caught up with reality.** The beta-tester guide became `doc/en/00-getting-started.md` / `doc/fr/00-premiers-pas.md` — same terminal primer and step-by-step onboarding, no more mission or 2025 dates. The publication guide now describes the actual deploy flow (push to `preview`, source "GitHub Actions") instead of a `main` trigger that never existed, and drops `npm install -g gh-pages` for `npx`. The doc hubs list the features 0.10/0.11 added (worldwide map, legal pages, sitemap, image optimization), carry the `brew trust` step, announce the planned video tutorials, and the configuration guide documents images in Markdown pages. A new guide, "Preparing Your Images" (`03-preparing-images.md` / `03-preparation-images.md`), covers sizes, formats, and a field-by-field map of the EXIF/IPTC metadata the lightbox displays, with Affinity Photo and exiftool as editing tools and a warning about the GPS data a phone photo publishes with it — the project and publication guides shifted to 04 and 05 to make room. The READMEs replaced their beta-program section with a contribution call
 - **The example project is now the Lichtspiel Pavilion**, a light installation in the Bauhaus spirit of the new demo set, replacing the Aligot & Saucisse Cathedral. Generated on the same model as the zipped projects (`pnpm generate-demo --example`), it keeps the jobs the old one did — the only project exercising the full optional metadata, a typography stress test of a body, and plates carrying the complete EXIF/IPTC set the lightbox panel can show (written via exiftool) — at 245 KB where the old assets weighed 19 MB. Its video is a real playable file built from its own plates
 - **The demo set is thirty handwritten "Bauhaus" projects** instead of a hundred stamped placeholders. Every project has its own prose, tags, authors and seeded geometric cover art; the PDFs are small but real documents rather than 264-byte stubs, and the fake video files are gone. The set is produced by `pnpm generate-demo` (`scripts/generate-demo-projects.js`, deterministic, no network), which replaces `example_projects_generator.sh`
+
+### Removed
+
+- **The beta-testing program.** Its guides live on as the getting-started guides; the recruitment email templates are gone, and every "join the beta" call in the READMEs and documentation became an invitation to contribute
 
 ## [0.11.0] - 2026-08-19
 

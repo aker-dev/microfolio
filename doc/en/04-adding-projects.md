@@ -75,12 +75,15 @@ Present the results obtained, project reception, its impact.
 
 ### 3. Important Metadata
 
-**Required fields:**
+**Required fields** (a project missing either is skipped, and named in a summary at the end of the build):
 
 - `title`: Project title
 - `date`: Completion date (YYYY-MM-DD format)
+
+**Recommended fields:**
+
 - `description`: Short description for previews
-- `type`: Project type (see list below)
+- `type`: Project type, drives the type filter (see list below)
 
 **Optional fields:**
 
@@ -107,23 +110,13 @@ Present the results obtained, project reception, its impact.
 
 ### 1. Thumbnail Image (required)
 
-Add a `thumbnail.jpg` image in the project folder:
-
-- **Format**: JPG or PNG
-- **Recommended size**: 800x600 pixels
-- **Weight**: Maximum 200 KB
-- **Quality**: High resolution for display
+Add a `thumbnail.jpg` image in the project folder — 1200×900 pixels recommended (4:3, the card ratio).
 
 ### 2. Project Images
 
 Create an `images/` folder and add your images.
 
-**Image tips:**
-
-- Name your files descriptively
-- Use web-optimized formats (JPG, PNG, WebP)
-- Add explanatory captions
-- Maintain visual consistency
+Sizes, formats, naming, and the EXIF/IPTC metadata the lightbox displays — including what to strip before publishing — are covered in the **[Preparing Your Images](03-preparing-images.md)** guide.
 
 ### 3. Videos (optional)
 
@@ -283,7 +276,7 @@ Verify your project displays correctly in:
 
 ## Next Steps
 
-Once your projects are added, check out the [Publication guide](04-publication.md) to put your portfolio online.
+Once your projects are added, check out the [Publication guide](05-publication.md) to put your portfolio online.
 
 ## Useful Resources
 

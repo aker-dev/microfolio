@@ -107,15 +107,21 @@ git push origin main
 1. **Accédez à votre repository GitHub**
 2. **Allez dans Settings > Pages**
 3. **Configurez la source :**
-   - Source: "Deploy from a branch"
-   - Branch: "main"
-   - Folder: "/ (root)"
+   - Source : "GitHub Actions"
 
 ### 3. GitHub Actions (automatique)
 
-Le repository utilise GitHub Actions pour le déploiement automatique. À chaque push sur `main`, le site sera rebuild et redéployé.
+Le repository fournit un workflow, `.github/workflows/deploy.yml`, qui construit le site, le vérifie, puis le publie sur GitHub Pages. **Il se déclenche sur un push vers la branche `preview`** — pas `main` — c'est donc vous qui décidez quand une version part en ligne :
 
-**Fichier `.github/workflows/deploy.yml` :**
+```bash
+# Publier l'état actuel de main
+git checkout preview
+git merge main
+git push origin preview
+git checkout main
+```
+
+Vous préférez publier à chaque push sur `main` ? Éditez la ligne `branches` en tête de `.github/workflows/deploy.yml` et remplacez `preview` par `main`.
 
 ## Publication manuelle
 
@@ -130,16 +136,13 @@ git commit -m "Prêt pour publication"
 pnpm build
 ```
 
-### 2. Déployement manuel
+### 2. Déploiement manuel
 
-Si vous préférez déployer manuellement :
+Si vous préférez déployer le dossier `build/` vous-même :
 
 ```bash
-# Installer gh-pages
-npm install -g gh-pages
-
-# Déployer
-gh-pages -d build
+# Déployer vers une branche gh-pages (aucune installation globale requise)
+npx gh-pages -d build
 ```
 
 ## Autres options d'hébergement

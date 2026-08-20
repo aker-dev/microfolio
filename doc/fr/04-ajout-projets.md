@@ -75,12 +75,15 @@ Présentez les résultats obtenus, l'accueil du projet, son impact.
 
 ### 3. Métadonnées importantes
 
-**Champs obligatoires :**
+**Champs obligatoires** (un projet auquel il en manque un est ignoré, et nommé dans un résumé en fin de build) :
 
 - `title` : Titre du projet
 - `date` : Date de réalisation (format YYYY-MM-DD)
+
+**Champs recommandés :**
+
 - `description` : Description courte pour les aperçus
-- `type` : Type de projet (voir liste ci-dessous)
+- `type` : Type de projet, alimente le filtre par type (voir liste ci-dessous)
 
 **Champs optionnels :**
 
@@ -107,23 +110,13 @@ Présentez les résultats obtenus, l'accueil du projet, son impact.
 
 ### 1. Image miniature (obligatoire)
 
-Ajoutez une image `thumbnail.jpg` dans le dossier du projet :
-
-- **Format** : JPG ou PNG
-- **Taille recommandée** : 800x600 pixels
-- **Poids** : Maximum 200 KB
-- **Qualité** : Haute résolution pour l'affichage
+Ajoutez une image `thumbnail.jpg` dans le dossier du projet — 1200×900 pixels recommandés (4:3, le ratio des cartes).
 
 ### 2. Images du projet
 
 Créez un dossier `images/` et ajoutez vos images.
 
-**Conseils pour les images :**
-
-- Nommez vos fichiers de manière descriptive
-- Utilisez des formats web optimisés (JPG, PNG, WebP)
-- Ajoutez des légendes explicatives
-- Respectez une cohérence visuelle
+Tailles, formats, nommage, et les métadonnées EXIF/IPTC que la lightbox affiche — y compris ce qu'il faut retirer avant de publier — sont couverts dans le guide **[Préparation des images](03-preparation-images.md)**.
 
 ### 3. Vidéos (optionnel)
 
@@ -283,7 +276,7 @@ Vérifiez que votre projet s'affiche correctement dans :
 
 ## Prochaines étapes
 
-Une fois vos projets ajoutés, consultez le [Guide de publication](04-publication.md) pour mettre votre portfolio en ligne.
+Une fois vos projets ajoutés, consultez le [Guide de publication](05-publication.md) pour mettre votre portfolio en ligne.
 
 ## Ressources utiles
 

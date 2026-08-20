@@ -221,3 +221,29 @@
 	outline: 2px solid var(--color-primary);
 	outline-offset: 2px;
 }
+
+/* The full-width Markdown pages (home, about, legal, privacy) read in a ~65ch
+   column, which on a desktop left the right half of the max-w-7xl main empty.
+   .ak-editorial keeps the running text at reading measure and lets what is not
+   running text — images, and blockquotes as pull quotes — spread into that
+   space. Project pages never carry the class: their article shares the row
+   with the metadata aside, and a breakout would run underneath it. */
+@media (min-width: 64rem) {
+	.ak-editorial {
+		max-width: none;
+	}
+	.ak-editorial > * {
+		max-width: 65ch;
+	}
+	/* marked wraps a lone image in a paragraph of its own */
+	.ak-editorial > p:has(> img:only-child) {
+		max-width: none;
+	}
+	.ak-editorial > p:has(> img:only-child) > img {
+		width: 100%;
+	}
+	.ak-editorial > blockquote {
+		max-width: 90ch;
+		font-size: 1.2em;
+	}
+}

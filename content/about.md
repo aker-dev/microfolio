@@ -1,47 +1,56 @@
 ---
-title: 'About Atelier Zirkel'
-description: 'Who the cooperative is, how it works, and what this site really is.'
+title: 'About microfolio'
+description: 'Who makes microfolio, what it believes, and how it got to 1.0 "Bauhaus".'
 ---
 
-## The cooperative
+## What this site is
 
-Atelier Zirkel was founded — so the story goes — around one long table and
-three pots of paint. Today the cooperative counts eleven members across
-Rotterdam, Copenhagen, Berlin and Lyon, working as one practice with three
-trades:
+This site is the live demonstration of **microfolio**. Everything on it — the
+cards, the filterable list, the world map, the lightbox reading camera
+metadata out of the images — was built by the generator from a folder of
+Markdown files. The projects are the **Bauhaus collection**: thirty-one
+fictional works of architecture, design and art, written and drawn for the
+occasion, as a nod to the school that gave version 1.0 its code name.
 
-- **Architecture** — Studio Vierkant: Emil Kessler, Marta Duran, Ruth Anders
-  and Salim Bouzid, with Ayala Ron in Tel Aviv and Kenji Morita in Tokyo
-- **Design** — Atelier Primær in Copenhagen, type and print by Clara Voss in
-  Basel, metalwork by Lotte Brandt in Berlin, environmental graphics by Taller
-  Meridiano in Mexico City
-- **Art** — Vera Lindqvist, Theo Marchand, Mira Halas, Ines Vogel and Jonas
-  Ferro, between turbine halls, botanical gardens and December fog
+## Made by AKER
 
-Members appear on each other's projects constantly; the credit lines are the
-org chart. Decisions are made the way the colour scheme was: three primaries,
-one vote each.
+microfolio is designed and built by [AKER](https://aker.pro), a French studio
+working where design meets code. It exists because portfolios kept ending up
+in tools that outgrew, outpriced or outlived the people using them — and
+because a body of work deserves better than a subscription.
 
-## How we work
+## What it believes
 
-Every project starts as a constraint stated in one sentence — a shelf that
-becomes a building, a map drawn in a single line, a clock without hands. If
-the sentence survives the first workshop week, the project exists. If it
-doesn't, it becomes a poster for something else.
+> Form follows content. A portfolio site has one job: put the work first and
+> get out of the way.
 
-## About this site
+- A portfolio should outlive the tools that made it. Plain files do.
+- Simplicity is a feature. One config file, one folder per project.
+- Sobriety is respect — for your visitors' attention, their privacy, and the
+  energy a page burns.
 
-**Atelier Zirkel is fictional**, and so are its members and projects. This
-site is the live demonstration of
-[microfolio](https://microfolio.net), a free and open-source static portfolio
-generator for creatives, built with SvelteKit and Tailwind CSS by
-[AKER](https://aker.pro).
+![Diagonal study in cream, red and yellow](images/workbench.jpg)
 
-Everything you see here — the project pages, the filterable list, the map, the
-lightbox with its image metadata — is what microfolio builds from a folder of
-Markdown files and images. To make it yours:
+## From 0.1 to 1.0
 
-- Get started at [microfolio.net](https://microfolio.net)
-- Browse the code on [GitHub](https://github.com/aker-dev/microfolio)
-- Report a bug or ask a question in the
-  [issues](https://github.com/aker-dev/microfolio/issues)
+microfolio started in the summer of 2025 as a small tool in the hands of a
+group of beta testers — creatives who were promised nothing and reported
+everything. Eighteen releases later, their bug reports, confusions and ideas
+have become version 1.0 _Bauhaus_. To all of them: thank you.
+
+## Contribute
+
+The 1.0 is a beginning, not a museum piece.
+
+- Found a bug? [Open an issue](https://github.com/aker-dev/microfolio/issues)
+- Have an idea? [Start a discussion](https://github.com/aker-dev/microfolio/discussions)
+- Want to translate microfolio into your language? Write to
+  **hello@aker.pro**
+
+## Colophon
+
+Built with [SvelteKit](https://kit.svelte.dev) and
+[Tailwind CSS](https://tailwindcss.com). Map by
+[MapLibre GL](https://maplibre.org) on [OpenFreeMap](https://openfreemap.org)
+tiles. Type set in IBM Plex Sans. Image metadata read by ExifReader. Hosted on
+GitHub Pages.

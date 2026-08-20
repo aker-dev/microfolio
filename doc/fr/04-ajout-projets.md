@@ -41,19 +41,30 @@ Créez le fichier `index.md` avec la structure suivante :
 
 ```markdown
 ---
+# ── Obligatoire ── un projet auquel il manque l'un des deux est ignoré partout
 title: 'Titre de votre projet'
-date: '2024-01-15'
-location: 'Ville, Pays'
-coordinates: [latitude, longitude]
+date: '2024-01-15' # AAAA-MM-JJ
+
+# ── Recommandé ──
 description: 'Description courte et percutante de votre projet'
-type: 'architecture'
-tags: ['moderne', 'durable', 'espace-public']
+type: 'architecture' # alimente le filtre par type — voir la liste ci-dessous
+
+# ── Optionnel ──
+location: 'Ville, Pays'
+coordinates: [48.8566, 2.3522] # [latitude, longitude], place le projet sur la carte
+tags: ['moderne', 'durable', 'espace-public'] # ne répétez pas le type
 authors:
   - name: 'Votre Nom'
     role: 'Designer Principal'
   - name: 'Collaborateur'
     role: 'Consultant'
-featured: true
+featured: true # true met le projet en avant sur la page d'accueil
+
+# ── Panneau d'infos optionnel ── affiché sur la page projet quand présent
+owner: "Client ou maître d'ouvrage"
+status: 'delivered' # texte libre : delivered, ongoing, competition…
+surface_area: '250 m²'
+cost: '1 200 000 €'
 ---
 
 ## Description du projet
@@ -95,8 +106,9 @@ Présentez les résultats obtenus, l'accueil du projet, son impact.
 > en tête de `src/routes/map/+page.svelte` si vous en préférez un autre.
 
 - `tags` : Mots-clés pour le filtrage — ne répétez pas le type, il a son propre filtre
-- `authors` : Créateurs et collaborateurs
+- `authors` : Créateurs et collaborateurs (chacun avec un `name` et un `role`)
 - `featured` : Projet mis en avant (true/false)
+- `owner`, `status`, `surface_area`, `cost` : champs en texte libre, affichés dans le panneau d'infos de la page projet quand ils sont présents
 
 ### 4. Exemples de types de projets
 
@@ -159,6 +171,10 @@ authors:
     role: 'Architecte'
   - name: 'Jean Martin'
     role: 'Architecte paysagiste'
+owner: 'Client privé'
+status: 'delivered'
+surface_area: '250 m²'
+cost: '1 850 000 €'
 featured: true
 ---
 

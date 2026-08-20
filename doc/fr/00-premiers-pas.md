@@ -296,8 +296,8 @@ Ouvrez le fichier `content/projects/mon-premier-projet/index.md` et modifiez :
 
 ```markdown
 ---
-title: 'Le titre de mon projet'
-date: '2024-01-15'
+title: 'Le titre de mon projet' # obligatoire
+date: '2024-01-15' # obligatoire, AAAA-MM-JJ — tout le reste est optionnel
 location: 'Paris, France'
 coordinates: [48.8566, 2.3522] # Optionnel, pour la carte
 description: 'Une courte description de mon projet'
@@ -313,6 +313,8 @@ featured: true # true pour mettre en avant
 
 Ici, décrivez votre projet en détail…
 ```
+
+Seuls `title` et `date` sont obligatoires — un projet auquel il en manque un est ignoré, et nommé dans un résumé en fin de build. La référence complète des champs, y compris le panneau d'infos optionnel (`owner`, `status`, `surface_area`, `cost`), se trouve dans le [Guide d'ajout de projets](04-ajout-projets.md#3-métadonnées-importantes).
 
 ### Étape 4 : Ajouter vos fichiers
 

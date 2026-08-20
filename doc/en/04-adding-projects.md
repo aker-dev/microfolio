@@ -41,19 +41,30 @@ Create the `index.md` file with the following structure:
 
 ```markdown
 ---
+# ── Required ── a project missing either is skipped from every view
 title: 'Your project title'
-date: '2024-01-15'
-location: 'City, Country'
-coordinates: [latitude, longitude]
+date: '2024-01-15' # YYYY-MM-DD
+
+# ── Recommended ──
 description: 'Short and compelling description of your project'
-type: 'architecture'
-tags: ['modern', 'sustainable', 'public-space']
+type: 'architecture' # drives the type filter — see the list below
+
+# ── Optional ──
+location: 'City, Country'
+coordinates: [48.8566, 2.3522] # [latitude, longitude], puts the project on the map
+tags: ['modern', 'sustainable', 'public-space'] # don't repeat the type
 authors:
   - name: 'Your Name'
     role: 'Lead Designer'
   - name: 'Collaborator'
     role: 'Consultant'
-featured: true
+featured: true # true shows the project on the homepage
+
+# ── Optional info panel ── shown on the project page when present
+owner: 'Client or commissioning body'
+status: 'delivered' # free text: delivered, ongoing, competition…
+surface_area: '250 m²'
+cost: '1 200 000 €'
 ---
 
 ## Project Description
@@ -95,8 +106,9 @@ Present the results obtained, project reception, its impact.
 > `src/routes/map/+page.svelte` if you want another one.
 
 - `tags`: Keywords for filtering — don't repeat the type, it has its own filter
-- `authors`: Creators and collaborators
+- `authors`: Creators and collaborators (each with a `name` and a `role`)
 - `featured`: Featured project (true/false)
+- `owner`, `status`, `surface_area`, `cost`: free-text fields shown in the project page's info panel when present
 
 ### 4. Project Type Examples
 
@@ -159,6 +171,10 @@ authors:
     role: 'Architect'
   - name: 'Jean Martin'
     role: 'Landscape Architect'
+owner: 'Private client'
+status: 'delivered'
+surface_area: '250 m²'
+cost: '1 850 000 €'
 featured: true
 ---
 

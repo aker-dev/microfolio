@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The example frontmatter in the docs is now the complete, annotated reference**: required, recommended and optional fields are labelled in the YAML itself, and the info-panel fields (`owner`, `status`, `surface_area`, `cost`) — displayed on the project page but documented nowhere — appear in the reference, the field list and the complete example. Every sample block is verified against the real parser
+
 ## [0.12.3] - 2026-08-20
 
 ### Security

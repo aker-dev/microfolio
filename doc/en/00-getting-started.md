@@ -296,8 +296,8 @@ Open the `content/projects/my-first-project/index.md` file and modify:
 
 ```markdown
 ---
-title: 'My project title'
-date: '2024-01-15'
+title: 'My project title' # required
+date: '2024-01-15' # required, YYYY-MM-DD — everything else is optional
 location: 'Paris, France'
 coordinates: [48.8566, 2.3522] # Optional, for map
 description: 'A short description of my project'
@@ -313,6 +313,8 @@ featured: true # true to highlight
 
 Here, describe your project in detail...
 ```
+
+Only `title` and `date` are required — a project missing either is skipped, and named in a summary at the end of the build. The full field reference, including the optional info panel (`owner`, `status`, `surface_area`, `cost`), is in the [Project Addition Guide](04-adding-projects.md#3-important-metadata).
 
 ### Step 4: Add your files
 

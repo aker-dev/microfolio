@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- **Every open Dependabot alert is resolved**: sharp upgraded to 0.35.3 (libvips CVEs, the two high alerts), and two targeted pnpm overrides lift transitive pins clear of their advisories — esbuild ≥ 0.25 under svelte-i18n (whose CLI microfolio never runs) and cookie ≥ 0.7.2 under @sveltejs/kit (API-compatible, stricter validation only)
+
 ### Changed
 
 - **The demo tags read like real tags.** No more umbrella `bauhaus` tag on every project, and no tag ever repeats the project's type — the type has its own filter. The shared tags that remain (`public-space`, `typography`, `product`…) exist because several projects genuinely share them; the documentation examples follow the same rule

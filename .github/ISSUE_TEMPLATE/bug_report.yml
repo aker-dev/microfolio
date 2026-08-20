@@ -1,0 +1,49 @@
+name: 🐛 Bug report
+description: Something is broken — help us reproduce it (français bienvenu)
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Feel free to write in English or in French.
+        Merci de prendre le temps de signaler un bug ! Vous pouvez écrire en anglais ou en français.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+      placeholder: 'I ran `pnpm dev`, opened the map page, and…'
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. …
+        2. …
+        3. …
+    validations:
+      required: false
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: 'macOS 15.5 / Windows 11 / Ubuntu 24.04'
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      description: The output of `node --version`
+      placeholder: 'v22.14.0'
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Terminal output or screenshot
+      description: Paste the error from the terminal, or drop a screenshot here
+    validations:
+      required: false

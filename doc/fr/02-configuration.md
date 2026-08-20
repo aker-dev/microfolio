@@ -109,6 +109,22 @@ Expliquez votre approche du design/art, vos valeurs, ce qui vous motive.
 - **Année** - Projet, Client
 ```
 
+#### Des images dans ces pages
+
+Les pages d'accueil, à propos, mentions légales et confidentialité peuvent
+embarquer des images. Placez les fichiers dans `content/images/` et
+référencez-les relativement à `content/` :
+
+```markdown
+![Une vue de mon atelier](images/atelier.jpg)
+```
+
+L'adresse est résolue au build : cela fonctionne aussi bien en développement
+que sous un sous-chemin (GitHub Pages). Les liens externes de ces pages
+s'ouvrent automatiquement dans un nouvel onglet. Sur grand écran, les images
+s'étalent plus large que la colonne de texte — c'est la mise en page
+éditoriale de ces pages.
+
 ### 4. Configuration du domaine personnalisé
 
 Si vous avez un nom de domaine personnalisé :
@@ -281,8 +297,8 @@ microfolio n'en lit aucune qui lui soit propre. L'adresse du site vit dans
 
 ## Prochaines étapes
 
-- [Guide d'ajout de projets](03-ajout-projets.md)
-- [Guide de publication](04-publication.md)
+- [Guide d'ajout de projets](04-ajout-projets.md)
+- [Guide de publication](05-publication.md)
 
 ## Conseils
 

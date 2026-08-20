@@ -108,6 +108,20 @@ Explain your approach to design/art, your values, what motivates you.
 - **Year** - Project, Client
 ```
 
+#### Images in these pages
+
+The home, about, legal and privacy pages can embed images. Put the files in
+`content/images/` and reference them relative to `content/`:
+
+```markdown
+![A view of my studio](images/studio.jpg)
+```
+
+The address is resolved at build time, so it works in development and under a
+sub-path (GitHub Pages) alike. External links in these pages open in a new tab
+automatically. On large screens, images spread wider than the text column —
+part of the editorial layout of these pages.
+
 ### 4. Custom domain configuration
 
 If you have a custom domain name:
@@ -276,7 +290,7 @@ microfolio reads none of its own. The site's address lives in
 
 ## Next steps
 
-- [Project addition guide](03-adding-projects.md)
+- [Project addition guide](04-adding-projects.md)
 - [Publishing guide](04-publishing.md)
 
 ## Tips

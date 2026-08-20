@@ -60,3 +60,71 @@ describe('renderMarkdownBody', () => {
 		expect(html).toContain('Wrapped prose\ncarried on.');
 	});
 });
+
+describe('image addresses in Markdown bodies', () => {
+	// A Markdown author cannot know the base path, and the page URL is the
+	// wrong anchor for a relative src (/about/ would resolve images/x.jpg to
+	// /about/images/x.jpg, where nothing is served). renderMarkdownBody
+	// resolves them against the assetBase its caller provides.
+
+	it('resolves a relative image against the assetBase', () => {
+		const html = renderMarkdownBody('![A plate](images/plate.jpg)', '/content');
+
+		expect(html).toContain('src="/content/images/plate.jpg"');
+	});
+
+	it('rewrites images nested inside blockquotes and lists too', () => {
+		const html = renderMarkdownBody('> ![Quoted](a.jpg)\n\n- ![Listed](b.jpg)\n', '/content');
+
+		expect(html).toContain('src="/content/a.jpg"');
+		expect(html).toContain('src="/content/b.jpg"');
+	});
+
+	it('prefixes a root-relative image with the base path in production', () => {
+		const previous = process.env.NODE_ENV;
+		process.env.NODE_ENV = 'production';
+		try {
+			const html = renderMarkdownBody('![Hero](/content/images/hero.jpg)', '/base/content');
+
+			// The base path comes from siteConfig.url's pathname — /microfolio
+			// on the demo site — and must land ahead of the author's path
+			expect(html).toContain('src="/microfolio/content/images/hero.jpg"');
+		} finally {
+			process.env.NODE_ENV = previous;
+		}
+	});
+
+	it('leaves absolute and anchor addresses alone', () => {
+		const html = renderMarkdownBody(
+			'![Remote](https://example.com/x.jpg)\n\n![Inline](data:image/gif;base64,R0lGOD)\n',
+			'/content'
+		);
+
+		expect(html).toContain('src="https://example.com/x.jpg"');
+		expect(html).toContain('src="data:image/gif;base64,R0lGOD"');
+	});
+
+	it('changes nothing when no assetBase is given', () => {
+		const html = renderMarkdownBody('![A plate](images/plate.jpg)');
+
+		expect(html).toContain('src="images/plate.jpg"');
+	});
+});
+
+describe('links in Markdown bodies', () => {
+	it('opens external links in a new tab', () => {
+		const html = renderMarkdownBody('[AKER](https://aker.pro)');
+
+		expect(html).toContain(
+			'<a href="https://aker.pro" target="_blank" rel="noopener noreferrer">AKER</a>'
+		);
+	});
+
+	it('leaves internal, anchor and mailto links in the same tab', () => {
+		const html = renderMarkdownBody(
+			'[projects](/projects/) and [write](mailto:hello@aker.pro) and [top](#top)'
+		);
+
+		expect(html).not.toContain('target="_blank"');
+	});
+});

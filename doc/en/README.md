@@ -11,9 +11,9 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 - ✨ **Modern and clean interface**
 - 📱 **Responsive design** (mobile, tablet, desktop)
 - 🎨 **Easily customizable**
-- 🚀 **Optimal performance** with static generation
-- 🔍 **SEO friendly** with OG metadata for social sharing
-- 🗺️ **Map display** for geolocated projects
+- 🚀 **Optimal performance** with static generation and build-time image optimization (WebP)
+- 🔍 **SEO friendly** with OG metadata for social sharing, `sitemap.xml` and `robots.txt`
+- 🗺️ **Worldwide project map** — MapLibre GL on OpenFreeMap vector tiles, no API key, light and dark styles
 - 🏷️ **Tag and filter system** with counters and collapsible tag list
 - 📊 **Different display modes** (grid, list, map)
 - 🌐 **Ready for custom domain**
@@ -22,8 +22,16 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 - 🌍 **Internationalization** — English/French via svelte-i18n, RTL-ready
 - 📄 **Pagination & sorting** — customizable rows-per-page, sort by date, title, type, or location
 - 🖼️ **Image lightbox** with EXIF/IPTC metadata display
+- ⚖️ **Legal notice and privacy policy** page templates, linked from the footer
 
 ## Documentation Structure
+
+### [0. Getting Started — Beginner's Guide](00-getting-started.md)
+
+- Never opened a terminal? Start here
+- Prerequisites explained step by step (Mac and Windows)
+- First project, file naming, Markdown primer
+- Common problems and solutions
 
 ### [1. Installation Guide](01-installation.md)
 
@@ -42,7 +50,14 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 - Metadata and SEO
 - Advanced features
 
-### [3. Project Addition Guide](03-adding-projects.md)
+### [3. Preparing Your Images](03-preparing-images.md)
+
+- Sizes, formats and naming
+- EXIF/IPTC metadata the lightbox displays, field by field
+- Editing tools (Affinity Photo, exiftool)
+- Privacy: what to strip before publishing
+
+### [4. Project Addition Guide](04-adding-projects.md)
 
 - Project structure
 - Creating new projects
@@ -50,7 +65,7 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 - Metadata and organization
 - Best practices
 
-### [4. Publication Guide](04-publication.md)
+### [5. Publication Guide](05-publication.md)
 
 - Publication preparation
 - Site build
@@ -66,7 +81,8 @@ microfolio is a modern static portfolio generator, designed specifically for cre
 **Homebrew** is a package manager for macOS that greatly simplifies installation:
 
 ```bash
-# Install microfolio via Homebrew
+# Trust the AKER tap, then install microfolio
+brew trust aker-dev/tap
 brew install aker-dev/tap/microfolio
 
 # Create a new portfolio
@@ -139,14 +155,26 @@ This documentation is primarily aimed at **non-developer creatives**:
 
 **No deep technical knowledge is required** to use Microfolio. The guides are designed to be accessible to everyone.
 
+## Video Tutorials (planned)
+
+A series of short video tutorials is in preparation. Planned topics:
+
+1. **Installing microfolio with Homebrew** — from zero to a running site
+2. **Your first project** — folder, `index.md`, images
+3. **Making it yours** — configuration, colors, dark mode
+4. **Publishing on GitHub Pages** — from your computer to the web
+5. **Using a custom domain** — DNS and HTTPS without tears
+
+Links will be added here as episodes are released.
+
 ## Help and Support
 
 ### Resources
 
 - **Official documentation**: This `doc/` folder
 - **Project examples**: `content/projects/` folder
-- **GitHub Issues**: To report bugs
-- **Discussions**: To ask questions
+- **[GitHub Issues](https://github.com/aker-dev/microfolio/issues)**: To report bugs
+- **[Discussions](https://github.com/aker-dev/microfolio/discussions)**: To ask questions
 
 ### Contact
 
@@ -163,11 +191,12 @@ In your message, please specify:
 
 ### Contribution
 
-Your contributions are welcome! Feel free to:
+Your contributions are welcome! See **[CONTRIBUTING.md](../../CONTRIBUTING.md)** for how to:
 
 - Improve the documentation
 - Report bugs
 - Suggest new features
+- Help translate microfolio
 - Share your creations
 
 ## Changelog

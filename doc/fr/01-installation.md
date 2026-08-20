@@ -268,8 +268,8 @@ Le serveur reste actif tant que la fenêtre du terminal reste ouverte. Pour l'ar
 Maintenant que Microfolio est installé, consultez :
 
 - [Guide de configuration](02-configuration.md) pour personnaliser votre site
-- [Guide d'ajout de projets](03-ajout-projets.md) pour ajouter vos propres créations
-- [Guide de publication](04-publication.md) pour mettre votre site en ligne
+- [Guide d'ajout de projets](04-ajout-projets.md) pour ajouter vos propres créations
+- [Guide de publication](05-publication.md) pour mettre votre site en ligne
 
 ## Contact et support
 

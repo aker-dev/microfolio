@@ -268,8 +268,8 @@ The server remains active as long as the terminal window stays open. To stop it,
 Now that Microfolio is installed, check out:
 
 - [Configuration guide](02-configuration.md) to customize your site
-- [Project addition guide](03-adding-projects.md) to add your own creations
-- [Publication guide](04-publication.md) to put your site online
+- [Project addition guide](04-adding-projects.md) to add your own creations
+- [Publication guide](05-publication.md) to put your site online
 
 ## Contact and Support
 

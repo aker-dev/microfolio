@@ -1,0 +1,33 @@
+name: 🌍 Translation
+description: Offer a translation, or report a wording problem in an existing one (français bienvenu)
+labels: ['i18n']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        microfolio ships in English and French, and we'd love more languages — thank you!
+        The interface strings live in `src/lib/locales/`, one JSON file per language.
+  - type: input
+    id: language
+    attributes:
+      label: Which language?
+      placeholder: 'Español, Deutsch, العربية, …'
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is this about?
+      options:
+        - I'd like to translate microfolio into this language
+        - A wording problem in an existing translation
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: For a wording problem, quote the current text and your suggestion
+    validations:
+      required: false

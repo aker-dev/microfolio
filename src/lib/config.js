@@ -22,7 +22,7 @@ export const siteConfig = {
 	// Sharing image for pages that are not a project — the home page above all,
 	// which has no image of its own. A file in static/, 1200x630, or empty for
 	// none. Projects use their own thumbnail and need nothing here.
-	ogImage: '',
+	ogImage: '/og.jpg',
 
 	images: {
 		// Generates the WebP thumbnails, and the sharing images, as part of the

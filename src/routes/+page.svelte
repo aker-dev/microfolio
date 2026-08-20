@@ -20,7 +20,7 @@
 	{/if}
 </header>
 
-<article class="prose prose-neutral text-primary">
+<article class="ak-editorial prose prose-neutral text-primary">
 	<!-- Markdown authored in content/index.md and converted at build time, not user input -->
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html page.content}

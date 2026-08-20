@@ -37,7 +37,9 @@ export async function load({ params }) {
 		project: {
 			slug,
 			...metadata,
-			content: renderMarkdownBody(raw),
+			// Resolved against the project's own folder, so the documented
+			// `![…](images/photo.jpg)` syntax lands on the copied content
+			content: renderMarkdownBody(raw, `${basePath}/content/projects/${slug}`),
 			resources: await getProjectResources(projectPath, slug),
 			thumbnailMetadata: hasThumbnail ? await loadThumbnailMetadata(thumbnailPath) : null,
 			hasThumbnail

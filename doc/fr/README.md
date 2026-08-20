@@ -11,9 +11,9 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 - ✨ **Interface moderne et épurée**
 - 📱 **Responsive design** (mobile, tablette, desktop)
 - 🎨 **Personnalisable** facilement
-- 🚀 **Performances optimales** avec génération statique
-- 🔍 **SEO friendly** avec métadonnées OG pour le partage social
-- 🗺️ **Affichage sur carte** des projets géolocalisés
+- 🚀 **Performances optimales** avec génération statique et optimisation des images au build (WebP)
+- 🔍 **SEO friendly** avec métadonnées OG pour le partage social, `sitemap.xml` et `robots.txt`
+- 🗺️ **Carte mondiale des projets** — MapLibre GL sur les tuiles vectorielles OpenFreeMap, sans clé API, styles clair et sombre
 - 🏷️ **Système de tags et filtres** avec compteurs et liste repliable
 - 📊 **Différents modes d'affichage** (grille, liste, carte)
 - 🌐 **Prêt pour domaine personnalisé**
@@ -22,8 +22,16 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 - 🌍 **Internationalisation** — anglais/français via svelte-i18n, support RTL
 - 📄 **Pagination et tri** — lignes par page personnalisable, tri par date, titre, type ou localisation
 - 🖼️ **Lightbox d'images** avec affichage des métadonnées EXIF/IPTC
+- ⚖️ **Mentions légales et politique de confidentialité** — modèles de pages liés depuis le pied de page
 
 ## Structure de la documentation
+
+### [0. Premiers pas — Guide du débutant](00-premiers-pas.md)
+
+- Jamais ouvert un terminal ? Commencez ici
+- Prérequis expliqués pas à pas (Mac et Windows)
+- Premier projet, nommage des fichiers, introduction à Markdown
+- Problèmes courants et solutions
 
 ### [1. Guide d'Installation](01-installation.md)
 
@@ -42,7 +50,14 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 - Métadonnées et SEO
 - Fonctionnalités avancées
 
-### [3. Guide d'Ajout de Projets](03-ajout-projets.md)
+### [3. Préparation des images](03-preparation-images.md)
+
+- Tailles, formats et nommage
+- Les métadonnées EXIF/IPTC affichées par la lightbox, champ par champ
+- Outils d'édition (Affinity Photo, exiftool)
+- Vie privée : quoi retirer avant de publier
+
+### [4. Guide d'Ajout de Projets](04-ajout-projets.md)
 
 - Structure d'un projet
 - Création de nouveaux projets
@@ -50,7 +65,7 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 - Métadonnées et organisation
 - Bonnes pratiques
 
-### [4. Guide de Publication](04-publication.md)
+### [5. Guide de Publication](05-publication.md)
 
 - Préparation pour la publication
 - Build du site
@@ -66,7 +81,8 @@ microfolio est un générateur de portfolio statique moderne, conçu spécialeme
 **Homebrew** est un gestionnaire de paquets pour macOS qui simplifie grandement l'installation :
 
 ```bash
-# Installer microfolio via Homebrew
+# Approuver le tap AKER, puis installer microfolio
+brew trust aker-dev/tap
 brew install aker-dev/tap/microfolio
 
 # Créer un nouveau portfolio
@@ -139,14 +155,26 @@ Cette documentation s'adresse principalement aux **créatifs non-développeurs**
 
 **Aucune connaissance technique approfondie n'est requise** pour utiliser Microfolio. Les guides sont conçus pour être accessibles à tous.
 
+## Tutoriels vidéo (à venir)
+
+Une série de courts tutoriels vidéo est en préparation. Sujets prévus :
+
+1. **Installer microfolio avec Homebrew** — de zéro à un site qui tourne
+2. **Votre premier projet** — dossier, `index.md`, images
+3. **Le faire vôtre** — configuration, couleurs, mode sombre
+4. **Publier sur GitHub Pages** — de votre ordinateur au web
+5. **Utiliser un domaine personnalisé** — DNS et HTTPS sans larmes
+
+Les liens seront ajoutés ici au fil des épisodes.
+
 ## Aide et support
 
 ### Ressources
 
 - **Documentation officielle** : Ce dossier `doc/`
 - **Exemples de projets** : Dossier `content/projects/`
-- **Issues GitHub** : Pour reporter des bugs
-- **Discussions** : Pour poser des questions
+- **[Issues GitHub](https://github.com/aker-dev/microfolio/issues)** : Pour reporter des bugs
+- **[Discussions](https://github.com/aker-dev/microfolio/discussions)** : Pour poser des questions
 
 ### Contact
 
@@ -163,11 +191,12 @@ Dans votre message, précisez :
 
 ### Contribution
 
-Vos contributions sont les bienvenues ! N'hésitez pas à :
+Vos contributions sont les bienvenues ! Consultez **[CONTRIBUER.md](../../CONTRIBUER.md)** pour :
 
 - Améliorer la documentation
 - Signaler des bugs
 - Proposer de nouvelles fonctionnalités
+- Aider à traduire microfolio
 - Partager vos réalisations
 
 ## Changelog

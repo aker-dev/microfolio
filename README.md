@@ -73,14 +73,6 @@ For search engines and shared links: a title, description, canonical link and
 Open Graph and Twitter tags on every page, plus a `sitemap.xml` and `robots.txt`
 generated from your own projects.
 
-## 🧪 Beta Testing Program
-
-**We're looking for beta testers!** Are you a creative and want to test microfolio?
-
-👉 **[Beta Tester Guide](doc/en/beta-testers-guide.md)** - Complete guide to get started
-
-📧 Contact **hello@aker.pro** to join the testing program.
-
 ## 🚀 Quick Start
 
 ### Option 1: Homebrew Installation (macOS - Recommended)
@@ -122,15 +114,16 @@ pnpm dev
 
 ## 📚 Documentation
 
+- **[Getting Started](doc/en/00-getting-started.md)** - Beginner's guide, no terminal experience required
 - **[Installation Guide](doc/en/01-installation.md)** - Installation and prerequisites
 - **[Configuration](doc/en/02-configuration.md)** - Site customization
-- **[Adding Projects](doc/en/03-adding-projects.md)** - Create and organize projects
-- **[Publishing](doc/en/04-publication.md)** - Deploy your portfolio
-- **[Beta Tester Guide](doc/en/beta-testers-guide.md)** - Guide for beta testers
+- **[Preparing Your Images](doc/en/03-preparing-images.md)** - Sizes, formats and metadata
+- **[Adding Projects](doc/en/04-adding-projects.md)** - Create and organize projects
+- **[Publishing](doc/en/05-publication.md)** - Deploy your portfolio
 
 ## 🚀 Deployment
 
-📖 **Complete deployment guide**: [doc/en/04-publication.md](doc/en/04-publication.md)
+📖 **Complete deployment guide**: [doc/en/05-publication.md](doc/en/05-publication.md)
 
 ### Quick Deploy to GitHub Pages
 
@@ -138,27 +131,26 @@ pnpm dev
 # Build the site
 microfolio build  # or pnpm build
 
-# Enable GitHub Pages in repository settings
-# Push to main branch - automatic deployment
+# Enable GitHub Pages in repository settings (Source: GitHub Actions)
+# Push to the preview branch — automatic deployment
 ```
 
 ## 🤝 Contributing
 
-Contributions are welcome! Fork the project, create a feature branch, and submit a Pull Request.
+microfolio is built in the open, and every kind of help counts:
 
-### Recent Features (v0.11.0)
+- 🐛 **Found a bug?** [Open an issue](https://github.com/aker-dev/microfolio/issues)
+- 💡 **Have an idea?** [Start a discussion](https://github.com/aker-dev/microfolio/discussions)
+- 🌍 **Speak another language?** Help translate microfolio — write to **hello@aker.pro**
+- 🔧 **Want to code?** Fork the project, create a feature branch, and submit a Pull Request
 
-- **`pnpm test:smoke` walks the built site**, not the dev server — the suites above it finish before the build starts, so nothing used to load the artefact that actually ships. A blank map once reached production that way
-- **Legal notice and privacy pages**, as templates to fill in — a site published in France needs them, and most templates found online still cite an article of the LCEN that was repealed in May 2024
-- **No consent banner, and the reasoning for it**: nothing here requires consent, so asking for it would be theatre
-
-> Node.js 22.13 or later is required (a pnpm 11 dependency).
+See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the details, and the **[changelog](CHANGELOG.md)** for what's new.
 
 ## 📞 Support
 
 - 🐛 **Issues**: [GitHub Issues](https://github.com/aker-dev/microfolio/issues)
+- 💬 **Questions**: [GitHub Discussions](https://github.com/aker-dev/microfolio/discussions)
 - 📧 **Email**: hello@aker.pro
-- 💬 **Discussions**: GitHub Discussions for questions
 
 ## 📄 License
 

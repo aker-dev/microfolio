@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.2] - 2026-08-20
+
+### Fixed
+
+- **The filter pages no longer open scrolled to wherever the previous page was.** SvelteKit resets the scroll two ticks after a navigation lands, and the filters' URL-sync effect used to abort that pending reset with a same-URL `goto()` on its first run — /projects, /list and /map kept the scroll position of the page you came from. The sync now skips the call when the URL would not change
+
 ## [0.12.1] - 2026-08-20
 
 ### Changed

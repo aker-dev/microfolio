@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The demo tags read like real tags.** No more umbrella `bauhaus` tag on every project, and no tag ever repeats the project's type — the type has its own filter. The shared tags that remain (`public-space`, `typography`, `product`…) exist because several projects genuinely share them; the documentation examples follow the same rule
+- **The Lichtspiel Pavilion moves to Rodez** — staged for the town's winter light festival, December fog of the Aveyron included — and Fourteen Metronomes returns to Prague, so Rodez belongs to the example project alone
+
 ## [0.12.2] - 2026-08-20
 
 ### Fixed

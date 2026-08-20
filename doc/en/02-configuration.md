@@ -247,7 +247,20 @@ export const siteConfig = {
 
 ### 1. Custom favicon
 
-Replace the `static/favicon.png` file with your own favicon.
+Replace the `static/favicon.svg` file with your own favicon (SVG scales to every size from one file; a PNG works too if you update the `<link rel="icon">` in `src/app.html`).
+
+### 1b. Sharing image (Open Graph)
+
+When a page is shared on a social network or in a messaging app, the preview card uses an image:
+
+- **Project pages already have theirs**: an `og.jpg` is generated from each project's thumbnail at build time — nothing to do
+- **Every other page** (home, about, list, map…) falls back to the site-wide image declared in `src/lib/config.js`:
+
+  ```js
+  ogImage: '/og.jpg';
+  ```
+
+  Replace `static/og.jpg` with your own — **1200×630 pixels**, the format every network crops to. Set `ogImage: ''` to ship none.
 
 ### 2. Custom fonts
 

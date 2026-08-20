@@ -50,12 +50,16 @@ function assertDataset() {
 	for (const p of projects) {
 		if (slugs.has(p.slug)) problems.push(`duplicate slug: ${p.slug}`);
 		slugs.add(p.slug);
-		if (!p.tags.includes('bauhaus')) problems.push(`${p.slug}: missing the 'bauhaus' tag`);
+		if (p.tags.includes(p.type)) problems.push(`${p.slug}: tag '${p.type}' repeats the type`);
 		if (Number.isNaN(new Date(p.date).getTime())) problems.push(`${p.slug}: bad date ${p.date}`);
 	}
-	const withTag = projects.filter((p) => p.tags.includes('bauhaus')).length;
-	if (withTag < 21) {
-		problems.push(`only ${withTag} projects share the 'bauhaus' tag — pagination specs need 21+`);
+	// The e2e pagination specs filter on this tag with rows=5 and need a
+	// second page to exist (see e2e/navigation.spec.js)
+	const withTag = projects.filter((p) => p.tags.includes('public-space')).length;
+	if (withTag < 6) {
+		problems.push(
+			`only ${withTag} projects share the 'public-space' tag — pagination specs need 6+`
+		);
 	}
 	const featured = projects.filter((p) => p.featured).length;
 	if (featured !== 11) {

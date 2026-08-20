@@ -1,0 +1,30 @@
+name: 💡 Feature request
+description: An idea to make microfolio better (français bienvenu)
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea! Feel free to write in English or in French.
+        Merci pour l'idée ! Vous pouvez écrire en anglais ou en français.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the situation where microfolio falls short for you — the problem matters more than the solution
+      placeholder: "When I add a project with thirty images, I can't…"
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: What would you like to happen?
+      description: If you have a solution in mind, sketch it here
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Workarounds you've tried
+    validations:
+      required: false

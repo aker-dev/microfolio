@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Questions and ideas
+    url: https://github.com/aker-dev/microfolio/discussions
+    about: The place to ask questions, share what you built, and discuss ideas before they become issues
+  - name: 📧 Contact AKER
+    url: mailto:hello@aker.pro
+    about: For anything that doesn't fit an issue — translations, private reports, hello

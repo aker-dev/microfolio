@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Images in Markdown pages.** The homepage, about, legal and privacy pages can embed images with `![…](images/photo.jpg)`, resolved against `content/`; the same syntax in a project body — documented since the start but broken until now — resolves against the project's own folder. Root-relative addresses get the base path, so everything works both in dev and under `/microfolio` on GitHub Pages
+- **Contribution infrastructure.** `CONTRIBUTING.md` / `CONTRIBUER.md`, issue forms (bug, feature, translation — French welcome), a pull-request template, the Contributor Covenant 2.1 as code of conduct, and a security policy pointing to private reporting
 - **A site-wide sharing image.** `static/og.jpg` — the microfolio wordmark over the Bauhaus palette — is now the `og:image` of every page that has no image of its own (`siteConfig.ogImage`); until now those pages shipped none and shared as bare text
 - **External links in Markdown content open in a new tab** (`target="_blank"` with `rel="noopener noreferrer"`); internal links, anchors and `mailto:` keep the default behaviour
 - **The demo homepage and about page have real content**: what microfolio is, the 1.0 "Bauhaus" story, AKER, the manifesto, how to contribute, and a colophon — replacing the "Add content here." stubs

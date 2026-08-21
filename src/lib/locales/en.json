@@ -34,7 +34,6 @@
 		"project_plural": "projects",
 		"results_found": "found",
 		"no_projects_found": "No projects found matching your criteria.",
-		"not_available": "N/A",
 		"view_project": "View project",
 		"clear_tags": "Clear",
 		"clear_search": "Clear search",
@@ -89,7 +88,8 @@
 		},
 		"project": {
 			"infos": "Infos",
-			"location_date": "Location & Date",
+			"date": "Date",
+			"location": "Location",
 			"status": "Status",
 			"owner": "Project Owner",
 			"surface_area": "Surface Area",

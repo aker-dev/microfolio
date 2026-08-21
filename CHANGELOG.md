@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Date and location on two lines** in the project page's info panel, date first — and **a project without a location shows none**: no line on its page, an empty cell in the list instead of the old "N/A", no marker on the map without coordinates. Only `title` and `date` were ever required; the interface now behaves that way. The demo's Universal Grotesk Revival — a typeface has no address — exercises the path
+
 ## [0.13.1] - 2026-08-21
 
 ### Added

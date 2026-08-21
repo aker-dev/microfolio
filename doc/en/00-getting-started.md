@@ -314,7 +314,7 @@ featured: true # true to highlight
 Here, describe your project in detail...
 ```
 
-Only `title` and `date` are required — a project missing either is skipped, and named in a summary at the end of the build. The full field reference, including the optional info panel (`owner`, `status`, `surface_area`, `cost`), is in the [Project Addition Guide](04-adding-projects.md#3-important-metadata).
+Only `title` and `date` are required — a project missing either is skipped, and named in a summary at the end of the build. A project without a `location` simply shows none (no placeholder on its page or in the list), and without `coordinates` it has no marker on the map. The full field reference, including the optional info panel (`owner`, `status`, `surface_area`, `cost`), is in the [Project Addition Guide](04-adding-projects.md#3-important-metadata).
 
 ### Step 4: Add your files
 

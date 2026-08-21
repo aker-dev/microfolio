@@ -77,17 +77,16 @@ function yamlQuote(value) {
 }
 
 function frontmatterFor(p) {
-	const lines = [
-		'---',
-		`title: ${yamlQuote(p.title)}`,
-		`date: ${yamlQuote(p.date)}`,
-		`location: ${yamlQuote(p.location)}`,
-		`coordinates: [${p.coordinates[0]}, ${p.coordinates[1]}]`,
+	const lines = ['---', `title: ${yamlQuote(p.title)}`, `date: ${yamlQuote(p.date)}`];
+	// Both optional — a project without a place simply omits them
+	if (p.location) lines.push(`location: ${yamlQuote(p.location)}`);
+	if (p.coordinates) lines.push(`coordinates: [${p.coordinates[0]}, ${p.coordinates[1]}]`);
+	lines.push(
 		`description: ${yamlQuote(p.description)}`,
 		`type: ${yamlQuote(p.type)}`,
 		`tags: [${p.tags.map(yamlQuote).join(', ')}]`,
 		'authors:'
-	];
+	);
 	for (const author of p.authors) {
 		lines.push(`  - name: ${yamlQuote(author.name)}`);
 		lines.push(`    role: ${yamlQuote(author.role)}`);
@@ -134,7 +133,11 @@ async function generateProject(stagingDir, p) {
 	}
 
 	const { accents } = identityFor(p.slug);
-	const pdf = buildProjectPdf(p.title, `${p.location} — ${p.date.slice(0, 4)}`, accents);
+	const pdf = buildProjectPdf(
+		p.title,
+		[p.location, p.date.slice(0, 4)].filter(Boolean).join(' — '),
+		accents
+	);
 	await writeFile(join(dir, 'documents', 'project-dossier.pdf'), pdf);
 }
 

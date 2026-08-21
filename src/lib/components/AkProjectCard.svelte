@@ -53,7 +53,9 @@
 		</p>
 
 		<div class="flex items-center justify-between text-xs">
-			<span>{project.location}</span>
+			<!-- Empty rather than absent when there is no location, so the date
+			     keeps its place on the right -->
+			<span>{project.location ?? ''}</span>
 			<span>{formatProjectDate(project.date)}</span>
 		</div>
 

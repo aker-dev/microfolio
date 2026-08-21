@@ -320,8 +320,9 @@ Five-metre canvases do not use doors politely. The east gable unlatches and winc
 		slug: 'universal-grotesk-revival',
 		title: 'Universal Grotesk Revival',
 		date: '2025-09-01',
-		location: 'Berlin, Germany',
-		coordinates: [52.52, 13.405],
+		// No location on purpose: a typeface has no address. The one project
+		// exercising the optional-location path — no line on its page, an empty
+		// cell in the list, no marker on the map.
 		description:
 			'A four-year revival of a 1920s single-case experimental alphabet, extended from 26 surviving letterforms to a working family of 14 styles with full European language support',
 		type: 'design',

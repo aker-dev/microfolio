@@ -127,9 +127,18 @@
 		<!-- Location & Date -->
 		<div>
 			<h3 class="text-base font-bold">{$_('ui.project.infos')}</h3>
-			<span class="font-bold">{$_('ui.project.location_date')} ›</span>
-			<span>{project.location} / </span>
-			<span>{formatProjectDate(project.date)}</span>
+			<!-- Date first: it is the one field every project has. A project with
+			     no location simply has no location line — no placeholder. -->
+			<div>
+				<span class="font-bold">{$_('ui.project.date')} ›</span>
+				<span>{formatProjectDate(project.date)}</span>
+			</div>
+			{#if project.location}
+				<div>
+					<span class="font-bold">{$_('ui.project.location')} ›</span>
+					<span>{project.location}</span>
+				</div>
+			{/if}
 
 			<!-- Status -->
 			{#if project.status}

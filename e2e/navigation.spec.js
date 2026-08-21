@@ -219,6 +219,29 @@ test.describe('navigating into a filtered view', () => {
 	});
 });
 
+test.describe('a project without a location', () => {
+	// Only title and date are required. A project that names no place shows
+	// none — no placeholder text anywhere.
+	test('its page has a date line and no location line', async ({ page }) => {
+		await page.goto('/projects/universal-grotesk-revival/');
+		const infos = page.locator('aside');
+
+		await expect(infos).toContainText('Date ›');
+		await expect(infos).not.toContainText('Location ›');
+		await expect(infos).not.toContainText('N/A');
+	});
+
+	test('its row in the list has an empty location cell', async ({ page }) => {
+		await page.goto('/list/?search=Universal+Grotesk');
+		await waitForFiltersReady(page);
+
+		const row = page.locator('table tbody tr').first();
+		await expect(row).toContainText('Universal Grotesk Revival');
+		// Third column is the location
+		await expect(row.locator('td').nth(2)).toHaveText('');
+	});
+});
+
 /** See the note on waitForFiltersReady: the layout marks the tree interactive. */
 async function waitForHydration(page) {
 	await expect(page.locator('html')).toHaveAttribute('data-hydrated', 'true');

@@ -34,7 +34,6 @@
 		"project_plural": "projets",
 		"results_found": "résultat(s)",
 		"no_projects_found": "Aucun projet ne correspond à votre recherche.",
-		"not_available": "N/A",
 		"view_project": "Voir le projet",
 		"clear_tags": "Effacer",
 		"clear_search": "Effacer la recherche",
@@ -89,7 +88,8 @@
 		},
 		"project": {
 			"infos": "Informations",
-			"location_date": "Lieu et date",
+			"date": "Date",
+			"location": "Lieu",
 			"status": "Statut",
 			"owner": "Maître d'ouvrage",
 			"surface_area": "Surface",

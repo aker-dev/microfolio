@@ -1,7 +1,17 @@
 {
 	"name": "microfolio",
+	"version": "1.0.0",
+	"description": "Static portfolio generator for creatives — folders and Markdown in, a fast site out",
+	"license": "MIT",
+	"homepage": "https://aker-dev.github.io/microfolio/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/aker-dev/microfolio.git"
+	},
+	"bugs": {
+		"url": "https://github.com/aker-dev/microfolio/issues"
+	},
 	"private": true,
-	"version": "0.15.0",
 	"engines": {
 		"node": ">=22.13.0"
 	},
@@ -31,30 +41,30 @@
 		"@eslint/js": "^9.39.5",
 		"@playwright/test": "^1.62.1",
 		"@sveltejs/adapter-static": "^3.0.10",
-		"@sveltejs/kit": "^2.70.2",
+		"@sveltejs/kit": "^2.70.3",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tailwindcss/typography": "^0.5.20",
 		"@tailwindcss/vite": "^4.3.3",
 		"@vincjo/datatables": "^2.8.1",
 		"eslint": "^9.39.5",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-svelte": "^3.22.0",
+		"eslint-plugin-svelte": "^3.23.0",
 		"globals": "^16.5.0",
 		"prettier": "^3.9.6",
 		"prettier-plugin-svelte": "^4.1.1",
 		"prettier-plugin-tailwindcss": "^0.8.1",
 		"sharp": "^0.35.3",
-		"svelte": "^5.56.8",
+		"svelte": "^5.56.9",
 		"tailwindcss": "^4.3.3",
 		"vite": "^7.3.6",
 		"vite-plugin-static-copy": "^3.4.0",
-		"vitest": "^4.1.10"
+		"vitest": "^4.1.11"
 	},
 	"packageManager": "pnpm@11.22.0",
 	"dependencies": {
 		"cursor-effects": "^1.0.18",
-		"exifreader": "^4.42.0",
-		"maplibre-gl": "^6.3.0",
+		"exifreader": "^4.43.0",
+		"maplibre-gl": "^6.4.1",
 		"marked": "^16.4.2",
 		"svelte-i18n": "^4.0.1",
 		"yaml": "^2.9.0"

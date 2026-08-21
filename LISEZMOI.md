@@ -156,6 +156,19 @@ pnpm update-microfolio
 
 Elle applique la release fichier par fichier, ne touche jamais `content/`, `config.js`, votre favicon ni votre image de partage, et laisse une copie `.upstream` partout où vos modifications et les nôtres se heurtent. Détails dans le [guide de publication](doc/fr/05-publication.md#3-mettre-à-jour-microfolio).
 
+## 🧭 Stabilité
+
+La 1.0 est une promesse : ce sur quoi vous construisez reste valable jusqu'à la 2.0.
+
+**Figé jusqu'à la 2.0**
+
+- La disposition du contenu — `content/projects/<slug>/index.md` avec ses `images/`, `videos/` et `documents/` — et les clés du frontmatter : `title` et `date` obligatoires, tout le reste optionnel
+- Les clés de `src/lib/config.js` : de nouvelles peuvent apparaître, aucune n'est renommée ni retirée
+- Les commandes : `pnpm dev`, `build`, `deploy`, `demo`, `update-microfolio`, `optimize-images`, et leurs équivalents `microfolio`
+- Ce que `pnpm update-microfolio` ne touche jamais : `content/`, `src/lib/config.js`, `static/favicon.svg`, `static/og.jpg` et les fichiers `.env`
+
+**Libre d'évoluer en 1.x** : l'apparence, les dépendances, les détails internes, le contenu de démonstration, les textes de l'interface. Un changement qui casserait la liste ci-dessus est une 2.0, et le dira.
+
 ## 🤝 Contribution
 
 microfolio se construit au grand jour, et toutes les aides comptent :

@@ -5,15 +5,12 @@ allowBuilds:
   es5-ext: false # postinstall is only a console notice
   exifreader: false # no-op without an exifreader config in package.json
 
-# Explicitly accepted despite being newer than the minimumReleaseAge window.
-minimumReleaseAgeExclude:
-  - '@iconify/json@2.2.514'
-
 # Targeted fixes for advisories in transitive pins (Dependabot alerts #7, #6).
 overrides:
-  # svelte-i18n (latest, 4.0.1) pins esbuild ^0.19 for its CLI extractor,
-  # which microfolio never runs; ^0.25 is the first line clear of GHSA advisories
-  'svelte-i18n>esbuild': ^0.25.0
+  # svelte-i18n (latest, 4.0.1) pins esbuild ^0.19 for its CLI extractor, which
+  # microfolio never runs: an old line with GHSA advisories, and a second 11 MB
+  # binary next to the one Vite installs. Kept on Vite's line so there is one.
+  'svelte-i18n>esbuild': ^0.28.0
   # @sveltejs/kit pins cookie ^0.6.0; 0.7.x is API-compatible and only
   # tightens name/value validation
   '@sveltejs/kit>cookie': ^0.7.2

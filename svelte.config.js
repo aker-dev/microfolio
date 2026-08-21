@@ -1,11 +1,7 @@
 import adapter from '@sveltejs/adapter-static';
 import { readdir } from 'fs/promises';
 import { join } from 'path';
-import dotenv from 'dotenv';
 import { getBasePath } from './src/lib/utils/paths.js';
-
-// Load environment variables
-dotenv.config();
 
 async function createConfig() {
 	// Explicit, so the two endpoints have to be named: SvelteKit finds pages by

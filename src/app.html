@@ -3,15 +3,12 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
-		<link rel="preconnect" href="https://fonts.bunny.net" />
-		<link rel="dns-prefetch" href="https://fonts.bunny.net" />
-		<!-- Here rather than through an @import in app.css: declared in the HTML it
-		     is found while the markup is still being parsed and fetched alongside
-		     the app's own stylesheet, instead of waiting for it to arrive first. -->
-		<link
-			rel="stylesheet"
-			href="https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap"
-		/>
+		<!-- The typeface: filled in by src/hooks.server.js from the font block of
+		     src/lib/config.js, so that changing it survives an update of microfolio
+		     (config.js is yours, this file is not). In the HTML rather than through
+		     an @import in app.css: found while the markup is still being parsed, it
+		     is fetched alongside the app's own stylesheet instead of after it. -->
+		%microfolio.font%
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 		<script>

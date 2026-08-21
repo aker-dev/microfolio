@@ -3,7 +3,7 @@
 	import { _ } from 'svelte-i18n';
 	import { formatProjectDate } from '$lib/utils/date.js';
 	import AkBadge from './AkBadge.svelte';
-	import IconStarFilled from '~icons/carbon/star-filled';
+	import IconStarFilled from '$lib/icons/IconStarFilled.svelte';
 
 	let { project, class: className = '' } = $props();
 

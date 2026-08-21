@@ -4,8 +4,8 @@
 	import { _ } from 'svelte-i18n';
 	import AkBadge from './AkBadge.svelte';
 	import AkOptimizedImage from './AkOptimizedImage.svelte';
-	import IconStarFilled from '~icons/carbon/star-filled';
-	import IconImage from '~icons/carbon/image';
+	import IconStarFilled from '$lib/icons/IconStarFilled.svelte';
+	import IconImage from '$lib/icons/IconImage.svelte';
 
 	// Set on the first card of a grid: its thumbnail is what the browser measures
 	// as the largest contentful paint, so it should not be queued behind the rest.

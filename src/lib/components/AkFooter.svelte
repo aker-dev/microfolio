@@ -1,10 +1,10 @@
 <script>
 	import { browser } from '$app/environment';
-	import IconInstagram from '~icons/akar-icons/instagram-fill';
-	import IconLinkedin from '~icons/akar-icons/linkedin-fill';
-	import IconGithub from '~icons/akar-icons/github-fill';
-	import IconSun from '~icons/carbon/sun';
-	import IconMoon from '~icons/carbon/asleep';
+	import IconInstagram from '$lib/icons/IconInstagramFill.svelte';
+	import IconLinkedin from '$lib/icons/IconLinkedinFill.svelte';
+	import IconGithub from '$lib/icons/IconGithubFill.svelte';
+	import IconSun from '$lib/icons/IconSun.svelte';
+	import IconMoon from '$lib/icons/IconAsleep.svelte';
 	import { base } from '$app/paths';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';

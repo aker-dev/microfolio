@@ -18,7 +18,7 @@ Les deux sont liées depuis le pied de chaque page.
 
 ### 1. Modification du fichier config.js
 
-`src/lib/config.js` contient tout ce qui concerne **votre** site, et rien d'autre — quatre blocs, du général au particulier :
+`src/lib/config.js` contient tout ce qui concerne **votre** site, et rien d'autre — cinq blocs, du général au particulier :
 
 ```javascript
 export const siteConfig = {
@@ -47,6 +47,12 @@ export const siteConfig = {
 	ogImage: '/og.jpg',
 	images: { optimizeOnBuild: true },
 
+	// --- Typeface --------------------------------------------------------------
+	font: {
+		url: 'https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap',
+		family: "'IBM Plex Sans', sans-serif"
+	},
+
 	// --- Lightbox --------------------------------------------------------------
 	lightbox: { hideControlsDelay: 3000, showExtendedMetadata: true }
 };
@@ -57,6 +63,7 @@ export const siteConfig = {
 - **`locale`** — `'en'` ou `'fr'` ; l'ajout d'une langue est décrit sous [Internationalisation](#7-internationalisation-i18n)
 - **`navigation`** — le menu, dans l'ordre. `name` est une clé de traduction de `src/lib/locales/` (`nav.home`, `nav.about`…), le menu suit donc la langue ; supprimez une entrée pour retirer une page du menu
 - **`socialLinks`** — le pied de page affiche une icône pour chacun de `github`, `linkedin` et `instagram` ; supprimez ceux que vous n'utilisez pas
+- **`font`** — la police : la feuille de style qui la charge et le nom de la famille, voir [Fonts personnalisées](#2-fonts-personnalisées)
 - **`ogImage`, `images`, `lightbox`** — l'image de partage, l'optimisation des images au build et les deux réglages de la lightbox, couverts dans [Configuration avancée](#configuration-avancée)
 
 ### 2. Informations personnelles
@@ -179,8 +186,6 @@ Le site utilise Tailwind CSS v4. Vous pouvez personnaliser les couleurs et le st
 **Exemple de personnalisation :**
 
 ```css
-@import url(https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap);
-
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
@@ -309,23 +314,30 @@ lightbox: {
 
 ### 2. Fonts personnalisées
 
-Pour utiliser des polices personnalisées :
+La police se règle dans le bloc `font` de `src/lib/config.js` — pas dans `src/app.html`, qu'une mise à jour de microfolio écrase :
 
-1. Ajoutez vos fichiers de police dans `static/fonts/`
-2. Modifiez le fichier `src/app.css` :
-
-```css
-@font-face {
-	font-family: 'MaPolice';
-	src: url('/fonts/mapolice.woff2') format('woff2');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@theme {
-	--default-font-family: 'MaPolice', 'sans-serif';
+```js
+font: {
+	url: 'https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap',
+	family: "'IBM Plex Sans', sans-serif"
 }
 ```
+
+- **Une autre famille chez Bunny Fonts** (le catalogue de Google Fonts, servi depuis l'UE sans pistage) : choisissez-la sur [fonts.bunny.net](https://fonts.bunny.net), collez l'adresse fournie dans `url`, et le nom de la famille dans `family` — comme le CSS l'attend, avec une police de repli
+- **Une police que vous hébergez vous-même** : `url: ''` pour ne rien charger d'un tiers, les fichiers dans `static/fonts/` avec un `@font-face` dans `src/app.css`, et la famille dans `family` :
+
+  ```css
+  @font-face {
+  	font-family: 'MaPolice';
+  	src: url('/fonts/mapolice.woff2') format('woff2');
+  	font-weight: normal;
+  	font-style: normal;
+  }
+  ```
+
+- **La police système** : `url: ''` et `family: 'system-ui, sans-serif'`
+
+Qui sert les fichiers de police voit les adresses IP de vos visiteurs, et `content/privacy.md` nomme Bunny.net pour cette raison : si vous changez de fournisseur, ou hébergez les fichiers vous-même, mettez son tableau à jour.
 
 ### 3. Personnalisation des modes d'affichage
 
@@ -345,13 +357,14 @@ Vous pouvez personnaliser ces modes dans les fichiers correspondants :
 
 Tout ce qui précède est de la configuration. Quand vous voulez changer l'apparence ou le comportement, les templates sont à vous aussi — microfolio est un projet SvelteKit, et un petit :
 
-| Ce que vous voulez changer                                          | Où ça vit                            |
-| ------------------------------------------------------------------- | ------------------------------------ |
-| La mise en page d'une page (accueil, projets, liste, carte, projet) | `src/routes/**/+page.svelte`         |
-| En-tête, pied de page, cartes, filtres, lightbox                    | `src/lib/components/Ak*.svelte`      |
-| Couleurs, thème sombre, style de la prose                           | `src/lib/theme.css` et `src/app.css` |
-| Les textes de l'interface                                           | `src/lib/locales/en.json`, `fr.json` |
-| Le menu, la lightbox, l'image de partage                            | `src/lib/config.js` (ce guide)       |
+| Ce que vous voulez changer                                          | Où ça vit                                                   |
+| ------------------------------------------------------------------- | ----------------------------------------------------------- |
+| La mise en page d'une page (accueil, projets, liste, carte, projet) | `src/routes/**/+page.svelte`                                |
+| En-tête, pied de page, cartes, filtres, lightbox                    | `src/lib/components/Ak*.svelte`                             |
+| Couleurs, thème sombre, style de la prose                           | `src/lib/theme.css` et `src/app.css`                        |
+| Les textes de l'interface                                           | `src/lib/locales/en.json`, `fr.json`                        |
+| Les icônes                                                          | `src/lib/icons/` — `pnpm icons` en ajoute une depuis Carbon |
+| Le menu, la lightbox, l'image de partage                            | `src/lib/config.js` (ce guide)                              |
 
 `pnpm dev` recharge la page à chaque enregistrement. La pile est [SvelteKit 2](https://svelte.dev/docs/kit), [Svelte 5](https://svelte.dev/docs/svelte) et [Tailwind CSS 4](https://tailwindcss.com/docs) ; leur documentation couvre ce que font les templates. Un conseil : gardez des modifications petites et localisées — une couleur ici, un bloc là — pour que `git merge` ramène les futures versions de microfolio sans bagarre.
 

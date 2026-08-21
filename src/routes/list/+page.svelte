@@ -6,8 +6,8 @@
 	import Pagination from '$lib/components/Pagination.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
 	import AkBadge from '$lib/components/AkBadge.svelte';
-	import IconArrowRight from '~icons/carbon/arrow-right';
-	import IconStarFilled from '~icons/carbon/star-filled';
+	import IconArrowRight from '$lib/icons/IconArrowRight.svelte';
+	import IconStarFilled from '$lib/icons/IconStarFilled.svelte';
 	import { _ } from 'svelte-i18n';
 	import { formatProjectDate } from '$lib/utils/date.js';
 	import AkProjectSummary from '$lib/components/AkProjectSummary.svelte';

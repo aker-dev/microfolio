@@ -1,7 +1,7 @@
 <script>
 	import { untrack } from 'svelte';
-	import IconChevronUp from '~icons/carbon/chevron-up';
-	import IconChevronDown from '~icons/carbon/chevron-down';
+	import IconChevronUp from '$lib/icons/IconChevronUp.svelte';
+	import IconChevronDown from '$lib/icons/IconChevronDown.svelte';
 
 	let {
 		handler,

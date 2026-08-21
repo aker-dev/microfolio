@@ -38,7 +38,7 @@ pnpm 11 no longer reads the `pnpm` field in package.json — its settings live i
 
 ## Testing
 
-- **Unit** — Vitest, co-located `src/**/*.test.js` and `scripts/**/*.test.js`. `vitest.config.js` deliberately omits the SvelteKit plugin, so these cover plain modules only (the content parsing, the update script) and run in well under a second.
+- **Unit** — Vitest, co-located `src/**/*.test.js` and `scripts/**/*.test.js`. `vitest.config.js` deliberately omits the SvelteKit plugin, so these cover plain modules only (the content parsing, the update script) and run in well under a second. **They run on every fork's CI too**, so they must hold on a site that set its own `url` and deleted the demo zip: `markdown.test.js` mocks `config.js` for the base-path case rather than read the site's, and `install-demo.test.js` skips the two tests that need the real archive when it is absent. A 0.14.0 fork that followed the docs had three red tests and a red badge for this.
 - **End-to-end** — Playwright, specs in `e2e/`. It starts its own dev server, or reuses one already running on the port. Set `PLAYWRIGHT_PORT` to exercise the CI path locally without colliding with a dev server on 5555.
 - **Smoke** — `pnpm test:smoke`, `e2e/smoke/` under `playwright.smoke.config.js`. The only suite that loads `build/` rather than a dev server: it serves the artefact with `vite preview` and walks its pages, asserting each returns 200, hydrates, throws nothing, and asks for no same-origin file it does not have. Cross-origin requests are filtered out — the font CDN and the tile server are somebody else's uptime and have no business failing a deploy. Deliberately shallow: behaviour is the e2e suite's job, this one is about the artefact. It runs in ~5s and it earns its place — reverting the `?worker&url` fix in the map route makes it fail with `404 …/maplibre-gl-shared.mjs` while all 29 e2e tests still pass.
 - **The smoke suite always runs against a production build**, because `vite preview` sets `NODE_ENV=production` itself whatever the build was made with. So it serves under `/microfolio` even after a plain `pnpm build`, and the origin root 404s. `test:smoke` sets `NODE_ENV=production` too so `getBasePath()` agrees with the server by construction; locally, pair it with `pnpm deploy`, not `pnpm build`. Its routes are relative and its `baseURL` ends in a slash — Playwright joins them with `new URL()`, where a leading slash would drop the base path.
@@ -89,7 +89,7 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - `$lib/utils/locale.js` — `getTextDirection()`, shared by `hooks.server.js` (prerender) and `+layout.svelte` (client)
 - `$lib/utils/imageMetadata.js` — EXIF/IPTC extraction via `exifreader` (credit, camera, GPS, etc.)
 - `$lib/utils/date.js` — `formatProjectDate()`: the `YYYY-MM` shown everywhere a project is dated. It was written out four times before
-- `$lib/config.js` — Site config, and deliberately only what someone setting up **their** site needs: title, `url`, social links, navigation, `ogImage`, `images.optimizeOnBuild`, `lightbox.hideControlsDelay`, `lightbox.showExtendedMetadata`. Tile provider URLs and zoom limits live in the map route instead
+- `$lib/config.js` — Site config, and deliberately only what someone setting up **their** site needs: title, `url`, social links, navigation, `ogImage`, `images.optimizeOnBuild`, `font.url`, `font.family`, `lightbox.hideControlsDelay`, `lightbox.showExtendedMetadata`. Tile provider URLs and zoom limits live in the map route instead
 - `$lib/utils/seo.js` — `absoluteUrl()`: takes a route path **without** the base, because `siteConfig.url` already carries it
 - `$lib/i18n.js` — Internationalization setup with `svelte-i18n` (en/fr active, more commented out)
 
@@ -98,7 +98,7 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - Tailwind CSS 4 configured in `src/app.css` with `@tailwindcss/typography` plugin
 - Custom theme in `src/lib/theme.css`
 - Dark mode has two layers: a `prefers-color-scheme` media query for the default, and a `.dark` / `.light` class on `:root` for the explicit toggle in `AkFooter` (persisted in `localStorage`). An inline script in `app.html` applies the stored choice before first paint to avoid a flash
-- Font: IBM Plex Sans (loaded from bunny.net CDN)
+- Font: `siteConfig.font` — `url` (Bunny Fonts by default) and `family`. `hooks.server.js` writes them into `app.html`'s `%microfolio.font%` at prerender: preconnect + stylesheet, then an **unlayered** `:root{--default-font-family:…}` that beats the `@theme` default in `app.css`. It lives in config rather than `app.html` because the update script protects `config.js` and overwrites `app.html`; a config without a `font` block falls back to IBM Plex rather than to no font
 - `src/app.css` also holds the rules no component owns: a global `:focus-visible` outline so keyboard focus is never invisible, `.ak-filters :disabled` for the pre-hydration state described under Components, and the map block — `.ak-marker` plus the overrides that flatten MapLibre's own chrome. Those last ones are written with two classes rather than one, because MapLibre's stylesheet is imported by the map route and therefore lands after this file: matching its specificity would leave the winner down to injection order
 
 ### Components
@@ -116,7 +116,7 @@ All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectC
 - **`fitMaxZoom` exists because fitting one project would otherwise frame its roof.** The map's own `maxZoom` used to do that job back when it was capped at 6
 - **MapLibre's chrome fights back twice.** Its icons are baked dark SVG data URIs with variants only for Windows' forced-colors mode, so they are inverted in dark; and its compact attribution paints itself white through a two-class rule that ties with ours and wins on order, so ours carries a third class. Without it the bar was white with white links on it
 
-Markers are built with `createElement`, out of reach of a Svelte component, so the star a featured project carries comes from `import starFilled from '~icons/carbon/star-filled?raw'`. The `?raw` suffix hands back the SVG as a string from the same `@iconify` record every `<IconStarFilled>` renders — one original, rather than a traced copy free to drift.
+Markers are built with `createElement`, out of reach of a Svelte template, so the star a featured project carries is the same `IconStarFilled` component **mounted** into the element (`mount`/`unmount` from `svelte`) — one original, rather than a traced copy free to drift.
 
 MapLibre 6 has **no default export**; `(await import('maplibre-gl')).default` is undefined, and every example online still shows otherwise.
 
@@ -127,7 +127,7 @@ MapLibre 6 has **no default export**; `(await import('maplibre-gl')).default` is
 - Static site generation via `@sveltejs/adapter-static` (output: `/build`)
 - `svelte.config.js` dynamically generates prerender entries by scanning `/content/projects/`
 - `vite.config.js` copies the `content/` directory to build output via `vite-plugin-static-copy` (build only, not dev)
-- Icons via `unplugin-icons` with Iconify JSON
+- **Icons are local components**, `src/lib/icons/Icon*.svelte`, generated by `pnpm icons` (`scripts/icons.js`) from the public Iconify API — 14 Carbon (Apache-2.0) and 3 Akar Icons (MIT), licences in `src/lib/icons/README.md`. Each spreads its props onto a `1.2em` `<svg>`, exactly what `unplugin-icons` used to emit. To add one: name it in the script's `ICONS` list, run `pnpm icons`, import it. `@iconify/json` was 437 MB of the 643 MB `node_modules` before this; the folder is in `.prettierignore` because it is generated
 - **The site's address is written once**, as `siteConfig.url`. The base path is its pathname (empty in dev, so `pnpm dev` keeps serving from `/`), and every absolute URL — `og:image`, `og:url`, canonical, sitemap — is built from it by `absoluteUrl()`. `getBasePath()` is the single definition and `svelte.config.js` imports it
 - **There is no CNAME file.** Published through an Actions workflow, GitHub Pages ignores any CNAME in the build — the custom domain is set in the repository settings. The one that used to sit in `static/` did nothing
 - `sitemap.xml` and `robots.txt` are prerendered endpoints, listed explicitly in `svelte.config.js` entries because nothing links to them and the crawler would never find them

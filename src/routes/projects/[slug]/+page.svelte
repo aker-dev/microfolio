@@ -7,8 +7,8 @@
 	import AkBadge from '$lib/components/AkBadge.svelte';
 	import AkLightbox from '$lib/components/AkLightbox.svelte';
 	import AkOptimizedImage from '$lib/components/AkOptimizedImage.svelte';
-	import IconStarFilled from '~icons/carbon/star-filled';
-	import IconDocument from '~icons/carbon/document';
+	import IconStarFilled from '$lib/icons/IconStarFilled.svelte';
+	import IconDocument from '$lib/icons/IconDocument.svelte';
 
 	let { data } = $props();
 	let project = $derived(data.project);

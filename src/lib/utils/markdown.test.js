@@ -1,4 +1,9 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
+// The base path is the pathname of siteConfig.url, so this file pins the config
+// rather than read the site's own: these tests also run on a fork whose url is
+// its own domain, and they must stay green there.
+vi.mock('../config.js', () => ({ siteConfig: { url: 'https://example.test/folio' } }));
 import { renderMarkdownBody, splitFrontmatter } from './markdown.js';
 
 describe('splitFrontmatter', () => {
@@ -86,9 +91,9 @@ describe('image addresses in Markdown bodies', () => {
 		try {
 			const html = renderMarkdownBody('![Hero](/content/images/hero.jpg)', '/base/content');
 
-			// The base path comes from siteConfig.url's pathname — /microfolio
-			// on the demo site — and must land ahead of the author's path
-			expect(html).toContain('src="/microfolio/content/images/hero.jpg"');
+			// The base path comes from siteConfig.url's pathname — /folio in the
+			// config mocked above — and must land ahead of the author's path
+			expect(html).toContain('src="/folio/content/images/hero.jpg"');
 		} finally {
 			process.env.NODE_ENV = previous;
 		}

@@ -2,6 +2,8 @@
 
 _[🇫🇷 Lire en français](LISEZMOI.md)_
 
+[![Deploy to GitHub Pages](https://github.com/aker-dev/microfolio/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/aker-dev/microfolio/actions/workflows/deploy.yml)
+
 A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CSS 4** by AKER. Features a file-based content management system using folders and Markdown files. Perfect for designers, artists, architects, and creatives who want to showcase their projects elegantly and professionally.
 
 **Live Demo**: [https://aker-dev.github.io/microfolio/](https://aker-dev.github.io/microfolio/)
@@ -10,21 +12,21 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 
 ## ✅ Features
 
-- **📁 File-based CMS** — No database needed, just folders and Markdown files
-- **🎨 Multiple Views** — Projects grid, List, and Map modes
-- **📱 Responsive Design** — Mobile-first approach
-- **🏷️ Smart Tagging** — Filter counters and collapsible tag list
-- **🗺️ Interactive Map** — MapLibre GL with geolocated projects, light and dark, on an OpenStreetMap basemap
-- **🚀 Static Generation** — Optimal performance with SvelteKit adapter-static
-- **🖼️ Image Lightbox** — Enhanced gallery with navigation arrows and metadata display
-- **📊 EXIF/IPTC Metadata** — Automatic extraction and display of image technical information
-- **🌙 Dark Mode** — Toggle in footer with persistent preference (system / manual / localStorage)
-- **⚡ Image Optimization** — WebP thumbnails and sharing images, generated as part of the build
-- **🔗 Shareable URLs** — Filter, search, sort, and pagination state synced to URL query params
-- **🌐 Internationalization** — English/French via svelte-i18n, RTL-ready
-- **🏷️ Built to be shared and found** — Open Graph and Twitter tags with absolute URLs, canonical links, and a `sitemap.xml` and `robots.txt` generated from your projects
-- **🔒 No cookies, no consent banner** — nothing is tracked, so there is nothing to ask permission for. Legal notice and privacy pages come as templates to fill in. A YouTube or Vimeo address alone on its line becomes a player, routed through the platforms' no-cookie modes
-- **📄 Pagination & Sorting** — Customizable rows-per-page, sort by date, title, type, or location
+- **📁 File-based CMS** › No database needed, just folders and Markdown files
+- **🎨 Multiple Views** › Projects grid, List, and Map modes
+- **📱 Responsive Design** › Mobile-first approach
+- **🏷️ Smart Tagging** › Filter counters and collapsible tag list
+- **🗺️ Interactive Map** › MapLibre GL with geolocated projects, light and dark, on an OpenStreetMap basemap
+- **🚀 Static Generation** › Optimal performance with SvelteKit adapter-static
+- **🖼️ Image Lightbox** › Enhanced gallery with navigation arrows and metadata display
+- **📊 EXIF/IPTC Metadata** › Automatic extraction and display of image technical information
+- **🌙 Dark Mode** › Toggle in footer with persistent preference (system / manual / localStorage)
+- **⚡ Image Optimization** › WebP thumbnails and sharing images, generated as part of the build
+- **🔗 Shareable URLs** › Filter, search, sort, and pagination state synced to URL query params
+- **🌐 Internationalization** › English/French via svelte-i18n, RTL-ready
+- **🏷️ Built to be shared and found** › Open Graph and Twitter tags with absolute URLs, canonical links, and a `sitemap.xml` and `robots.txt` generated from your projects
+- **🔒 No cookies, no consent banner** › nothing is tracked, so there is nothing to ask permission for. Legal notice and privacy pages come as templates to fill in. A YouTube or Vimeo address alone on its line becomes a player, routed through the platforms' no-cookie modes
+- **📄 Pagination & Sorting** › Customizable rows-per-page, sort by date, title, type, or location
 
 ## 🔒 Privacy by construction
 
@@ -39,7 +41,7 @@ A portfolio should not spy on its readers, and this one cannot.
 - **No Google Fonts.** The typeface comes from Bunny.net, a third-party CDN,
   which therefore receives visitors' IP addresses like any file server would.
   This is declared in the privacy template rather than glossed over
-- **A map with no API key and no account** — OpenFreeMap, on OpenStreetMap data.
+- **A map with no API key and no account** › OpenFreeMap, on OpenStreetMap data.
   Its tiles are fetched only on the map page
 
 The generated site ships `content/legal.md` and `content/privacy.md` as
@@ -167,8 +169,8 @@ See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the details, and the **[changelog
 
 ## 📰 They talked about microfolio
 
-- **Korben** — [Microfolio, le portfolio statique qui regarde WordPress de haut](https://korben.info/microfolio-portfolio-statique-mate-wordpress-haut.html)
-- **Entreprendre à Montpellier** — [Microfolio : l'innovation montpelliéraine qui réinvente le portfolio en ligne](https://entreprendre-montpellier.eolas-65.montpellier.fr/actualites/microfolio-linnovation-montpellieraine-qui-reinvente-le-portfolio-en-ligne)
+- **Korben** › [Microfolio, le portfolio statique qui regarde WordPress de haut](https://korben.info/microfolio-portfolio-statique-mate-wordpress-haut.html)
+- **Entreprendre à Montpellier** › [Microfolio : l'innovation montpelliéraine qui réinvente le portfolio en ligne](https://entreprendre-montpellier.eolas-65.montpellier.fr/actualites/microfolio-linnovation-montpellieraine-qui-reinvente-le-portfolio-en-ligne)
 
 Thank you, Korben, for the article — and thank you to the beta testers whose feedback shaped everything between 0.1 and 1.0.
 

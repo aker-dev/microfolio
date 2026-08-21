@@ -10,6 +10,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 microfolio is a static portfolio generator built with SvelteKit 2, Svelte 5, and Tailwind CSS 4. It uses a file-based CMS (Markdown + YAML frontmatter) for content. Developed by AKER.
 
+**The 1.0 stability promise** (README › Stability) freezes until 2.0: the content layout and frontmatter keys, the keys of `config.js` (add-only), the commands, and the files `update-microfolio` never touches. A change to any of those is a major version, not a minor.
+
 ## Development Commands
 
 ```bash

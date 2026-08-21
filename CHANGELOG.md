@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [1.0.0] - 2026-08-21
 
 **The first stable release — codename Bauhaus.** Everything built since the beta is in, from the thirty-project demo set to the update script, and 1.0 is a promise as much as a number: the content layout and the frontmatter keys, the keys of `config.js` (new ones may appear, none is renamed or removed), the commands, and the files `pnpm update-microfolio` never touches stay valid until 2.0. The look, the dependencies, the internals, the demo content and the interface texts remain free to move in 1.x.

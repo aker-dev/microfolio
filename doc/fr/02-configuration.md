@@ -18,42 +18,46 @@ Les deux sont liées depuis le pied de chaque page.
 
 ### 1. Modification du fichier config.js
 
-Le fichier `src/lib/config.js` contient les paramètres principaux de votre portfolio. Voici comment le personnaliser :
+`src/lib/config.js` contient tout ce qui concerne **votre** site, et rien d'autre — quatre blocs, du général au particulier :
 
 ```javascript
-// Configuration du site
-export const config = {
-	// Informations générales
-	siteName: 'Mon Portfolio',
-	siteDescription: 'Portfolio de [Votre Nom] - [Votre profession]',
-	author: 'Votre Nom',
+export const siteConfig = {
+	// --- Your site -------------------------------------------------------------
+	title: 'microfolio', // l'en-tête, et le début du titre de chaque page
+	description: 'static portfolio generator', // sous le titre, et la méta-description par défaut
+	author: 'AKER', // la ligne de copyright du pied de page
+	url: 'https://aker-dev.github.io/microfolio', // l'adresse de publication, sans slash final
+	locale: 'en', // langue de l'interface : 'en' ou 'fr'
 
-	// Navigation
+	// --- Navigation and links --------------------------------------------------
 	navigation: [
-		{ name: 'Accueil', href: '/' },
-		{ name: 'Projets', href: '/projects' },
-		{ name: 'Liste', href: '/list' },
-		{ name: 'Carte', href: '/map' },
-		{ name: 'À propos', href: '/about' }
+		{ name: 'nav.home', href: '/' },
+		{ name: 'nav.about', href: '/about' },
+		{ name: 'nav.projects', href: '/projects' },
+		{ name: 'nav.list', href: '/list' },
+		{ name: 'nav.map', href: '/map' }
 	],
+	socialLinks: {
+		github: 'https://github.com/aker-dev/microfolio',
+		linkedin: 'https://www.linkedin.com/company/aker-network/',
+		instagram: 'https://www.instagram.com/aker.pro/'
+	},
 
-	// Liens sociaux
-	social: {
-		email: 'votre@email.com',
-		linkedin: 'https://linkedin.com/in/votre-profil',
-		instagram: 'https://instagram.com/votre-compte',
-		github: 'https://github.com/votre-compte'
-	}
+	// --- Sharing and images ----------------------------------------------------
+	ogImage: '/og.jpg',
+	images: { optimizeOnBuild: true },
+
+	// --- Lightbox --------------------------------------------------------------
+	lightbox: { hideControlsDelay: 3000, showExtendedMetadata: true }
 };
 ```
 
-**Personnalisez les sections suivantes :**
-
-- **siteName** : Le nom de votre portfolio
-- **siteDescription** : Description pour le SEO
-- **author** : Votre nom complet
-- **navigation** : Ajustez ou supprimez des liens de navigation
-- **social** : Vos profils sur les réseaux sociaux
+- **`title`, `description`, `author`** — votre nom, votre accroche, votre ligne de copyright
+- **`url`** — le seul endroit où l'adresse est écrite : le chemin de base et toutes les URL absolues (balises de partage, liens canoniques, sitemap) en découlent. Voir [Configuration du domaine personnalisé](#4-configuration-du-domaine-personnalisé)
+- **`locale`** — `'en'` ou `'fr'` ; l'ajout d'une langue est décrit sous [Internationalisation](#7-internationalisation-i18n)
+- **`navigation`** — le menu, dans l'ordre. `name` est une clé de traduction de `src/lib/locales/` (`nav.home`, `nav.about`…), le menu suit donc la langue ; supprimez une entrée pour retirer une page du menu
+- **`socialLinks`** — le pied de page affiche une icône pour chacun de `github`, `linkedin` et `instagram` ; supprimez ceux que vous n'utilisez pas
+- **`ogImage`, `images`, `lightbox`** — l'image de partage, l'optimisation des images au build et les deux réglages de la lightbox, couverts dans [Configuration avancée](#configuration-avancée)
 
 ### 2. Informations personnelles
 

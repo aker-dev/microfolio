@@ -158,6 +158,10 @@ Consultez **[CONTRIBUER.md](CONTRIBUER.md)** pour les détails, et le **[changel
 - 💬 **Questions** : [GitHub Discussions](https://github.com/aker-dev/microfolio/discussions)
 - 📧 **Email** : hello@aker.pro
 
+## 🙏 Filiation
+
+microfolio doit son idée fondatrice à **[Subfolio](https://github.com/area17/subfolio)** d'[Area 17](https://area17.com) : un portfolio qui n'est rien d'autre qu'un dossier de fichiers, bien montré. Subfolio l'a prouvé il y a des années ; microfolio porte l'idée vers un générateur statique et respectueux de la vie privée pour le web d'aujourd'hui. Merci, Area 17.
+
 ## 📄 Licence
 
 Licence MIT - Consultez le fichier [LICENSE](LICENSE) pour plus de détails.

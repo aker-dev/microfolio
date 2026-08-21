@@ -152,6 +152,10 @@ See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the details, and the **[changelog
 - 💬 **Questions**: [GitHub Discussions](https://github.com/aker-dev/microfolio/discussions)
 - 📧 **Email**: hello@aker.pro
 
+## 🙏 Heritage
+
+microfolio owes its founding idea to **[Subfolio](https://github.com/area17/subfolio)** by [Area 17](https://area17.com): a portfolio that is nothing more than a folder of files, shown well. Subfolio proved the idea years ago; microfolio carries it into a static, privacy-first generator for today's web. Thank you, Area 17.
+
 ## 📄 License
 
 MIT License - See [LICENSE](LICENSE) file for details.

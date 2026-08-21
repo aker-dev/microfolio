@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The READMEs credit Subfolio by Area 17**, the file-based portfolio that gave microfolio its founding idea
+
 ## [0.13.2] - 2026-08-21
 
 ### Changed

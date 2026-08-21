@@ -2,6 +2,8 @@
 
 _[🇺🇸 Read in English](README.md)_
 
+[![Deploy to GitHub Pages](https://github.com/aker-dev/microfolio/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/aker-dev/microfolio/actions/workflows/deploy.yml)
+
 Un générateur de portfolio statique moderne développé avec **SvelteKit 2** et **Tailwind CSS 4** par AKER. Il intègre un système de gestion de contenu basé sur des fichiers utilisant des dossiers et des fichiers Markdown. Idéal pour les designers, artistes, architectes et créatifs qui souhaitent présenter leurs projets avec élégance et professionnalisme.
 
 **Démo en ligne** : [https://aker-dev.github.io/microfolio/](https://aker-dev.github.io/microfolio/)
@@ -10,21 +12,21 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 
 ## ✅ Fonctionnalités
 
-- **📁 CMS basé sur des fichiers** — Pas de base de données, juste des dossiers et des fichiers Markdown
-- **🎨 Vues multiples** — Grille de projets, Liste et Carte
-- **📱 Design responsive** — Conçu avec une approche mobile-first
-- **🏷️ Étiquetage intelligent** — Compteurs de filtres et liste de tags repliable
-- **🗺️ Carte interactive** — MapLibre GL et projets géolocalisés, en clair et en sombre, sur un fond OpenStreetMap
-- **🚀 Génération statique** — Performances optimales avec SvelteKit adapter-static
-- **🖼️ Lightbox d'images** — Galerie améliorée avec flèches de navigation et affichage des métadonnées
-- **📊 Métadonnées EXIF/IPTC** — Extraction et affichage automatique des informations techniques d'images
-- **🌙 Mode sombre** — Toggle dans le footer avec préférence persistante (système / manuel / localStorage)
-- **⚡ Optimisation des images** — Vignettes WebP et images de partage, générées pendant le build
-- **🔗 URLs partageables** — Filtres, recherche, tri et pagination synchronisés dans les paramètres d'URL
-- **🌐 Internationalisation** — Anglais/Français via svelte-i18n, support RTL
-- **🏷️ Partageable et indexable** — Balises Open Graph et Twitter en URL absolues, liens canoniques, et un `sitemap.xml` et `robots.txt` générés depuis vos projets
-- **🔒 Aucun cookie, aucun bandeau** — rien n'est pisté, donc il n'y a rien à faire accepter. Mentions légales et politique de confidentialité fournies en gabarits à remplir. Une adresse YouTube ou Vimeo seule sur sa ligne devient un lecteur, qui passe par les modes sans cookies des plateformes
-- **📄 Pagination et tri** — Lignes par page personnalisable, tri par date, titre, type ou localisation
+- **📁 CMS basé sur des fichiers** › Pas de base de données, juste des dossiers et des fichiers Markdown
+- **🎨 Vues multiples** › Grille de projets, Liste et Carte
+- **📱 Design responsive** › Conçu avec une approche mobile-first
+- **🏷️ Étiquetage intelligent** › Compteurs de filtres et liste de tags repliable
+- **🗺️ Carte interactive** › MapLibre GL et projets géolocalisés, en clair et en sombre, sur un fond OpenStreetMap
+- **🚀 Génération statique** › Performances optimales avec SvelteKit adapter-static
+- **🖼️ Lightbox d'images** › Galerie améliorée avec flèches de navigation et affichage des métadonnées
+- **📊 Métadonnées EXIF/IPTC** › Extraction et affichage automatique des informations techniques d'images
+- **🌙 Mode sombre** › Toggle dans le footer avec préférence persistante (système / manuel / localStorage)
+- **⚡ Optimisation des images** › Vignettes WebP et images de partage, générées pendant le build
+- **🔗 URLs partageables** › Filtres, recherche, tri et pagination synchronisés dans les paramètres d'URL
+- **🌐 Internationalisation** › Anglais/Français via svelte-i18n, support RTL
+- **🏷️ Partageable et indexable** › Balises Open Graph et Twitter en URL absolues, liens canoniques, et un `sitemap.xml` et `robots.txt` générés depuis vos projets
+- **🔒 Aucun cookie, aucun bandeau** › rien n'est pisté, donc il n'y a rien à faire accepter. Mentions légales et politique de confidentialité fournies en gabarits à remplir. Une adresse YouTube ou Vimeo seule sur sa ligne devient un lecteur, qui passe par les modes sans cookies des plateformes
+- **📄 Pagination et tri** › Lignes par page personnalisable, tri par date, titre, type ou localisation
 
 ## 🔒 La vie privée par construction
 
@@ -42,7 +44,7 @@ Un portfolio n'a pas à surveiller ses lecteurs, et celui-ci en est incapable.
 - **Pas de Google Fonts.** La police vient de Bunny.net, un CDN tiers, qui reçoit
   donc les adresses IP des visiteurs comme tout serveur de fichiers. C'est
   déclaré dans le gabarit de confidentialité plutôt que passé sous silence
-- **Une carte sans clé d'API ni compte** — OpenFreeMap, sur données
+- **Une carte sans clé d'API ni compte** › OpenFreeMap, sur données
   OpenStreetMap. Ses tuiles ne sont demandées que sur la page carte
 
 Le site généré fournit `content/legal.md` et `content/privacy.md` en gabarits.
@@ -173,8 +175,8 @@ Consultez **[CONTRIBUER.md](CONTRIBUER.md)** pour les détails, et le **[changel
 
 ## 📰 Ils ont parlé de microfolio
 
-- **Korben** — [Microfolio, le portfolio statique qui regarde WordPress de haut](https://korben.info/microfolio-portfolio-statique-mate-wordpress-haut.html)
-- **Entreprendre à Montpellier** — [Microfolio : l'innovation montpelliéraine qui réinvente le portfolio en ligne](https://entreprendre-montpellier.eolas-65.montpellier.fr/actualites/microfolio-linnovation-montpellieraine-qui-reinvente-le-portfolio-en-ligne)
+- **Korben** › [Microfolio, le portfolio statique qui regarde WordPress de haut](https://korben.info/microfolio-portfolio-statique-mate-wordpress-haut.html)
+- **Entreprendre à Montpellier** › [Microfolio : l'innovation montpelliéraine qui réinvente le portfolio en ligne](https://entreprendre-montpellier.eolas-65.montpellier.fr/actualites/microfolio-linnovation-montpellieraine-qui-reinvente-le-portfolio-en-ligne)
 
 Merci à Korben pour son article — et merci aux bêta-testeurs dont les retours ont façonné tout ce qui sépare la 0.1 de la 1.0.
 

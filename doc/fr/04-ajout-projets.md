@@ -28,7 +28,7 @@ pnpm demo            # les décompresse dans content/projects/
 pnpm demo --remove   # les retire
 ```
 
-(`microfolio demo` et `microfolio demo --remove` si vous avez installé avec Homebrew.) git les ignore par leur nom : ils restent sur votre machine et n'atteignent jamais votre dépôt ni votre site publié. Le zip, lui, est suivi ; si vous n'en avez pas l'usage, supprimez-le — rien de ce qui est à vous n'en dépend.
+(`microfolio demo` et `microfolio demo --remove` si vous avez installé avec Homebrew.) git les ignore par leur nom : ils restent sur votre machine et n'atteignent jamais votre dépôt ni votre site publié. Le zip, lui, est suivi ; si vous n'en avez pas l'usage, supprimez-le — rien de ce qui est à vous n'en dépend (les tests de microfolio, eux, s'en servent, et se mettent simplement en attente quand il manque).
 
 ## Création d'un nouveau projet
 

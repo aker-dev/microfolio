@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **The typeface is set in `config.js`** (`font.url`, `font.family`) rather than in `app.html`, which an update of microfolio overwrites. An empty `url` loads nothing from a third party, for a self-hosted or system font. `hooks.server.js` writes it into every page's head at build; documented under custom fonts
 
+### Fixed
+
+- **`pnpm test` stays green on a fork that followed the docs.** Two unit tests depended on the demo repository's own state — one expected the `/microfolio` base path, two needed `example_projects.zip` — so setting your `url` or deleting the zip turned the tests, and the CI badge, red. The base-path test now pins its own config, and the zip tests skip when the archive is gone
+
 ## [0.14.0] - 2026-08-21
 
 ### Changed

@@ -9,6 +9,10 @@ import { installDemo, readZip, removeDemo, topLevelDirs } from './install-demo.j
 const DEMO_ZIP = fileURLToPath(
 	new URL('../content/projects/example_projects.zip', import.meta.url)
 );
+// The docs tell a site that has no use for the demo to delete the zip, and its
+// unit tests run on that site's CI too: the two tests that need the real
+// archive wait rather than fail. The ones on storedZip() cover the rest.
+const hasDemo = existsSync(DEMO_ZIP);
 
 /** A zip of stored entries, enough to probe the reader without a zip tool around. */
 function storedZip(files) {
@@ -47,14 +51,17 @@ function storedZip(files) {
 }
 
 describe('readZip', () => {
-	it('reads the demo archive: thirty projects, every entry the size it declares', () => {
-		const entries = readZip(readFileSync(DEMO_ZIP));
-		expect(topLevelDirs(entries)).toHaveLength(30);
-		expect(entries.filter((e) => e.name.endsWith('/index.md'))).toHaveLength(30);
-		for (const entry of entries.filter((e) => !e.isDirectory)) {
-			expect(entry.read().length, entry.name).toBe(entry.size);
+	it.skipIf(!hasDemo)(
+		'reads the demo archive: thirty projects, every entry the size it declares',
+		() => {
+			const entries = readZip(readFileSync(DEMO_ZIP));
+			expect(topLevelDirs(entries)).toHaveLength(30);
+			expect(entries.filter((e) => e.name.endsWith('/index.md'))).toHaveLength(30);
+			for (const entry of entries.filter((e) => !e.isDirectory)) {
+				expect(entry.read().length, entry.name).toBe(entry.size);
+			}
 		}
-	});
+	);
 
 	it('reads stored entries too, and keeps directories apart from files', () => {
 		const entries = readZip(storedZip({ 'a/': '', 'a/hello.txt': 'hello', 'b/x.txt': 'x' }));
@@ -102,7 +109,7 @@ describe('installDemo / removeDemo', () => {
 		expect(removeDemo({ zipPath, projectsDir: tmp })).toEqual([]);
 	});
 
-	it('installs the real demo', () => {
+	it.skipIf(!hasDemo)('installs the real demo', () => {
 		const { projects, files } = installDemo({ zipPath: DEMO_ZIP, projectsDir: tmp });
 		expect(projects).toHaveLength(30);
 		expect(files).toBeGreaterThan(30);

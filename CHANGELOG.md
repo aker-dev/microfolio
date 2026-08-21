@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Your projects reach your repository**: `.gitignore` ignored `content/projects/*`, so a site that followed the docs pushed none of its projects to GitHub and GitHub Pages built it with the demo instead. The demo set is now ignored by name, in a block `pnpm generate-demo` writes from its dataset
+- **The deploy workflow tells a fork from the upstream repository**: the demo unzip, lint and end-to-end steps run only on `aker-dev/microfolio`. A fork or clone builds and smoke-tests its own site — whose project page in the smoke suite is now the first project found, rather than `example-project`, which a real site deletes (and deleting the demo zip no longer breaks the deploy)
 - **Three new doc sections**: a two-branch workflow (`dev` to work, `main` to publish) now that `main` deploys; a chapter on shared hosting (O2Switch, OVH…) — `pnpm deploy` locally, then the contents of `build/` uploaded with FileZilla; and a first pointer to the Svelte templates for whoever wants to customize beyond `config.js`
 - **The configuration guide shows the real `config.js`** — the actual `siteConfig` in its four blocks, with the translation-key navigation, the three social links the footer knows, and pointers to the sharing-image, images and lightbox settings — instead of a sample that had drifted from the file years ago
 - **The site deploys from `main`.** The GitHub Pages workflow now runs on every push to `main` instead of a separate `preview` branch — a fork or a clone publishes with a plain `git push`, nothing to configure. The publication guide and the READMEs say so

@@ -4,7 +4,11 @@
 // set CI unzips before building the demo site. Maintainer tool: it shells out
 // to `zip` (present on macOS and Linux) and is not part of any build.
 //
-//   pnpm generate-demo            rebuild the zip
+//   pnpm generate-demo            rebuild the zip, and the block of .gitignore
+//                                 that names the demo projects (they sit in
+//                                 content/projects/ next to a user's own, which
+//                                 must stay tracked — so the set is ignored by
+//                                 name, never the directory)
 //   pnpm generate-demo --install  also refresh the unzipped copies in
 //                                 content/projects/ (removes the previous
 //                                 generated set; example-project is never
@@ -21,7 +25,16 @@
 // the dataset produces a byte-identical archive and a quiet diff.
 
 import { execFileSync } from 'node:child_process';
-import { mkdir, mkdtemp, readdir, rm, utimes, writeFile, copyFile } from 'node:fs/promises';
+import {
+	mkdir,
+	mkdtemp,
+	readdir,
+	readFile,
+	rm,
+	utimes,
+	writeFile,
+	copyFile
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -158,19 +171,40 @@ function zipStaging(stagingDir, outPath) {
 	execFileSync('zip', ['-X', '-q', outPath, '-@'], { cwd: stagingDir, input: files.join('\n') });
 }
 
-// Refresh the unzipped working copies: every directory in content/projects/
-// that git ignores is a generated one (the tracked example-project is not),
-// so it can be removed and replaced by the fresh set.
+// The demo is unzipped into content/projects/, the directory a user's own
+// projects live in — and theirs must reach their repository, so .gitignore
+// cannot ignore the directory wholesale. It ignores the demo by name instead,
+// in a block rewritten from the dataset here so the two cannot drift.
+const GITIGNORE_START = '# Demo projects, named by pnpm generate-demo — start';
+const GITIGNORE_END = '# Demo projects — end';
+
+async function writeGitignoreBlock() {
+	const path = join(rootDir, '.gitignore');
+	const text = await readFile(path, 'utf8');
+	const start = text.indexOf(GITIGNORE_START);
+	const end = text.indexOf(GITIGNORE_END);
+	if (start === -1 || end === -1 || end < start) {
+		throw new Error(
+			`.gitignore lacks the demo block markers:\n${GITIGNORE_START}\n${GITIGNORE_END}`
+		);
+	}
+	const block = [
+		GITIGNORE_START,
+		...projects.map((p) => `/content/projects/${p.slug}/`),
+		GITIGNORE_END
+	];
+	const next = text.slice(0, start) + block.join('\n') + text.slice(end + GITIGNORE_END.length);
+	if (next !== text) {
+		await writeFile(path, next);
+		console.log(`✓ ${projects.length} projects named in .gitignore`);
+	}
+}
+
+// Refresh the unzipped working copies: the previous set is removed by name,
+// so a project of any other origin in content/projects/ is never touched.
 async function installLocally() {
-	for (const entry of await readdir(projectsDir, { withFileTypes: true })) {
-		if (!entry.isDirectory()) continue;
-		const dir = join(projectsDir, entry.name);
-		try {
-			execFileSync('git', ['check-ignore', '-q', dir], { cwd: rootDir });
-		} catch {
-			continue; // tracked (example-project) or otherwise not ours to delete
-		}
-		await rm(dir, { recursive: true });
+	for (const p of projects) {
+		await rm(join(projectsDir, p.slug), { recursive: true, force: true });
 	}
 	execFileSync('unzip', ['-oq', zipPath], { cwd: projectsDir });
 	console.log(`✓ installed the set into ${projectsDir}`);
@@ -268,6 +302,7 @@ try {
 	await copyFile(stagedZip, zipPath);
 	await rm(stagedZip, { force: true });
 	console.log(`✓ ${projects.length} projects → ${zipPath}`);
+	await writeGitignoreBlock();
 	if (process.argv.includes('--install')) {
 		await installLocally();
 	}

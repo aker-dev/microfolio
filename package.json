@@ -16,6 +16,7 @@
 		"deploy": "NODE_ENV=production pnpm run build",
 		"demo": "node scripts/install-demo.js",
 		"generate-demo": "node scripts/generate-demo-projects.js",
+		"icons": "node scripts/icons.js",
 		"update-microfolio": "node scripts/update-microfolio.js",
 		"optimize-images": "node scripts/generate-optimized-images.js",
 		"clean-images": "node scripts/clean-optimized-images.js",
@@ -28,7 +29,6 @@
 	"devDependencies": {
 		"@eslint/compat": "^1.4.1",
 		"@eslint/js": "^9.39.5",
-		"@iconify/json": "^2.2.514",
 		"@playwright/test": "^1.62.1",
 		"@sveltejs/adapter-auto": "^6.1.1",
 		"@sveltejs/adapter-static": "^3.0.10",
@@ -48,14 +48,12 @@
 		"sharp": "^0.35.3",
 		"svelte": "^5.56.8",
 		"tailwindcss": "^4.3.3",
-		"unplugin-icons": "^22.5.0",
 		"vite": "^7.3.6",
 		"vite-plugin-static-copy": "^3.4.0",
 		"vitest": "^4.1.10"
 	},
 	"packageManager": "pnpm@11.22.0",
 	"dependencies": {
-		"@iconify/svelte": "^5.2.2",
 		"cursor-effects": "^1.0.18",
 		"exifreader": "^4.42.0",
 		"maplibre-gl": "^6.3.0",

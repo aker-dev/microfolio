@@ -3,8 +3,8 @@
 	import { base } from '$app/paths';
 	import { siteConfig } from '$lib/config.js';
 	import { _ } from 'svelte-i18n';
-	import IconMenu from '~icons/carbon/menu';
-	import IconCloseLarge from '~icons/carbon/close-large';
+	import IconMenu from '$lib/icons/IconMenu.svelte';
+	import IconCloseLarge from '$lib/icons/IconCloseLarge.svelte';
 
 	// Current page URL - reactive to page changes
 	let currentPage = $derived($page.url.pathname);

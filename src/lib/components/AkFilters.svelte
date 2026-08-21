@@ -2,9 +2,9 @@
 	import { TableHandler } from '@vincjo/datatables';
 	import RowsPerPage from '$lib/components/RowsPerPage.svelte';
 	import RowCount from '$lib/components/RowCount.svelte';
-	import IconChevronUp from '~icons/carbon/chevron-up';
-	import IconChevronDown from '~icons/carbon/chevron-down';
-	import IconFilter from '~icons/carbon/filter';
+	import IconChevronUp from '$lib/icons/IconChevronUp.svelte';
+	import IconChevronDown from '$lib/icons/IconChevronDown.svelte';
+	import IconFilter from '$lib/icons/IconFilter.svelte';
 	import { _ } from 'svelte-i18n';
 	import { onMount, untrack } from 'svelte';
 	import { goto } from '$app/navigation';

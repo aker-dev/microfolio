@@ -1,5 +1,5 @@
 <script>
-	import IconClose from '~icons/carbon/close';
+	import IconClose from '$lib/icons/IconClose.svelte';
 	import { _ } from 'svelte-i18n';
 
 	let {

@@ -3,8 +3,8 @@
 	import { siteConfig } from '$lib/config.js';
 	import AkBtnClose from './AkBtnClose.svelte';
 	import AkBtnMetadata from './AkBtnMetadata.svelte';
-	import IconChevronLeft from '~icons/carbon/chevron-left';
-	import IconChevronRight from '~icons/carbon/chevron-right';
+	import IconChevronLeft from '$lib/icons/IconChevronLeft.svelte';
+	import IconChevronRight from '$lib/icons/IconChevronRight.svelte';
 
 	let { images = [], open = $bindable(false), index = $bindable(0) } = $props();
 

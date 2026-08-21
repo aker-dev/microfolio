@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+	import { mount, onMount, unmount } from 'svelte';
 	import AkSeo from '$lib/components/AkSeo.svelte';
 	import AkProjectSummary from '$lib/components/AkProjectSummary.svelte';
 	import AkFilters from '$lib/components/AkFilters.svelte';
@@ -13,11 +13,10 @@
 	// up blank with no tile request at all. `?worker&url` makes Vite bundle the
 	// worker together with the shared module it imports and hand back its address.
 	import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
-	// The markup star, as a string. Markers are built with createElement, out of
-	// reach of a Svelte component, and `?raw` reads the very same @iconify record
-	// that every <IconStarFilled> on the site renders — one original, no traced
-	// copy to drift when the icon set moves.
-	import starFilled from '~icons/carbon/star-filled?raw';
+	// Markers are built with createElement, out of reach of the template, so the
+	// star is the very same component every <IconStarFilled> on the site renders,
+	// mounted into the element by hand — one original, no traced copy to drift.
+	import IconStarFilled from '$lib/icons/IconStarFilled.svelte';
 
 	let { data } = $props();
 	let projects = $derived(data.projects);
@@ -129,7 +128,7 @@
 			if (typeof cancelIdleCallback === 'function') cancelIdleCallback(idle);
 			else clearTimeout(idle);
 			stopWatchingTheme();
-			markers.forEach((marker) => marker.remove());
+			clearMarkers();
 			map?.remove();
 		};
 	});
@@ -171,9 +170,19 @@
 		return [lng, lat];
 	}
 
-	function updateMarkers() {
+	// The stars are mounted components, and a component taken off the map must be
+	// unmounted too, or each filter change leaves a few behind
+	let stars = [];
+
+	function clearMarkers() {
 		markers.forEach((marker) => marker.remove());
+		stars.forEach((star) => unmount(star));
 		markers = [];
+		stars = [];
+	}
+
+	function updateMarkers() {
+		clearMarkers();
 		tooltip?.remove();
 
 		const bounds = new maplibre.LngLatBounds();
@@ -210,8 +219,7 @@
 		element.className = `ak-marker${project.featured ? ' ak-marker--featured' : ''}`;
 		element.setAttribute('aria-label', project.title);
 
-		// A build-time constant, never project data, so innerHTML is safe here
-		if (project.featured) element.innerHTML = starFilled;
+		if (project.featured) stars.push(mount(IconStarFilled, { target: element }));
 
 		element.addEventListener('click', (event) => {
 			event.stopPropagation();

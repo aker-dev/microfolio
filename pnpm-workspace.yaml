@@ -5,10 +5,6 @@ allowBuilds:
   es5-ext: false # postinstall is only a console notice
   exifreader: false # no-op without an exifreader config in package.json
 
-# Explicitly accepted despite being newer than the minimumReleaseAge window.
-minimumReleaseAgeExclude:
-  - '@iconify/json@2.2.514'
-
 # Targeted fixes for advisories in transitive pins (Dependabot alerts #7, #6).
 overrides:
   # svelte-i18n (latest, 4.0.1) pins esbuild ^0.19 for its CLI extractor,

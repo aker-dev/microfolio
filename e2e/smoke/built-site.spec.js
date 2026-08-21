@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
+import { siteConfig } from '../../src/lib/config.js';
 
 /**
  * The only suite that loads the built site rather than the dev server.
@@ -120,5 +121,23 @@ test('the endpoints nothing links to were prerendered', async ({ request }) => {
 	for (const route of ['sitemap.xml', 'robots.txt']) {
 		const response = await request.get(route);
 		expect(response.status(), `${route} did not return 200`).toBe(200);
+	}
+});
+
+// The typeface is whatever config.js says. This suite also runs in a fork's
+// deploy workflow, so it checks that site's own config rather than Bunny.
+test('the typeface comes from config.js', async ({ page, baseURL }) => {
+	await page.goto('./');
+	const font = siteConfig.font;
+	const sheets = await page
+		.locator('link[rel="stylesheet"]')
+		.evaluateAll((links) => links.map((link) => link.href));
+	if (font?.url) expect(sheets).toContain(font.url);
+	else expect(sheets.filter((href) => !isSameOrigin(href, baseURL))).toEqual([]);
+	if (font?.family) {
+		const family = await page.evaluate(() => getComputedStyle(document.documentElement).fontFamily);
+		// Browsers normalise the quotes around a family name, so compare without them
+		const unquote = (s) => s.replace(/["']/g, '');
+		expect(unquote(family)).toContain(unquote(font.family.split(',')[0].trim()));
 	}
 });

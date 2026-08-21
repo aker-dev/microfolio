@@ -17,7 +17,7 @@ Both are linked from the footer of every page.
 
 ### 1. Modifying the config.js file
 
-`src/lib/config.js` holds everything that is about **your** site, and nothing else — four blocks, from the general to the particular:
+`src/lib/config.js` holds everything that is about **your** site, and nothing else — five blocks, from the general to the particular:
 
 ```javascript
 export const siteConfig = {
@@ -46,6 +46,12 @@ export const siteConfig = {
 	ogImage: '/og.jpg',
 	images: { optimizeOnBuild: true },
 
+	// --- Typeface --------------------------------------------------------------
+	font: {
+		url: 'https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap',
+		family: "'IBM Plex Sans', sans-serif"
+	},
+
 	// --- Lightbox --------------------------------------------------------------
 	lightbox: { hideControlsDelay: 3000, showExtendedMetadata: true }
 };
@@ -56,6 +62,7 @@ export const siteConfig = {
 - **`locale`** — `'en'` or `'fr'`; adding a language is described under [Internationalization](#7-internationalization-i18n)
 - **`navigation`** — the menu, in order. `name` is a translation key from `src/lib/locales/` (`nav.home`, `nav.about`…), so the menu follows the locale; remove an entry to take a page out of the menu
 - **`socialLinks`** — the footer shows an icon for each of `github`, `linkedin` and `instagram`; delete the ones you don't use
+- **`font`** — the typeface: the stylesheet that loads it and the family name, see [Custom fonts](#2-custom-fonts)
 - **`ogImage`, `images`, `lightbox`** — the sharing image, build-time image optimization and the lightbox's two settings, covered under [Advanced Configuration](#advanced-configuration)
 
 ### 2. Personal information
@@ -172,8 +179,6 @@ The site uses Tailwind CSS v4. You can customize colors and styles in the `src/a
 **Customization example:**
 
 ```css
-@import url(https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap);
-
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
@@ -302,23 +307,30 @@ lightbox: {
 
 ### 2. Custom fonts
 
-To use custom fonts:
+The typeface is set in the `font` block of `src/lib/config.js` — not in `src/app.html`, which an update of microfolio overwrites:
 
-1. Add your font files to `static/fonts/`
-2. Modify the `src/app.css` file:
-
-```css
-@font-face {
-	font-family: 'MyFont';
-	src: url('/fonts/myfont.woff2') format('woff2');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@theme {
-	--default-font-family: 'MyFont', 'sans-serif';
+```js
+font: {
+	url: 'https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap',
+	family: "'IBM Plex Sans', sans-serif"
 }
 ```
+
+- **Another family from Bunny Fonts** (the same catalogue as Google Fonts, served from the EU without tracking): pick it on [fonts.bunny.net](https://fonts.bunny.net), paste the address it gives you into `url`, and put the family name in `family` — as CSS expects it, with a fallback
+- **A font you host yourself**: set `url: ''` so nothing is loaded from a third party, add the files to `static/fonts/` with a `@font-face` in `src/app.css`, and name the family in `family`:
+
+  ```css
+  @font-face {
+  	font-family: 'MyFont';
+  	src: url('/fonts/myfont.woff2') format('woff2');
+  	font-weight: normal;
+  	font-style: normal;
+  }
+  ```
+
+- **The system font**: `url: ''` and `family: 'system-ui, sans-serif'`
+
+Whoever serves the font files sees your visitors' IP addresses, and `content/privacy.md` names Bunny.net for that reason: if you change provider, or host the files yourself, update its table.
 
 ### 3. Display mode customization
 

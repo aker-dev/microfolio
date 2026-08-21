@@ -89,7 +89,7 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - `$lib/utils/locale.js` — `getTextDirection()`, shared by `hooks.server.js` (prerender) and `+layout.svelte` (client)
 - `$lib/utils/imageMetadata.js` — EXIF/IPTC extraction via `exifreader` (credit, camera, GPS, etc.)
 - `$lib/utils/date.js` — `formatProjectDate()`: the `YYYY-MM` shown everywhere a project is dated. It was written out four times before
-- `$lib/config.js` — Site config, and deliberately only what someone setting up **their** site needs: title, `url`, social links, navigation, `ogImage`, `images.optimizeOnBuild`, `lightbox.hideControlsDelay`, `lightbox.showExtendedMetadata`. Tile provider URLs and zoom limits live in the map route instead
+- `$lib/config.js` — Site config, and deliberately only what someone setting up **their** site needs: title, `url`, social links, navigation, `ogImage`, `images.optimizeOnBuild`, `font.url`, `font.family`, `lightbox.hideControlsDelay`, `lightbox.showExtendedMetadata`. Tile provider URLs and zoom limits live in the map route instead
 - `$lib/utils/seo.js` — `absoluteUrl()`: takes a route path **without** the base, because `siteConfig.url` already carries it
 - `$lib/i18n.js` — Internationalization setup with `svelte-i18n` (en/fr active, more commented out)
 
@@ -98,7 +98,7 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - Tailwind CSS 4 configured in `src/app.css` with `@tailwindcss/typography` plugin
 - Custom theme in `src/lib/theme.css`
 - Dark mode has two layers: a `prefers-color-scheme` media query for the default, and a `.dark` / `.light` class on `:root` for the explicit toggle in `AkFooter` (persisted in `localStorage`). An inline script in `app.html` applies the stored choice before first paint to avoid a flash
-- Font: IBM Plex Sans (loaded from bunny.net CDN)
+- Font: `siteConfig.font` — `url` (Bunny Fonts by default) and `family`. `hooks.server.js` writes them into `app.html`'s `%microfolio.font%` at prerender: preconnect + stylesheet, then an **unlayered** `:root{--default-font-family:…}` that beats the `@theme` default in `app.css`. It lives in config rather than `app.html` because the update script protects `config.js` and overwrites `app.html`; a config without a `font` block falls back to IBM Plex rather than to no font
 - `src/app.css` also holds the rules no component owns: a global `:focus-visible` outline so keyboard focus is never invisible, `.ak-filters :disabled` for the pre-hydration state described under Components, and the map block — `.ak-marker` plus the overrides that flatten MapLibre's own chrome. Those last ones are written with two classes rather than one, because MapLibre's stylesheet is imported by the map route and therefore lands after this file: matching its specificity would leave the winner down to injection order
 
 ### Components

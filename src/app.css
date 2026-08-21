@@ -10,6 +10,8 @@
 @import './lib/theme.css';
 
 @theme {
+	/* The default only: the value in use comes from the font block of
+	   src/lib/config.js, which hooks.server.js writes into every page's head */
 	--default-font-family: 'IBM Plex Sans', 'sans-serif';
 	--font-weight-bold: 600;
 

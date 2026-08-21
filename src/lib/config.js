@@ -51,6 +51,19 @@ export const siteConfig = {
 		optimizeOnBuild: true
 	},
 
+	// --- Typeface --------------------------------------------------------------
+	font: {
+		// The stylesheet that loads the typeface. Bunny Fonts by default — the same
+		// families as Google Fonts, served from the EU without tracking: change the
+		// family in this address, or point it at another provider. Leave it empty
+		// to load none, for the system font or a @font-face of your own in
+		// src/app.css. Whoever serves the files sees visitors' IP addresses, and
+		// content/privacy.md names them — keep it true if you change provider.
+		url: 'https://fonts.bunny.net/css?family=ibm-plex-sans:400,400i,600&display=swap',
+		// The family that stylesheet declares, as CSS expects it, with a fallback
+		family: "'IBM Plex Sans', sans-serif"
+	},
+
 	// --- Lightbox --------------------------------------------------------------
 	lightbox: {
 		// Delay in milliseconds before the controls fade out while the visitor is

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The typeface is set in `config.js`** (`font.url`, `font.family`) rather than in `app.html`, which an update of microfolio overwrites. An empty `url` loads nothing from a third party, for a self-hosted or system font. `hooks.server.js` writes it into every page's head at build; documented under custom fonts
+
 ## [0.14.0] - 2026-08-21
 
 ### Changed

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.2] - 2026-08-21
+
+### Changed
+
+- **Date and location on two lines** in the project page's info panel, date first — and **a project without a location shows none**: no line on its page, an empty cell in the list instead of the old "N/A", no marker on the map without coordinates. Only `title` and `date` were ever required; the interface now behaves that way. The demo's Universal Grotesk Revival — a typeface has no address — exercises the path
+
 ## [0.13.1] - 2026-08-21
 
 ### Added

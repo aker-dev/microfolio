@@ -314,7 +314,7 @@ featured: true # true pour mettre en avant
 Ici, décrivez votre projet en détail…
 ```
 
-Seuls `title` et `date` sont obligatoires — un projet auquel il en manque un est ignoré, et nommé dans un résumé en fin de build. La référence complète des champs, y compris le panneau d'infos optionnel (`owner`, `status`, `surface_area`, `cost`), se trouve dans le [Guide d'ajout de projets](04-ajout-projets.md#3-métadonnées-importantes).
+Seuls `title` et `date` sont obligatoires — un projet auquel il en manque un est ignoré, et nommé dans un résumé en fin de build. Un projet sans `location` n'affiche simplement aucun lieu (pas de texte de remplacement sur sa page ni dans la liste), et sans `coordinates` il n'a pas de marqueur sur la carte. La référence complète des champs, y compris le panneau d'infos optionnel (`owner`, `status`, `surface_area`, `cost`), se trouve dans le [Guide d'ajout de projets](04-ajout-projets.md#3-métadonnées-importantes).
 
 ### Étape 4 : Ajouter vos fichiers
 

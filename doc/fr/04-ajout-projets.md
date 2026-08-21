@@ -50,8 +50,8 @@ description: 'Description courte et percutante de votre projet'
 type: 'architecture' # alimente le filtre par type — voir la liste ci-dessous
 
 # ── Optionnel ──
-location: 'Ville, Pays'
-coordinates: [48.8566, 2.3522] # [latitude, longitude], place le projet sur la carte
+location: 'Ville, Pays' # omettez-le et le projet n'affiche simplement aucun lieu
+coordinates: [48.8566, 2.3522] # [latitude, longitude] pour la carte — pas de coordonnées, pas de marqueur
 tags: ['moderne', 'durable', 'espace-public'] # ne répétez pas le type
 authors:
   - name: 'Votre Nom'
@@ -98,8 +98,8 @@ Présentez les résultats obtenus, l'accueil du projet, son impact.
 
 **Champs optionnels :**
 
-- `location` : Localisation du projet
-- `coordinates` : Coordonnées GPS [latitude, longitude]
+- `location` : Localisation du projet — omettez-la et rien ne s'affiche à sa place, ni sur la page projet ni dans la liste
+- `coordinates` : Coordonnées GPS [latitude, longitude] — sans elles, le projet n'a pas de marqueur sur la carte
 
 > La carte affiche OpenStreetMap dans le monde entier, via OpenFreeMap, et suit
 > votre thème clair ou sombre. Le fond de carte et ses limites de zoom se règlent

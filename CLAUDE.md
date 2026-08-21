@@ -112,7 +112,7 @@ All custom components use `Ak` prefix (e.g., `AkHeader`, `AkFooter`, `AkProjectC
 **The map is MapLibre GL on OpenFreeMap**, worldwide OpenStreetMap vector tiles with no API key, in Positron for light and Dark for dark — the two neutral styles it publishes, which is why nothing desaturates the map any more. The styles and zoom limits sit at the top of `map/+page.svelte`, not in `config.js`. Things about it that are not guessable:
 
 - **Coordinates swap.** Frontmatter is `[latitude, longitude]`, MapLibre wants `[longitude, latitude]`. `toLngLat()` in `map/+page.svelte` is the only place they meet — keep it that way
-- **Switching theme swaps the whole style**, since light and dark are two published styles rather than one repainted. Markers survive it: they are DOM nodes the map owns, not part of the style. Verified, not assumed — 31 before and after
+- **Switching theme swaps the whole style**, since light and dark are two published styles rather than one repainted. Markers survive it: they are DOM nodes the map owns, not part of the style. Verified, not assumed — 30 before and after (31 projects, one of which names no place)
 - **`fitMaxZoom` exists because fitting one project would otherwise frame its roof.** The map's own `maxZoom` used to do that job back when it was capped at 6
 - **MapLibre's chrome fights back twice.** Its icons are baked dark SVG data URIs with variants only for Windows' forced-colors mode, so they are inverted in dark; and its compact attribution paints itself white through a two-class rule that ties with ours and wins on order, so ours carries a third class. Without it the bar was white with white links on it
 

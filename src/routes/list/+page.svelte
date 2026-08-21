@@ -137,7 +137,7 @@
 								</div>
 							</td>
 							<td class="text-primary px-4 py-3 text-sm">
-								{project.location || $_('ui.not_available')}
+								{project.location ?? ''}
 							</td>
 							<td class="text-primary px-4 py-3 text-sm">
 								{formatProjectDate(project.date)}

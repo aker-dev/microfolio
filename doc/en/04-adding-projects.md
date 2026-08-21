@@ -50,8 +50,8 @@ description: 'Short and compelling description of your project'
 type: 'architecture' # drives the type filter — see the list below
 
 # ── Optional ──
-location: 'City, Country'
-coordinates: [48.8566, 2.3522] # [latitude, longitude], puts the project on the map
+location: 'City, Country' # leave it out and the project simply shows no place
+coordinates: [48.8566, 2.3522] # [latitude, longitude] for the map — no coordinates, no marker
 tags: ['modern', 'sustainable', 'public-space'] # don't repeat the type
 authors:
   - name: 'Your Name'
@@ -98,8 +98,8 @@ Present the results obtained, project reception, its impact.
 
 **Optional fields:**
 
-- `location`: Project location
-- `coordinates`: GPS coordinates [latitude, longitude]
+- `location`: Project location — leave it out and nothing is shown for it, on the project page or in the list
+- `coordinates`: GPS coordinates [latitude, longitude] — without them the project has no marker on the map
 
 > The map draws OpenStreetMap the world over, through OpenFreeMap, and follows
 > your light or dark theme. The basemap and its zoom limits are set at the top of

@@ -277,6 +277,20 @@ When a page is shared on a social network or in a messaging app, the preview car
 
   Replace `static/og.jpg` with your own — **1200×630 pixels**, the format every network crops to. Set `ogImage: ''` to ship none.
 
+### 1c. Lightbox
+
+Two settings in the `lightbox` block of `src/lib/config.js`:
+
+```js
+lightbox: {
+	hideControlsDelay: 3000,
+	showExtendedMetadata: true
+}
+```
+
+- **`hideControlsDelay`** — milliseconds before the arrows, the close button and the details toggle fade out while the visitor is idle; any mouse move, key press or touch brings them back. `0` keeps them on screen permanently.
+- **`showExtendedMetadata`** — the details panel always shows an image's title, caption and credit (from its IPTC/EXIF fields, see [Preparing Your Images](03-preparing-images.md)). With `true` it also shows what else the file carries: **Technical Details** (camera, lens, exposure), **Location & Date** and **Keywords**. Set it to `false` to keep the panel to the editorial three — for a portfolio where the camera settings are nobody's business, or where the photos come from many hands.
+
 ### 2. Custom fonts
 
 To use custom fonts:

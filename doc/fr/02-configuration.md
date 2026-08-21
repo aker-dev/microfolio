@@ -284,6 +284,20 @@ Quand une page est partagée sur un réseau social ou une messagerie, la carte d
 
   Remplacez `static/og.jpg` par la vôtre — **1200×630 pixels**, le format que tous les réseaux recadrent. Mettez `ogImage: ''` pour ne pas en fournir.
 
+### 1c. Lightbox
+
+Deux réglages dans le bloc `lightbox` de `src/lib/config.js` :
+
+```js
+lightbox: {
+	hideControlsDelay: 3000,
+	showExtendedMetadata: true
+}
+```
+
+- **`hideControlsDelay`** — délai en millisecondes avant que les flèches, le bouton de fermeture et le bouton des détails s'effacent quand le visiteur est inactif ; tout mouvement de souris, touche ou contact les fait revenir. `0` les garde affichés en permanence.
+- **`showExtendedMetadata`** — le panneau de détails affiche toujours le titre, la légende et le crédit de l'image (depuis ses champs IPTC/EXIF, voir [Préparation des images](03-preparation-images.md)). Avec `true`, il affiche aussi ce que le fichier transporte d'autre : **Détails techniques** (boîtier, objectif, exposition), **Lieu & date** et **Mots-clés**. Passez-le à `false` pour limiter le panneau aux trois champs éditoriaux — pour un portfolio où les réglages de l'appareil ne regardent personne, ou dont les photos viennent de plusieurs mains.
+
 ### 2. Fonts personnalisées
 
 Pour utiliser des polices personnalisées :

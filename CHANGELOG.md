@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **YouTube and Vimeo videos in Markdown.** Paste the platform's embed code into any content page or project body and it renders as a responsive 16:9 player — full width on the editorial pages, column width in a project. Every embed is routed through the platforms' no-cookie modes at build time (`youtube-nocookie.com`, Vimeo `dnt=1`), so a pasted snippet cannot break the site's "no cookies" promise behind its author's back. The example project carries one; the demo's privacy page declares it
+- **`lightbox.showExtendedMetadata`** in `config.js`: one switch that keeps the details panel to an image's title, caption and credit, hiding Technical Details, Location & Date and Keywords together. `true` by default; documented alongside `hideControlsDelay`, which never had a doc entry
 
 ### Changed
 

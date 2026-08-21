@@ -122,12 +122,17 @@ sub-path (GitHub Pages) alike. External links in these pages open in a new tab
 automatically. On large screens, images spread wider than the text column —
 part of the editorial layout of these pages.
 
-**Videos from YouTube or Vimeo**: paste the embed code the platform gives you
-("Share › Embed") straight into the Markdown, on a line of its own:
+**Videos from YouTube or Vimeo**: paste the video's address on a line of its
+own — nothing else on the line — and it becomes the player:
 
 ```markdown
-<iframe src="https://www.youtube.com/embed/VIDEO_ID" title="My film" allowfullscreen></iframe>
+https://www.youtube.com/watch?v=VIDEO_ID
 ```
+
+`youtu.be/…`, Shorts and `vimeo.com/…` addresses work the same way. A written
+link (`[see the film](…)`) or an address inside a sentence stays a plain link.
+Need the platform's options (start time, playlist…)? The embed code from
+"Share › Embed" can be pasted as-is instead.
 
 The player scales to the column and keeps its 16:9 ratio. microfolio also
 routes every embed through the platforms' no-cookie modes at build time —

@@ -411,6 +411,7 @@ For more details, consult the [technical file](documents/specifications.pdf).
 - **Forced break**: To start a new line inside a single paragraph — an address, opening hours, a credit list — end the line with `\`. Without it, Markdown runs the lines together
 - **Images**: Place them in the `images/` folder and reference them with `images/image-name.jpg`
 - **Links**: Use `[text](url)` for external links — they open in a new tab automatically
+- **Videos**: a YouTube or Vimeo address alone on its line becomes the player
 - **Titles**: Use `##` for sections (the main `#` is reserved for the project title)
 
 ## Useful Resources

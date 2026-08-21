@@ -51,7 +51,7 @@ The screens run a 22-minute cycle, composed rather than programmed:
 
 The full cycle, filmed on the second night:
 
-<iframe src="https://www.youtube.com/embed/HH7we9EaQok" title="Lichtspiel Pavilion — the 22-minute cycle" allowfullscreen></iframe>
+https://www.youtube.com/watch?v=HH7we9EaQok
 
 ### What the fog changed
 

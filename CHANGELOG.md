@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **A video address alone on its line becomes the player.** Paste `https://www.youtube.com/watch?v=…`, `youtu.be/…`, a Short or `vimeo.com/…` on a line of its own and microfolio renders the embed — no snippet to copy from the platform. A written link or an address inside a sentence stays a link; the pasted-iframe route from 0.13.0 remains for the platforms' advanced options. Same no-cookie modes, lazy-loaded. The example project now uses the bare address
+
 ## [0.13.0] - 2026-08-21
 
 ### Added

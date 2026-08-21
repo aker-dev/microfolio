@@ -130,7 +130,7 @@ Créez un dossier `images/` et ajoutez vos images.
 
 Tailles, formats, nommage, et les métadonnées EXIF/IPTC que la lightbox affiche — y compris ce qu'il faut retirer avant de publier — sont couverts dans le guide **[Préparation des images](03-preparation-images.md)**.
 
-Une vidéo YouTube ou Vimeo peut aussi prendre place dans le texte du projet : collez le code d'intégration de la plateforme sur une ligne à part, comme décrit dans le [guide de configuration](02-configuration.md#des-images-et-des-vidéos-dans-ces-pages) — il passe automatiquement par les modes sans cookies.
+Une vidéo YouTube ou Vimeo peut aussi prendre place dans le texte du projet : collez l'adresse de la vidéo sur une ligne à part et elle devient le lecteur, comme décrit dans le [guide de configuration](02-configuration.md#des-images-et-des-vidéos-dans-ces-pages) — en passant automatiquement par les modes sans cookies.
 
 ### 3. Vidéos (optionnel)
 

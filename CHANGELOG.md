@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `package.json` carries the description, licence, repository, homepage and issue tracker it had always left out; the licence years read 2025-2026
+
 ## [0.15.0] - 2026-08-21
 
 ### Changed

@@ -28,7 +28,7 @@ pnpm demo            # unzips them into content/projects/
 pnpm demo --remove   # takes them out again
 ```
 
-git ignores them by name, so they stay on your machine and never reach your repository or your published site. The zip itself is tracked; if you have no use for it, delete it — nothing of yours depends on it.
+(`microfolio demo` and `microfolio demo --remove` if you installed with Homebrew.) git ignores them by name, so they stay on your machine and never reach your repository or your published site. The zip itself is tracked; if you have no use for it, delete it — nothing of yours depends on it.
 
 ## Creating a New Project
 

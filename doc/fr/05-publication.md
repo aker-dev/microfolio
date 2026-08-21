@@ -134,7 +134,7 @@ git push origin main
 git switch dev             # retour au travail
 ```
 
-`main` ne reçoit jamais que ce que vous avez déjà vu fonctionner en local — et un projet à moitié écrit qui attend sur `dev` n'atteint jamais le site publié par accident.
+`main` ne reçoit jamais que ce que vous avez déjà vu fonctionner en local — et un projet à moitié écrit qui attend sur `dev` n'atteint jamais le site publié par accident. Un push sur `dev` lance tout de même les vérifications (tests, build, test de fumée) sans rien publier : l'onglet **Actions** vous dit que la fusion est sûre avant que vous la fassiez.
 
 ## Publication manuelle
 
@@ -257,6 +257,8 @@ Une nouvelle version de microfolio, c'est une nouvelle version du moteur ; vos p
 pnpm update-microfolio            # vers la dernière version
 pnpm update-microfolio --dry-run  # dire seulement ce qui changerait
 ```
+
+(`microfolio update`, mêmes options, si vous avez installé avec Homebrew.)
 
 Le script télécharge la version que vous utilisez et celle vers laquelle vous allez, et décide fichier par fichier : ce que vous n'avez jamais touché prend la nouvelle version, ce que vous avez modifié et que microfolio n'a pas changé reste tel quel, et quand les deux côtés ont changé le même fichier il tente de combiner les deux — à défaut, votre version reste et la nouvelle est écrite à côté, en `<fichier>.upstream`, pour que vous la regardiez. `content/`, `src/lib/config.js`, `static/favicon.svg` et `static/og.jpg` ne sont jamais touchés ; quand `config.js` a gagné des réglages en amont, la différence est affichée pour que vous recopiiez ce qui vous intéresse. Ensuite :
 

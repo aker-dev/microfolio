@@ -2,7 +2,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # main publishes. dev only runs the checks — lint, tests, build, smoke —
+    # so a push there says whether it is safe to merge, without going live.
+    branches: [main, dev]
   workflow_dispatch:
 
 permissions:
@@ -10,8 +12,10 @@ permissions:
   pages: write
   id-token: write
 
+# One group per branch: a check run on dev never queues behind a deploy, and
+# deploys from main still run one at a time.
 concurrency:
-  group: 'pages'
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -93,14 +97,17 @@ jobs:
           retention-days: 7
 
       - name: Setup Pages
+        if: github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v6
 
       - name: Upload artifact
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v5
         with:
           path: './build'
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

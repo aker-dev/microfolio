@@ -5,10 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.14.0] - 2026-08-21
 
 ### Changed
 
+- **A push to `dev` runs the checks without publishing**: the deploy workflow now runs on `dev` too, and only `main` deploys. The `preview` branch is gone — GitHub Pages serves one site per repository
 - **`pnpm demo`** unzips the thirty demo projects into `content/projects/`, and `pnpm demo --remove` takes them out again — in plain Node, so it works where `unzip` does not. The deploy workflow and `generate-demo --install` go through it too, and the docs finally say what `example_projects.zip` is, and that it can be deleted
 - **Your projects reach your repository**: `.gitignore` ignored `content/projects/*`, so a site that followed the docs pushed none of its projects to GitHub and GitHub Pages built it with the demo instead. The demo set is now ignored by name, in a block `pnpm generate-demo` writes from its dataset
 - **The deploy workflow tells a fork from the upstream repository**: the demo unzip, lint and end-to-end steps run only on `aker-dev/microfolio`. A fork or clone builds and smoke-tests its own site — whose project page in the smoke suite is now the first project found, rather than `example-project`, which a real site deletes (and deleting the demo zip no longer breaks the deploy)

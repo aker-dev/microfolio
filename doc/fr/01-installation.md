@@ -61,7 +61,7 @@ Votre site sera accessible à l'adresse : http://localhost:5555
 
 - Installation automatique de toutes les dépendances (Node.js, pnpm, Git)
 - Commandes simplifiées : `microfolio new`, `microfolio dev`, `microfolio build`
-- Mise à jour facile avec `brew upgrade microfolio`
+- `brew upgrade microfolio` maintient la commande à jour ; un site se met à jour avec `pnpm update-microfolio` (voir [Mettre à jour microfolio](05-publication.md#3-mettre-à-jour-microfolio))
 
 #### Option 2 : Installation manuelle
 

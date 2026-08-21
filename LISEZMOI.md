@@ -141,6 +141,16 @@ microfolio build  # ou pnpm build
 # Pousser sur main — déploiement automatique
 ```
 
+### Mise à jour
+
+Une release est un nouveau moteur ; votre contenu et vos réglages restent à vous. Depuis votre site, tout étant commité :
+
+```bash
+pnpm update-microfolio
+```
+
+Elle applique la release fichier par fichier, ne touche jamais `content/`, `config.js`, votre favicon ni votre image de partage, et laisse une copie `.upstream` partout où vos modifications et les nôtres se heurtent. Détails dans le [guide de publication](doc/fr/05-publication.md#3-mettre-à-jour-microfolio).
+
 ## 🤝 Contribution
 
 microfolio se construit au grand jour, et toutes les aides comptent :

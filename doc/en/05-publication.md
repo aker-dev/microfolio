@@ -248,24 +248,37 @@ git commit -m "Design update"
 git push origin main
 ```
 
-### 3. Dependency Updates
+### 3. Updating microfolio
+
+A new release of microfolio is a new version of the engine; your projects, your `config.js`, your favicon and your sharing image are yours and stay put. From the folder of your site, with everything committed:
 
 ```bash
-# Check for updates
-pnpm outdated
-
-# Update
-pnpm update
-
-# Test
-pnpm dev
-pnpm build
-
-# Publish
-git add .
-git commit -m "Dependency updates"
-git push origin main
+pnpm update-microfolio            # to the latest release
+pnpm update-microfolio --dry-run  # only say what would change
 ```
+
+The script downloads the release you run and the one you are moving to, and decides file by file: what you never touched takes the new version, what you edited and microfolio left alone stays as it is, and when both sides changed the same file it tries to combine the two — failing that, your version stays and the new one is written next to it as `<file>.upstream`, for you to look at. `content/`, `src/lib/config.js`, `static/favicon.svg` and `static/og.jpg` are never touched; when `config.js` gained settings upstream, the difference is printed so you can copy what you want. Then:
+
+```bash
+pnpm install
+pnpm dev                                    # look at the site
+git add -A && git commit -m "Update microfolio to 1.1.0"
+git push origin main                        # publishes, if GitHub Pages deploys main
+```
+
+If you do not like the result, `git checkout . && git clean -fd` right after the update puts everything back — which is why the script asks for a clean working tree before it starts.
+
+**A site older than the script** (from before 1.0) has no `pnpm update-microfolio` yet. Fetch the script once and run it; it is part of the site from then on:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/aker-dev/microfolio/main/scripts/update-microfolio.js -o update-microfolio.js
+node update-microfolio.js
+rm update-microfolio.js
+```
+
+**By hand**, if you would rather see every step: download the release you want from [the releases page](https://github.com/aker-dev/microfolio/releases) and unpack it next to your site, then copy everything from it into your site's folder **except** `content/`, `src/lib/config.js`, `static/favicon.svg` and `static/og.jpg`. Bring back any change you had made to the templates or to `src/app.css` by comparing with your git history, run `pnpm install`, check with `pnpm dev`, and commit. This also works on a site that was never a git repository.
+
+**With git alone**, if you cloned the repository rather than used `microfolio new`: your history is shared with microfolio's, so `git remote add upstream https://github.com/aker-dev/microfolio.git`, `git fetch upstream --tags` and `git merge v1.1.0` bring the release in. Expect conflicts on the files you rewrote — the home and about pages, `config.js` — and on the example project if you deleted it; resolve each by keeping yours.
 
 ## Production Optimization
 

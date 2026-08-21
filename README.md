@@ -135,6 +135,16 @@ microfolio build  # or pnpm build
 # Push to main — automatic deployment
 ```
 
+### Updating
+
+A release is a new engine; your content and settings stay yours. From your site, with everything committed:
+
+```bash
+pnpm update-microfolio
+```
+
+It applies the release file by file, never touches `content/`, `config.js`, your favicon or your sharing image, and leaves a `.upstream` copy wherever your edits and ours collide. Details in the [publication guide](doc/en/05-publication.md#3-updating-microfolio).
+
 ## 🤝 Contributing
 
 microfolio is built in the open, and every kind of help counts:

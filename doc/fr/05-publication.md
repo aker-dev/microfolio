@@ -249,24 +249,37 @@ git commit -m "Mise à jour du design"
 git push origin main
 ```
 
-### 3. Mise à jour des dépendances
+### 3. Mettre à jour microfolio
+
+Une nouvelle version de microfolio, c'est une nouvelle version du moteur ; vos projets, votre `config.js`, votre favicon et votre image de partage sont à vous et restent en place. Depuis le dossier de votre site, tout étant commité :
 
 ```bash
-# Vérifiez les mises à jour
-pnpm outdated
-
-# Mettez à jour
-pnpm update
-
-# Testez
-pnpm dev
-pnpm build
-
-# Publiez
-git add .
-git commit -m "Mise à jour des dépendances"
-git push origin main
+pnpm update-microfolio            # vers la dernière version
+pnpm update-microfolio --dry-run  # dire seulement ce qui changerait
 ```
+
+Le script télécharge la version que vous utilisez et celle vers laquelle vous allez, et décide fichier par fichier : ce que vous n'avez jamais touché prend la nouvelle version, ce que vous avez modifié et que microfolio n'a pas changé reste tel quel, et quand les deux côtés ont changé le même fichier il tente de combiner les deux — à défaut, votre version reste et la nouvelle est écrite à côté, en `<fichier>.upstream`, pour que vous la regardiez. `content/`, `src/lib/config.js`, `static/favicon.svg` et `static/og.jpg` ne sont jamais touchés ; quand `config.js` a gagné des réglages en amont, la différence est affichée pour que vous recopiiez ce qui vous intéresse. Ensuite :
+
+```bash
+pnpm install
+pnpm dev                                    # regarder le site
+git add -A && git commit -m "Mise à jour de microfolio en 1.1.0"
+git push origin main                        # publie, si GitHub Pages déploie main
+```
+
+Si le résultat ne vous plaît pas, `git checkout . && git clean -fd` juste après la mise à jour remet tout en place — c'est pour cela que le script exige un dépôt sans modification en attente avant de commencer.
+
+**Un site plus ancien que le script** (d'avant la 1.0) n'a pas encore `pnpm update-microfolio`. Récupérez le script une fois et lancez-le ; il fait partie du site ensuite :
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/aker-dev/microfolio/main/scripts/update-microfolio.js -o update-microfolio.js
+node update-microfolio.js
+rm update-microfolio.js
+```
+
+**À la main**, si vous préférez voir chaque étape : téléchargez la version voulue depuis [la page des releases](https://github.com/aker-dev/microfolio/releases) et décompressez-la à côté de votre site, puis copiez tout son contenu dans le dossier de votre site **sauf** `content/`, `src/lib/config.js`, `static/favicon.svg` et `static/og.jpg`. Rapportez les modifications que vous aviez faites aux templates ou à `src/app.css` en comparant avec votre historique git, lancez `pnpm install`, vérifiez avec `pnpm dev`, et commitez. Cela marche aussi pour un site qui n'a jamais été un dépôt git.
+
+**Avec git seul**, si vous avez cloné le dépôt plutôt qu'utilisé `microfolio new` : votre historique est commun avec celui de microfolio, donc `git remote add upstream https://github.com/aker-dev/microfolio.git`, `git fetch upstream --tags` puis `git merge v1.1.0` ramènent la version. Attendez-vous à des conflits sur les fichiers que vous avez réécrits — pages d'accueil et à propos, `config.js` — et sur le projet d'exemple si vous l'avez supprimé ; résolvez chacun en gardant le vôtre.
 
 ## Optimisation pour la production
 

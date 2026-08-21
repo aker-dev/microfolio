@@ -41,13 +41,13 @@
 	});
 </script>
 
-<header class="bg-background sticky top-0 z-5000 mb-8">
+<header class="bg-background sticky top-0 z-5000 mb-6 md:mb-8">
 	<div
-		class="border-primary mx-auto flex h-32 max-w-7xl items-end justify-between border-b border-solid px-4 md:h-32"
+		class="border-primary mx-auto flex h-24 max-w-7xl items-end justify-between border-b border-solid px-4 md:h-32"
 	>
 		<section class="h-15 flex-1">
 			<a href="{base}/">
-				<div class="text-2xl font-bold">{siteConfig.title}</div>
+				<div class="text-xl font-bold md:text-2xl">{siteConfig.title}</div>
 				<div class="text-sm">{siteConfig.description}</div>
 			</a>
 		</section>

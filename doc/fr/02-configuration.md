@@ -341,6 +341,20 @@ Vous pouvez personnaliser ces modes dans les fichiers correspondants :
 - `src/routes/list/+page.svelte` (liste)
 - `src/routes/map/+page.svelte` (carte)
 
+### 4. Aller plus loin : les templates Svelte
+
+Tout ce qui précède est de la configuration. Quand vous voulez changer l'apparence ou le comportement, les templates sont à vous aussi — microfolio est un projet SvelteKit, et un petit :
+
+| Ce que vous voulez changer                                          | Où ça vit                            |
+| ------------------------------------------------------------------- | ------------------------------------ |
+| La mise en page d'une page (accueil, projets, liste, carte, projet) | `src/routes/**/+page.svelte`         |
+| En-tête, pied de page, cartes, filtres, lightbox                    | `src/lib/components/Ak*.svelte`      |
+| Couleurs, thème sombre, style de la prose                           | `src/lib/theme.css` et `src/app.css` |
+| Les textes de l'interface                                           | `src/lib/locales/en.json`, `fr.json` |
+| Le menu, la lightbox, l'image de partage                            | `src/lib/config.js` (ce guide)       |
+
+`pnpm dev` recharge la page à chaque enregistrement. La pile est [SvelteKit 2](https://svelte.dev/docs/kit), [Svelte 5](https://svelte.dev/docs/svelte) et [Tailwind CSS 4](https://tailwindcss.com/docs) ; leur documentation couvre ce que font les templates. Un conseil : gardez des modifications petites et localisées — une couleur ici, un bloc là — pour que `git merge` ramène les futures versions de microfolio sans bagarre.
+
 ## Variables d'environnement
 
 Le fichier `.env` contient les variables importantes :

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Three new doc sections**: a two-branch workflow (`dev` to work, `main` to publish) now that `main` deploys; a chapter on shared hosting (O2Switch, OVH…) — `pnpm deploy` locally, then the contents of `build/` uploaded with FileZilla; and a first pointer to the Svelte templates for whoever wants to customize beyond `config.js`
 - **The configuration guide shows the real `config.js`** — the actual `siteConfig` in its four blocks, with the translation-key navigation, the three social links the footer knows, and pointers to the sharing-image, images and lightbox settings — instead of a sample that had drifted from the file years ago
 - **The site deploys from `main`.** The GitHub Pages workflow now runs on every push to `main` instead of a separate `preview` branch — a fork or a clone publishes with a plain `git push`, nothing to configure. The publication guide and the READMEs say so
 - **The READMEs credit Subfolio by Area 17**, the file-based portfolio that gave microfolio its founding idea

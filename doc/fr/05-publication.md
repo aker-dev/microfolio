@@ -119,6 +119,23 @@ git push origin main
 
 Quelques minutes plus tard, le site est en ligne. Vous pouvez aussi déclencher un déploiement à la main depuis l'onglet **Actions** du repository (« Deploy to GitHub Pages › Run workflow »). Si vous préférez travailler sur une autre branche et publier délibérément, fusionnez-la dans `main` quand vous êtes prêt — ou changez la ligne `branches` en tête du workflow.
 
+### 4. Deux branches : `dev` pour travailler, `main` pour publier
+
+Puisque chaque push sur `main` part en ligne, gardez une seconde branche pour le travail en cours :
+
+```bash
+git switch -c dev          # une fois : créer la branche de travail
+# …éditer, ajouter des projets, vérifier avec pnpm dev…
+git add . && git commit -m "Nouveau projet : …"
+
+git switch main            # publier : ramener dev dans main et pousser
+git merge dev
+git push origin main
+git switch dev             # retour au travail
+```
+
+`main` ne reçoit jamais que ce que vous avez déjà vu fonctionner en local — et un projet à moitié écrit qui attend sur `dev` n'atteint jamais le site publié par accident.
+
 ## Publication manuelle
 
 ### 1. Build pour production
@@ -141,39 +158,30 @@ Si vous préférez déployer le dossier `build/` vous-même :
 npx gh-pages -d build
 ```
 
-## Autres options d'hébergement
+## Hébergement mutualisé (O2Switch, OVH, Gandi…) : build local, puis FTP
 
-### 1. Netlify
+Un site microfolio, ce sont de simples fichiers : n'importe quel hébergement web qui sert du HTML peut l'accueillir, et rien n'est à installer côté serveur — ni Node.js, ni base de données.
 
-1. **Connectez votre repository GitHub à Netlify**
-2. **Configurez le build :**
-   - Build command: `pnpm build`
-   - Publish directory: `build`
-   - Renseignez `url` dans `src/lib/config.js` avec votre adresse Netlify
+1. **Renseignez l'adresse finale** dans `src/lib/config.js`, car le build l'inscrit dans toutes les URL absolues :
 
-3. **Domaine personnalisé :**
-   - Ajoutez votre domaine dans Netlify
-   - Configurez le DNS chez votre registrar
-
-### 2. Vercel
-
-1. **Importez votre projet depuis GitHub**
-2. **Configuration automatique pour SvelteKit**
-3. **Renseignez `url`** dans `src/lib/config.js` avec votre adresse Vercel
-
-### 3. Hébergement traditionnel
-
-Pour un hébergement classique :
-
-1. **Build du site :**
-
-   ```bash
-   pnpm build
+   ```js
+   url: 'https://www.mon-portfolio.fr'; // à la racine d'un domaine
+   url: 'https://www.mon-site.fr/portfolio'; // ou dans un sous-dossier
    ```
 
-2. **Upload du contenu :**
-   - Uploadez le contenu du dossier `build/`
-   - Configurez le serveur web (Apache, Nginx)
+2. **Construisez pour la production** avec `pnpm deploy`, pas `pnpm build` : c'est lui qui pose `NODE_ENV=production` et respecte donc un sous-dossier dans `url` (à la racine d'un domaine les deux donnent le même résultat, mais autant prendre l'habitude) :
+
+   ```bash
+   pnpm deploy
+   ```
+
+   Sous Windows PowerShell, qui ne comprend pas ce préfixe `NODE_ENV=` : `$env:NODE_ENV='production'; pnpm build`. Le site est dans `build/`.
+
+3. **Téléversez le _contenu_ de `build/`** (pas le dossier lui-même) dans la racine web de votre hébergement — appelée `www/`, `public_html/` ou `htdocs/` selon l'hébergeur, ou le sous-dossier choisi. Un client FTP gratuit comme [FileZilla](https://filezilla-project.org) fait l'affaire : créez une connexion avec l'hôte, l'identifiant et le mot de passe indiqués dans le panneau de votre hébergeur (choisissez SFTP quand il le propose), ouvrez `build/` à gauche, la racine web à droite, sélectionnez tout à gauche et glissez-le vers la droite.
+
+4. **Vérifiez le site** à votre adresse — chaque page, la carte, un projet et sa lightbox.
+
+**Mettre à jour le site**, ce sont les mêmes étapes : `pnpm deploy`, puis téléversement. Videz la racine web avant de téléverser (ou laissez FileZilla écraser, puis supprimez ce qui n'est plus dans `build/`) : les noms des fichiers générés changent d'un build à l'autre, et les anciens resteraient là.
 
 ## Domaines personnalisés
 
@@ -315,8 +323,6 @@ pnpm build
 ## Ressources utiles
 
 - **GitHub Pages** : https://pages.github.com/
-- **Netlify** : https://www.netlify.com/
-- **Vercel** : https://vercel.com/
 - **DNS Checker** : https://dnschecker.org/
 - **PageSpeed Insights** : https://pagespeed.web.dev/
 - **Google Search Console** : https://search.google.com/search-console

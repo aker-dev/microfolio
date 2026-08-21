@@ -334,6 +334,20 @@ You can customize these modes in the corresponding files:
 - `src/routes/list/+page.svelte` (list)
 - `src/routes/map/+page.svelte` (map)
 
+### 4. Going further: the Svelte templates
+
+Everything above is configuration. When you want to change how things look or behave, the templates are yours too — microfolio is a SvelteKit project, and a small one:
+
+| What you want to change                              | Where it lives                        |
+| ---------------------------------------------------- | ------------------------------------- |
+| A page's layout (home, projects, list, map, project) | `src/routes/**/+page.svelte`          |
+| Header, footer, cards, filters, lightbox             | `src/lib/components/Ak*.svelte`       |
+| Colours, dark theme, prose styling                   | `src/lib/theme.css` and `src/app.css` |
+| Interface texts                                      | `src/lib/locales/en.json`, `fr.json`  |
+| The menu, the lightbox, the sharing image            | `src/lib/config.js` (this guide)      |
+
+`pnpm dev` reloads the page as you save. The stack is [SvelteKit 2](https://svelte.dev/docs/kit), [Svelte 5](https://svelte.dev/docs/svelte) and [Tailwind CSS 4](https://tailwindcss.com/docs); their documentation covers what the templates do. One piece of advice: keep your changes small and local — a colour here, a block there — so that `git merge` brings in future microfolio versions without a fight.
+
 ## Environment Variables
 
 microfolio reads none of its own. The site's address lives in
@@ -342,7 +356,7 @@ microfolio reads none of its own. The site's address lives in
 ## Next steps
 
 - [Project addition guide](04-adding-projects.md)
-- [Publishing guide](04-publishing.md)
+- [Publishing guide](05-publication.md)
 
 ## Tips
 

@@ -23,7 +23,7 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 - **🔗 Shareable URLs** — Filter, search, sort, and pagination state synced to URL query params
 - **🌐 Internationalization** — English/French via svelte-i18n, RTL-ready
 - **🏷️ Built to be shared and found** — Open Graph and Twitter tags with absolute URLs, canonical links, and a `sitemap.xml` and `robots.txt` generated from your projects
-- **🔒 No cookies, no consent banner** — nothing is tracked, so there is nothing to ask permission for. Legal notice and privacy pages come as templates to fill in. Pasted YouTube and Vimeo embeds are routed through the platforms' no-cookie modes
+- **🔒 No cookies, no consent banner** — nothing is tracked, so there is nothing to ask permission for. Legal notice and privacy pages come as templates to fill in. A YouTube or Vimeo address alone on its line becomes a player, routed through the platforms' no-cookie modes
 - **📄 Pagination & Sorting** — Customizable rows-per-page, sort by date, title, type, or location
 
 ## 🔒 Privacy by construction

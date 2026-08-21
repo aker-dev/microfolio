@@ -23,7 +23,7 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 - **🔗 URLs partageables** — Filtres, recherche, tri et pagination synchronisés dans les paramètres d'URL
 - **🌐 Internationalisation** — Anglais/Français via svelte-i18n, support RTL
 - **🏷️ Partageable et indexable** — Balises Open Graph et Twitter en URL absolues, liens canoniques, et un `sitemap.xml` et `robots.txt` générés depuis vos projets
-- **🔒 Aucun cookie, aucun bandeau** — rien n'est pisté, donc il n'y a rien à faire accepter. Mentions légales et politique de confidentialité fournies en gabarits à remplir. Les embeds YouTube et Vimeo collés passent par les modes sans cookies des plateformes
+- **🔒 Aucun cookie, aucun bandeau** — rien n'est pisté, donc il n'y a rien à faire accepter. Mentions légales et politique de confidentialité fournies en gabarits à remplir. Une adresse YouTube ou Vimeo seule sur sa ligne devient un lecteur, qui passe par les modes sans cookies des plateformes
 - **📄 Pagination et tri** — Lignes par page personnalisable, tri par date, titre, type ou localisation
 
 ## 🔒 La vie privée par construction

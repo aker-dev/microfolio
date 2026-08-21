@@ -125,13 +125,18 @@ s'ouvrent automatiquement dans un nouvel onglet. Sur grand écran, les images
 s'étalent plus large que la colonne de texte — c'est la mise en page
 éditoriale de ces pages.
 
-**Vidéos YouTube ou Vimeo** : collez le code d'intégration fourni par la
-plateforme (« Partager › Intégrer ») directement dans le Markdown, sur une
-ligne à part :
+**Vidéos YouTube ou Vimeo** : collez l'adresse de la vidéo sur une ligne à
+part — rien d'autre sur la ligne — et elle devient le lecteur :
 
 ```markdown
-<iframe src="https://www.youtube.com/embed/ID_VIDEO" title="Mon film" allowfullscreen></iframe>
+https://www.youtube.com/watch?v=ID_VIDEO
 ```
+
+Les adresses `youtu.be/…`, Shorts et `vimeo.com/…` fonctionnent de la même
+façon. Un lien rédigé (`[voir le film](…)`) ou une adresse au milieu d'une
+phrase reste un simple lien. Besoin des options de la plateforme (minutage de
+départ, playlist…) ? Le code d'intégration de « Partager › Intégrer » peut être
+collé tel quel à la place.
 
 Le lecteur s'adapte à la colonne en gardant son ratio 16:9. microfolio fait
 aussi passer chaque embed par les modes sans cookies des plateformes au build

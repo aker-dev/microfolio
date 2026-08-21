@@ -411,6 +411,7 @@ Pour plus de détails, consultez le [dossier technique](documents/specifications
 - **Retour forcé** : pour passer à la ligne à l'intérieur d'un même paragraphe — une adresse, des horaires, une liste de crédits — terminez la ligne par `\`. Sans cela, Markdown colle les lignes ensemble
 - **Images** : placez-les dans le dossier `images/` et référencez-les avec `images/nom-image.jpg`
 - **Liens** : utilisez `[texte](url)` pour les liens externes — ils s'ouvrent automatiquement dans un nouvel onglet
+- **Vidéos** : une adresse YouTube ou Vimeo seule sur sa ligne devient le lecteur
 - **Titres** : utilisez `##` pour les sections (le `#` principal est réservé au titre du projet)
 
 ## Ressources utiles

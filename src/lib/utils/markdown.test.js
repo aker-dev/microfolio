@@ -181,3 +181,56 @@ describe('video embeds pasted into Markdown', () => {
 		expect(html).toContain(raw);
 	});
 });
+
+describe('a video address alone on its line', () => {
+	// The simple way: paste the URL, nothing else on the line, get the player.
+
+	it.each([
+		['https://www.youtube.com/watch?v=HH7we9EaQok', 'www.youtube-nocookie.com/embed/HH7we9EaQok'],
+		['https://youtu.be/HH7we9EaQok', 'www.youtube-nocookie.com/embed/HH7we9EaQok'],
+		['https://www.youtube.com/shorts/HH7we9EaQok', 'www.youtube-nocookie.com/embed/HH7we9EaQok'],
+		[
+			'https://www.youtube.com/watch?v=HH7we9EaQok&t=42s',
+			'www.youtube-nocookie.com/embed/HH7we9EaQok'
+		],
+		['https://vimeo.com/76979871', 'player.vimeo.com/video/76979871?dnt=1"'],
+		[
+			'https://vimeo.com/76979871/a1b2c3d4e5',
+			'player.vimeo.com/video/76979871?dnt=1&amp;h=a1b2c3d4e5"'
+		],
+		['https://player.vimeo.com/video/76979871', 'player.vimeo.com/video/76979871?dnt=1"']
+	])('turns %s into a player', (url, expectedSrc) => {
+		const html = renderMarkdownBody(`Before.\n\n${url}\n\nAfter.`);
+
+		expect(html).toContain(`<iframe src="https://${expectedSrc}`);
+		expect(html).toContain('allowfullscreen');
+		expect(html).not.toContain('<a href');
+	});
+
+	it('leaves a written link alone', () => {
+		const html = renderMarkdownBody('[see the film](https://youtu.be/HH7we9EaQok)');
+
+		expect(html).toContain('<a href="https://youtu.be/HH7we9EaQok"');
+		expect(html).not.toContain('<iframe');
+	});
+
+	it('leaves an address inside a sentence alone', () => {
+		const html = renderMarkdownBody('Watch it at https://youtu.be/HH7we9EaQok tonight.');
+
+		expect(html).toContain('<a href="https://youtu.be/HH7we9EaQok"');
+		expect(html).not.toContain('<iframe');
+	});
+
+	it('leaves a bare address that is not a video alone', () => {
+		const html = renderMarkdownBody('https://aker.pro');
+
+		expect(html).toContain('<a href="https://aker.pro"');
+		expect(html).not.toContain('<iframe');
+	});
+
+	it('gives two addresses on two lines two players', () => {
+		const html = renderMarkdownBody('https://youtu.be/HH7we9EaQok\n\nhttps://vimeo.com/76979871');
+
+		expect(html.match(/<iframe/g)).toHaveLength(2);
+	});
+});

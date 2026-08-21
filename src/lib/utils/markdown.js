@@ -70,10 +70,52 @@ function resolveAssetHref(href, assetBase) {
 	return assetBase ? `${assetBase}/${href}` : href;
 }
 
+// A video address alone on its line becomes the player — the way GitHub,
+// WordPress or Obsidian treat a bare link. Only a paragraph holding nothing but
+// the URL qualifies: a written link ([see the film](…)) or an address in the
+// middle of a sentence stays a link. The players use the same no-cookie modes
+// as the pasted embeds above.
+const VIDEO_PROVIDERS = [
+	{
+		pattern:
+			/^https?:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/,
+		title: 'YouTube video',
+		src: (m) => `https://www.youtube-nocookie.com/embed/${m[1]}`
+	},
+	{
+		// vimeo.com/ID, vimeo.com/ID/HASH (an unlisted video, whose hash the
+		// player needs as h=), player.vimeo.com/video/ID
+		pattern: /^https?:\/\/(?:www\.)?(?:player\.)?vimeo\.com\/(?:video\/)?(\d+)(?:\/([a-z0-9]+))?/,
+		title: 'Vimeo video',
+		src: (m) => `https://player.vimeo.com/video/${m[1]}?dnt=1${m[2] ? `&amp;h=${m[2]}` : ''}`
+	}
+];
+
+function videoEmbedFor(url) {
+	for (const { pattern, title, src } of VIDEO_PROVIDERS) {
+		const match = pattern.exec(url);
+		if (match) {
+			return `<iframe src="${src(match)}" title="${title}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+		}
+	}
+	return null;
+}
+
+// The shape marked gives a bare URL paragraph: a single autolinked token whose
+// text is its own address. A written link has a different text.
+function bareUrlOf(token) {
+	if (token.type !== 'paragraph' || token.tokens?.length !== 1) return null;
+	const [only] = token.tokens;
+	return only.type === 'link' && only.text === only.href ? only.href : null;
+}
+
 // Walk every token, including those nested in blockquotes, lists and tables.
+// The callback may return a replacement token, which takes the original's place.
 function walkTokens(tokens, fn) {
-	for (const token of tokens) {
-		fn(token);
+	for (let i = 0; i < tokens.length; i++) {
+		const replacement = fn(tokens[i]);
+		if (replacement) tokens[i] = replacement;
+		const token = tokens[i];
 		if (token.tokens) walkTokens(token.tokens, fn);
 		if (token.items) walkTokens(token.items, fn);
 		if (token.header) for (const cell of token.header) walkTokens(cell.tokens, fn);
@@ -96,6 +138,11 @@ export function renderMarkdownBody(raw, assetBase = '') {
 		if (token.type === 'html') {
 			token.text = privacyFriendlyEmbeds(token.text);
 			token.raw = privacyFriendlyEmbeds(token.raw);
+		}
+		const url = bareUrlOf(token);
+		const embed = url && videoEmbedFor(url);
+		if (embed) {
+			return { type: 'html', block: true, pre: false, raw: token.raw, text: embed };
 		}
 	});
 	return marked.parser(tokens);

@@ -311,9 +311,8 @@ find content/ -name "*.png" -exec optipng -o5 {} \;
 ### Problem: Build fails
 
 ```bash
-# Clean cache
-pnpm clean
-rm -rf node_modules package-lock.json
+# Start over from a clean install
+rm -rf node_modules .svelte-kit
 pnpm install
 
 # Rebuild

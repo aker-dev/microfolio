@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **A stability promise**, in the READMEs: what 1.0 freezes until 2.0 — the content layout and frontmatter keys, the keys of `config.js` (add-only), the commands, and the files `update-microfolio` never touches — and what is free to move in 1.x
 - `package.json` carries the description, licence, repository, homepage and issue tracker it had always left out; the licence years read 2025-2026
 
+### Fixed
+
+- The publication guide's "build fails" recipe ran a `pnpm clean` that does not exist and deleted an npm lockfile this project never had; it now starts over from a clean install
+
 ## [0.15.0] - 2026-08-21
 
 ### Changed

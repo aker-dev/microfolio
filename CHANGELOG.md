@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **The READMEs credit Subfolio by Area 17**, the file-based portfolio that gave microfolio its founding idea
+- **The READMEs and the landing page link the press coverage** (Korben, Entreprendre à Montpellier), thank Korben and the beta testers, and invite people to share the sites they build — a wall of fame is in the making, collected in the Show-and-tell discussions. The landing page swaps its emoji for Carbon icons, the same set the site uses
 
 ## [0.13.2] - 2026-08-21
 

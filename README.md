@@ -152,6 +152,17 @@ See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the details, and the **[changelog
 - 💬 **Questions**: [GitHub Discussions](https://github.com/aker-dev/microfolio/discussions)
 - 📧 **Email**: hello@aker.pro
 
+## 📰 They talked about microfolio
+
+- **Korben** — [Microfolio, le portfolio statique qui regarde WordPress de haut](https://korben.info/microfolio-portfolio-statique-mate-wordpress-haut.html)
+- **Entreprendre à Montpellier** — [Microfolio : l'innovation montpelliéraine qui réinvente le portfolio en ligne](https://entreprendre-montpellier.eolas-65.montpellier.fr/actualites/microfolio-linnovation-montpellieraine-qui-reinvente-le-portfolio-en-ligne)
+
+Thank you, Korben, for the article — and thank you to the beta testers whose feedback shaped everything between 0.1 and 1.0.
+
+## 🖼️ Built a site with microfolio?
+
+Show it! Post it in [Show and tell](https://github.com/aker-dev/microfolio/discussions/categories/show-and-tell) or write to **hello@aker.pro** — a wall of fame of sites made with microfolio is in the making, and yours belongs on it.
+
 ## 🙏 Heritage
 
 microfolio owes its founding idea to **[Subfolio](https://github.com/area17/subfolio)** by [Area 17](https://area17.com): a portfolio that is nothing more than a folder of files, shown well. Subfolio proved the idea years ago; microfolio carries it into a static, privacy-first generator for today's web. Thank you, Area 17.

@@ -1,8 +1,39 @@
 node_modules
-# Content
-content/projects/*
-!content/projects/example-project/
-!content/projects/example_projects.zip
+# Content — your projects are tracked. Only the demo set that the deploy
+# workflow and `pnpm generate-demo --install` unzip into content/projects/
+# is ignored, and by name, so it cannot take yours with it.
+# Demo projects, named by pnpm generate-demo — start
+/content/projects/ilm-park-reading-pavilion/
+/content/projects/dessau-tram-shelters/
+/content/projects/shophouse-rooftop-studios/
+/content/projects/toerten-community-hall/
+/content/projects/lakeshore-bathhouse/
+/content/projects/hillside-library-ulm/
+/content/projects/vieux-port-kindergarten/
+/content/projects/tugendhat-garden-room/
+/content/projects/paulista-courtyard-canopy/
+/content/projects/paper-partition-house/
+/content/projects/aspen-mountain-studio/
+/content/projects/universal-grotesk-revival/
+/content/projects/festival-of-form-wayfinding/
+/content/projects/primary-chess-set/
+/content/projects/counterweight-lamp/
+/content/projects/jacquard-punch-card-textiles/
+/content/projects/single-line-metro-map/
+/content/projects/circle-triangle-square-posters/
+/content/projects/span-shelving/
+/content/projects/brass-tea-service/
+/content/projects/twelve-column-annual-report/
+/content/projects/neon-numeral-clock/
+/content/projects/suspended-balance-studies/
+/content/projects/primary-colours-underpass/
+/content/projects/photogram-garden/
+/content/projects/triadic-costume-reissue/
+/content/projects/refraction-curtain/
+/content/projects/sound-of-shapes/
+/content/projects/alphabet-facade/
+/content/projects/fourteen-metronomes/
+# Demo projects — end
 
 # Output
 .output

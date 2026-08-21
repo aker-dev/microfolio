@@ -2,7 +2,9 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [preview]
+    # main publishes. dev only runs the checks — lint, tests, build, smoke —
+    # so a push there says whether it is safe to merge, without going live.
+    branches: [main, dev]
   workflow_dispatch:
 
 permissions:
@@ -10,8 +12,10 @@ permissions:
   pages: write
   id-token: write
 
+# One group per branch: a check run on dev never queues behind a deploy, and
+# deploys from main still run one at a time.
 concurrency:
-  group: 'pages'
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -21,11 +25,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-
-      - name: Generate example projects
-        run: |
-          cd content/projects
-          unzip -o example_projects.zip
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -39,7 +38,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      # The demo set, the lint and the end-to-end suite are for developing
+      # microfolio itself. A fork or a clone publishes someone's portfolio: its
+      # projects are not the demo, its Markdown was not written for Prettier,
+      # and the e2e suite counts on the demo's thirty projects — so those three
+      # steps run on the upstream repository only. The unit tests, the build
+      # and the smoke test of what was built run everywhere.
+      #
+      # Same command a user runs to look at the demo locally.
+      - name: Install the demo projects
+        if: github.repository == 'aker-dev/microfolio'
+        run: pnpm demo
+
       - name: Lint
+        if: github.repository == 'aker-dev/microfolio'
         run: pnpm run lint
 
       - name: Test
@@ -59,6 +71,7 @@ jobs:
         run: pnpm exec playwright install chromium
 
       - name: End-to-end tests
+        if: github.repository == 'aker-dev/microfolio'
         run: pnpm test:e2e
 
       - name: Build
@@ -84,14 +97,17 @@ jobs:
           retention-days: 7
 
       - name: Setup Pages
+        if: github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v6
 
       - name: Upload artifact
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v5
         with:
           path: './build'
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

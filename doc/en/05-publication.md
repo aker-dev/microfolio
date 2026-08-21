@@ -110,17 +110,30 @@ git push origin main
 
 ### 3. GitHub Actions (automatic)
 
-The repository ships a workflow, `.github/workflows/deploy.yml`, that builds the site, checks it, and publishes it to GitHub Pages. **It triggers on a push to the `preview` branch** — not `main` — so you decide when a version goes live:
+The repository ships a workflow, `.github/workflows/deploy.yml`, that builds the site, checks it (lint, tests, a smoke pass over the built files) and publishes it to GitHub Pages. **It runs on every push to `main`** — so publishing is just:
 
 ```bash
-# Publish the current state of main
-git checkout preview
-git merge main
-git push origin preview
-git checkout main
+git push origin main
 ```
 
-Prefer publishing on every push to `main`? Edit the `branches` line at the top of `.github/workflows/deploy.yml` and replace `preview` with `main`.
+A few minutes later the site is live. You can also trigger a deployment by hand from the repository's **Actions** tab ("Deploy to GitHub Pages › Run workflow"). If you would rather work on another branch and publish deliberately, merge it into `main` when you are ready — or change the `branches` line at the top of the workflow.
+
+### 4. Two branches: `dev` to work, `main` to publish
+
+Since every push to `main` goes live, keep a second branch for work in progress:
+
+```bash
+git switch -c dev          # once: create the working branch
+# …edit, add projects, check with pnpm dev…
+git add . && git commit -m "New project: …"
+
+git switch main            # publish: bring dev into main and push
+git merge dev
+git push origin main
+git switch dev             # back to work
+```
+
+`main` only ever receives what you have already seen working locally — and a half-finished project waiting on `dev` never reaches the published site by accident. A push to `dev` still runs the checks (tests, build, smoke test) without publishing anything: the **Actions** tab tells you it is safe to merge before you do.
 
 ## Manual Publication
 
@@ -144,39 +157,30 @@ If you prefer to deploy the `build/` folder yourself:
 npx gh-pages -d build
 ```
 
-## Other Hosting Options
+## Shared hosting (O2Switch, OVH, Gandi…): build locally, upload by FTP
 
-### 1. Netlify
+A microfolio site is plain files: any web hosting that serves HTML can host it, and nothing needs to be installed on the server — no Node.js, no database.
 
-1. **Connect your GitHub repository to Netlify**
-2. **Configure the build:**
-   - Build command: `pnpm build`
-   - Publish directory: `build`
-   - Set `url` in `src/lib/config.js` to your Netlify address
+1. **Set the final address** in `src/lib/config.js`, because the build bakes it into every absolute URL:
 
-3. **Custom domain:**
-   - Add your domain in Netlify
-   - Configure DNS at your registrar
-
-### 2. Vercel
-
-1. **Import your project from GitHub**
-2. **Automatic configuration for SvelteKit**
-3. **Set `url`** in `src/lib/config.js` to your Vercel address
-
-### 3. Traditional Hosting
-
-For classic hosting:
-
-1. **Build the site:**
-
-   ```bash
-   pnpm build
+   ```js
+   url: 'https://www.my-portfolio.com'; // at the root of a domain
+   url: 'https://www.my-site.com/portfolio'; // or in a sub-folder
    ```
 
-2. **Upload content:**
-   - Upload the contents of the `build/` folder
-   - Configure the web server (Apache, Nginx)
+2. **Build for production** with `pnpm deploy`, not `pnpm build`: it is the one that sets `NODE_ENV=production` and therefore honours a sub-folder in `url` (at the root of a domain both give the same result, but make it a habit):
+
+   ```bash
+   pnpm deploy
+   ```
+
+   On Windows PowerShell, where that `NODE_ENV=` prefix is not understood: `$env:NODE_ENV='production'; pnpm build`. The site is in `build/`.
+
+3. **Upload the _contents_ of `build/`** (not the folder itself) to your hosting's web root — called `www/`, `public_html/` or `htdocs/` depending on the host, or the sub-folder you chose. A free FTP client such as [FileZilla](https://filezilla-project.org) does the job: create a connection with the host, login and password shown in your hosting panel (pick SFTP when your host offers it), open `build/` on the left, the web root on the right, select everything on the left and drag it across.
+
+4. **Check the site** at your address — every page, the map, one project and its lightbox.
+
+**Updating the site** is the same steps again: `pnpm deploy`, then upload. Empty the web root before uploading (or let FileZilla overwrite, then delete what is no longer in `build/`): the generated file names change between builds, and old ones would linger.
 
 ## Custom Domains
 
@@ -244,24 +248,39 @@ git commit -m "Design update"
 git push origin main
 ```
 
-### 3. Dependency Updates
+### 3. Updating microfolio
+
+A new release of microfolio is a new version of the engine; your projects, your `config.js`, your favicon and your sharing image are yours and stay put. From the folder of your site, with everything committed:
 
 ```bash
-# Check for updates
-pnpm outdated
-
-# Update
-pnpm update
-
-# Test
-pnpm dev
-pnpm build
-
-# Publish
-git add .
-git commit -m "Dependency updates"
-git push origin main
+pnpm update-microfolio            # to the latest release
+pnpm update-microfolio --dry-run  # only say what would change
 ```
+
+(`microfolio update`, with the same options, if you installed with Homebrew.)
+
+The script downloads the release you run and the one you are moving to, and decides file by file: what you never touched takes the new version, what you edited and microfolio left alone stays as it is, and when both sides changed the same file it tries to combine the two — failing that, your version stays and the new one is written next to it as `<file>.upstream`, for you to look at. `content/`, `src/lib/config.js`, `static/favicon.svg` and `static/og.jpg` are never touched; when `config.js` gained settings upstream, the difference is printed so you can copy what you want. Then:
+
+```bash
+pnpm install
+pnpm dev                                    # look at the site
+git add -A && git commit -m "Update microfolio to 1.1.0"
+git push origin main                        # publishes, if GitHub Pages deploys main
+```
+
+If you do not like the result, `git checkout . && git clean -fd` right after the update puts everything back — which is why the script asks for a clean working tree before it starts.
+
+**A site older than the script** (from before 1.0) has no `pnpm update-microfolio` yet. Fetch the script once and run it; it is part of the site from then on:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/aker-dev/microfolio/main/scripts/update-microfolio.js -o update-microfolio.js
+node update-microfolio.js
+rm update-microfolio.js
+```
+
+**By hand**, if you would rather see every step: download the release you want from [the releases page](https://github.com/aker-dev/microfolio/releases) and unpack it next to your site, then copy everything from it into your site's folder **except** `content/`, `src/lib/config.js`, `static/favicon.svg` and `static/og.jpg`. Bring back any change you had made to the templates or to `src/app.css` by comparing with your git history, run `pnpm install`, check with `pnpm dev`, and commit. This also works on a site that was never a git repository.
+
+**With git alone**, if you cloned the repository rather than used `microfolio new`: your history is shared with microfolio's, so `git remote add upstream https://github.com/aker-dev/microfolio.git`, `git fetch upstream --tags` and `git merge v1.1.0` bring the release in. Expect conflicts on the files you rewrote — the home and about pages, `config.js` — and on the example project if you deleted it; resolve each by keeping yours.
 
 ## Production Optimization
 
@@ -318,8 +337,6 @@ pnpm build
 ## Useful Resources
 
 - **GitHub Pages**: https://pages.github.com/
-- **Netlify**: https://www.netlify.com/
-- **Vercel**: https://vercel.com/
 - **DNS Checker**: https://dnschecker.org/
 - **PageSpeed Insights**: https://pagespeed.web.dev/
 - **Google Search Console**: https://search.google.com/search-console

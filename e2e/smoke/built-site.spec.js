@@ -1,3 +1,4 @@
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
 
 /**
@@ -62,9 +63,23 @@ function watchForBreakage(page, baseURL) {
 // which carries the /microfolio the site is served under, and a leading slash
 // would throw that away and ask the origin root instead.
 //
-// example-project is the one project tracked in git. The rest arrive from
-// example_projects.zip, which CI unzips and a fresh clone does not.
-const PAGES = ['./', 'about/', 'projects/', 'list/', 'map/', 'projects/example-project/'];
+// The project page is whichever project the content holds first, because this
+// suite also runs in the deploy workflow of a site that replaced example-project
+// with its own. The frontmatter check mirrors what the build requires: a
+// project without title or date is skipped, and its page would 404 here.
+function firstProjectRoute() {
+	const dir = 'content/projects';
+	if (!existsSync(dir)) return null;
+	for (const name of readdirSync(dir).sort()) {
+		const file = `${dir}/${name}/index.md`;
+		if (!existsSync(file)) continue;
+		const head = readFileSync(file, 'utf8').slice(0, 4000);
+		if (/^title:/m.test(head) && /^date:/m.test(head)) return `projects/${name}/`;
+	}
+	return null;
+}
+
+const PAGES = ['./', 'about/', 'projects/', 'list/', 'map/', firstProjectRoute()].filter(Boolean);
 
 for (const route of PAGES) {
 	test(`${route} loads from the build, whole and hydrated`, async ({ page, baseURL }) => {

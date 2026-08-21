@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.0] - 2026-08-21
+
+### Changed
+
+- **A push to `dev` runs the checks without publishing**: the deploy workflow now runs on `dev` too, and only `main` deploys. The `preview` branch is gone — GitHub Pages serves one site per repository
+- **`pnpm demo`** unzips the thirty demo projects into `content/projects/`, and `pnpm demo --remove` takes them out again — in plain Node, so it works where `unzip` does not. The deploy workflow and `generate-demo --install` go through it too, and the docs finally say what `example_projects.zip` is, and that it can be deleted
+- **Your projects reach your repository**: `.gitignore` ignored `content/projects/*`, so a site that followed the docs pushed none of its projects to GitHub and GitHub Pages built it with the demo instead. The demo set is now ignored by name, in a block `pnpm generate-demo` writes from its dataset
+- **The deploy workflow tells a fork from the upstream repository**: the demo unzip, lint and end-to-end steps run only on `aker-dev/microfolio`. A fork or clone builds and smoke-tests its own site — whose project page in the smoke suite is now the first project found, rather than `example-project`, which a real site deletes (and deleting the demo zip no longer breaks the deploy)
+- **`pnpm update-microfolio`** moves a site to a newer release, file by file: yours untouched (`content/`, `config.js`, favicon, sharing image), theirs taken where you never edited, merged where both sides changed, a `.upstream` copy where that fails, and the upstream changes to `config.js` printed rather than applied. Documented in the publication guide, with a manual procedure and the git-only path — and `brew upgrade microfolio` no longer claims to update a site
+- **Three new doc sections**: a two-branch workflow (`dev` to work, `main` to publish) now that `main` deploys; a chapter on shared hosting (O2Switch, OVH…) — `pnpm deploy` locally, then the contents of `build/` uploaded with FileZilla; and a first pointer to the Svelte templates for whoever wants to customize beyond `config.js`
+- **The configuration guide shows the real `config.js`** — the actual `siteConfig` in its four blocks, with the translation-key navigation, the three social links the footer knows, and pointers to the sharing-image, images and lightbox settings — instead of a sample that had drifted from the file years ago
+- **The site deploys from `main`.** The GitHub Pages workflow now runs on every push to `main` instead of a separate `preview` branch — a fork or a clone publishes with a plain `git push`, nothing to configure. The publication guide and the READMEs say so
+- **The READMEs credit Subfolio by Area 17**, the file-based portfolio that gave microfolio its founding idea
+- **The READMEs and the landing page link the press coverage** (Korben, Entreprendre à Montpellier), thank Korben and the beta testers, and invite people to share the sites they build — a wall of fame is in the making, collected in the Show-and-tell discussions. The landing page swaps its emoji for Carbon icons, the same set the site uses
+
 ## [0.13.2] - 2026-08-21
 
 ### Changed

@@ -114,6 +114,9 @@ pnpm install
 
 # Lancer le serveur de développement
 pnpm dev
+
+# Facultatif : décompresser les trente projets du site de démonstration à côté des vôtres
+pnpm demo
 ```
 
 📖 **Guide d'installation détaillé** : [doc/fr/01-installation.md](doc/fr/01-installation.md)
@@ -138,8 +141,18 @@ pnpm dev
 microfolio build  # ou pnpm build
 
 # Activer GitHub Pages dans les paramètres du dépôt (Source : GitHub Actions)
-# Pousser vers la branche preview — déploiement automatique
+# Pousser sur main — déploiement automatique
 ```
+
+### Mise à jour
+
+Une release est un nouveau moteur ; votre contenu et vos réglages restent à vous. Depuis votre site, tout étant commité :
+
+```bash
+pnpm update-microfolio
+```
+
+Elle applique la release fichier par fichier, ne touche jamais `content/`, `config.js`, votre favicon ni votre image de partage, et laisse une copie `.upstream` partout où vos modifications et les nôtres se heurtent. Détails dans le [guide de publication](doc/fr/05-publication.md#3-mettre-à-jour-microfolio).
 
 ## 🤝 Contribution
 
@@ -157,6 +170,21 @@ Consultez **[CONTRIBUER.md](CONTRIBUER.md)** pour les détails, et le **[changel
 - 🐛 **Problèmes** : [GitHub Issues](https://github.com/aker-dev/microfolio/issues)
 - 💬 **Questions** : [GitHub Discussions](https://github.com/aker-dev/microfolio/discussions)
 - 📧 **Email** : hello@aker.pro
+
+## 📰 Ils ont parlé de microfolio
+
+- **Korben** — [Microfolio, le portfolio statique qui regarde WordPress de haut](https://korben.info/microfolio-portfolio-statique-mate-wordpress-haut.html)
+- **Entreprendre à Montpellier** — [Microfolio : l'innovation montpelliéraine qui réinvente le portfolio en ligne](https://entreprendre-montpellier.eolas-65.montpellier.fr/actualites/microfolio-linnovation-montpellieraine-qui-reinvente-le-portfolio-en-ligne)
+
+Merci à Korben pour son article — et merci aux bêta-testeurs dont les retours ont façonné tout ce qui sépare la 0.1 de la 1.0.
+
+## 🖼️ Vous avez fait un site avec microfolio ?
+
+Montrez-le ! Postez-le dans [Show and tell](https://github.com/aker-dev/microfolio/discussions/categories/show-and-tell) ou écrivez à **hello@aker.pro** — un mur d'honneur des sites réalisés avec microfolio est en préparation, et le vôtre y a sa place.
+
+## 🙏 Filiation
+
+microfolio doit son idée fondatrice à **[Subfolio](https://github.com/area17/subfolio)** d'[Area 17](https://area17.com) : un portfolio qui n'est rien d'autre qu'un dossier de fichiers, bien montré. Subfolio l'a prouvé il y a des années ; microfolio porte l'idée vers un générateur statique et respectueux de la vie privée pour le web d'aujourd'hui. Merci, Area 17.
 
 ## 📄 Licence
 

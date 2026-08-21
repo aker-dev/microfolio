@@ -19,6 +19,17 @@ content/projects/my-project/
     └── technical-specs.pdf
 ```
 
+## The demo projects
+
+`content/projects/example_projects.zip` holds the thirty projects of the [demo site](https://aker-dev.github.io/microfolio) — a Bauhaus-flavoured set with images, PDFs and complete frontmatter, the very material microfolio's tests run against. To look at them next to your own projects:
+
+```bash
+pnpm demo            # unzips them into content/projects/
+pnpm demo --remove   # takes them out again
+```
+
+(`microfolio demo` and `microfolio demo --remove` if you installed with Homebrew.) git ignores them by name, so they stay on your machine and never reach your repository or your published site. The zip itself is tracked; if you have no use for it, delete it — nothing of yours depends on it.
+
 ## Creating a New Project
 
 ### 1. Create the Project Folder

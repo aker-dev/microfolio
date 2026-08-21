@@ -2,7 +2,8 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
 // Deliberately does not load the SvelteKit plugin: these tests cover the plain
-// content-parsing modules, so they stay fast and free of build machinery.
+// content-parsing modules and the update script, so they stay fast and free of
+// build machinery.
 export default defineConfig({
 	resolve: {
 		alias: {
@@ -10,7 +11,7 @@ export default defineConfig({
 		}
 	},
 	test: {
-		include: ['src/**/*.test.js'],
+		include: ['src/**/*.test.js', 'scripts/**/*.test.js'],
 		environment: 'node'
 	}
 });

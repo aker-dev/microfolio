@@ -63,7 +63,7 @@ Your site will be accessible at: http://localhost:5555
 
 - Automatic installation of all dependencies (Node.js, pnpm, Git)
 - Simplified commands: `microfolio new`, `microfolio dev`, `microfolio build`
-- Easy updates with `brew upgrade microfolio`
+- `brew upgrade microfolio` keeps the command current; a site updates with `pnpm update-microfolio` (see [Updating microfolio](05-publication.md#3-updating-microfolio))
 
 #### Option 2: Manual Installation
 
@@ -289,6 +289,8 @@ The easiest way is to copy the `example-project` folder:
 ```bash
 cp -r content/projects/example-project content/projects/my-first-project
 ```
+
+Want more to look at? `pnpm demo` unzips the thirty projects of the demo site into `content/projects/`, and `pnpm demo --remove` takes them out again. git ignores them, so they never reach your repository.
 
 ### Step 3: Modify the index.md file
 

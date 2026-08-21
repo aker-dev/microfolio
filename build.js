@@ -1,11 +1,7 @@
 #!/usr/bin/env node
 
-import dotenv from 'dotenv';
 import { spawn } from 'child_process';
 import { siteConfig } from './src/lib/config.js';
-
-// Load environment variables from .env file
-dotenv.config();
 
 /** Runs a command to completion, resolving with its exit code. */
 function run(command, args) {

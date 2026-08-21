@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **The site deploys from `main`.** The GitHub Pages workflow now runs on every push to `main` instead of a separate `preview` branch — a fork or a clone publishes with a plain `git push`, nothing to configure. The publication guide and the READMEs say so
 - **The READMEs credit Subfolio by Area 17**, the file-based portfolio that gave microfolio its founding idea
 - **The READMEs and the landing page link the press coverage** (Korben, Entreprendre à Montpellier), thank Korben and the beta testers, and invite people to share the sites they build — a wall of fame is in the making, collected in the Show-and-tell discussions. The landing page swaps its emoji for Carbon icons, the same set the site uses
 

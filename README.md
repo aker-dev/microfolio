@@ -132,7 +132,7 @@ pnpm dev
 microfolio build  # or pnpm build
 
 # Enable GitHub Pages in repository settings (Source: GitHub Actions)
-# Push to the preview branch — automatic deployment
+# Push to main — automatic deployment
 ```
 
 ## 🤝 Contributing

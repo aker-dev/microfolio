@@ -110,17 +110,13 @@ git push origin main
 
 ### 3. GitHub Actions (automatic)
 
-The repository ships a workflow, `.github/workflows/deploy.yml`, that builds the site, checks it, and publishes it to GitHub Pages. **It triggers on a push to the `preview` branch** — not `main` — so you decide when a version goes live:
+The repository ships a workflow, `.github/workflows/deploy.yml`, that builds the site, checks it (lint, tests, a smoke pass over the built files) and publishes it to GitHub Pages. **It runs on every push to `main`** — so publishing is just:
 
 ```bash
-# Publish the current state of main
-git checkout preview
-git merge main
-git push origin preview
-git checkout main
+git push origin main
 ```
 
-Prefer publishing on every push to `main`? Edit the `branches` line at the top of `.github/workflows/deploy.yml` and replace `preview` with `main`.
+A few minutes later the site is live. You can also trigger a deployment by hand from the repository's **Actions** tab ("Deploy to GitHub Pages › Run workflow"). If you would rather work on another branch and publish deliberately, merge it into `main` when you are ready — or change the `branches` line at the top of the workflow.
 
 ## Manual Publication
 

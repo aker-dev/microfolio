@@ -138,7 +138,7 @@ pnpm dev
 microfolio build  # ou pnpm build
 
 # Activer GitHub Pages dans les paramètres du dépôt (Source : GitHub Actions)
-# Pousser vers la branche preview — déploiement automatique
+# Pousser sur main — déploiement automatique
 ```
 
 ## 🤝 Contribution

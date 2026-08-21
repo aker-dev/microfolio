@@ -111,17 +111,13 @@ git push origin main
 
 ### 3. GitHub Actions (automatique)
 
-Le repository fournit un workflow, `.github/workflows/deploy.yml`, qui construit le site, le vérifie, puis le publie sur GitHub Pages. **Il se déclenche sur un push vers la branche `preview`** — pas `main` — c'est donc vous qui décidez quand une version part en ligne :
+Le repository fournit un workflow, `.github/workflows/deploy.yml`, qui construit le site, le vérifie (lint, tests, une passe de fumée sur les fichiers construits) puis le publie sur GitHub Pages. **Il s'exécute à chaque push sur `main`** — publier se résume donc à :
 
 ```bash
-# Publier l'état actuel de main
-git checkout preview
-git merge main
-git push origin preview
-git checkout main
+git push origin main
 ```
 
-Vous préférez publier à chaque push sur `main` ? Éditez la ligne `branches` en tête de `.github/workflows/deploy.yml` et remplacez `preview` par `main`.
+Quelques minutes plus tard, le site est en ligne. Vous pouvez aussi déclencher un déploiement à la main depuis l'onglet **Actions** du repository (« Deploy to GitHub Pages › Run workflow »). Si vous préférez travailler sur une autre branche et publier délibérément, fusionnez-la dans `main` quand vous êtes prêt — ou changez la ligne `branches` en tête du workflow.
 
 ## Publication manuelle
 

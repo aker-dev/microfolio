@@ -290,6 +290,8 @@ Le plus simple est de copier le dossier `example-project` :
 cp -r content/projects/example-project content/projects/mon-premier-projet
 ```
 
+Envie d'en voir plus ? `pnpm demo` décompresse les trente projets du site de démonstration dans `content/projects/`, et `pnpm demo --remove` les retire. git les ignore : ils n'atteignent jamais votre dépôt.
+
 ### Étape 3 : Modifier le fichier index.md
 
 Ouvrez le fichier `content/projects/mon-premier-projet/index.md` et modifiez :

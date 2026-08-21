@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`pnpm demo`** unzips the thirty demo projects into `content/projects/`, and `pnpm demo --remove` takes them out again — in plain Node, so it works where `unzip` does not. The deploy workflow and `generate-demo --install` go through it too, and the docs finally say what `example_projects.zip` is, and that it can be deleted
 - **Your projects reach your repository**: `.gitignore` ignored `content/projects/*`, so a site that followed the docs pushed none of its projects to GitHub and GitHub Pages built it with the demo instead. The demo set is now ignored by name, in a block `pnpm generate-demo` writes from its dataset
 - **The deploy workflow tells a fork from the upstream repository**: the demo unzip, lint and end-to-end steps run only on `aker-dev/microfolio`. A fork or clone builds and smoke-tests its own site — whose project page in the smoke suite is now the first project found, rather than `example-project`, which a real site deletes (and deleting the demo zip no longer breaks the deploy)
 - **`pnpm update-microfolio`** moves a site to a newer release, file by file: yours untouched (`content/`, `config.js`, favicon, sharing image), theirs taken where you never edited, merged where both sides changed, a `.upstream` copy where that fails, and the upstream changes to `config.js` printed rather than applied. Documented in the publication guide, with a manual procedure and the git-only path — and `brew upgrade microfolio` no longer claims to update a site

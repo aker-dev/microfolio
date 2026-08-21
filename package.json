@@ -14,6 +14,7 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"deploy": "NODE_ENV=production pnpm run build",
+		"demo": "node scripts/install-demo.js",
 		"generate-demo": "node scripts/generate-demo-projects.js",
 		"update-microfolio": "node scripts/update-microfolio.js",
 		"optimize-images": "node scripts/generate-optimized-images.js",

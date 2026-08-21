@@ -114,6 +114,9 @@ pnpm install
 
 # Lancer le serveur de développement
 pnpm dev
+
+# Facultatif : décompresser les trente projets du site de démonstration à côté des vôtres
+pnpm demo
 ```
 
 📖 **Guide d'installation détaillé** : [doc/fr/01-installation.md](doc/fr/01-installation.md)

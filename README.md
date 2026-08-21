@@ -108,6 +108,9 @@ pnpm install
 
 # Start development server
 pnpm dev
+
+# Optional: unzip the thirty projects of the demo site next to yours
+pnpm demo
 ```
 
 📖 **Detailed installation guide**: [doc/en/01-installation.md](doc/en/01-installation.md)

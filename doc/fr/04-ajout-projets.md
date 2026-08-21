@@ -19,6 +19,17 @@ content/projects/mon-projet/
     └── technical-specs.pdf
 ```
 
+## Les projets de démonstration
+
+`content/projects/example_projects.zip` contient les trente projets du [site de démonstration](https://aker-dev.github.io/microfolio) — un ensemble d'inspiration Bauhaus avec images, PDF et frontmatter complet, la matière même sur laquelle tournent les tests de microfolio. Pour les regarder à côté de vos propres projets :
+
+```bash
+pnpm demo            # les décompresse dans content/projects/
+pnpm demo --remove   # les retire
+```
+
+git les ignore par leur nom : ils restent sur votre machine et n'atteignent jamais votre dépôt ni votre site publié. Le zip, lui, est suivi ; si vous n'en avez pas l'usage, supprimez-le — rien de ce qui est à vous n'en dépend.
+
 ## Création d'un nouveau projet
 
 ### 1. Créer le dossier du projet

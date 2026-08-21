@@ -43,6 +43,7 @@ import { projects } from './demo-projects/projects.js';
 import { exampleProject } from './demo-projects/example-project.js';
 import { renderComposition, identityFor } from './demo-projects/compose.js';
 import { buildProjectPdf } from './demo-projects/pdf.js';
+import { installDemo } from './install-demo.js';
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..');
 const projectsDir = join(rootDir, 'content', 'projects');
@@ -206,8 +207,8 @@ async function installLocally() {
 	for (const p of projects) {
 		await rm(join(projectsDir, p.slug), { recursive: true, force: true });
 	}
-	execFileSync('unzip', ['-oq', zipPath], { cwd: projectsDir });
-	console.log(`✓ installed the set into ${projectsDir}`);
+	const { files } = installDemo({ zipPath, projectsDir });
+	console.log(`✓ installed the set into ${projectsDir} (${files} files)`);
 }
 
 // --- The tracked example project ----------------------------------------------

@@ -22,18 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      # The demo set, the lint and the end-to-end suite are for developing
-      # microfolio itself. A fork or a clone publishes someone's portfolio: its
-      # projects are not the demo, its Markdown was not written for Prettier,
-      # and the e2e suite counts on the demo's thirty projects — so those three
-      # steps run on the upstream repository only. The unit tests, the build
-      # and the smoke test of what was built run everywhere.
-      - name: Generate example projects
-        if: github.repository == 'aker-dev/microfolio'
-        run: |
-          cd content/projects
-          unzip -o example_projects.zip
-
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
@@ -45,6 +33,18 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      # The demo set, the lint and the end-to-end suite are for developing
+      # microfolio itself. A fork or a clone publishes someone's portfolio: its
+      # projects are not the demo, its Markdown was not written for Prettier,
+      # and the e2e suite counts on the demo's thirty projects — so those three
+      # steps run on the upstream repository only. The unit tests, the build
+      # and the smoke test of what was built run everywhere.
+      #
+      # Same command a user runs to look at the demo locally.
+      - name: Install the demo projects
+        if: github.repository == 'aker-dev/microfolio'
+        run: pnpm demo
 
       - name: Lint
         if: github.repository == 'aker-dev/microfolio'

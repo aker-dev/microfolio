@@ -247,3 +247,19 @@
 		font-size: 1.2em;
 	}
 }
+
+/* Video embeds pasted into Markdown. YouTube and Vimeo snippets come with a
+   fixed 560×315; scaled to the column here, ratio kept — height: auto beats the
+   height attribute. On the editorial pages they spread like the images do. */
+.prose iframe {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+	border: 0;
+}
+
+@media (min-width: 64rem) {
+	.ak-editorial > iframe {
+		max-width: none;
+	}
+}

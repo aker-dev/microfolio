@@ -23,7 +23,7 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 - **🔗 URLs partageables** — Filtres, recherche, tri et pagination synchronisés dans les paramètres d'URL
 - **🌐 Internationalisation** — Anglais/Français via svelte-i18n, support RTL
 - **🏷️ Partageable et indexable** — Balises Open Graph et Twitter en URL absolues, liens canoniques, et un `sitemap.xml` et `robots.txt` générés depuis vos projets
-- **🔒 Aucun cookie, aucun bandeau** — rien n'est pisté, donc il n'y a rien à faire accepter. Mentions légales et politique de confidentialité fournies en gabarits à remplir
+- **🔒 Aucun cookie, aucun bandeau** — rien n'est pisté, donc il n'y a rien à faire accepter. Mentions légales et politique de confidentialité fournies en gabarits à remplir. Les embeds YouTube et Vimeo collés passent par les modes sans cookies des plateformes
 - **📄 Pagination et tri** — Lignes par page personnalisable, tri par date, titre, type ou localisation
 
 ## 🔒 La vie privée par construction
@@ -31,8 +31,9 @@ Un générateur de portfolio statique moderne développé avec **SvelteKit 2** e
 Un portfolio n'a pas à surveiller ses lecteurs, et celui-ci en est incapable.
 
 - **Aucun cookie.** `document.cookie` n'apparaît nulle part dans le code
-- **Aucune mesure d'audience**, aucun script de suivi, aucun embed social, aucun
-  formulaire
+- **Aucune mesure d'audience**, aucun script de suivi, aucun formulaire. La démo
+  embarque une vidéo YouTube, en mode sans cookies — et le dit dans sa page
+  de confidentialité
 - **Aucun bandeau de consentement, parce qu'aucun n'est requis.** La seule chose
   conservée sur l'appareil du visiteur est le choix clair/sombre qu'il a fait
   lui-même, dans `localStorage` sous la clé `theme`. Une préférence d'interface

@@ -23,7 +23,7 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 - **🔗 Shareable URLs** — Filter, search, sort, and pagination state synced to URL query params
 - **🌐 Internationalization** — English/French via svelte-i18n, RTL-ready
 - **🏷️ Built to be shared and found** — Open Graph and Twitter tags with absolute URLs, canonical links, and a `sitemap.xml` and `robots.txt` generated from your projects
-- **🔒 No cookies, no consent banner** — nothing is tracked, so there is nothing to ask permission for. Legal notice and privacy pages come as templates to fill in
+- **🔒 No cookies, no consent banner** — nothing is tracked, so there is nothing to ask permission for. Legal notice and privacy pages come as templates to fill in. Pasted YouTube and Vimeo embeds are routed through the platforms' no-cookie modes
 - **📄 Pagination & Sorting** — Customizable rows-per-page, sort by date, title, type, or location
 
 ## 🔒 Privacy by construction
@@ -31,7 +31,7 @@ A modern static portfolio generator built with **SvelteKit 2** and **Tailwind CS
 A portfolio should not spy on its readers, and this one cannot.
 
 - **No cookies.** `document.cookie` appears nowhere in the codebase
-- **No analytics**, no tracking scripts, no social embeds, no forms
+- **No analytics**, no tracking scripts, no forms. The demo embeds one YouTube video, in YouTube's no-cookie mode — and says so in its privacy page
 - **No consent banner, because none is required.** The only thing kept on a
   visitor's device is the light/dark choice they made themselves, in
   `localStorage` under `theme`. French rules exempt an interface preference of

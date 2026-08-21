@@ -108,7 +108,7 @@ Explain your approach to design/art, your values, what motivates you.
 - **Year** - Project, Client
 ```
 
-#### Images in these pages
+#### Images and videos in these pages
 
 The home, about, legal and privacy pages can embed images. Put the files in
 `content/images/` and reference them relative to `content/`:
@@ -121,6 +121,21 @@ The address is resolved at build time, so it works in development and under a
 sub-path (GitHub Pages) alike. External links in these pages open in a new tab
 automatically. On large screens, images spread wider than the text column —
 part of the editorial layout of these pages.
+
+**Videos from YouTube or Vimeo**: paste the embed code the platform gives you
+("Share › Embed") straight into the Markdown, on a line of its own:
+
+```markdown
+<iframe src="https://www.youtube.com/embed/VIDEO_ID" title="My film" allowfullscreen></iframe>
+```
+
+The player scales to the column and keeps its 16:9 ratio. microfolio also
+routes every embed through the platforms' no-cookie modes at build time —
+`youtube.com/embed` becomes `youtube-nocookie.com/embed`, and Vimeo players
+get `dnt=1` — so the "no cookies" promise of your site survives a pasted
+snippet. Loading a player still sends the visitor's IP address to YouTube or
+Vimeo, though: **add them to the third-party table in `content/privacy.md`**,
+which says so itself. The same works in a project's body.
 
 ### 4. Custom domain configuration
 

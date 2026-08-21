@@ -130,6 +130,8 @@ Create an `images/` folder and add your images.
 
 Sizes, formats, naming, and the EXIF/IPTC metadata the lightbox displays — including what to strip before publishing — are covered in the **[Preparing Your Images](03-preparing-images.md)** guide.
 
+A YouTube or Vimeo video can also sit in the project's text: paste the platform's embed code on a line of its own, as described in the [configuration guide](02-configuration.md#images-and-videos-in-these-pages) — it is routed through the no-cookie modes automatically.
+
 ### 3. Videos (optional)
 
 To add videos, create a `videos/` folder

@@ -109,7 +109,7 @@ Expliquez votre approche du design/art, vos valeurs, ce qui vous motive.
 - **Année** - Projet, Client
 ```
 
-#### Des images dans ces pages
+#### Des images et des vidéos dans ces pages
 
 Les pages d'accueil, à propos, mentions légales et confidentialité peuvent
 embarquer des images. Placez les fichiers dans `content/images/` et
@@ -124,6 +124,23 @@ que sous un sous-chemin (GitHub Pages). Les liens externes de ces pages
 s'ouvrent automatiquement dans un nouvel onglet. Sur grand écran, les images
 s'étalent plus large que la colonne de texte — c'est la mise en page
 éditoriale de ces pages.
+
+**Vidéos YouTube ou Vimeo** : collez le code d'intégration fourni par la
+plateforme (« Partager › Intégrer ») directement dans le Markdown, sur une
+ligne à part :
+
+```markdown
+<iframe src="https://www.youtube.com/embed/ID_VIDEO" title="Mon film" allowfullscreen></iframe>
+```
+
+Le lecteur s'adapte à la colonne en gardant son ratio 16:9. microfolio fait
+aussi passer chaque embed par les modes sans cookies des plateformes au build
+— `youtube.com/embed` devient `youtube-nocookie.com/embed`, et les lecteurs
+Vimeo reçoivent `dnt=1` — pour que la promesse « aucun cookie » de votre site
+survive à un code collé. Charger un lecteur envoie tout de même l'adresse IP
+du visiteur à YouTube ou Vimeo : **ajoutez-les au tableau des tiers de
+`content/privacy.md`**, qui le demande lui-même. Ça fonctionne de la même
+façon dans le corps d'un projet.
 
 ### 4. Configuration du domaine personnalisé
 

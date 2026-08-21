@@ -26,6 +26,24 @@ export function splitFrontmatter(raw) {
 // never rewritten.
 const ABSOLUTE_URL = /^([a-z][a-z0-9+.-]*:|\/\/)/i;
 
+// Pasted video embeds are routed through the platforms' no-cookie modes, so a
+// site that promises to set no cookies keeps the promise when its author
+// pastes a YouTube or Vimeo snippet: youtube.com/embed becomes
+// youtube-nocookie.com/embed, and Vimeo players get dnt=1 (Do Not Track)
+// unless it is already there. Everything else in the HTML passes untouched.
+function privacyFriendlyEmbeds(html) {
+	return html
+		.replace(/https:\/\/www\.youtube\.com\/embed\//g, 'https://www.youtube-nocookie.com/embed/')
+		.replace(
+			/https:\/\/player\.vimeo\.com\/video\/([^"'\s?]+)(\?[^"'\s]*)?/g,
+			(match, id, query) => {
+				if (query && /[?&](amp;)?dnt=/.test(query)) return match;
+				const separator = !query ? '?' : query.includes('&amp;') ? '&amp;' : '&';
+				return `https://player.vimeo.com/video/${id}${query ?? ''}${separator}dnt=1`;
+			}
+		);
+}
+
 // External links leave the reader's place in the portfolio; open them in a new
 // tab. Internal links, anchors and mailto: keep the default behaviour.
 marked.use({
@@ -74,6 +92,10 @@ export function renderMarkdownBody(raw, assetBase = '') {
 	walkTokens(tokens, (token) => {
 		if (token.type === 'image') {
 			token.href = resolveAssetHref(token.href, assetBase);
+		}
+		if (token.type === 'html') {
+			token.text = privacyFriendlyEmbeds(token.text);
+			token.raw = privacyFriendlyEmbeds(token.raw);
 		}
 	});
 	return marked.parser(tokens);

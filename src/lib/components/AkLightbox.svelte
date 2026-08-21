@@ -57,6 +57,8 @@
 	// The controls step out of the way while the visitor is looking at an image,
 	// and any sign of activity brings them straight back.
 	const hideDelay = siteConfig.lightbox?.hideControlsDelay ?? 0;
+	// One switch for the three non-editorial sections of the panel
+	const showExtended = siteConfig.lightbox?.showExtendedMetadata !== false;
 	let controlsVisible = $state(true);
 	let hideTimer;
 
@@ -116,7 +118,7 @@
 					{/if}
 				</div>
 
-				{#if hasCameraInfo}
+				{#if showExtended && hasCameraInfo}
 					<div class="text-xs">
 						<h3 class="text-sm font-bold">{$_('ui.metadata.technical_details')}</h3>
 						{#if metadata.camera}
@@ -158,7 +160,7 @@
 					</div>
 				{/if}
 
-				{#if hasContextInfo}
+				{#if showExtended && hasContextInfo}
 					<div class="text-xs">
 						<h3 class="text-sm font-bold">{$_('ui.metadata.location_date')}</h3>
 						{#if metadata.dateTime}
@@ -202,7 +204,7 @@
 					</div>
 				{/if}
 
-				{#if hasKeywords}
+				{#if showExtended && hasKeywords}
 					<div class="text-xs">
 						<h3 class="mb-1 text-sm font-bold">{$_('ui.metadata.keywords')}</h3>
 						<!-- Plain text, not badges: these describe the image, unlike the

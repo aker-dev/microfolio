@@ -29,17 +29,19 @@ it.
 ## What reaches other companies
 
 Loading any web page means your device asks a server for files, and a server
-cannot answer without knowing your IP address. Three are involved here:
+cannot answer without knowing your IP address. Four are involved here:
 
-| Who          | What for                   | When                 |
-| ------------ | -------------------------- | -------------------- |
-| GitHub, Inc. | hosting this site          | every page           |
-| Bunny.net    | the IBM Plex Sans typeface | every page           |
-| OpenFreeMap  | the map tiles              | only on the map page |
+| Who          | What for                                                     | When                             |
+| ------------ | ------------------------------------------------------------ | -------------------------------- |
+| GitHub, Inc. | hosting this site                                            | every page                       |
+| Bunny.net    | the IBM Plex Sans typeface                                   | every page                       |
+| OpenFreeMap  | the map tiles                                                | only on the map page             |
+| YouTube      | one embedded video, in YouTube's no-cookie mode (`nocookie`) | only on the example project page |
 
 We do not control what those companies do with the requests they receive. Their
 own policies apply: [GitHub](https://docs.github.com/site-policy),
-[Bunny.net](https://bunny.net/privacy), [OpenFreeMap](https://openfreemap.org).
+[Bunny.net](https://bunny.net/privacy), [OpenFreeMap](https://openfreemap.org),
+[YouTube](https://policies.google.com/privacy).
 
 ## What we do not do
 

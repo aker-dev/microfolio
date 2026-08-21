@@ -49,6 +49,10 @@ The screens run a 22-minute cycle, composed rather than programmed:
 4. **Coda** — everything slows to a stop; the last minute is a single static
    shadow, held like a breath.
 
+The full cycle, filmed on the second night:
+
+<iframe src="https://www.youtube.com/embed/HH7we9EaQok" title="Lichtspiel Pavilion — the 22-minute cycle" allowfullscreen></iframe>
+
 ### What the fog changed
 
 The piece was composed in a rendering engine with clean air. Rodez in December

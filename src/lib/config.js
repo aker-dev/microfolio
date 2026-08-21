@@ -1,4 +1,5 @@
 export const siteConfig = {
+	// --- Your site -------------------------------------------------------------
 	title: 'microfolio',
 	description: 'static portfolio generator',
 	author: 'AKER',
@@ -16,9 +17,28 @@ export const siteConfig = {
 	// Actions workflow, as this project is, GitHub ignores any CNAME in the build.
 	url: 'https://aker-dev.github.io/microfolio',
 
-	// Internationalization config
-	locale: 'en', // 'en', 'fr'
+	// Interface language: 'en' or 'fr' (see src/lib/i18n.js to add one)
+	locale: 'en',
 
+	// --- Navigation and links --------------------------------------------------
+	// The menu, in order. Labels are translation keys from src/lib/locales/.
+	navigation: [
+		{ name: 'nav.home', href: '/' },
+		{ name: 'nav.about', href: '/about' },
+		{ name: 'nav.projects', href: '/projects' },
+		{ name: 'nav.list', href: '/list' },
+		{ name: 'nav.map', href: '/map' }
+		// ...
+	],
+
+	// Shown as icons in the footer. Remove the ones you don't use.
+	socialLinks: {
+		github: 'https://github.com/aker-dev/microfolio',
+		linkedin: 'https://www.linkedin.com/company/aker-network/',
+		instagram: 'https://www.instagram.com/aker.pro/'
+	},
+
+	// --- Sharing and images ----------------------------------------------------
 	// Sharing image for pages that are not a project — the home page above all,
 	// which has no image of its own. A file in static/, 1200x630, or empty for
 	// none. Projects use their own thumbnail and need nothing here.
@@ -31,28 +51,15 @@ export const siteConfig = {
 		optimizeOnBuild: true
 	},
 
-	// Image lightbox
+	// --- Lightbox --------------------------------------------------------------
 	lightbox: {
 		// Delay in milliseconds before the controls fade out while the visitor is
 		// idle. Any mouse move, key press or touch brings them back. 0 keeps them
 		// on screen permanently.
-		hideControlsDelay: 3000
-	},
-
-	// Social links
-	socialLinks: {
-		github: 'https://github.com/aker-dev/microfolio',
-		linkedin: 'https://www.linkedin.com/company/aker-network/',
-		instagram: 'https://www.instagram.com/aker.pro/'
-	},
-
-	// Navigation
-	navigation: [
-		{ name: 'nav.home', href: '/' },
-		{ name: 'nav.about', href: '/about' },
-		{ name: 'nav.projects', href: '/projects' },
-		{ name: 'nav.list', href: '/list' },
-		{ name: 'nav.map', href: '/map' }
-		// ...
-	]
+		hideControlsDelay: 3000,
+		// The details panel always shows an image's title, caption and credit.
+		// true adds what else the file carries — camera and exposure, date and
+		// location, keywords. false keeps the panel to the editorial three.
+		showExtendedMetadata: true
+	}
 };

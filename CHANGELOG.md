@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.0] - 2026-08-21
+
+### Added
+
+- **YouTube and Vimeo videos in Markdown.** Paste the platform's embed code into any content page or project body and it renders as a responsive 16:9 player — full width on the editorial pages, column width in a project. Every embed is routed through the platforms' no-cookie modes at build time (`youtube-nocookie.com`, Vimeo `dnt=1`), so a pasted snippet cannot break the site's "no cookies" promise behind its author's back. The example project carries one; the demo's privacy page declares it
+- **`lightbox.showExtendedMetadata`** in `config.js`: one switch that keeps the details panel to an image's title, caption and credit, hiding Technical Details, Location & Date and Keywords together. `true` by default; documented alongside `hideControlsDelay`, which never had a doc entry
+
+### Changed
+
+- **A shorter header on phones**: 96px instead of 128 below `md`, the title one step smaller — desktop untouched
+- **The example frontmatter in the docs is now the complete, annotated reference**: required, recommended and optional fields are labelled in the YAML itself, and the info-panel fields (`owner`, `status`, `surface_area`, `cost`) — displayed on the project page but documented nowhere — appear in the reference, the field list and the complete example. Every sample block is verified against the real parser
+
 ## [0.12.3] - 2026-08-20
 
 ### Security

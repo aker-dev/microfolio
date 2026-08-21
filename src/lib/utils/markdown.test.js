@@ -128,3 +128,56 @@ describe('links in Markdown bodies', () => {
 		expect(html).not.toContain('target="_blank"');
 	});
 });
+
+describe('video embeds pasted into Markdown', () => {
+	// The site promises to set no cookies; a pasted embed must not break that
+	// promise behind the author's back, so the platforms' no-cookie modes are
+	// applied at render time.
+
+	it('routes a YouTube embed through youtube-nocookie.com', () => {
+		const html = renderMarkdownBody(
+			'<iframe width="560" height="315" src="https://www.youtube.com/embed/abc123" title="x"></iframe>'
+		);
+
+		expect(html).toContain('src="https://www.youtube-nocookie.com/embed/abc123"');
+		expect(html).not.toContain('www.youtube.com');
+	});
+
+	it('leaves an embed that already uses youtube-nocookie.com alone', () => {
+		const src = 'https://www.youtube-nocookie.com/embed/abc123';
+		const html = renderMarkdownBody(`<iframe src="${src}"></iframe>`);
+
+		expect(html).toContain(`src="${src}"`);
+	});
+
+	it('adds dnt=1 to a Vimeo player without a query string', () => {
+		const html = renderMarkdownBody(
+			'<iframe src="https://player.vimeo.com/video/76979871"></iframe>'
+		);
+
+		expect(html).toContain('src="https://player.vimeo.com/video/76979871?dnt=1"');
+	});
+
+	it('appends dnt=1 to a Vimeo player that already has a query string', () => {
+		const html = renderMarkdownBody(
+			'<iframe src="https://player.vimeo.com/video/76979871?badge=0&amp;autopause=0"></iframe>'
+		);
+
+		expect(html).toContain('video/76979871?badge=0&amp;autopause=0&amp;dnt=1"');
+	});
+
+	it('does not double a dnt parameter the author already set', () => {
+		const src = 'https://player.vimeo.com/video/76979871?dnt=1';
+		const html = renderMarkdownBody(`<iframe src="${src}"></iframe>`);
+
+		expect(html).toContain(`src="${src}"`);
+		expect(html.match(/dnt=1/g)).toHaveLength(1);
+	});
+
+	it('touches no other HTML', () => {
+		const raw = '<iframe src="https://example.com/player?x=1"></iframe>';
+		const html = renderMarkdownBody(raw);
+
+		expect(html).toContain(raw);
+	});
+});

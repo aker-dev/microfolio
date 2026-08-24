@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-08-24
+
 ### Fixed
 
 - **`microfolio new` failed on Intel Macs.** The repository pinned one exact pnpm version through `package.json`'s `packageManager` field; the moment the installed pnpm differs from it — which it does at every pnpm release — pnpm tries to switch versions, and for any 11.x target that switch goes through `@pnpm/exe`, which has published no macOS Intel binary since pnpm 11. Installing, developing and building all died on `Cannot verify the identity of the @pnpm/exe.darwin-x64 native binary`. The pin is gone in favour of `engines.pnpm` (`>=11.22.0`, which pnpm enforces just as firmly), and the exact version now lives in the CI workflow, where the runner is Linux. An existing site fixes itself by deleting the `packageManager` line from its `package.json`, or by running `pnpm update-microfolio`

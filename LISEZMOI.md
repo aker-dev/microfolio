@@ -102,7 +102,7 @@ microfolio dev
 
 #### Prérequis
 
-- Node.js 22.13 ou supérieur (requis par pnpm 11 ; testé avec 22.x et 24.x)
+- Node.js 22.13 ou supérieur (requis par pnpm 11 ; testé avec la LTS 24 et la 26.x)
 - pnpm 11 ou supérieur
 - Git pour le contrôle de version
 

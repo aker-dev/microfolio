@@ -266,6 +266,12 @@ versions — and pnpm 11 publishes no binary for Intel Macs, so the switch can n
 Open `package.json` and delete the line that starts with `"packageManager"`, then run
 `pnpm install` again. Updating the site with `pnpm update-microfolio` does the same thing.
 
+### `env: node: No such file or directory`
+
+Homebrew installed microfolio before its formula depended on a Node that Homebrew actually puts
+within reach. Run `brew update && brew upgrade microfolio`, which now pulls one; `brew install node`
+fixes it too.
+
 ### Changes not visible
 
 - Save your files

@@ -267,6 +267,12 @@ peut donc jamais aboutir.
 Ouvrez `package.json`, supprimez la ligne qui commence par `"packageManager"`, puis relancez
 `pnpm install`. Mettre le site à jour avec `pnpm update-microfolio` revient au même.
 
+### `env: node: No such file or directory`
+
+Homebrew a installé microfolio à une époque où sa formule dépendait d'un Node qu'il ne mettait pas à
+portée. Lancez `brew update && brew upgrade microfolio`, qui en installe un désormais ;
+`brew install node` corrige aussi.
+
 ### Modifications non visibles
 
 - Sauvegardez vos fichiers

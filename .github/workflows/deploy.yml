@@ -29,8 +29,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          # pnpm 11 uses node:sqlite and refuses to run below 22.13
-          node-version: '22'
+          # 24 is the Active LTS (Krypton). Homebrew installs microfolio
+          # against its unversioned `node` formula, which tracks Current — so
+          # the LTS is what gets tested here, while engines.node keeps 22.13
+          # as the floor (pnpm 11 uses node:sqlite and refuses to run below it).
+          node-version: '24'
 
       # The exact pnpm version lives here rather than in package.json's
       # "packageManager". That field makes pnpm switch to the pinned version, and

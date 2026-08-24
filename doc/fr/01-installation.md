@@ -257,6 +257,16 @@ Le serveur reste actif tant que la fenêtre du terminal reste ouverte. Pour l'ar
 - Vérifiez que `pnpm install` a bien été exécuté
 - Fermez et rouvrez le terminal
 
+### `Cannot verify the identity of the @pnpm/exe...` (Mac Intel)
+
+Un site créé avec microfolio 1.0.0 ou une version antérieure fige une version exacte de pnpm
+dans son `package.json`. Dès que le pnpm installé sur votre machine en diffère, pnpm tente de
+changer de version — et pnpm 11 ne publie aucun binaire pour les Mac Intel, ce changement ne
+peut donc jamais aboutir.
+
+Ouvrez `package.json`, supprimez la ligne qui commence par `"packageManager"`, puis relancez
+`pnpm install`. Mettre le site à jour avec `pnpm update-microfolio` revient au même.
+
 ### Modifications non visibles
 
 - Sauvegardez vos fichiers

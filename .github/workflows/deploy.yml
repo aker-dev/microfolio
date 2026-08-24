@@ -32,8 +32,15 @@ jobs:
           # pnpm 11 uses node:sqlite and refuses to run below 22.13
           node-version: '22'
 
+      # The exact pnpm version lives here rather than in package.json's
+      # "packageManager". That field makes pnpm switch to the pinned version, and
+      # for any 11.x target the switch goes through @pnpm/exe, which has published
+      # no macOS Intel binary since pnpm 11 — so it can never succeed there. The
+      # runner is linux-x64 and can afford a pin; the people cloning this cannot.
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
+        with:
+          version: 11.23.0
 
       - name: Install dependencies
         run: pnpm install

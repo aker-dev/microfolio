@@ -13,7 +13,8 @@
 	},
 	"private": true,
 	"engines": {
-		"node": ">=22.13.0"
+		"node": ">=22.13.0",
+		"pnpm": ">=11.22.0"
 	},
 	"type": "module",
 	"scripts": {
@@ -60,7 +61,6 @@
 		"vite-plugin-static-copy": "^3.4.0",
 		"vitest": "^4.1.11"
 	},
-	"packageManager": "pnpm@11.22.0",
 	"dependencies": {
 		"cursor-effects": "^1.0.18",
 		"exifreader": "^4.43.0",

@@ -257,6 +257,15 @@ The server remains active as long as the terminal window stays open. To stop it,
 - Verify that `pnpm install` was properly executed
 - Close and reopen the terminal
 
+### `Cannot verify the identity of the @pnpm/exe...` (Intel Mac)
+
+A site created with microfolio 1.0.0 or earlier pins one exact pnpm version in its
+`package.json`. As soon as the pnpm you have installed differs from it, pnpm tries to switch
+versions — and pnpm 11 publishes no binary for Intel Macs, so the switch can never succeed.
+
+Open `package.json` and delete the line that starts with `"packageManager"`, then run
+`pnpm install` again. Updating the site with `pnpm update-microfolio` does the same thing.
+
 ### Changes not visible
 
 - Save your files

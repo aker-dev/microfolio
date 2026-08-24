@@ -1,6 +1,6 @@
 {
 	"name": "microfolio",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Static portfolio generator for creatives — folders and Markdown in, a fast site out",
 	"license": "MIT",
 	"homepage": "https://aker-dev.github.io/microfolio/",
@@ -13,7 +13,8 @@
 	},
 	"private": true,
 	"engines": {
-		"node": ">=22.13.0"
+		"node": ">=22.13.0",
+		"pnpm": ">=11.22.0"
 	},
 	"type": "module",
 	"scripts": {
@@ -60,7 +61,6 @@
 		"vite-plugin-static-copy": "^3.4.0",
 		"vitest": "^4.1.11"
 	},
-	"packageManager": "pnpm@11.22.0",
 	"dependencies": {
 		"cursor-effects": "^1.0.18",
 		"exifreader": "^4.43.0",

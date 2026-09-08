@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-09-08
+
 ### Fixed
 
 - **The Homebrew formula installed a Node nobody could run.** It depended on `node@22`, and every versioned Node formula is keg-only — Homebrew never puts one on `PATH`. Since Homebrew's pnpm is the JavaScript package, its `#!/usr/bin/env node` shebang failed with `env: node: No such file or directory` on any Mac without a Node of its own, which is every Mac out of the box. The formula now depends on the unversioned `node`, the only one Homebrew links

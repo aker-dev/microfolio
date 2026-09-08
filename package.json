@@ -1,6 +1,6 @@
 {
 	"name": "microfolio",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Static portfolio generator for creatives — folders and Markdown in, a fast site out",
 	"license": "MIT",
 	"homepage": "https://aker-dev.github.io/microfolio/",

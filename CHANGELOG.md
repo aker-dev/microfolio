@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - CI runs on Node 24, the Active LTS, rather than 22. `engines.node` keeps `>=22.13.0` as the floor
+- **ESLint 10.** The 9.x line went to maintenance and npm now prints a deprecation notice on every install; `@eslint/js`, `@eslint/compat` and `globals` move with it (`@eslint/compat` 1.x peers on ESLint 9 and no further). `eslint-plugin-svelte` and `eslint-config-prettier` already accepted 10, and the flat config carried over unchanged except for one rule: `no-useless-assignment` joined `js.configs.recommended`, and it cannot see that writing to a `$bindable()` prop is a call into the parent rather than a dead store — it is off for Svelte files, where `AkFilters` hands `filteredProjects` and `handler` up exactly that way
+- Dependencies refreshed within their existing ranges: Svelte 5.57, MapLibre 6.7, `exifreader` 4.44, sharp 0.35.4, Playwright 1.63. Nothing in the site changed shape — the whole suite passes unmodified — but a release is how they reach a site that runs `pnpm update-microfolio`
 
 ## [1.0.1] - 2026-08-24
 

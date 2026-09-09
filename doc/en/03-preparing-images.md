@@ -54,6 +54,9 @@ exiftool -gps:all= images/at-home.jpg
 
 Only publish images you hold the rights to. When a photo is not yours, fill in _Credit_ (and _Source_) so the photographer is named in the lightbox — and make sure they agreed to the publication.
 
-## Next Step
+## Next Steps
 
-Images ready? Head to the **[Project Addition Guide](04-adding-projects.md)** to put them in a project.
+Images ready? Here is what remains:
+
+- **[Adding Projects](04-adding-projects.md)** — everything a project folder can hold
+- **[Publication](05-publication.md)** — put your portfolio online

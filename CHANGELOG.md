@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **The image preparation guide was reachable only from the indexes.** Page 03 was added after the others: `doc/*/README.md`, the README documentation blocks and page 00's closing list all name it, but the "Next Steps" of pages 01, 02 and 04 — the navigation a reader actually follows, page by page — skipped straight from configuration to adding projects. Every guide now closes on the same block, listing the pages that follow it in order with the one-line gloss page 00 already carried, and page 05 stops being a dead end: it points back to adding projects, since a published site is one you republish
+- **On Windows, the installation guide led to a `pnpm` that refused to run.** PowerShell executes no script at all by default, and `pnpm` is exposed as a `pnpm.ps1` — so every `pnpm` command failed with `running scripts is disabled on this system`, at the first step of a guide that had been followed to the letter. The Windows section now runs `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` before installing pnpm, and the error message has its own troubleshooting entry, in all four guides. Installing pnpm no longer asks for PowerShell "as administrator" either: the installer writes to `%LOCALAPPDATA%`, and that advice was never needed — it also contradicted the `-Scope CurrentUser` that fixes this
+
 ## [1.0.2] - 2026-09-08
 
 ### Fixed

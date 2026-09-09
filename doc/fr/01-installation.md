@@ -296,11 +296,12 @@ portée. Lancez `brew update && brew upgrade microfolio`, qui en installe un dé
 
 ## Prochaines étapes
 
-Maintenant que Microfolio est installé, consultez :
+Maintenant que microfolio est installé, les guides suivants prennent le relais :
 
-- [Guide de configuration](02-configuration.md) pour personnaliser votre site
-- [Guide d'ajout de projets](04-ajout-projets.md) pour ajouter vos propres créations
-- [Guide de publication](05-publication.md) pour mettre votre site en ligne
+- **[Configuration](02-configuration.md)** — faites de ce site le vôtre : titre, couleurs, pages légales
+- **[Préparation des images](03-preparation-images.md)** — tailles, formats, et les métadonnées que la lightbox affiche
+- **[Ajout de projets](04-ajout-projets.md)** — tout ce qu'un dossier de projet peut contenir
+- **[Publication](05-publication.md)** — mettez votre portfolio en ligne
 
 ## Contact et support
 

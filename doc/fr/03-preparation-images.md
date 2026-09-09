@@ -54,6 +54,9 @@ exiftool -gps:all= images/chez-moi.jpg
 
 Ne publiez que des images dont vous détenez les droits. Quand une photo n'est pas de vous, renseignez _Credit_ (et _Source_) pour que le photographe soit nommé dans la lightbox — et assurez-vous de son accord pour la publication.
 
-## Étape suivante
+## Prochaines étapes
 
-Images prêtes ? Direction le **[Guide d'ajout de projets](04-ajout-projets.md)** pour les mettre dans un projet.
+Images prêtes ? Il reste :
+
+- **[Ajout de projets](04-ajout-projets.md)** — tout ce qu'un dossier de projet peut contenir
+- **[Publication](05-publication.md)** — mettez votre portfolio en ligne

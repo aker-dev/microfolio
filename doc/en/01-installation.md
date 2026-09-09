@@ -295,11 +295,12 @@ fixes it too.
 
 ## Next Steps
 
-Now that Microfolio is installed, check out:
+Now that microfolio is installed, the next guides take over:
 
-- [Configuration guide](02-configuration.md) to customize your site
-- [Project addition guide](04-adding-projects.md) to add your own creations
-- [Publication guide](05-publication.md) to put your site online
+- **[Configuration](02-configuration.md)** — make the site yours: title, colors, legal pages
+- **[Preparing Your Images](03-preparing-images.md)** — sizes, formats, and the metadata the lightbox displays
+- **[Adding Projects](04-adding-projects.md)** — everything a project folder can hold
+- **[Publication](05-publication.md)** — put your portfolio online
 
 ## Contact and Support
 

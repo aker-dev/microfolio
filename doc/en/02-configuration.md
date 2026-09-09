@@ -366,11 +366,6 @@ Everything above is configuration. When you want to change how things look or be
 microfolio reads none of its own. The site's address lives in
 `src/lib/config.js`, under `url`.
 
-## Next steps
-
-- [Project addition guide](04-adding-projects.md)
-- [Publishing guide](05-publication.md)
-
 ## Tips
 
 - Always test your changes with `pnpm dev`
@@ -378,3 +373,11 @@ microfolio reads none of its own. The site's address lives in
 - Use high-quality images
 - Check mobile compatibility
 - Optimize SEO with relevant descriptions
+
+## Next Steps
+
+Your site now looks the way you want it. What comes next:
+
+- **[Preparing Your Images](03-preparing-images.md)** — sizes, formats, and the metadata the lightbox displays
+- **[Adding Projects](04-adding-projects.md)** — everything a project folder can hold
+- **[Publication](05-publication.md)** — put your portfolio online

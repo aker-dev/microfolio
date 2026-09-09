@@ -303,13 +303,15 @@ Vérifiez que votre projet s'affiche correctement dans :
 - Testez sur mobile
 - Validez l'accessibilité
 
-## Prochaines étapes
-
-Une fois vos projets ajoutés, consultez le [Guide de publication](05-publication.md) pour mettre votre portfolio en ligne.
-
 ## Ressources utiles
 
 - **Optimisation d'images** : TinyPNG, Squoosh
 - **Coordonnées GPS** : Google Maps, OpenStreetMap
 - **Inspiration** : Behance, Dribbble, ArchDaily
 - **Rédaction** : Grammarly, Antidote
+
+## Prochaines étapes
+
+Une fois vos projets ajoutés, il reste un guide :
+
+- **[Publication](05-publication.md)** — mettez votre portfolio en ligne

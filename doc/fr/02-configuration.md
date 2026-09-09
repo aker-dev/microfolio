@@ -375,11 +375,6 @@ Le fichier `.env` contient les variables importantes :
 microfolio n'en lit aucune qui lui soit propre. L'adresse du site vit dans
 `src/lib/config.js`, sous `url`.
 
-## Prochaines étapes
-
-- [Guide d'ajout de projets](04-ajout-projets.md)
-- [Guide de publication](05-publication.md)
-
 ## Conseils
 
 - Testez toujours vos modifications avec `pnpm dev`
@@ -387,3 +382,11 @@ microfolio n'en lit aucune qui lui soit propre. L'adresse du site vit dans
 - Utilisez des images de haute qualité
 - Vérifiez la compatibilité mobile
 - Optimisez le référencement avec des descriptions pertinentes
+
+## Prochaines étapes
+
+Votre site a maintenant l'allure que vous voulez. La suite :
+
+- **[Préparation des images](03-preparation-images.md)** — tailles, formats, et les métadonnées que la lightbox affiche
+- **[Ajout de projets](04-ajout-projets.md)** — tout ce qu'un dossier de projet peut contenir
+- **[Publication](05-publication.md)** — mettez votre portfolio en ligne

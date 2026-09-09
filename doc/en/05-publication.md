@@ -340,6 +340,13 @@ pnpm build
 - **PageSpeed Insights**: https://pagespeed.web.dev/
 - **Google Search Console**: https://search.google.com/search-console
 
+## Next Steps
+
+A published site is not a finished one:
+
+- **[Adding Projects](04-adding-projects.md)** — add a new project, then publish again
+- **[Documentation index](README.md)** — back to all the guides
+
 ---
 
-Congratulations! Your Microfolio portfolio is now online and accessible to the world. Don't forget to keep it updated with your new projects and monitor its performance regularly.
+Congratulations! Your microfolio portfolio is now online and accessible to the world. Don't forget to keep it updated with your new projects and monitor its performance regularly.

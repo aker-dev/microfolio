@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **On Windows, the installation guide led to a `pnpm` that refused to run.** PowerShell executes no script at all by default, and `pnpm` is exposed as a `pnpm.ps1` — so every `pnpm` command failed with `running scripts is disabled on this system`, at the first step of a guide that had been followed to the letter. The Windows section now runs `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` before installing pnpm, and the error message has its own troubleshooting entry, in all four guides. Installing pnpm no longer asks for PowerShell "as administrator" either: the installer writes to `%LOCALAPPDATA%`, and that advice was never needed — it also contradicted the `-Scope CurrentUser` that fixes this
+
 ## [1.0.2] - 2026-09-08
 
 ### Fixed

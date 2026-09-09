@@ -135,13 +135,18 @@ Si vous préférez l'installation manuelle ou rencontrez des problèmes avec Hom
 
 #### 3. Installer pnpm
 
-1. Ouvrez PowerShell en tant qu'administrateur
-2. Tapez :
-   ```bash
+1. Ouvrez PowerShell (une fenêtre ordinaire — aucun droit administrateur n'est nécessaire)
+2. Autorisez PowerShell à exécuter les scripts signés pour votre compte. Windows les refuse tous par défaut, et la commande `pnpm` en est un — sans cela, chaque commande `pnpm` échouera ensuite sur `running scripts is disabled on this system` :
+   ```powershell
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ```
+   Confirmez par `O`. C'est à faire une seule fois.
+3. Installez pnpm :
+   ```powershell
    Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
    ```
-3. **Fermez et relancez PowerShell** pour que l'installation prenne effet
-4. Vérifiez l'installation :
+4. **Fermez et relancez PowerShell** pour que l'installation prenne effet
+5. Vérifiez l'installation :
    ```bash
    pnpm --version
    ```
@@ -438,7 +443,17 @@ Pour plus de détails, consultez le [dossier technique](documents/specifications
 
 - Vérifiez que Node.js, Git et pnpm sont bien installés
 - Relancez votre terminal
-- Sur Windows, utilisez PowerShell en tant qu'administrateur
+- Sur Windows, fermez et rouvrez PowerShell après chaque installation
+
+### `pnpm : ... cannot be loaded because running scripts is disabled on this system` (Windows)
+
+Windows interdit l'exécution des scripts PowerShell par défaut, et la commande `pnpm` en est un. Autorisez les scripts signés pour votre compte — une seule fois, dans une fenêtre PowerShell ordinaire, sans droits administrateur :
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Confirmez par `O`, puis fermez et rouvrez PowerShell.
 
 ### Les images ne s'affichent pas
 

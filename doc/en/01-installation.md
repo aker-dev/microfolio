@@ -133,13 +133,18 @@ If you prefer manual installation or encounter problems with Homebrew:
 
 #### 3. Install pnpm
 
-1. Open PowerShell as administrator
-2. Type:
-   ```bash
+1. Open PowerShell (an ordinary window — no administrator rights needed)
+2. Allow PowerShell to run signed scripts for your account. Windows refuses to run any script by default, and the `pnpm` command is one — without this, every `pnpm` command later fails with `running scripts is disabled on this system`:
+   ```powershell
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ```
+   Confirm with `Y`. You only ever do this once.
+3. Install pnpm:
+   ```powershell
    Invoke-WebRequest https://get.pnpm.io/install.ps1 -UseBasicParsing | Invoke-Expression
    ```
-3. **Close and restart PowerShell** for the installation to take effect
-4. Verify the installation:
+4. **Close and restart PowerShell** for the installation to take effect
+5. Verify the installation:
    ```bash
    pnpm --version
    ```
@@ -243,7 +248,17 @@ The server remains active as long as the terminal window stays open. To stop it,
 
 - Verify that Node.js, Git and pnpm are properly installed
 - Restart your terminal
-- On Windows, use PowerShell as administrator
+- On Windows, close and reopen PowerShell after installing anything
+
+### `pnpm : ... cannot be loaded because running scripts is disabled on this system` (Windows)
+
+Windows blocks PowerShell scripts by default, and the `pnpm` command is one of them. Authorize signed scripts for your account — once, in an ordinary PowerShell window, no administrator rights needed:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Confirm with `Y`, then close and reopen PowerShell.
 
 ### Images not displaying
 

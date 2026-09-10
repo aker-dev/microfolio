@@ -7,10 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-09-10
+
 ### Fixed
 
+- **`pnpm build` failed on Windows before it started.** `build.js` launched the bundler through `npx`, which is `npx.cmd` there — and Node refuses to run a `.cmd` without a shell, so the build died on `spawn npx ENOENT` at the first command a new site runs. Nothing goes through a shim any more: the build runs the Node already executing it against the dependency's own script, resolved through that dependency's `package.json`. A failure to launch is reported as a build error now, instead of surfacing as an unhandled event and a raw stack trace
+- **Two scripts exited successfully on Windows without doing anything.** `optimize-images` and `clean-images` recognised being run directly by comparing a hand-built `file://` string against their own module URL — never equal on Windows, where a path reads `C:\…` and the URL reads `file:///C:/…`. Both returned an exit code of 0 having skipped their own work, and the build checks only that code: with the bundler fixed, a Windows build would have published a site without a single optimized image and reported success. It also fixes a project folder whose path contains a space or an accent, on any system
+- **`pnpm deploy` and `pnpm test:smoke` could not run in a Windows shell.** Both set `NODE_ENV=production` through a prefix only POSIX shells understand. `deploy` now passes an argument the build script reads, and the smoke suite sets the variable in its own configuration — so the documented commands work everywhere, and the PowerShell workaround the publication guide carried is gone
+- **A zip entry using backslashes could have escaped `content/projects/`.** The guard `pnpm demo` applies to an archive knew only about `/`, while Node on Windows treats a backslash as a separator too. It now covers both, and a drive-letter prefix. Nothing in the demo archive was ever affected
 - **The image preparation guide was reachable only from the indexes.** Page 03 was added after the others: `doc/*/README.md`, the README documentation blocks and page 00's closing list all name it, but the "Next Steps" of pages 01, 02 and 04 — the navigation a reader actually follows, page by page — skipped straight from configuration to adding projects. Every guide now closes on the same block, listing the pages that follow it in order with the one-line gloss page 00 already carried, and page 05 stops being a dead end: it points back to adding projects, since a published site is one you republish
 - **On Windows, the installation guide led to a `pnpm` that refused to run.** PowerShell executes no script at all by default, and `pnpm` is exposed as a `pnpm.ps1` — so every `pnpm` command failed with `running scripts is disabled on this system`, at the first step of a guide that had been followed to the letter. The Windows section now runs `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` before installing pnpm, and the error message has its own troubleshooting entry, in all four guides. Installing pnpm no longer asks for PowerShell "as administrator" either: the installer writes to `%LOCALAPPDATA%`, and that advice was never needed — it also contradicted the `-Scope CurrentUser` that fixes this
+
+### Changed
+
+- **The site is built and smoke-tested on Windows in CI**, alongside Linux. microfolio is written on macOS and published from Linux, so the Windows path had only ever been tried by hand — which is how both build failures above reached a release. The job installs, builds, and loads the built site; it deliberately does not gate publication, which still ships from the Linux build
 
 ## [1.0.2] - 2026-09-08
 

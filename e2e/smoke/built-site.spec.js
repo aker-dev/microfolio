@@ -1,4 +1,5 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { siteConfig } from '../../src/lib/config.js';
 
@@ -72,7 +73,9 @@ function firstProjectRoute() {
 	const dir = 'content/projects';
 	if (!existsSync(dir)) return null;
 	for (const name of readdirSync(dir).sort()) {
-		const file = `${dir}/${name}/index.md`;
+		// join, not a template literal: this is a filesystem path, unlike the
+		// route below, which is a URL and keeps its slashes.
+		const file = join(dir, name, 'index.md');
 		if (!existsSync(file)) continue;
 		const head = readFileSync(file, 'utf8').slice(0, 4000);
 		if (/^title:/m.test(head) && /^date:/m.test(head)) return `projects/${name}/`;

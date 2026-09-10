@@ -116,6 +116,84 @@ jobs:
         with:
           path: './build'
 
+  # microfolio is written on macOS and published from Linux, so the Windows path
+  # was only ever tested by hand — which is how `pnpm build` came to spawn `npx`
+  # in the one way Node refuses there, and how two scripts came to compare
+  # `file://${process.argv[1]}` against import.meta.url and quietly do nothing.
+  # This job is what would have caught both.
+  #
+  # Deliberately short: install, demo, build, load what was built. Lint and the
+  # e2e suite stay on ubuntu — neither is platform-specific, and both would only
+  # double the wait. It does not gate `deploy`: the site ships from the ubuntu
+  # build, and a Windows regression is a red check to fix, not a reason to hold
+  # a publication. Actions minutes are free on a public repository; a private
+  # fork pays Windows at twice the Linux rate.
+  windows:
+    runs-on: windows-latest
+    # The default is six hours. Nothing here takes ten minutes.
+    timeout-minutes: 30
+    # Nothing is published from here, so not the workflow's pages/id-token.
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11.23.0
+
+      # sharp needs no toolchain here: 0.35 has no install script at all, and
+      # the lockfile already carries the prebuilt @img/sharp-win32-x64, which
+      # bundles its own libvips rather than splitting it out as on Linux.
+      - name: Install dependencies
+        run: pnpm install
+
+      # Same guard as the ubuntu job, for the same reason: a fork publishes its
+      # own projects, and the smoke suite takes the first project it finds — so
+      # unzipping the demo over a fork's content would test somebody else's.
+      # A fork with no projects at all stays green: firstProjectRoute() returns
+      # null and is filtered out.
+      - name: Install the demo projects
+        if: github.repository == 'aker-dev/microfolio'
+        run: pnpm demo
+
+      # playwright.smoke.config.js names no `projects`, so it runs the default
+      # browser, chromium — and the Windows image ships none. Before the build,
+      # so a missing browser fails in a minute rather than after everything.
+      # No --with-deps: that step is apt, and there is no apt here.
+      - name: Install Playwright browser
+        run: pnpm exec playwright install chromium
+
+      - name: Build
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      # The build alone would pass with every thumbnail missing, since the image
+      # step is a separate process whose exit code was the only thing checked.
+      # This loads the artefact and asks it for its files.
+      - name: Smoke test the built site
+        run: pnpm test:smoke
+
+      # A different name from the ubuntu job's: two jobs of one run uploading
+      # the same artifact name is a 409, and it would hide the failure that
+      # matters.
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report-windows
+          path: playwright-report/
+          retention-days: 7
+
   deploy:
     if: github.ref == 'refs/heads/main'
     environment:

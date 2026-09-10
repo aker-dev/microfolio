@@ -51,7 +51,11 @@ export function readZip(buffer) {
 		at += 46 + nameLength + extraLength + commentLength;
 
 		if (flags & 1) throw new Error(`${name} is encrypted`);
-		if (name.startsWith('/') || name.split('/').includes('..')) {
+		// Backslashes and a drive letter as well as '/': zip entries are spec'd to
+		// use '/', but Windows treats a backslash as a separator too, so an entry
+		// named ..\..\x would walk out of the target there while passing a check
+		// that only knows about '/'.
+		if (/^([a-zA-Z]:|[/\\])/.test(name) || name.split(/[/\\]/).includes('..')) {
 			throw new Error(`${name} would escape the target directory`);
 		}
 		entries.push({

@@ -2,7 +2,7 @@
 
 import { rm, readdir, access, stat } from 'fs/promises';
 import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -167,8 +167,10 @@ async function main() {
 	}
 }
 
-// Run script if called directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Run script if called directly. pathToFileURL, not a `file://` template:
+// on Windows argv[1] is C:\… while import.meta.url is file:///C:/…, so the two
+// never matched and this script quietly did nothing at all.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
 	main();
 }
 

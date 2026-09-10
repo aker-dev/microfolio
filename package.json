@@ -24,7 +24,7 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
-		"deploy": "NODE_ENV=production pnpm run build",
+		"deploy": "node build.js --production",
 		"demo": "node scripts/install-demo.js",
 		"generate-demo": "node scripts/generate-demo-projects.js",
 		"icons": "node scripts/icons.js",
@@ -34,7 +34,7 @@
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"test:e2e": "playwright test",
-		"test:smoke": "NODE_ENV=production playwright test --config playwright.smoke.config.js",
+		"test:smoke": "playwright test --config playwright.smoke.config.js",
 		"screenshots": "node scripts/screenshots.js"
 	},
 	"devDependencies": {

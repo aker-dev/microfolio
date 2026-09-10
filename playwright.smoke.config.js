@@ -1,6 +1,13 @@
 import { defineConfig } from '@playwright/test';
 import { getBasePath } from './src/lib/utils/paths.js';
 
+// Set here rather than by the `test:smoke` script: a `NODE_ENV=production`
+// prefix is POSIX shell syntax that Windows does not understand. This file is
+// evaluated before getBasePath() below and before the webServer is launched,
+// and Playwright spreads process.env into that child — so `vite preview` gets
+// it too. ??= leaves an explicit NODE_ENV alone.
+process.env.NODE_ENV ??= 'production';
+
 // The end-to-end suite drives `pnpm dev`, so nothing in it ever loads the site
 // that actually ships. This config is the other half: it serves `build/` and
 // walks the pages of it. See e2e/smoke/built-site.spec.js for what it looks for.
@@ -12,8 +19,8 @@ const PORT = Number(process.env.PLAYWRIGHT_SMOKE_PORT ?? 2001);
 //
 // It answers on NODE_ENV, and `vite preview` sets that to production itself
 // whatever the build was made with — which is why the site is under /microfolio
-// there even after a plain `pnpm build`, and why the root 404s. The `test:smoke`
-// script therefore sets NODE_ENV=production too, so this agrees with the server
+// there even after a plain `pnpm build`, and why the root 404s. The line at the
+// top of this file sets NODE_ENV=production too, so this agrees with the server
 // by construction rather than by coincidence.
 //
 // The trailing slash matters: Playwright resolves a page's URL against this one

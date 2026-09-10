@@ -174,7 +174,7 @@ A microfolio site is plain files: any web hosting that serves HTML can host it, 
    pnpm deploy
    ```
 
-   On Windows PowerShell, where that `NODE_ENV=` prefix is not understood: `$env:NODE_ENV='production'; pnpm build`. The site is in `build/`.
+   The same command on Windows as anywhere else — it used to need a PowerShell rewrite, and no longer does. The site is in `build/`.
 
 3. **Upload the _contents_ of `build/`** (not the folder itself) to your hosting's web root — called `www/`, `public_html/` or `htdocs/` depending on the host, or the sub-folder you chose. A free FTP client such as [FileZilla](https://filezilla-project.org) does the job: create a connection with the host, login and password shown in your hosting panel (pick SFTP when your host offers it), open `build/` on the left, the web root on the right, select everything on the left and drag it across.
 

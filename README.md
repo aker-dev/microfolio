@@ -100,6 +100,16 @@ microfolio dev
 - pnpm 11 or later
 - Git for version control
 
+**On Windows, one extra step before anything else.** Windows refuses to run any
+script by default, and the `pnpm` command is one — without this, every `pnpm`
+command below fails with `running scripts is disabled on this system`. In an
+ordinary PowerShell window (no administrator rights needed), run it once and
+confirm with `Y`:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
 ```bash
 # Clone the template
 git clone https://github.com/aker-dev/microfolio.git my-portfolio

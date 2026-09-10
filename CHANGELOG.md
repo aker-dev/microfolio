@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-09-10
+
 ### Fixed
 
 - **`pnpm build` failed on Windows before it started.** `build.js` launched the bundler through `npx`, which is `npx.cmd` there — and Node refuses to run a `.cmd` without a shell, so the build died on `spawn npx ENOENT` at the first command a new site runs. Nothing goes through a shim any more: the build runs the Node already executing it against the dependency's own script, resolved through that dependency's `package.json`. A failure to launch is reported as a build error now, instead of surfacing as an unhandled event and a raw stack trace

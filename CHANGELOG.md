@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-10-22
+
+### Fixed
+
+- **Searching dropped the type, featured and tag filters.** In `/projects`, `/list` and `/map`, the first letter typed in the search field brought back projects of every type and every tag, while the selected chips stayed lit and the URL kept its `type` and `tags`: `/projects/?type=architecture&search=studio` listed a design project, and the map placed its marker. `@vincjo/datatables` applies a search _instead of_ its filters, never on top of them. The search is now one more filter, matching the same fields — nested ones such as authors included — with the same case- and accent-insensitive comparison, so search, type, featured and tags narrow each other, and the entry count, the pagination and the map's markers follow. Links already shared keep working: the URL parameters are unchanged
+
+### Changed
+
+- Dependencies refreshed within their existing ranges: MapLibre 6.15, `exifreader` 4.51, Svelte 5.57.2, Vite 7.3.7, Playwright 1.64, sharp 0.35.5. It closes eight security advisories on two indirect dependencies — `devalue`, which SvelteKit uses to write a page's data into its HTML, and `source-map-js`, used by Tailwind and PostCSS at build time — both now on their patched versions. Playwright 1.64 wants a newer browser: run `pnpm exec playwright install chromium` before the end-to-end tests
+
 ## [1.0.3] - 2026-09-10
 
 ### Fixed

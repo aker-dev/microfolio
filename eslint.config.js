@@ -32,6 +32,8 @@ export default [
 			// Navigation is driven by siteConfig.navigation, whose entries are plain
 			// strings rather than route IDs, so internal links are built from `base`
 			// instead of resolve(). External links come from siteConfig.socialLinks.
+			// The one goto(), in AkFilters, rewrites the query string of the current
+			// pathname — already resolved, so resolve() would prefix the base twice.
 			'svelte/no-navigation-without-resolve': 'off',
 			// Recommended since ESLint 10, and blind to runes: writing to a
 			// `$bindable()` prop compiles to a call into the parent, so an

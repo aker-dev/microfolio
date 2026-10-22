@@ -54,7 +54,8 @@
 	handler = table;
 	filteredProjects = table.rows;
 
-	let sort = $state();
+	// Plain rather than $state: only the handlers below use it, never the markup
+	let sort;
 	let isUrlInitialized = $state(false);
 
 	// onMount does not run on the server, so this stays false through prerendering —
@@ -128,65 +129,65 @@
 	}
 
 	// Restoring state from the query string is the only part that has to wait for
-	// the browser, so it is all that remains in an effect.
-	$effect(() => {
-		if (!isUrlInitialized) {
-			const params = new URLSearchParams(window.location.search);
+	// the browser. It runs once, so onMount rather than an $effect: an effect
+	// would also subscribe to everything it reads and rerun on each change, held
+	// back only by a guard.
+	onMount(() => {
+		const params = new URLSearchParams(window.location.search);
 
-			// Type
-			const urlType = params.get('type');
-			if (urlType && projectTypes.includes(urlType)) {
-				handleTypeChange(urlType);
-			}
-
-			// Tags (comma-separated)
-			const urlTags = params.get('tags');
-			if (urlTags) {
-				const available = getAvailableTags(selectedType);
-				urlTags
-					.split(',')
-					.filter((t) => available.includes(t))
-					.forEach((tag) => handleTagToggle(tag));
-			}
-
-			// Search
-			const urlSearch = params.get('search');
-			if (urlSearch) {
-				searchTerm = urlSearch;
-				handleSearchInput();
-			}
-
-			// Sort (with URL fallback to defaults: date/desc)
-			const urlSort = params.get('sort') || 'date';
-			const urlOrder = params.get('order') || 'desc';
-			sortBy = urlSort;
-			sortOrder = urlOrder;
-			sort = handler.createSort(urlSort);
-			if (urlOrder === 'desc') {
-				sort.set(); // asc
-				sort.set(); // desc
-			} else {
-				sort.set(); // asc
-			}
-
-			// Rows per page
-			const urlRows = params.get('rows');
-			if (urlRows) {
-				const rowsNum = Number(urlRows);
-				if ([5, 10, 20, 50, 100].includes(rowsNum)) {
-					handler.setRowsPerPage(rowsNum);
-				}
-			}
-
-			// Page
-			const urlPage = params.get('page');
-			if (urlPage) {
-				const pageNum = Number(urlPage);
-				if (pageNum > 1) handler.setPage(pageNum);
-			}
-
-			isUrlInitialized = true;
+		// Type
+		const urlType = params.get('type');
+		if (urlType && projectTypes.includes(urlType)) {
+			handleTypeChange(urlType);
 		}
+
+		// Tags (comma-separated)
+		const urlTags = params.get('tags');
+		if (urlTags) {
+			const available = getAvailableTags(selectedType);
+			urlTags
+				.split(',')
+				.filter((t) => available.includes(t))
+				.forEach((tag) => handleTagToggle(tag));
+		}
+
+		// Search
+		const urlSearch = params.get('search');
+		if (urlSearch) {
+			searchTerm = urlSearch;
+			handleSearchInput();
+		}
+
+		// Sort (with URL fallback to defaults: date/desc)
+		const urlSort = params.get('sort') || 'date';
+		const urlOrder = params.get('order') || 'desc';
+		sortBy = urlSort;
+		sortOrder = urlOrder;
+		sort = handler.createSort(urlSort);
+		if (urlOrder === 'desc') {
+			sort.set(); // asc
+			sort.set(); // desc
+		} else {
+			sort.set(); // asc
+		}
+
+		// Rows per page
+		const urlRows = params.get('rows');
+		if (urlRows) {
+			const rowsNum = Number(urlRows);
+			if ([5, 10, 20, 50, 100].includes(rowsNum)) {
+				handler.setRowsPerPage(rowsNum);
+			}
+		}
+
+		// Page
+		const urlPage = params.get('page');
+		if (urlPage) {
+			const pageNum = Number(urlPage);
+			if (pageNum > 1) handler.setPage(pageNum);
+		}
+
+		isUrlInitialized = true;
 	});
 
 	// Sync filter state to URL query params

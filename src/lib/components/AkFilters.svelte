@@ -32,7 +32,13 @@
 	// guarded the same construction.
 	// svelte-ignore state_referenced_locally
 	const table = new TableHandler(projects, { rowsPerPage });
-	const search = table.createSearch();
+	// A filter over the whole row rather than createSearch(): the library applies a
+	// search *instead of* its filters, never on top of them, so typing a single
+	// letter used to drop the type and tag filters while their chips stayed lit.
+	// Matching the whole row walks every field, nested ones like `authors`
+	// included, with the same case- and accent-insensitive comparison a search
+	// uses, and filters combine with each other.
+	const search = table.createFilter((row) => row);
 	const typeFilter = table.createFilter('type');
 	const featuredFilter = table.createFilter('featured', (value) => value === true);
 	const tagFilter = table.createFilter(

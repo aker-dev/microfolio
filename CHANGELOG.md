@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.5] - 2026-11-18
+
+### Security
+
+- **Three advisories closed.** SvelteKit 2.70.4 stops resolving a protocol-relative module path during server-side route resolution as a cross-origin script — the step that runs when microfolio prerenders its pages (GHSA-rqp5-r3wg-vg35). `@sveltejs/adapter-static` 3.0.11 stops reading prerendered paths as regular expressions in the route configuration it writes for Vercel, which only matters to a site deployed there (GHSA-jf9x-2fg2-hx4w). And `postcss-selector-parser`, which `@tailwindcss/typography` uses to scope the `prose` styles at build time, moves to 6.1.6 past a quadratic parsing slowdown (GHSA-rj75-hqrm-r3gf). Typography — 0.5.20, its latest — pins 6.0.10 exactly, so no update could reach the fix: a pnpm override scoped to that one parent does, on the same major. The built CSS is byte-identical before and after
+- **Eight SvelteKit advisories are dismissed rather than fixed, and a fork will see them too.** They are fixed only in SvelteKit 3, with no 2.x backport, and they concern features microfolio does not use: remote functions and their `form` and `query.batch`, `use:enhance` on form actions, and a `cache-control` value forwarded through `setHeaders`. A fully prerendered site ships no server for any of them to reach. SvelteKit 3 asks for Vite 8 and Node 22.17, above the 22.13 microfolio promises, so it waits for a release of its own. If Dependabot flags them on your site, the same reasoning applies — unless you added such code yourself
+
+### Changed
+
+- Dependencies refreshed within their existing ranges: SvelteKit 2.70.4, MapLibre 6.18, `exifreader` 4.54, Svelte 5.57.3, Vite 7.3.8, Tailwind 4.3.5, Playwright 1.65. Playwright 1.65 wants a newer browser: run `pnpm exec playwright install chromium` before the end-to-end tests
+
 ## [1.0.4] - 2026-10-22
 
 ### Fixed

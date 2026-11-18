@@ -5,7 +5,7 @@ allowBuilds:
   es5-ext: false # postinstall is only a console notice
   exifreader: false # no-op without an exifreader config in package.json
 
-# Targeted fixes for advisories in transitive pins (Dependabot alerts #7, #6).
+# Targeted fixes for advisories in transitive pins (Dependabot alerts #7, #6, #94).
 overrides:
   # svelte-i18n (latest, 4.0.1) pins esbuild ^0.19 for its CLI extractor, which
   # microfolio never runs: an old line with GHSA advisories, and a second 11 MB
@@ -14,3 +14,7 @@ overrides:
   # @sveltejs/kit pins cookie ^0.6.0; 0.7.x is API-compatible and only
   # tightens name/value validation
   '@sveltejs/kit>cookie': ^0.7.2
+  # @tailwindcss/typography (latest, 0.5.20) pins postcss-selector-parser to
+  # exactly 6.0.10, which has quadratic selector parsing (GHSA-rj75-hqrm-r3gf,
+  # Dependabot #94). 6.1.5+ is the fixed release on the same major.
+  '@tailwindcss/typography>postcss-selector-parser': ^6.1.5

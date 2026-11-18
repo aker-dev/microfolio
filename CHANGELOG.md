@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`pnpm test:smoke` never finished under pnpm 12.** All nine tests passed, then the command waited forever. Without a terminal, pnpm 12 runs a script in a process group of its own, and Playwright stops its server by killing the group it started: pnpm died, vite stayed up, and Playwright went on waiting for it. `pnpm test:e2e` would hang the same way whenever it starts its own server rather than reusing yours. Both suites now start vite directly, with the Node already running, as `pnpm build` already did — so they behave the same under pnpm 11 and 12
+
 ## [1.0.5] - 2026-11-18
 
 ### Security

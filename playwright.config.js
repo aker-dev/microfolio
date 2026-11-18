@@ -1,4 +1,5 @@
 import { defineConfig } from '@playwright/test';
+import { localBinCommand } from './scripts/local-bin.js';
 
 // Overridable so the CI path (which starts its own server) can be exercised
 // locally without colliding with a dev server already on the default port
@@ -20,7 +21,9 @@ export default defineConfig({
 		trace: 'retain-on-failure'
 	},
 	webServer: {
-		command: `pnpm dev --port ${PORT}`,
+		// vite itself, not `pnpm dev`: under pnpm 12 the server outlives the stop
+		// and the run never ends (scripts/local-bin.js has the whole story)
+		command: localBinCommand('vite', 'vite', ['dev', '--port', PORT]),
 		port: PORT,
 		// Locally this picks up a dev server you already have running
 		reuseExistingServer: !process.env.CI,

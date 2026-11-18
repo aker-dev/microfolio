@@ -1,13 +1,9 @@
 #!/usr/bin/env node
 
 import { spawn } from 'node:child_process';
-import { readFileSync } from 'node:fs';
-import { createRequire } from 'node:module';
-import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { siteConfig } from './src/lib/config.js';
-
-const require = createRequire(import.meta.url);
+import { localBin } from './scripts/local-bin.js';
 
 // `pnpm deploy` used to be `NODE_ENV=production pnpm run build`, a prefix no
 // Windows shell understands. Setting it here means one command works everywhere.
@@ -33,20 +29,6 @@ function run(args) {
 		});
 		child.on('close', (code) => resolve(code ?? 1));
 	});
-}
-
-/** Absolute path to a dependency's own executable .js, resolved through its package.json. */
-function localBin(pkg, binName) {
-	// package.json rather than the bin path directly: vite's `exports` map
-	// publishes ./package.json but not ./bin/*, so resolving the bin throws
-	// ERR_PACKAGE_PATH_NOT_EXPORTED.
-	const pkgJsonPath = require.resolve(`${pkg}/package.json`);
-	const { bin } = JSON.parse(readFileSync(pkgJsonPath, 'utf8'));
-	const relative = typeof bin === 'string' ? bin : bin?.[binName];
-	if (!relative) {
-		throw new Error(`${pkg} declares no ${binName} binary — is it installed?`);
-	}
-	return join(dirname(pkgJsonPath), relative);
 }
 
 console.log('🏗️  Building microfolio...');

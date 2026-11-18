@@ -1,5 +1,6 @@
 import { defineConfig } from '@playwright/test';
 import { getBasePath } from './src/lib/utils/paths.js';
+import { localBinCommand } from './scripts/local-bin.js';
 
 // Set here rather than by the `test:smoke` script: a `NODE_ENV=production`
 // prefix is POSIX shell syntax that Windows does not understand. This file is
@@ -45,7 +46,9 @@ export default defineConfig({
 		// strictPort because vite.config.js deliberately leaves it off: a preview
 		// that quietly moved to the next free port would leave this suite reporting
 		// on whatever else holds 2001
-		command: `pnpm preview --port ${PORT} --strictPort`,
+		// vite itself, not `pnpm preview`: under pnpm 12 the server outlived the
+		// stop and the run never ended (scripts/local-bin.js has the whole story)
+		command: localBinCommand('vite', 'vite', ['preview', '--port', PORT, '--strictPort']),
 		// The base itself, not the origin root: with a base path the root 404s
 		url: BASE_URL,
 		// Never reuse: the whole point is the artefact this build just produced

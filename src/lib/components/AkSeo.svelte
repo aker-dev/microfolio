@@ -1,6 +1,7 @@
 <script>
 	import { siteConfig } from '$lib/config.js';
 	import { absoluteUrl } from '$lib/utils/seo.js';
+	import { jsonLdScript } from '$lib/utils/structuredData.js';
 
 	/**
 	 * Every head tag a page needs to be indexed and to survive being shared.
@@ -13,6 +14,7 @@
 	 * @property {string} [image]      sharing image path, no base either
 	 * @property {string} [imageAlt]   what the image shows
 	 * @property {'website'|'article'} [type]
+	 * @property {object} [structuredData]  schema.org object, from $lib/utils/structuredData.js
 	 */
 	let {
 		title,
@@ -20,7 +22,8 @@
 		path,
 		image = siteConfig.ogImage,
 		imageAlt = '',
-		type = 'website'
+		type = 'website',
+		structuredData
 	} = $props();
 
 	let fullTitle = $derived(`${siteConfig.title} • ${title}`);
@@ -49,5 +52,11 @@
 		<meta name="twitter:card" content="summary_large_image" />
 	{:else}
 		<meta name="twitter:card" content="summary" />
+	{/if}
+
+	{#if structuredData}
+		<!-- Safe: jsonLdScript() escapes every `<`, so nothing in the data can close the tag -->
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html jsonLdScript(structuredData)}
 	{/if}
 </svelte:head>

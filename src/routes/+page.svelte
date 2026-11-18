@@ -1,13 +1,19 @@
 <script>
 	import AkProjectCard from '$lib/components/AkProjectCard.svelte';
 	import AkSeo from '$lib/components/AkSeo.svelte';
+	import { websiteJsonLd } from '$lib/utils/structuredData.js';
 	import { _ } from 'svelte-i18n';
 	let { data } = $props();
 	let page = $derived(data.page);
 	let featuredProjects = $derived(data.featuredProjects);
 </script>
 
-<AkSeo title={page.title} description={page.description} path="/" />
+<AkSeo
+	title={page.title}
+	description={page.description}
+	path="/"
+	structuredData={websiteJsonLd()}
+/>
 
 <header class="mb-8">
 	<h1 class="text-primary mb-2 text-3xl font-bold">

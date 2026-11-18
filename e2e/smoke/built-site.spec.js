@@ -127,6 +127,29 @@ test('the endpoints nothing links to were prerendered', async ({ request }) => {
 	}
 });
 
+// Crawlers read the HTML as served, so this reads the prerendered file rather
+// than the page after hydration, and parses it: a tag present but malformed is
+// one every search engine silently ignores.
+test('the structured data is in the prerendered HTML, and parses', async ({ request }) => {
+	const jsonLd = async (route) => {
+		const html = await (await request.get(route)).text();
+		const blocks = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)];
+		expect(blocks, `${route} carries no JSON-LD`).toHaveLength(1);
+		return JSON.parse(blocks[0][1]);
+	};
+
+	const site = await jsonLd('./');
+	expect(site['@type']).toBe('WebSite');
+	expect(site.name).toBe(siteConfig.title);
+
+	const route = firstProjectRoute();
+	if (route) {
+		const work = await jsonLd(route);
+		expect(work['@type']).toBe('CreativeWork');
+		expect(work.isPartOf['@id']).toBe(site['@id']);
+	}
+});
+
 // The typeface is whatever config.js says. This suite also runs in a fork's
 // deploy workflow, so it checks that site's own config rather than Bunny.
 test('the typeface comes from config.js', async ({ page, baseURL }) => {

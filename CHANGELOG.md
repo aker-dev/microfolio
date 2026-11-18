@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Search engines can read a project as a work, not just a page.** Each project page now carries schema.org structured data — a `CreativeWork` with its title, description, date, type, tags, authors and their roles, sharing image and place, coordinates included — and the home page names the site, which is what lets a result show the site's name rather than its address. All of it comes from what a site already holds: no new frontmatter key, no new setting, and a field a project leaves out is left out of the data rather than written empty. A date written to the month, `2025-06`, stays at the month
+
 ### Fixed
 
 - **`pnpm test:smoke` never finished under pnpm 12.** All nine tests passed, then the command waited forever. Without a terminal, pnpm 12 runs a script in a process group of its own, and Playwright stops its server by killing the group it started: pnpm died, vite stayed up, and Playwright went on waiting for it. `pnpm test:e2e` would hang the same way whenever it starts its own server rather than reusing yours. Both suites now start vite directly, with the Node already running, as `pnpm build` already did — so they behave the same under pnpm 11 and 12

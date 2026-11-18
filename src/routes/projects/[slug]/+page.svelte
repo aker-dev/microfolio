@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import AkSeo from '$lib/components/AkSeo.svelte';
 	import { formatProjectDate } from '$lib/utils/date.js';
+	import { projectJsonLd } from '$lib/utils/structuredData.js';
 	import { afterNavigate } from '$app/navigation';
 	import { _ } from 'svelte-i18n';
 	import AkBadge from '$lib/components/AkBadge.svelte';
@@ -45,15 +46,20 @@
 	}
 
 	// No client-side metadata loading needed - data comes from server
+
+	// Written by the image step of the build; one path for the sharing tags and
+	// the structured data, so the two cannot point at different files
+	let shareImage = $derived(project.hasThumbnail ? `/content/projects/${project.slug}/og.jpg` : '');
 </script>
 
 <AkSeo
 	title={project.title}
 	description={project.description}
 	path="/projects/{project.slug}/"
-	image={project.hasThumbnail ? `/content/projects/${project.slug}/og.jpg` : ''}
+	image={shareImage}
 	imageAlt={thumbnailMetadata?.description || project.title}
 	type="article"
+	structuredData={projectJsonLd(project, shareImage)}
 />
 
 <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">

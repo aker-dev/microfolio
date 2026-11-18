@@ -100,6 +100,7 @@ Content parsing goes through `$lib/utils/markdown.js`, never an ad-hoc `split('-
 - `$lib/utils/date.js` — `formatProjectDate()`: the `YYYY-MM` shown everywhere a project is dated. It was written out four times before
 - `$lib/config.js` — Site config, and deliberately only what someone setting up **their** site needs: title, `url`, social links, navigation, `ogImage`, `images.optimizeOnBuild`, `font.url`, `font.family`, `lightbox.hideControlsDelay`, `lightbox.showExtendedMetadata`. Tile provider URLs and zoom limits live in the map route instead
 - `$lib/utils/seo.js` — `absoluteUrl()`: takes a route path **without** the base, because `siteConfig.url` already carries it
+- `$lib/utils/structuredData.js` — JSON-LD: `websiteJsonLd()` on the home page, `projectJsonLd()` (a `CreativeWork`) on each project, both passed to `AkSeo` as `structuredData`. Built only from existing frontmatter and config — no new key. Authors become `Person`s, their frontmatter `role` as `jobTitle`. A month-precision `date` stays `2025-06` rather than gaining an invented day. `jsonLdScript()` escapes every `<`, which is what makes the `{@html}` in `AkSeo` safe; the smoke suite parses the block out of the prerendered HTML, since that is what a crawler reads
 - `$lib/i18n.js` — Internationalization setup with `svelte-i18n` (en/fr active, more commented out)
 
 ### Styling
@@ -152,13 +153,6 @@ MapLibre 6 has **no default export**; `(await import('maplibre-gl')).default` is
 - Locale strings in `src/lib/locales/{lang}.json`
 - Default locale set in `$lib/config.js` (`siteConfig.locale`)
 - RTL support via `getTextDirection()`: `hooks.server.js` fills the `lang` and `dir` placeholders in `app.html` at prerender, and `+layout.svelte` updates them when the locale changes client-side
-
-## Deferred
-
-**JSON-LD structured data**, deliberately left out of the sharing work: a
-`CreativeWork` per project and a site identity on the home page. The frontmatter
-already carries everything it needs — title, date, location, authors, type,
-tags — so it is a matter of emitting it, not of gathering it.
 
 ## Project Metadata Schema
 
